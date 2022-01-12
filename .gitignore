@@ -49,7 +49,6 @@ turbine-directory.txt
 
 # Bulk data
 *.csv
-*.png
 *.log
 *.tsv
 *.out
