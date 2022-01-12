@@ -2,9 +2,9 @@
 set -eu
 
 THIS=$( cd $( dirname $0 ) ; /bin/pwd )
-SITE=$THIS/../site
+SITE=$THIS/../docs
 WEBSITE=https://repast.github.io/emews_next_gen_tutorial_tests
-IMAGES=$THIS/../site/images
+IMAGES=$THIS/../docs/images
 
 
 
