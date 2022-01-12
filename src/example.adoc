@@ -1,0 +1,38 @@
+== Example Page
+
+This is an example page.
+
+=== Code Listing
+
+[source,python,numbered]
+----
+# hello_world.py
+from mpi4py import MPI
+
+size = MPI.COMM_WORLD.Get_size()    <1>
+rank = MPI.COMM_WORLD.Get_rank()    <2>
+
+print('Hello, World! I am process {} of {}'.format(rank, size))    <3>
+----
+<1> Gets the world size, that is, the total number of process ranks.
+<2> Gets the rank of the process the code is running on.
+<3> Prints out the size and current rank.
+
+
+=== Images
+
+[#img-network-ghost,reftext='{figure-caption} {counter:refnum}']
+.Ghost Agents in a Shared Network
+image::shared_net_2.png[]
+
+<<img-network-ghost>> is a lovely figure.
+
+=== Links
+
+// Using property substitution, and opening in new window
+// window=_blank opens a new window every time, even when already open. Naming the window
+// seems to open if not open, but then go to that tab if it exists.
+Click to open {website}/code/emews_project/run_eqpy_workflow.sh#L1[`run_eqpy_workflow.sh`,window=run_eqpy_workflow,pts="noopener,nofollow"] in its own tab.
+
+See the networkx https://networkx.org/documentation/stable/reference/generated/networkx.generators.random_graphs.connected_watts_strogatz_graph.html[API Docs] for more details.
+

@@ -1,0 +1,13 @@
+= EMEWS Tutorial
+Version 1.0 Jan 12 2022
+:toc2:
+:icons: font
+:numbered:
+:website: https://github.com/jozik/emews_next_gen_tutorial_tests
+:xrefstyle: full
+:imagesdir: images
+:source-highlighter: pygments
+
+// Sections need line break between includes
+
+include::example.adoc[]
