@@ -29,10 +29,10 @@ image::shared_net_2.png[]
 
 === Links
 
-// Using property substitution, and opening in new window
 // window=_blank opens a new window every time, even when already open. Naming the window
 // seems to open if not open, but then go to that tab if it exists.
-Click to open {code_examples}/emews_project/swift/run_eqpy_workflow.sh/code/emews_project/run_eqpy_workflow.sh#L1[`run_eqpy_workflow.sh`,window=run_eqpy_workflow,pts="noopener,nofollow"] in its own tab.
+// link is permalink created via github
+Click to open https://github.com/jozik/emews_next_gen_tutorial_tests/blob/37676be0c8f93ecc346a005e4845ae368f466e46/code/emews_project/swift/run_eqpy_workflow.sh#L1[`run_eqpy_workflow.sh`,window=run_eqpy_workflow,pts="noopener,nofollow"] in its own tab.
 
 See the networkx https://networkx.org/documentation/stable/reference/generated/networkx.generators.random_graphs.connected_watts_strogatz_graph.html[API Docs] for more details.
 
