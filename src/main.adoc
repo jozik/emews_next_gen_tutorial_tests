@@ -3,7 +3,7 @@ Version 1.0 Jan 12 2022
 :toc2:
 :icons: font
 :numbered:
-:website: https://github.com/jozik/emews_next_gen_tutorial_tests
+:code_examples: https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/
 :xrefstyle: full
 :imagesdir: images
 :source-highlighter: pygments
