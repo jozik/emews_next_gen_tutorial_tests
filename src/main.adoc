@@ -1,6 +1,7 @@
 = EMEWS Tutorial
 Version 1.0 Jan 12 2022
 :toc2:
+:toclevels: 4
 :icons: font
 :numbered:
 :code_examples: https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/
@@ -8,6 +9,9 @@ Version 1.0 Jan 12 2022
 :imagesdir: images
 :source-highlighter: pygments
 
+
 // Sections need line break between includes
 
-include::example.adoc[]
+//include::example.adoc[]
+
+include::uc1.adoc[]

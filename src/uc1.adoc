@@ -1,0 +1,433 @@
+IMPORTANT: #Highlights# below have in source TODOs.
+
+== Simple Workflows with ABM
+
+
+For a first demonstration ABM use case, we begin with an example of a Swift/T
+parallel parameter sweep to explore the parameter space of a model.
+This tutorial uses the project structure and files created from the
+// TODO: Include link to project creator section.
+EMEWS #<<_sweep_template,sweep template>>#, 
+and that should be read before this.
+
+
+=== Tutorial goals:
+
+* Run an ABM simulation using Repast in Swift/T
+* Execute parallel parameters sweep of ABM simulation model 
+* Implement parallel evaluation of the simulation results using Swift/T and R
+
+=== Workflow Project Structure
+The full source code for this tutorial use case can be accessed https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc1[here,window=UC1,pts="noopener,nofollow"].
+This workflow project has the following directory structure and files:
+[source,text]
+----
+uc1
+├── R
+├── data
+├── etc
+│   └── emews_utils.sh
+├── output
+├── scripts
+│   ├── outputcombiner.sh
+│   ├── pbs_outputcombiner.sh
+│   └── repast.sh
+└── swift
+    ├── swiftrun.swift
+    ├── swiftrun_R.swift
+    └── workflow.sh
+----
+
+
+[NOTE]
+====
+For running this use case, an R enabled Swift/T installation is required.
+See the http://swift-lang.github.io/swift-t/guide.html#build_r[Swift/T R Installation Guide, window=_blank,pts="noopener,nofollow"] for installation details.
+====
+
+=== JZombie: Repast simulation
+
+The example model used here is an adaptation of the JZombies demonstration model distributed with Repast Simphony
+(https://repast.github.io/docs/RepastJavaGettingStarted.pdf[Nick Collier and Michael North 2015,window=_blank,pts="noopener,nofollow"]). This is only an example model. Any simulation
+or scientific application that can be
+launched from the command line can be adapted to this paradigm. The fictional Zombies
+versus Humans model is intended to illustrate that Swift/T and Repast Simphony are domain agnostic.
+
+==== Model details
+
+The model has two kinds of agents, Zombies and Humans. Zombies chase the Humans,
+seeking to infect them, while Humans attempt to evade Zombies. When a
+Zombie is close enough to a Human, that Human is infected and becomes a
+Zombie. During a typical run all the Humans will eventually become Zombies.
+These agents are located in a two dimensional continuous
+space where each agent has a x and y coordinate expressed as a floating point number
+(and in a corresponding discrete grid with integer coordinates).
+Movement is performed in the continuous space and translated into discrete grid coordinates.
+The grid is used for neighborhood queries (e.g., given a Zombie’s location, where are the nearest Humans).
+The model records the grid coordinate of each agent as well as a count of each agent type (Zombie or Human)
+at each time step and writes this data to two files.
+The initial number of Zombies and Humans is specified
+by model input parameters zombie count and human count, and the distance a Zombie or Human can move at each
+time step is specified by the parameters zombie step size and human step size.
+
+
+=== Calling a Repast Simphony simulation from Swift/T
+
+The full Swift/T script can be seen in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/swiftrun.swift#L1[swiftrun.swift,window=swiftrun.swift,pts="noopener,nofollow"].
+The scripts consists of three functions, one that calls the simulation:
+// Note: Using "java" for *.swift files
+
+
+
+[source#repast-app,java]
+----
+app (file out, file err) repast (file shfile, string param_line, string outputdir)
+{
+    "bash" shfile param_line emews_root outputdir @stdout=out @stderr=err;
+}
+----
+
+////
+Example highlighting code block:
+[source,ruby,highlight=2..5]
+----
+ORDERED_LIST_KEYWORDS = {
+  'loweralpha' => 'a',
+  'lowerroman' => 'i',
+  'upperalpha' => 'A',
+  'upperroman' => 'I',
+}
+----
+////
+
+and two utility functions: 
+[source,java]
+----
+app (void o) make_dir(string dirname) {
+  "mkdir" "-p" dirname;
+}
+
+app (void o) cp_message_center() {
+  "cp" (emews_root+"/complete_model/MessageCenter.log4j.properties") turbine_output;
+}
+----
+
+followed by the code that performs the sweep:
+
+[source,java]
+----
+cp_message_center() => {
+  file repast_sh = input(emews_root+"/scripts/repast.sh");
+  file upf = input(argv("f"));
+  string upf_lines[] = file_lines(upf);
+  foreach s,i in upf_lines {
+    string instance = "%s/instance_%i/" % (turbine_output, i+1);
+    make_dir(instance) => {
+      file out <instance+"out.txt">;
+      file err <instance+"err.txt">;
+      (out,err) = repast(repast_sh, s, instance);
+    }
+  }
+}
+----
+
+==== Calling the External Application
+
+In order for Swift/T to call our external application (i.e., the Zombies model),
+we define an
+// TODO: connect to external_execution section in Swift/T tutorial
+#<<_external_execution,app>># function.
+(The Zombies model is written in Java which is not easily called via Tcl and thus an app function is the best
+choice for integrating the model into a Swift script. See the Swift/T Tutorial for more details.) Repast Simphony provides command line compatible functionality
+via an InstanceRunner class, for passing a set of parameters to a model and performing a single headless
+run of the model using those parameters. Using the InstanceRunner main class, Repast Simphony models can be launched by other
+control applications such as a bash, PBS, or Swift scripts.  We have wrapped the command line invocation of
+Repast Simphony's InstanceRunner in a bash script https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/repast.sh#L1[repast.sh,window=repast.sh,pts="noopener,nofollow"]
+ to ease command line usage. Other
+non-Repast Simphony models or scientific applications with command line interfaces can be wrapped
+and run similarly.
+
+
+An annotated version of the Swift app function that calls Repast Simphony is shown <<repast-app,below>>.
+Prior to the actual function definition, the environment variable
+EMEWS_PROJECT_ROOT is accessed. This variable is used to define the project's top level
+directory, relative to which other directories (e.g., the directory
+that contains the Zombies model) are defined. The value of the TURBINE_OUTPUT
+environment variable is also retrieved. This specifies the path to
+a directory where Swift/T stores its log files and which we will use
+as a parent directory for the working directories of our individual runs.
+For more on these variables see the
+// TODO: Include link to project creator section.
+#<<swift_run_sweep_sh,discussion>># in the template tutorial.
+
+[source#repast-app-annot,java]
+.Repast Simphony App Function
+----
+app (file out, file err) repast (file shfile, string param_line, string outputdir)  <1>
+{
+    "bash" shfile param_line emews_root outputdir @stdout=out @stderr=err;  <2>
+}
+----
+<1> The app function definition begins. The function returns two files, one for standard output and one for standard error.
+The function arguments are those required to run https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/repast.sh#L1[repast.sh,window=repast.sh,pts="noopener,nofollow"], that is,
+the full path of the script, the parameters to run and the directory where the model run output should be written,
+and the model's input scenario directory.
+<2> The body of the function calls the bash interpreter passing it the name of the script file to execute and the other function
+arguments as well as the project root, that is, `emews_root` directory.
+`@stdout=out` and `@stderr=err` redirect stdout and stderr to the files out and err.
+It should be easy to see how any model or application that can be run from the command line
+and wrapped in a bash script can be called from Swift in this way.
+
+==== Utility Functions
+As mentioned above, the Swift script also contains two other utility app functions.
+
+[source#util-app-annot,java]
+.Utility Functions
+----
+app (void o) make_dir(string dirname) { <1>
+  "mkdir" "-p" dirname;
+}
+
+app (void o) cp_message_center() {  <2>
+  "cp" (emews_root+"/complete_model/MessageCenter.log4j.properties") turbine_output;
+}
+----
+<1> `make_dir` simply calls the Unix `mkdir` command to create a specified directory
+<2> `cp_message_center` calls the unix `cp` command to copy a Repast Simphony logging configuration file into
+the current working directory.
+
+Both of these are used by the parameter sweeping part of the script.
+
+==== Parameter Sweeping
+
+The remainder of the Swift script performs a simple parameter sweep using the `repast` app function to run the model.
+The parameters over which we want to sweep are defined in an external file, the so-called unrolled parameter file (UPF),
+where each row of the file contains a parameter set for an individual run. The script will read
+these parameter sets and launch as many parallel runs as possible for a given process configuration,
+passing each run an individual parameter set. The general script flow is as follows:
+
+* Read the the list of parameters into a `file` object.
+* Split the contents of the file into lines and store each as an array element.
+* Iterate over the array in parallel, launching a model run
+for each parameter set (i.e., array element) in the array, using
+the repast app function.
+
+[source#sweep-annot,java]
+.Parameters Sweep
+----
+cp_message_center() => {  <1>
+  file repast_sh = input(emews_root+"/scripts/repast.sh");  <2>
+  file upf = input(argv("f"));  <3>
+  string upf_lines[] = file_lines(upf);  <4>
+  foreach s,i in upf_lines {  <5>
+    string instance = "%s/instance_%i/" % (turbine_output, i+1);
+    make_dir(instance) => {  <6>
+      file out <instance+"out.txt">;
+      file err <instance+"err.txt">;  <7>
+      (out,err) = repast(repast_sh, s, instance);  <8>
+    }
+  }
+}
+----
+<1> Script execution begins by calling the `cp_message_center` app function.
+In the absence of any data flow dependency, Swift statements will execute in parallel whenever possible.
+However, in our case, the Repast Simphony logging configuration file must be in place before a Zombie model run begins.
+The `=>` symbol enforces the required sequential execution:
+the code on its left-hand side must complete execution before the code on the right-hand side begins execution.
+<2> Initialize a Swift/T `file` variable with the location of the `repast.sh` script file. Note that the Swift/T `input`
+function takes a path and returns a `file`.
+<3> The path of the parameter file that contains
+the parameter sets that will be passed as input to the Zombies model is defined, also as a `file` variable.
+This line uses
+the swift built-in function `argv` to parse command line arguments to the Swift script.
+As indicated earlier, each line of this `upf` file contains an individual parameter set, that is,
+the random_seed, zombie_count, human_count, zombie_step_size and human_step_size
+for a single model run. The parameter set is passed as a single string
+(e.g., random_seed = 14344, zombie_count = 10, ...)
+to the Zombies model where it is parsed into the individual parameters.
+<4> Read the `upf` file into an array of strings where each line of the file is an element in the array.
+The built-in Swift `file_lines` function (requires import of files module at the top of https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/swiftrun.swift#L3[swiftrun.swift,window=swiftrun.swift,pts="noopener,nofollow"])
+is used to read the upf file into this array of strings.
+<5> The `foreach` loop 
+executes its loop iterations in parallel. In the `foreach` loop, the variable `s` is set to an
+array element (that is, a single parameter set represented as a string) while the variable `i` is the index of that array element.
+<6> Create an instance directory into which each model run will write its output. The `make_dir` app function
+is used to create the directory. The `=>` keyword is again used to ensure that the directory is created before the actual model
+run that uses that directory is performed.
+<7> Create file objects into which the standard out and standard error streams are
+redirected by the <<repast-app-annot,repast>> function.
+<8> Lastly the `repast` app function that performs the Zombie model run is called with the required arguments.
+
+This is a common pattern in EMEWS. Some collection of parameters is parsed into an array in which each element
+is the set of parameters for an individual run. A foreach loop is then
+used to iterate over the array, lauching parallel model runs each with
+their own parameters. In this way the number of model runs that can be
+performed in parallel is limited only by hardware resources.
+
+////
+
+
+
+
+        
+
+
+<p>
+
+</p>
+
+<p>
+<b></b>
+        </p>
+
+        <h2> Results Analysis </h2>
+          <p>
+            In our initial script we have seen how to run multiple instances of the Zombies model in parallel, each with a different set of parameters.
+            Our next example builds on this by adding some post-run analysis that explores the effect of simulated step size on the final
+            number of humans. This analysis will be performed in R and executed within the Swift workflow.
+
+            The new scripts consists of the following steps:
+
+            <ol id="myol">
+              <li>Read the the list of a parameters into a `file` object.
+              <li>Split the contents of the file into an array where each line of
+                file is an array element.
+              <li>Iterate over the array in parallel, launching a model run
+                for each parameter set (i.e. array element) in the array, using
+                the repast app function.
+              <li>Get the final human count from each run using R, and add it to
+                an array.
+              <li>Also using R, determine the maximum human
+                counts.
+              <li>Get the parameters that produced those maximum human
+                counts.
+              <li>Write those parameters to a file.
+            </ol>
+          </p><p>
+
+            We present this in two parts. The first describes the changes to the `foreach` loop to gather the output and the
+            second describes how that output is analyzed to determine the "best" parameter combination.
+          </p>
+
+          <h3 id="gather_results"> Gathering the Results </h3>
+          <p>
+            This example assumes an existing parameter file in which zombie_step_size and human_step_size are varied.
+            For each run of the model, that is, for each combination of parameters, the model records a count of
+            each agent type at each time step in an output file. As before the script will iterate through the
+            file performing as many runs as possible in parallel. However, an additional step that reads each output file and
+            determines the parameter combination or combinations that resulted in the most humans surviving at the
+            final time step has been added.
+          </p><p>
+            The updated swift code is in <open-code code="uc1/swift/swiftrun_R.swift">swiftrun_R.swift</open-code>.
+
+            Here the repast call is now followed by the execution of an R script in line
+            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="46" to="46">47</highlight-code>.
+            This uses Swift/T's support for the R language. R code can be run using
+            Swift's `R` function. `R` takes two arguments, the R code to run,
+            and an additional R statement that generates the desired return value of the R
+            code as a string. The return statement is typically something like `"toString(res)"`
+            where R's `toString` function is passed a variable that contains what
+            you want to return from the R script. Our R script reads the CSV file produced by a model run into a data frame,
+            accesses the last row of that data frame, and then the value of the human_count column in that row is
+            assigned to the `res` variable.
+            This script itself (lines
+            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="6" to="9">7-10</highlight-code>)
+            is assigned to the `count_humans` string variable. The string contains a template character, "%s",
+            (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="7" to="7">8</highlight-code>)
+            that can be replaced with the actual directory in which the output file (counts.csv) is written.
+            Line
+            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="45" to="45">46</highlight-code>
+            performs this substitution with the directory for the current run, using the "%" format Swift operator.
+            The resulting R code string is evaluated in line
+            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="46" to="46">47</highlight-code>
+            using the Swift `R` function.
+            In this case, the `res` variable in the R script (line
+            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="8" to="8">9</highlight-code>)
+            contains the number of surviving humans. This string is then placed in the results array at the ith index.
+          </p><p>
+            <h3 id="finding_best"> Finding the Best Parameters</h3>
+            <p>
+              The final workflow steps are to determine which runs yielded the maximum
+              number of humans and write out the parameters for those runs. The core idea here is
+              that we find the indices of the elements in the
+              results array that contain the maximum human counts and use those indices
+              to retrieve the parameters from the parameters array.</p>
+              <p>
+                First Swift's `string_join` function (requiring importing the
+                 <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="3" to="3">string</highlight-code> module)
+                is used to join all the elements of the results array (i.e., all the final human counts)
+                into a comma separated string
+                (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="51" to="51">52</highlight-code>).
+                We then use
+              R to find the indices of the maximum values in the results array
+              by substituting the template variable in the R code template
+              contained in the string variable `find_max`
+              (lines <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="11" to="14">12-15</highlight-code>)
+              with this comma separated string
+              (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="52" to="52">53</highlight-code>)
+              to create the working R code. The R code is executed in line
+              line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="53" to="53">54</highlight-code>
+              using the `R` function. The R code returns a comma separated string
+              of numbers where each number is the index in the results array that contained
+              a maximum value. This string is split into a `max_idxs` array using Swift's `split`
+              function
+              (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="54" to="54">55</highlight-code>).
+              The `split` function takes two arguments, the string to split and the string
+              to split on, and returns an array of strings.
+            </p>
+            <p>
+            The foreach loop (lines
+            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="56" to="59">57-60</highlight-code>)
+            iterates through `max_idxs` array, converts the string representation of the number to an
+            integer, retrieves the corresponding parameter string from the `upf_lines` array, and
+            adds it to the `best_params` array.
+            Given that the value in `results`[i] (from which the max indices are derived) is produced from the parameter combination in
+            `upf_lines`[i],
+            the index of the maximum value or values in the `max_idxs` array is the index of the best parameter combination or combinations.
+            Note that we subtract one from `idx` because R indices start at 1 while Swift's start at 0.
+            The final step is to write the best parameters to a file as seen in lines
+            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="60" to="61">61-62</highlight-code>,
+            using Swift's `write` function.
+          </p>
+
+          <h2>Running the Swift Script</h2>
+          <p>
+          Swift scripts are typically launched using a shell script. This allows
+          you to export useful values as environment variables and to properly
+          configure the swift workflow to be run on HPC resources. If you use
+          the <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="EMEWS_templates">EMEWS templates</modal-data>
+          such a shell script will automatically be created for you. The shell script for running
+          our simple workflow can be see in
+          <open-code code="uc1/swift/workflow.sh">workflow.sh</open-code>.
+
+          The workflow.sh file assumes the canonical EMEWS directory structure
+          (see the EMEWS templates tutorial for more details) where
+          a so-called EMEWS project root directory contains other directories
+          such as a `swift` directory in which your swift scripts are
+          located. workflow.sh defines and exports EMEWS_PROJECT_ROOT in line
+          <highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="12" to="12">13</highlight-code>,
+          and you can see EMEWS_PROJECT_ROOT being used in line
+          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="4" to="4">5</highlight-code> of swiftrun.swift.
+        </p>
+        <p>
+
+          workflow.sh takes 1 required argument: an experiment id (e.g., experiment_1).
+          The experiment id is used to define a TURBINE_OUTPUT directory
+          (line <highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="17" to="17">18</highlight-code>)
+          into which per workflow output can be written. Swift will also write its own
+          log files into this directory as the workflow executes. workflow.sh
+          also defines additional environment variables that are required for
+          cluster execution such as `WALLTIME`, `PPN`, `MACHINE`
+          and so forth. The final line of workflow.sh (line
+          <highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="66" to="66">67</highlight-code>)
+          runs the swift script by
+          calling `swift-t` with the script as the argument followed by any
+          arguments to the swift script itself (i.e. "-f="). The `-n` argument
+          specifies the total number of processes on which to run. Additional
+          help for the arguments to `swift-t` can be seen by running
+          `swift-t -h`. More information on shell script used to
+          launch the Swift/T workflow can be seen in the description of the
+          <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="swift_run_sweep_sh"><tt id="myfn">swift_run_sweep.sh`</modal-data>
+          section of the templating tutorial.
+        </p>
+        ////

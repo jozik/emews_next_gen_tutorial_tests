@@ -4,26 +4,24 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.10">
+<meta name="generator" content="Asciidoctor 2.0.17">
 <meta name="author" content="Version 1.0 Jan 12 2022">
 <title>EMEWS Tutorial</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
-/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
-/* Uncomment @import statement to use as custom stylesheet */
-/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
-article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}
-audio,video{display:inline-block}
-audio:not([controls]){display:none;height:0}
-html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
 a{background:none}
 a:focus{outline:thin dotted}
 a:active,a:hover{outline:0}
 h1{font-size:2em;margin:.67em 0}
-abbr[title]{border-bottom:1px dotted}
 b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
 dfn{font-style:italic}
-hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+hr{height:0}
 mark{background:#ff0;color:#000}
 code,kbd,pre,samp{font-family:monospace;font-size:1em}
 pre{white-space:pre-wrap}
@@ -35,20 +33,22 @@ sub{bottom:-.25em}
 img{border:0}
 svg:not(:root){overflow:hidden}
 figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
 fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
 legend{border:0;padding:0}
 button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
 button,input{line-height:normal}
 button,select{text-transform:none}
-button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
 button[disabled],html input[disabled]{cursor:default}
-input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type=checkbox],input[type=radio]{padding:0}
 button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
 textarea{overflow:auto;vertical-align:top}
 table{border-collapse:collapse;border-spacing:0}
-*,*::before,*::after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+*,::before,::after{box-sizing:border-box}
 html,body{font-size:100%}
-body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
 a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
@@ -63,14 +63,12 @@ img{-ms-interpolation-mode:bicubic}
 img,object,svg{display:inline-block;vertical-align:middle}
 textarea{height:auto;min-height:50px}
 select{width:100%}
-.center{margin-left:auto;margin-right:auto}
-.stretch{width:100%}
 .subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
-div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
 a{color:#2156a5;text-decoration:underline;line-height:inherit}
 a:hover,a:focus{color:#1d4b8f}
 a img{border:0}
-p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
 p aside{font-size:.875em;line-height:1.35;font-style:italic}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
 h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
@@ -79,14 +77,14 @@ h2{font-size:1.6875em}
 h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
 h4,h5{font-size:1.125em}
 h6{font-size:1em}
-hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
 em,i{font-style:italic;line-height:inherit}
 strong,b{font-weight:bold;line-height:inherit}
 small{font-size:60%;line-height:inherit}
 code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
-ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
 ul,ol{margin-left:1.5em}
-ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
 ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
 ul.square{list-style-type:square}
 ul.circle{list-style-type:circle}
@@ -94,31 +92,29 @@ ul.disc{list-style-type:disc}
 ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
 dl dt{margin-bottom:.3125em;font-weight:bold}
 dl dd{margin-bottom:1.25em}
-abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
-abbr{text-transform:none}
 blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
-blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
-blockquote cite::before{content:"\2014 \0020"}
-blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
 blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
 @media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
 h1{font-size:2.75em}
 h2{font-size:2.3125em}
 h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
 h4{font-size:1.4375em}}
-table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
 table thead,table tfoot{background:#f7f8f7}
 table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
 table tr.even,table tr.alt{background:#f8f8f7}
-table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
 h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
 .clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
 .clearfix::after,.float-group::after{clear:both}
-:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
-:not(pre)>code.nobreak{word-wrap:normal}
-:not(pre)>code.nowrap{white-space:nowrap}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
 pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
 pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
 pre>code{display:block}
@@ -126,7 +122,7 @@ pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
 em em{font-style:normal}
 strong strong{font-weight:400}
 .keyseq{color:rgba(51,51,51,.8)}
-kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
 .keyseq kbd:first-child{margin-left:0}
 .keyseq kbd:last-child{margin-right:0}
 .menuseq,.menuref{color:#000}
@@ -138,7 +134,7 @@ b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
 b.button::before{content:"[";padding:0 3px 0 2px}
 b.button::after{content:"]";padding:0 2px 0 3px}
 p a>code:hover{color:rgba(0,0,0,.9)}
-#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
 #header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
 #header::after,#content::after,#footnotes::after,#footer::after{clear:both}
 #content{margin-top:1.25em}
@@ -146,7 +142,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
 #header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
 #header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
-#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
 #header .details span:first-child{margin-left:-.125em}
 #header .details span.email a{color:rgba(0,0,0,.85)}
 #header .details br{display:none}
@@ -180,11 +176,11 @@ body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9
 #toc.toc2>ul{font-size:.95em}
 #toc.toc2 ul ul{padding-left:1.25em}
 body.toc2.toc-right{padding-left:0;padding-right:20em}}
-#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
 #content #toc>:first-child{margin-top:0}
 #content #toc>:last-child{margin-bottom:0}
-#footer{max-width:100%;background:rgba(0,0,0,.8);padding:1.25em}
-#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
 #content{margin-bottom:.625em}
 .sect1{padding-bottom:.625em}
 @media screen and (min-width:768px){#content{margin-bottom:1.25em}
@@ -197,29 +193,33 @@ body.toc2.toc-right{padding-left:0;padding-right:20em}}
 #content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
 #content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
 details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
-details>summary:first-of-type{cursor:pointer;display:list-item;outline:none;margin-bottom:.75em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
 .admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
 table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
-.paragraph.lead>p,#preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
-table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:inherit}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
 .admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
 .admonitionblock>table td.icon{text-align:center;width:80px}
 .admonitionblock>table td.icon img{max-width:none}
 .admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
-.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
-.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
 .exampleblock>.content>:first-child{margin-top:0}
 .exampleblock>.content>:last-child{margin-bottom:0}
-.sidebarblock{border-style:solid;border-width:1px;border-color:#dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
 .sidebarblock>:first-child{margin-top:0}
 .sidebarblock>:last-child{margin-bottom:0}
 .sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
 .exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
-.literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;overflow-x:auto;padding:1em;font-size:.8125em}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
-.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
 .literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
 .listingblock>.content{position:relative}
 .listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
@@ -227,7 +227,7 @@ table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font
 .listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
 .listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
 .listingblock pre.highlightjs{padding:0}
-.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
 .listingblock pre.prettyprint{border-width:0}
 .prettyprint{background:#f7f7f8}
 pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
@@ -237,9 +237,8 @@ pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
 table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
 table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
 table.linenotable td.code{padding-left:.75em}
-table.linenotable td.linenos{border-right:1px solid currentColor;opacity:.35;padding-right:.5em}
-pre.pygments .lineno{border-right:1px solid currentColor;opacity:.35;display:inline-block;margin-right:.75em}
-pre.pygments .lineno::before{content:"";margin-right:-.125em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
 .quoteblock{margin:0 1em 1.25em 1.5em;display:table}
 .quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
 .quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
@@ -248,7 +247,7 @@ pre.pygments .lineno::before{content:"";margin-right:-.125em}
 .quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
 .quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
 .verseblock{margin:0 1em 1.25em}
-.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
 .verseblock pre strong{font-weight:400}
 .verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
 .quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
@@ -261,23 +260,22 @@ pre.pygments .lineno::before{content:"";margin-right:-.125em}
 .quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
 .quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
 .quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
-.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
-table.tableblock{max-width:100%;border-collapse:separate}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
 p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
 td.tableblock>.content>:last-child{margin-bottom:-1.25em}
-td.tableblock>.content>:last-child.sidebarblock{margin-bottom:0}
 table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
-table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
-table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
-table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
-table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
-table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
-table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
-table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
 table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
 table.frame-sides{border-width:0 1px}
-table.frame-topbot,table.frame-ends{border-width:1px 0}
-table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
 th.halign-left,td.halign-left{text-align:left}
 th.halign-right,td.halign-right{text-align:right}
 th.halign-center,td.halign-center{text-align:center}
@@ -285,7 +283,7 @@ th.valign-top,td.valign-top{vertical-align:top}
 th.valign-bottom,td.valign-bottom{vertical-align:bottom}
 th.valign-middle,td.valign-middle{vertical-align:middle}
 table thead th,table tfoot th{font-weight:bold}
-tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th{background:#f7f8f7}
 tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
 p.tableblock>code:only-child{background:none;padding:0}
 p.tableblock{font-size:1em}
@@ -293,14 +291,15 @@ ol{margin-left:1.75em}
 ul li ol{margin-left:1.5em}
 dl dd{margin-left:1.125em}
 dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
-ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
 ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
 ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
 ul.unstyled,ol.unstyled{margin-left:0}
-ul.checklist{margin-left:.625em}
-ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
-ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
-ul.inline{display:-ms-flexbox;display:-webkit-box;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
 ul.inline>li{margin-left:1.25em}
 .unstyled dl dt{font-weight:400;font-style:normal}
 ol.arabic{list-style-type:decimal}
@@ -314,11 +313,12 @@ ol.lowergreek{list-style-type:lower-greek}
 .hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
 td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
 td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
 .literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
 .colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
 .colist td:not([class]):first-child img{max-width:none}
 .colist td:not([class]):last-child{padding:.25em 0}
-.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
 .imageblock.left{margin:.25em .625em 1.25em 0}
 .imageblock.right{margin:.25em 0 1.25em .625em}
 .imageblock>.title{margin-bottom:0}
@@ -338,8 +338,6 @@ sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
 #footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
 #footnotes .footnote:last-of-type{margin-bottom:0}
 #content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
-.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
-.gist .file-data>table td.line-data{width:99%}
 div.unbreakable{page-break-inside:avoid}
 .big{font-size:larger}
 .small{font-size:smaller}
@@ -386,7 +384,7 @@ a span.icon>.fa{cursor:inherit}
 .admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
 .admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
 .admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
-.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
 .conum[data-value] *{color:#fff!important}
 .conum[data-value]+b{display:none}
 .conum[data-value]::after{content:attr(data-value)}
@@ -394,25 +392,27 @@ pre .conum[data-value]{position:relative;top:-.125em}
 b.conum *{color:inherit!important}
 .conum:not([data-value]):empty{display:none}
 dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
-h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
 p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
-p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
 p{margin-bottom:1.25rem}
 .sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
-.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
 .print-only{display:none!important}
 @page{margin:1.25cm .75cm}
-@media print{*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
 html{font-size:80%}
 a{color:inherit!important;text-decoration:underline!important}
 a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
 a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
 abbr[title]::after{content:" (" attr(title) ")"}
 pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
 thead{display:table-header-group}
 svg{max-width:100%}
 p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
 h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
 #toc,.sidebarblock,.exampleblock>.content{background:none!important}
 #toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
 body.book #header{text-align:center}
@@ -429,7 +429,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .print-only{display:block!important}
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
-@media print,amzn-kf8{#header>h1:first-child{margin-top:1.25rem}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
 .sect1{padding:0!important}
 .sect1+.sect1{border:0}
 #footer{background:none}
@@ -437,105 +437,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body class="article toc2 toc-left">
-<div id="header">
-<h1>EMEWS Tutorial</h1>
-<div class="details">
-<span id="author" class="author">Version 1.0 Jan 12 2022</span><br>
-</div>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_example_page">1. Example Page</a>
-<ul class="sectlevel2">
-<li><a href="#_code_listing">1.1. Code Listing</a></li>
-<li><a href="#_images">1.2. Images</a></li>
-<li><a href="#_links">1.3. Links</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<div id="content">
-<div class="sect1">
-<h2 id="_example_page">1. Example Page</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This is an example page.</p>
-</div>
-<div class="sect2">
-<h3 id="_code_listing">1.1. Code Listing</h3>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span></pre></div></td><td class="code"><pre><span></span><span class="tok-c1"># hello_world.py</span>
-<span class="tok-kn">from</span> <span class="tok-nn">mpi4py</span> <span class="tok-kn">import</span> <span class="tok-n">MPI</span>
-
-<span class="tok-n">size</span> <span class="tok-o">=</span> <span class="tok-n">MPI</span><span class="tok-o">.</span><span class="tok-n">COMM_WORLD</span><span class="tok-o">.</span><span class="tok-n">Get_size</span><span class="tok-p">()</span>    <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-n">rank</span> <span class="tok-o">=</span> <span class="tok-n">MPI</span><span class="tok-o">.</span><span class="tok-n">COMM_WORLD</span><span class="tok-o">.</span><span class="tok-n">Get_rank</span><span class="tok-p">()</span>    <i class="conum" data-value="2"></i><b>(2)</b>
-
-<span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;Hello, World! I am process </span><span class="tok-si">{}</span><span class="tok-s1"> of </span><span class="tok-si">{}</span><span class="tok-s1">&#39;</span><span class="tok-o">.</span><span class="tok-n">format</span><span class="tok-p">(</span><span class="tok-n">rank</span><span class="tok-p">,</span> <span class="tok-n">size</span><span class="tok-p">))</span>    <i class="conum" data-value="3"></i><b>(3)</b>
-</pre></td></tr></table></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Gets the world size, that is, the total number of process ranks.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Gets the rank of the process the code is running on.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Prints out the size and current rank.</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_images">1.2. Images</h3>
-<div id="img-network-ghost" class="imageblock">
-<div class="content">
-<img src="images/shared_net_2.png" alt="shared net 2">
-</div>
-<div class="title">Figure 1. Ghost Agents in a Shared Network</div>
-</div>
-<div class="paragraph">
-<p><a href="#img-network-ghost">Figure 1</a> is a lovely figure.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_links">1.3. Links</h3>
-<div class="paragraph">
-<p>Click to open <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/37676be0c8f93ecc346a005e4845ae368f466e46/code/emews_project/swift/run_eqpy_workflow.sh#L1" target="run_eqpy_workflow"><code>run_eqpy_workflow.sh</code></a> in its own tab.</p>
-</div>
-<div class="paragraph">
-<p>See the networkx <a href="https://networkx.org/documentation/stable/reference/generated/networkx.generators.random_graphs.connected_watts_strogatz_graph.html">API Docs</a> for more details.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="footer">
-<div id="footer-text">
-Last updated 2022-01-12 17:29:59 -0500
-</div>
-</div>
 <style>
-pre { line-height: 125%; }
-td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
-span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
-td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
-span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
 pre.pygments .hll { background-color: #ffffcc }
 pre.pygments { background: #f8f8f8; }
 pre.pygments .tok-c { color: #408080; font-style: italic } /* Comment */
@@ -606,5 +508,402 @@ pre.pygments .tok-vi { color: #19177C } /* Name.Variable.Instance */
 pre.pygments .tok-vm { color: #19177C } /* Name.Variable.Magic */
 pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </style>
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>EMEWS Tutorial</h1>
+<div class="details">
+<span id="author" class="author">Version 1.0 Jan 12 2022</span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_simple_workflows_with_abm">1. Simple Workflows with ABM</a>
+<ul class="sectlevel2">
+<li><a href="#_tutorial_goals">1.1. Tutorial goals:</a></li>
+<li><a href="#_workflow_project_structure">1.2. Workflow Project Structure</a></li>
+<li><a href="#_jzombie_repast_simulation">1.3. JZombie: Repast simulation</a>
+<ul class="sectlevel3">
+<li><a href="#_model_details">1.3.1. Model details</a></li>
+</ul>
+</li>
+<li><a href="#_calling_a_repast_simphony_simulation_from_swiftt">1.4. Calling a Repast Simphony simulation from Swift/T</a>
+<ul class="sectlevel3">
+<li><a href="#_calling_the_external_application">1.4.1. Calling the External Application</a></li>
+<li><a href="#_utility_functions">1.4.2. Utility Functions</a></li>
+<li><a href="#_parameter_sweeping">1.4.3. Parameter Sweeping</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<mark>Highlights</mark> below have in source TODOs.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_simple_workflows_with_abm">1. Simple Workflows with ABM</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For a first demonstration ABM use case, we begin with an example of a Swift/T
+parallel parameter sweep to explore the parameter space of a model.
+This tutorial uses the project structure and files created from the
+EMEWS <mark><a href="#_sweep_template">sweep template</a></mark>,
+and that should be read before this.</p>
+</div>
+<div class="sect2">
+<h3 id="_tutorial_goals">1.1. Tutorial goals:</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Run an ABM simulation using Repast in Swift/T</p>
+</li>
+<li>
+<p>Execute parallel parameters sweep of ABM simulation model</p>
+</li>
+<li>
+<p>Implement parallel evaluation of the simulation results using Swift/T and R</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_workflow_project_structure">1.2. Workflow Project Structure</h3>
+<div class="paragraph">
+<p>The full source code for this tutorial use case can be accessed <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc1" target="UC1">here</a>.
+This workflow project has the following directory structure and files:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="text"><span></span>uc1
+├── R
+├── data
+├── etc
+│   └── emews_utils.sh
+├── output
+├── scripts
+│   ├── outputcombiner.sh
+│   ├── pbs_outputcombiner.sh
+│   └── repast.sh
+└── swift
+    ├── swiftrun.swift
+    ├── swiftrun_R.swift
+    └── workflow.sh</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For running this use case, an R enabled Swift/T installation is required.
+See the <a href="http://swift-lang.github.io/swift-t/guide.html#build_r" target="_blank" rel="noopener">Swift/T R Installation Guide</a> for installation details.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_jzombie_repast_simulation">1.3. JZombie: Repast simulation</h3>
+<div class="paragraph">
+<p>The example model used here is an adaptation of the JZombies demonstration model distributed with Repast Simphony
+(<a href="https://repast.github.io/docs/RepastJavaGettingStarted.pdf" target="_blank" rel="noopener">Nick Collier and Michael North 2015</a>). This is only an example model. Any simulation
+or scientific application that can be
+launched from the command line can be adapted to this paradigm. The fictional Zombies
+versus Humans model is intended to illustrate that Swift/T and Repast Simphony are domain agnostic.</p>
+</div>
+<div class="sect3">
+<h4 id="_model_details">1.3.1. Model details</h4>
+<div class="paragraph">
+<p>The model has two kinds of agents, Zombies and Humans. Zombies chase the Humans,
+seeking to infect them, while Humans attempt to evade Zombies. When a
+Zombie is close enough to a Human, that Human is infected and becomes a
+Zombie. During a typical run all the Humans will eventually become Zombies.
+These agents are located in a two dimensional continuous
+space where each agent has a x and y coordinate expressed as a floating point number
+(and in a corresponding discrete grid with integer coordinates).
+Movement is performed in the continuous space and translated into discrete grid coordinates.
+The grid is used for neighborhood queries (e.g., given a Zombie’s location, where are the nearest Humans).
+The model records the grid coordinate of each agent as well as a count of each agent type (Zombie or Human)
+at each time step and writes this data to two files.
+The initial number of Zombies and Humans is specified
+by model input parameters zombie count and human count, and the distance a Zombie or Human can move at each
+time step is specified by the parameters zombie step size and human step size.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_calling_a_repast_simphony_simulation_from_swiftt">1.4. Calling a Repast Simphony simulation from Swift/T</h3>
+<div class="paragraph">
+<p>The full Swift/T script can be seen in <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/swiftrun.swift#L1" target="swiftrun.swift">swiftrun.swift</a>.
+The scripts consists of three functions, one that calls the simulation:</p>
+</div>
+<div id="repast-app" class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">app</span> <span class="tok-p">(</span><span class="tok-n">file</span> <span class="tok-n">out</span><span class="tok-p">,</span> <span class="tok-n">file</span> <span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-n">repast</span> <span class="tok-p">(</span><span class="tok-n">file</span> <span class="tok-n">shfile</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">param_line</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">outputdir</span><span class="tok-p">)</span>
+<span class="tok-p">{</span>
+    <span class="tok-s">&quot;bash&quot;</span> <span class="tok-n">shfile</span> <span class="tok-n">param_line</span> <span class="tok-n">emews_root</span> <span class="tok-n">outputdir</span> <span class="tok-nd">@stdout</span><span class="tok-o">=</span><span class="tok-n">out</span> <span class="tok-nd">@stderr</span><span class="tok-o">=</span><span class="tok-n">err</span><span class="tok-p">;</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and two utility functions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">app</span> <span class="tok-p">(</span><span class="tok-kt">void</span> <span class="tok-n">o</span><span class="tok-p">)</span> <span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">string</span> <span class="tok-n">dirname</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+  <span class="tok-s">&quot;mkdir&quot;</span> <span class="tok-s">&quot;-p&quot;</span> <span class="tok-n">dirname</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
+
+<span class="tok-n">app</span> <span class="tok-p">(</span><span class="tok-kt">void</span> <span class="tok-n">o</span><span class="tok-p">)</span> <span class="tok-n">cp_message_center</span><span class="tok-p">()</span> <span class="tok-p">{</span>
+  <span class="tok-s">&quot;cp&quot;</span> <span class="tok-p">(</span><span class="tok-n">emews_root</span><span class="tok-o">+</span><span class="tok-s">&quot;/complete_model/MessageCenter.log4j.properties&quot;</span><span class="tok-p">)</span> <span class="tok-n">turbine_output</span><span class="tok-p">;</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>followed by the code that performs the sweep:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">cp_message_center</span><span class="tok-p">()</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+  <span class="tok-n">file</span> <span class="tok-n">repast_sh</span> <span class="tok-o">=</span> <span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">emews_root</span><span class="tok-o">+</span><span class="tok-s">&quot;/scripts/repast.sh&quot;</span><span class="tok-p">);</span>
+  <span class="tok-n">file</span> <span class="tok-n">upf</span> <span class="tok-o">=</span> <span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">(</span><span class="tok-s">&quot;f&quot;</span><span class="tok-p">));</span>
+  <span class="tok-n">string</span> <span class="tok-n">upf_lines</span><span class="tok-o">[]</span> <span class="tok-o">=</span> <span class="tok-n">file_lines</span><span class="tok-p">(</span><span class="tok-n">upf</span><span class="tok-p">);</span>
+  <span class="tok-n">foreach</span> <span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-n">i</span> <span class="tok-n">in</span> <span class="tok-n">upf_lines</span> <span class="tok-p">{</span>
+    <span class="tok-n">string</span> <span class="tok-n">instance</span> <span class="tok-o">=</span> <span class="tok-s">&quot;%s/instance_%i/&quot;</span> <span class="tok-o">%</span> <span class="tok-p">(</span><span class="tok-n">turbine_output</span><span class="tok-p">,</span> <span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">);</span>
+    <span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">instance</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+      <span class="tok-n">file</span> <span class="tok-n">out</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;out.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+      <span class="tok-n">file</span> <span class="tok-n">err</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;err.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+      <span class="tok-p">(</span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">repast</span><span class="tok-p">(</span><span class="tok-n">repast_sh</span><span class="tok-p">,</span> <span class="tok-n">s</span><span class="tok-p">,</span> <span class="tok-n">instance</span><span class="tok-p">);</span>
+    <span class="tok-p">}</span>
+  <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_calling_the_external_application">1.4.1. Calling the External Application</h4>
+<div class="paragraph">
+<p>In order for Swift/T to call our external application (i.e., the Zombies model),
+we define an
+<mark><a href="#_external_execution">app</a></mark> function.
+(The Zombies model is written in Java which is not easily called via Tcl and thus an app function is the best
+choice for integrating the model into a Swift script. See the Swift/T Tutorial for more details.) Repast Simphony provides command line compatible functionality
+via an InstanceRunner class, for passing a set of parameters to a model and performing a single headless
+run of the model using those parameters. Using the InstanceRunner main class, Repast Simphony models can be launched by other
+control applications such as a bash, PBS, or Swift scripts.  We have wrapped the command line invocation of
+Repast Simphony&#8217;s InstanceRunner in a bash script <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/repast.sh#L1" target="repast.sh">repast.sh</a>
+ to ease command line usage. Other
+non-Repast Simphony models or scientific applications with command line interfaces can be wrapped
+and run similarly.</p>
+</div>
+<div class="paragraph">
+<p>An annotated version of the Swift app function that calls Repast Simphony is shown <a href="#repast-app">below</a>.
+Prior to the actual function definition, the environment variable
+EMEWS_PROJECT_ROOT is accessed. This variable is used to define the project&#8217;s top level
+directory, relative to which other directories (e.g., the directory
+that contains the Zombies model) are defined. The value of the TURBINE_OUTPUT
+environment variable is also retrieved. This specifies the path to
+a directory where Swift/T stores its log files and which we will use
+as a parent directory for the working directories of our individual runs.
+For more on these variables see the
+<mark><a href="#swift_run_sweep_sh">discussion</a></mark> in the template tutorial.</p>
+</div>
+<div id="repast-app-annot" class="listingblock">
+<div class="title">Repast Simphony App Function</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">app</span> <span class="tok-p">(</span><span class="tok-n">file</span> <span class="tok-n">out</span><span class="tok-p">,</span> <span class="tok-n">file</span> <span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-n">repast</span> <span class="tok-p">(</span><span class="tok-n">file</span> <span class="tok-n">shfile</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">param_line</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">outputdir</span><span class="tok-p">)</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-p">{</span>
+    <span class="tok-s">&quot;bash&quot;</span> <span class="tok-n">shfile</span> <span class="tok-n">param_line</span> <span class="tok-n">emews_root</span> <span class="tok-n">outputdir</span> <span class="tok-nd">@stdout</span><span class="tok-o">=</span><span class="tok-n">out</span> <span class="tok-nd">@stderr</span><span class="tok-o">=</span><span class="tok-n">err</span><span class="tok-p">;</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The app function definition begins. The function returns two files, one for standard output and one for standard error.
+The function arguments are those required to run <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/repast.sh#L1" target="repast.sh">repast.sh</a>, that is,
+the full path of the script, the parameters to run and the directory where the model run output should be written,
+and the model&#8217;s input scenario directory.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The body of the function calls the bash interpreter passing it the name of the script file to execute and the other function
+arguments as well as the project root, that is, <code>emews_root</code> directory.
+<code>@stdout=out</code> and <code>@stderr=err</code> redirect stdout and stderr to the files out and err.
+It should be easy to see how any model or application that can be run from the command line
+and wrapped in a bash script can be called from Swift in this way.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_utility_functions">1.4.2. Utility Functions</h4>
+<div class="paragraph">
+<p>As mentioned above, the Swift script also contains two other utility app functions.</p>
+</div>
+<div id="util-app-annot" class="listingblock">
+<div class="title">Utility Functions</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">app</span> <span class="tok-p">(</span><span class="tok-kt">void</span> <span class="tok-n">o</span><span class="tok-p">)</span> <span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">string</span> <span class="tok-n">dirname</span><span class="tok-p">)</span> <span class="tok-p">{</span> <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="tok-s">&quot;mkdir&quot;</span> <span class="tok-s">&quot;-p&quot;</span> <span class="tok-n">dirname</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
+
+<span class="tok-n">app</span> <span class="tok-p">(</span><span class="tok-kt">void</span> <span class="tok-n">o</span><span class="tok-p">)</span> <span class="tok-n">cp_message_center</span><span class="tok-p">()</span> <span class="tok-p">{</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+  <span class="tok-s">&quot;cp&quot;</span> <span class="tok-p">(</span><span class="tok-n">emews_root</span><span class="tok-o">+</span><span class="tok-s">&quot;/complete_model/MessageCenter.log4j.properties&quot;</span><span class="tok-p">)</span> <span class="tok-n">turbine_output</span><span class="tok-p">;</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>make_dir</code> simply calls the Unix <code>mkdir</code> command to create a specified directory</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>cp_message_center</code> calls the unix <code>cp</code> command to copy a Repast Simphony logging configuration file into
+the current working directory.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Both of these are used by the parameter sweeping part of the script.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_parameter_sweeping">1.4.3. Parameter Sweeping</h4>
+<div class="paragraph">
+<p>The remainder of the Swift script performs a simple parameter sweep using the <code>repast</code> app function to run the model.
+The parameters over which we want to sweep are defined in an external file, the so-called unrolled parameter file (UPF),
+where each row of the file contains a parameter set for an individual run. The script will read
+these parameter sets and launch as many parallel runs as possible for a given process configuration,
+passing each run an individual parameter set. The general script flow is as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Read the the list of parameters into a <code>file</code> object.</p>
+</li>
+<li>
+<p>Split the contents of the file into lines and store each as an array element.</p>
+</li>
+<li>
+<p>Iterate over the array in parallel, launching a model run
+for each parameter set (i.e., array element) in the array, using
+the repast app function.</p>
+</li>
+</ul>
+</div>
+<div id="sweep-annot" class="listingblock">
+<div class="title">Parameters Sweep</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">cp_message_center</span><span class="tok-p">()</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="tok-n">file</span> <span class="tok-n">repast_sh</span> <span class="tok-o">=</span> <span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">emews_root</span><span class="tok-o">+</span><span class="tok-s">&quot;/scripts/repast.sh&quot;</span><span class="tok-p">);</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+  <span class="tok-n">file</span> <span class="tok-n">upf</span> <span class="tok-o">=</span> <span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">(</span><span class="tok-s">&quot;f&quot;</span><span class="tok-p">));</span>  <i class="conum" data-value="3"></i><b>(3)</b>
+  <span class="tok-n">string</span> <span class="tok-n">upf_lines</span><span class="tok-o">[]</span> <span class="tok-o">=</span> <span class="tok-n">file_lines</span><span class="tok-p">(</span><span class="tok-n">upf</span><span class="tok-p">);</span>  <i class="conum" data-value="4"></i><b>(4)</b>
+  <span class="tok-n">foreach</span> <span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-n">i</span> <span class="tok-n">in</span> <span class="tok-n">upf_lines</span> <span class="tok-p">{</span>  <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="tok-n">string</span> <span class="tok-n">instance</span> <span class="tok-o">=</span> <span class="tok-s">&quot;%s/instance_%i/&quot;</span> <span class="tok-o">%</span> <span class="tok-p">(</span><span class="tok-n">turbine_output</span><span class="tok-p">,</span> <span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">);</span>
+    <span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">instance</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>  <i class="conum" data-value="6"></i><b>(6)</b>
+      <span class="tok-n">file</span> <span class="tok-n">out</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;out.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+      <span class="tok-n">file</span> <span class="tok-n">err</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;err.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>  <i class="conum" data-value="7"></i><b>(7)</b>
+      <span class="tok-p">(</span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">repast</span><span class="tok-p">(</span><span class="tok-n">repast_sh</span><span class="tok-p">,</span> <span class="tok-n">s</span><span class="tok-p">,</span> <span class="tok-n">instance</span><span class="tok-p">);</span>  <i class="conum" data-value="8"></i><b>(8)</b>
+    <span class="tok-p">}</span>
+  <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Script execution begins by calling the <code>cp_message_center</code> app function.
+In the absence of any data flow dependency, Swift statements will execute in parallel whenever possible.
+However, in our case, the Repast Simphony logging configuration file must be in place before a Zombie model run begins.
+The <code>&#8658;</code> symbol enforces the required sequential execution:
+the code on its left-hand side must complete execution before the code on the right-hand side begins execution.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Initialize a Swift/T <code>file</code> variable with the location of the <code>repast.sh</code> script file. Note that the Swift/T <code>input</code>
+function takes a path and returns a <code>file</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The path of the parameter file that contains
+the parameter sets that will be passed as input to the Zombies model is defined, also as a <code>file</code> variable.
+This line uses
+the swift built-in function <code>argv</code> to parse command line arguments to the Swift script.
+As indicated earlier, each line of this <code>upf</code> file contains an individual parameter set, that is,
+the random_seed, zombie_count, human_count, zombie_step_size and human_step_size
+for a single model run. The parameter set is passed as a single string
+(e.g., random_seed = 14344, zombie_count = 10, &#8230;&#8203;)
+to the Zombies model where it is parsed into the individual parameters.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Read the <code>upf</code> file into an array of strings where each line of the file is an element in the array.
+The built-in Swift <code>file_lines</code> function (requires import of files module at the top of <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/swiftrun.swift#L3" target="swiftrun.swift">swiftrun.swift</a>)
+is used to read the upf file into this array of strings.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The <code>foreach</code> loop
+executes its loop iterations in parallel. In the <code>foreach</code> loop, the variable <code>s</code> is set to an
+array element (that is, a single parameter set represented as a string) while the variable <code>i</code> is the index of that array element.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Create an instance directory into which each model run will write its output. The <code>make_dir</code> app function
+is used to create the directory. The <code>&#8658;</code> keyword is again used to ensure that the directory is created before the actual model
+run that uses that directory is performed.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Create file objects into which the standard out and standard error streams are
+redirected by the <a href="#repast-app-annot">repast</a> function.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Lastly the <code>repast</code> app function that performs the Zombie model run is called with the required arguments.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This is a common pattern in EMEWS. Some collection of parameters is parsed into an array in which each element
+is the set of parameters for an individual run. A foreach loop is then
+used to iterate over the array, lauching parallel model runs each with
+their own parameters. In this way the number of model runs that can be
+performed in parallel is limited only by hardware resources.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2022-01-16 14:43:09 -0600
+</div>
+</div>
 </body>
 </html>
