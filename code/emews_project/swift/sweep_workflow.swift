@@ -7,7 +7,7 @@ import emews;
 string emews_root = getenv("EMEWS_PROJECT_ROOT");
 string turbine_output = getenv("TURBINE_OUTPUT");
 
-file model_sh = input(emews_root+"/scripts/run_my_model.sh");
+file model_sh = input(emews_root+"/scripts/run_my_model_sweep_workflow.sh");
 file upf = input(argv("f"));
 
 // app function used to run the model

@@ -14,7 +14,7 @@ set -eu
 # !!! IF YOU CHANGE THE NUMBER OF ARGUMENTS PASSED TO THIS SCRIPT, YOU MUST
 # CHANGE THE TIMEOUT_ARG_INDEX !!!
 TIMEOUT=""
-TIMEOUT_ARG_INDEX=6
+TIMEOUT_ARG_INDEX=4
 if [[ $# ==  $TIMEOUT_ARG_INDEX ]]
 then
 	TIMEOUT=${!TIMEOUT_ARG_INDEX}
@@ -29,20 +29,13 @@ fi
 # PARAM_LINE is the string containing the model parameters for a run.
 PARAM_LINE=$1
 
-# Set the name of the file to write model output to.
-OUTPUT_FILE=$2
-
-# Set the TRIAL_ID - this can be used to pass a random seed (for example)
-# to the model
-TRIAL_ID=$3
-
 # Set EMEWS_ROOT to the root directory of the project (i.e. the directory
 # that contains the scripts, swift, etc. directories and files)
-EMEWS_ROOT=$4
+EMEWS_ROOT=$2
 
 # Each model run, runs in its own "instance" directory
 # Set INSTANCE_DIRECTORY to that and cd into it.
-INSTANCE_DIRECTORY=$5
+INSTANCE_DIRECTORY=$3
 cd $INSTANCE_DIRECTORY
 
 # TODO: Define the command to run the model. For example,
@@ -50,7 +43,7 @@ cd $INSTANCE_DIRECTORY
 MODEL_CMD=""
 # TODO: Define the arguments to the MODEL_CMD. Each argument should be
 # surrounded by quotes and separated by spaces. For example,
-# arg_array=("$EMEWS_ROOT/python/my_model.py" "$PARAM_LINE" "$OUTPUT_FILE" "$TRIAL_ID")
+# arg_array=("$EMEWS_ROOT/python/my_model.py" "$PARAM_LINE")
 arg_array=("arg1" "arg2" "arg3")
 COMMAND="$MODEL_CMD ${arg_array[@]}"
 

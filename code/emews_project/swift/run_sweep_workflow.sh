@@ -36,6 +36,7 @@ export PROJECT=$CFG_PROJECT
 export WALLTIME=$CFG_WALLTIME
 export PPN=$CFG_PPN
 export TURBINE_JOBNAME="${EXPID}_job"
+export TURBINE_MPI_THREAD=1 
 
 mkdir -p $TURBINE_OUTPUT
 cp $CFG_FILE $TURBINE_OUTPUT/cfg.cfg
@@ -86,5 +87,8 @@ set -x
 SWIFT_FILE=sweep_workflow.swift
 swift-t -n $PROCS $MACHINE -p \
     -I $EMEWS_EXT -r $EMEWS_EXT \
+    -e TURBINE_MPI_THREAD \
+    -e TURBINE_OUTPUT \
+    -e EMEWS_PROJECT_ROOT \
     $EMEWS_PROJECT_ROOT/swift/$SWIFT_FILE \
     $CMD_LINE_ARGS
