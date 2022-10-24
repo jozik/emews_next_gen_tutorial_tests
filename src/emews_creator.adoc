@@ -1,0 +1,747 @@
+== Creating EMEWS Projects
+
+EMEWS Creator is a Python application for creating workflow projects for EMEWS from
+the command line. The project consists of the canonical EMEWS directory layout and 
+various files that can be customized by the user for their particular model.
+
+
+=== Installation
+
+EMEWS Creator can be downloaded and installed from PyPI using pip.
+
+----
+pip install emewscreator
+----
+
+=== Using EMEWS Creator
+
+Once installed EMEWS Creator is run from the command line. It has the following
+options.
+
+----
+$ emewscreator -h
+Usage: emewscreator [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  -V, --version          Show the version and exit.
+  -o, --output-dir PATH  Directory into which the project template will be
+                         generated. Defaults to the current directory
+
+  -m, --model-name TEXT  Name of the model application. Defaults to "model".
+  -w, --overwrite        Overwrite existing files
+  -h, --help             Show this message and exit.
+
+Commands:
+  eqpy   create an eqpy workflow
+  eqr    create an eqr workflow
+  sweep  create a sweep workflow
+----
+
+Each of the commands creates a particular type of workflow: a sweep, an eqpy-based workflow, 
+or an eqr-based workflow. Each of the commands has its own arguments specific to that
+workflow type. These are specified on the command line after the COMMAND argument, and will 
+be covered in the <<wflow_templates>> section below.
+
+The options supplied to `emewscreator` are common to all the workflow types.
+
+*  `--output-dir` - the root directory of the directory structure and files created
+by EMEWS Creator. 
+* `--model-name` - the name  of the model that will be run during the workflow. 
+This will be used in the model execution bash script. Spaces will be replaced by underscores.
+* `--overwrite` - if present, EMEWS Creator will overwrite any existing files in the
+`output-dir` directory when creating the workflow. By default, existing files will *not* be overwritten. 
+
+These values can also be supplied in a yaml format configuration file. Sample
+configuration files can be found https://github.com/emews/emews-project-creator/tree/master/example_cfgs[here]
+in the `example_cfgs` directory in the EMEWS Creator github repository. 
+
+=== EMEWS Project Structure
+
+Each of the workflow types will create the default EMEWS project structure
+in the directory specified by the `-o, --output-dir` argument. 
+EMEWS Creator is designed such that multiple workflows can be run in the same directory. 
+For example, you can begin with the `sweep` and then create an `eqr` or `eqpy`
+workflow in the same output directory. When multiple workflows are created
+in the same output directory, it is crucial that the `workflow_name`
+configuration template argument is unique to each individual workflow. See
+the <<wflow_templates>> section for more information on the `workflow_name`
+argument.
+
+==== Directories
+
+Given an `--output-dir` argument of `my_emews_project`, the default directory structure 
+produced by all the workflow types is:
+
+----
+my_emews_project/
+├── data
+├── etc
+│   └── emews_utils.sh
+├── ext
+│   └── emews
+│       └── emews.swift
+├── python
+│   └── test
+├── R
+│   └── test
+├── README.md
+├── scripts
+│   └── run_my_model_sweep_workflow.sh
+└── swift
+    ├── cfgs
+    │   └── sweep_workflow.cfg
+    ├── run_sweep_workflow.sh
+    └── sweep_workflow.swift
+----
+
+The directories are intended to contain the following:
+
+ * `data` - date required by the model and algorithm (inputs, etc.).
+ * `etc` - additional code used by EMEWS
+ * `ext` - Swift/T extensions, including the default EMEWS utility code extension as well as
+ the EQ/R and EQ/Py extensions when creating eqr or eqpy workflows
+ * `python` - Python code (e.g., model exploration algorithms written in Python)
+ * `python\test` - tests of the Python code
+ * `R` - R code (e.g., model exploration algorithms written R)
+ * `R\test` - tests of the R code
+ * `scripts` - any necessary scripts (e.g., scripts to launch a model), excluding scripts used to run the workflow
+ * `swift` - Swift/T code and scripts used to submit and run the workflow
+
+==== Files 
+Each of the workflow types will generate the following files. The file names
+are derived from parameters specified in the workflow template configuration
+arguments. The names of those parameters are included in curly brackets
+in the file names below. (In the above directory listing, the workflow_name
+was `sweep_workflow`.)
+
+* `swift/run_{workflow_name}.sh` - a bash script used to launch / submit the workflow
+* `swift/{workflow_name}.swift` - the swift script that implements the workflow.
+* `scripts/run_{model_name}_{workflow_name}.sh` - a bash script used to run the model application.
+* `cfgs/{workflow_name}.cfg` - a configuration file for running the workflow
+* `README.md` - a README file for the workflow
+
+These files may require some user customization before they can be used. The 
+relevant sections are marked with `TODO`.
+
+Once any edits have been completed, the workflows can be run with:
+
+----
+$ run_{workflow_name}.sh <experiment_name> cfgs/{workflow_name}.cfg
+----
+
+[[wflow_templates, Workflow Templates]]
+=== Workflow Templates
+
+Each workflow template has its own set of command line arguments, but all have the following
+in common:
+
+* `-n, --workflow-name` - the name of the workflow. This will be used as the file name for the workflow configuration, submission, and swift script files. Spaces will be replaced by underscores. 
+**The `workflow_name` should be unique among all the workflows in the output directory.**
+* `-c, --config` - path to the workflow template configuration file, optional if all
+the required arguments are specified on the command line
+
+The workflow template configuration file can be used to specify any of a
+workflow template's configuration parameters when those parameters are
+not specified on the command line. This file is in yaml format.
+Sample configuration files can be found 
+https://github.com/emews/emews-project-creator/tree/master/example_cfgs[here].
+in the `example_cfgs` directory in the EMEWS Creator github repository. Arguments
+supplied on the command line will override those supplied in a configuration file.
+If any required arguments are missing from the command line, then the
+configuration file is required to supply the missing arguments.
+
+==== Sweep
+The sweep command creates a sweep workflow in which EMEWS reads an input file,
+and runs an application using each line of the input file as input to an application run.
+We call this input file an _unrolled parameter file_ or _UPF_ file, as it contains a
+full explicit listing of all the parameter combinations to run, rather than some
+more terse sweep description.
+
+Usage:
+
+----
+$ emewscreator sweep -h
+Usage: emewscreator sweep [OPTIONS]
+
+Options:
+  -c, --config PATH         Path to the template configuration file
+                            [required if any command line arguments are
+                            missing]
+
+  -n, --workflow-name TEXT  Name of the workflow
+  -h, --help                Show this message and exit.
+----
+
+A sample sweep configuration file can be found https://github.com/emews/emews-project-creator/blob/master/example_cfgs/sweep.yaml[here]. 
+
+Generating a sweep workflow creates the following files. The exact file names are dependent on 
+the workflow_name and model_name configuration parameters. Here the workflow name is `sweep workflow`
+and the model name is `my model`.
+
+* `swift/run_sweep_workflow.sh` - a bash script used to launch the workflow
+* `swift/sweep_workflow.swift` - a swift script that will iterate through an input file, passing each line of that input to a model
+* `scripts/run_my_model_sweep_workflow.sh` - a bash script for executing the model. The swift script calls this script
+to run the model, passing it one line of input from the input file.
+* `swift/cfgs/sweep_workflow.cfg` - the configuration file for the workflow, specifying the location of the sweep input file,
+among other parameters.
+
+These files contain lines or sections marked with *TODO* where that line or section needs
+to be edited to customize the file for your model and workflow. See <<uc1>> for a fully fleshed out
+sweep workflow created using emews creator. We will look more closely at relevant parts of these files
+below.
+
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/run_sweep_workflow.sh#L1[`*run_sweep_workflow.sh*`,window=UC1,pts="noopener,nofollow"]
+
+NOTE: The launch scripts produced by the emews creator _source_ other files. Doing this in a bash script
+makes any variables and functions defined in those files available to the current file. as if they had been
+defined in the current file.
+
+The initial section of the file processes the input arguments to the file,
+initalizing some variables that used in the following parts of the file.
+
+[source,bash]
+----
+#! /usr/bin/env bash
+set -eu
+
+if [ "$#" -ne 2 ]; then    <1>
+  script_name=$(basename $0)
+  echo "Usage: ${script_name} exp_id cfg_file"
+  exit 1
+fi
+
+# Uncomment to turn on swift/t logging. Can also set TURBINE_LOG,
+# TURBINE_DEBUG, and ADLB_DEBUG to 0 to turn off logging
+# export TURBINE_LOG=1 TURBINE_DEBUG=1 ADLB_DEBUG=1
+export EMEWS_PROJECT_ROOT=$( cd $( dirname $0 )/.. ; /bin/pwd )    <2>
+# source some utility functions used by EMEWS in this script
+source "${EMEWS_PROJECT_ROOT}/etc/emews_utils.sh"    <3>
+
+export EXPID=$1
+export TURBINE_OUTPUT=$EMEWS_PROJECT_ROOT/experiments/$EXPID    <4>
+check_directory_exists
+
+CFG_FILE=$2
+source $CFG_FILE     <5>
+----
+<1> Check that the number of arguments passed to the script is equal to 2. The first should
+be the name of the experiment, and the second a configuration file that will be sourced
+into the current environment.
+<2> Define an `EMEWS_PROJECT_ROOT`` environment variable that specifies the root directory of the project.
+This corresponds to the root project directory specified in `--output-dir` when running
+emewscreator.
+<3> Source some utiliity functions that are used later in the script. These are: `check_directory_exists` which checks if the `TURBINE_OUTPUT` directory exists and prompts the user to continue; and `log_script` which logs the relevant environment variables and a copy of script to the `TURBINE_OUTPUT` directory.
+<4> Creates and exports an `EXPID` (an experiment id) environment variable from the experiment id passed into the script and then defines the `TURBINE_OUTPUT` directory using this `EXPID`. The `TURBINE_OUTPUT` directory is used by swift as the
+output location for all the files that it produces.
+<5> Creates a CFG_FILE environment variable from the second argument passed into the script, and sources this file.
+In this way the configuration variables, such as the file to sweep over, are made available to the launch script.
+
+The second part of the file exports some variables that are used by swift
+when submitting the workflow on an HPC resource. Typically such machines use
+a job scheduler that requires the user to provide the number of processes
+to use, the name of the compute queue, the project to charge the compute time
+to, and an estimate of how long the job will take. This section exports
+those values so that they are available to swift when creating the job submission
+script. These are set from values defined in the workflow configuration file
+(i.e., swift/cfgs/sweep_workflow.cfg). See the discussion of that file below.
+#TODO: make link#
+
+[source, bash]
+----
+export PROCS=$CFG_PROCS    <1>
+export QUEUE=$CFG_QUEUE
+export PROJECT=$CFG_PROJECT
+export WALLTIME=$CFG_WALLTIME
+export PPN=$CFG_PPN 
+export TURBINE_JOBNAME="${EXPID}_job"    <2>
+export TURBINE_MPI_THREAD=1    <3>
+----
+<1> `PROCS`, `QUEUE`, `PROJECT`, `WALLTIME`, and `PPN` are set from variables defined
+in the configuration file. See that section for more info #TODO#
+<2> `TURBINE_JOBNAME` is used to set the name of the job in the HPC submission script.
+When querying the HPC resource for the status of your job, you will see your job
+name as the experiment id following by `_job`.
+<3> Set `TURBINE_MPI_THREAD` to one to run MPI in a thread-safe mode to prevent any errors
+if the model is multi-threaded.
+
+The launch scripts for all the available workflow types copy all the relevant
+files into the experiment directory (i.e., `TURBINE_OUTPUT`) so that the original
+files can be changed without corrupting the workflow. We see that in the next
+section together with some variable declarations and some potential TODOs.
+
+[source, bash]
+----
+mkdir -p $TURBINE_OUTPUT    <1>
+cp $CFG_FILE $TURBINE_OUTPUT/cfg.cfg    <2>
+
+# TODO: If R cannot be found, then these will need to be   <3>
+# uncommented and set correctly.
+# export R_HOME=/path/to/R
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$R_HOME/lib
+
+# TODO: If Python cannot be found or there are "Cannot find     <4>
+# X package" type errors then these two environment variables
+# will need to be uncommented and set correctly.
+# export PYTHONHOME=/path/to/python
+# export PYTHONPATH=$EMEWS_PROJECT_ROOT/python
+
+EMEWS_EXT=$EMEWS_PROJECT_ROOT/ext/emews    <5>
+
+# Copies UPF file to experiment directory
+U_UPF_FILE=$EMEWS_PROJECT_ROOT/$CFG_UPF
+UPF_FILE=$TURBINE_OUTPUT/upf.txt
+cp $U_UPF_FILE $UPF_FILE    <6>
+----
+<1> Make the `TURBINE_OUTPUT` experiment directory
+<2> Copy the workflow configuration file into the experiment directory
+<3> If there are errors when running R code in workflows, this section
+can be edited appropriately and uncommented.
+<4> If there are errors when running Python code in workflows, this section
+can be edited appropriately and uncommented.
+<5> Set an environment directory for the EMEWS swift extensions. This is
+used internally by the workflow, and should not be edited.
+<6> Copy the _UPF_ file to experiment directory as `upf.txt`. This
+is the file containing the sweep input, one parameter set per line.
+
+The launch script pass arguments to the swift script via the command line.
+We define a variable that represents the command line and pass the
+location of the _UPF_ file using that. 
+
+[source, bash]
+----
+CMD_LINE_ARGS="$* -f=$UPF_FILE "
+# CMD_LINE_ARGS can be extended with +=:
+# CMD_LINE_ARGS+="-another_arg=$ANOTHER_VAR"
+----
+
+When submitting the workflow on an HPC machine, the type of job scheduled must be set in order for
+swift to correctly submit the job. This is done in the next section.
+
+[source, bash]
+----
+# TODO: Set MACHINE to your schedule type (e.g. pbs, slurm, cobalt etc.),
+# or empty for an immediate non-queued unscheduled run
+MACHINE=""
+
+if [ -n "$MACHINE" ]; then
+  MACHINE="-m $MACHINE"
+fi
+
+# TODO: Some slurm machines may expect jobs to be run
+# with srun, rather than the default mpiexec (for example). If
+# so, uncomment this export.
+# export TURBINE_LAUNCHER=srun
+----
+
+The final section logs a copy of the submission script to the experiment directory and
+calls swift-t to submit the job and execute the workflow swift script.
+
+[source, bash]
+----
+# TODO: Add any script variables that you want to log as
+# part of the experiment meta data to the USER_VARS array,
+# for example, USER_VARS=("VAR_1" "VAR_2")
+USER_VARS=()
+# log variables and script to to TURBINE_OUTPUT directory
+log_script    <1>
+# echo's anything following this to standard out
+set -x
+SWIFT_FILE=sweep_workflow.swift    <2>
+swift-t -n $PROCS $MACHINE -p \    <3>
+    -I $EMEWS_EXT -r $EMEWS_EXT \
+    -e TURBINE_MPI_THREAD \    <4>
+    -e TURBINE_OUTPUT \
+    -e EMEWS_PROJECT_ROOT \
+    $EMEWS_PROJECT_ROOT/swift/$SWIFT_FILE \
+    $CMD_LINE_ARGS    <5>
+----
+<1> Log a copy of this submission script including any of the variables
+in `USER_VARS` to the experiment directory.
+<2> Define a variable containing the name of the swift workflow script to
+execute.
+<3> Call swift-t passing it the relevant variables and the path of the swift script to be executed. At this point the script is either executed immediately or scheduled for execution depending on the value of the MACHINE variable.
+<4> The `-e` agument to swift-t adds the specified variable to the script execution environment. On some HPC machines,
+the login environment is separate from the compute environment. Consequently, variables defined in the login environment
+that are referenced in the swift script when it executes in the compute environment need to be made available for the
+script to work correctly. The `-e` argument does this, adding the specified variables to the compute environment.
+<5> Pass the `CMD_LINE_ARGS` to the swift script.
+
+
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/sweep_workflow.swift#L1[`*sweep_workflow.swift*`,window=UC1,pts="noopener,nofollow"]
+
+This file is the swift script that performs the actual sweep. The script consists of an opening section that
+defines some variables, and 3 functions, one (`run_model`) that calls the model itself, one (`make_dir`) utility 
+function, and a `main` function that performs the sweep.
+
+[source, swift]
+----
+string emews_root = getenv("EMEWS_PROJECT_ROOT");    <1>
+string turbine_output = getenv("TURBINE_OUTPUT");
+
+file model_sh = input(emews_root+"/scripts/run_my_model_sweep_workflow.sh");    <2>
+file upf = input(argv("f"));    <3>
+----
+<1> Set `emews_root` and `turbine_output` from the `EMEWS_PROJECT_ROOT` and `TURBINE_OUTPUT`
+environment variables. These were exported in the 
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/run_sweep_workflow.sh#L1[`run_sweep_workflow.sh`,window=UC1,pts="noopener,nofollow"] script.
+<2> Get the bash script that will be used to launch the model. Swift calls this script
+(`scripts/run_my_model_sweep_workflow.sh`) to perform a model run.
+<3> Get the upf file by parsing the `-f` argument to this script. The `-f` argument was specified in
+as part of the `CMD_LINE_ARGS` in the https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/run_sweep_workflow.sh#L1[`run_sweep_workflow.sh`,window=UC1,pts="noopener,nofollow"] script.
+
+The `run_model` function function executes a single model run via a bash script. It calls bash, passing it the name of the bash
+script to run, the parameter line (from the upf file) to use, the EMEWS_PROJECT_ROOT directory, and the path of an instance directory. The expectation is that each model run will execute in its own directory and instance is the path of that directory. Standard out and standard error are redirected to an out and err file respectively.
+
+[source, swift]
+----
+// app function used to run the model
+app (file out, file err) run_model(file shfile, string param_line, string instance)
+{
+    "bash" shfile param_line emews_root instance @stdout=out @stderr=err;    <1>
+}
+----
+<1> Call `bash` to run the model script specified in the previous section, redirecting
+`stdout` and `stderr` to `file out` and `file in` respectively.
+
+
+When we run the model, we want each to run in its own _instance_ directory, and we
+need a function to create that directory. `make_dir` is a Swift app function
+that calls the operating system's `mkdir` command to create the directory.
+
+[source, swift]
+----
+// call this to create any required directories
+app (void o) make_dir(string dirname) {
+    "mkdir" "-p" dirname;
+}
+----
+
+The `main` function iterates over each line of the upf file, passing each line
+to the model script to run.
+
+[source, swift]
+----
+// Iterate over each line in the upf file, passing each line 
+// to the model script to run
+main() {
+    // run_prerequisites() => {    
+    string upf_lines[] = file_lines(upf);    <1>
+    foreach s,i in upf_lines {    <2>
+        string instance = "%s/instance_%i/" % (turbine_output, i+1);   <3>
+        make_dir(instance) => {    <4>
+            file out <instance+"out.txt">;    <5>
+            file err <instance+"err.txt">;
+            (out,err) = run_model(model_sh, s, instance);    <6>
+        }
+    }
+    // }
+}
+----
+<1> Read all the lines from the upf file into a string array `upf_lines`.
+<2> For each line in the array, executing the code within the block. This
+will run in parallel, executing as many lines concurrently as there are
+available workers. Here `s` is the element at index `i` in the `upf_lines` array,
+such that `i` corresponds to the line number in the upf file itself.
+<3> Create the name of the instance directory that we pass to each model execution,
+using `i` to uniquely name each instance directory.
+<4> Call `make_dir` to create each instance directory.
+<5> Create the files into which the `stdout` and `stderr` will
+be written for each model run in each instance directory, naming
+them `out.txt` and `err.txt`.
+<6> Call `run_model` to execute the model run.
+
+
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/scripts/run_my_model_sweep_workflow.sh#L1[`*run_my_model_sweep_workflow.sh*`,window=UC1,pts="noopener,nofollow"]
+
+`run_my_model_sweep_workflow.sh` is called by `sweep_workflow.swift` to execute
+the model as if the model has been run from the command line. The script passed 
+single line of parameters from the upf file, the
+emews root directory location, and the instance directory created in `sweep_workflow.swift`.
+You will need to update the `MODEL_CMD` variable to specify the model executable.
+
+The script begins with defining an optional `TIMEOUT` that will timeout
+the model if its run duration exceeds that value.
+
+[source, bash]
+----
+# Check for an optional timeout threshold in seconds. If the duration of the
+# model run as executed below, takes longer that this threshhold
+# then the run will be aborted. Note that the "timeout" command
+# must be supported by executing OS.
+
+# The timeout argument is optional. By default the "run_model" swift
+# app fuction sends 3 arguments, and no timeout value is set. If there
+# is a 4th (the TIMEOUT_ARG_INDEX) argument, we use that as the timeout value.
+
+# !!! IF YOU CHANGE THE NUMBER OF ARGUMENTS PASSED TO THIS SCRIPT, YOU MUST
+# CHANGE THE TIMEOUT_ARG_INDEX !!!
+TIMEOUT="" 
+TIMEOUT_ARG_INDEX=4    <1>
+if [[ $# ==  $TIMEOUT_ARG_INDEX ]]
+then
+	TIMEOUT=${!TIMEOUT_ARG_INDEX}
+fi
+
+TIMEOUT_CMD=""
+if [ -n "$TIMEOUT" ]; then
+  TIMEOUT_CMD="timeout $TIMEOUT"
+fi
+----
+<1> If this script is passed `TIMEOUT_ARG_INDEX` number of arguments,
+then that argument (defaulting to the 4th argument) will be used as
+the number of seconds after which to timeout. 
+
+The next section of the script assigns the scripts command line arguments to
+some variables and changes directory to the instance directory passed to
+the script.
+
+[source, bash]
+----
+# Set PARAM_LINE from the first argument to this script
+# PARAM_LINE is the string containing the model parameters for a run.
+PARAM_LINE=$1
+
+# Set EMEWS_ROOT to the root directory of the project (i.e. the directory
+# that contains the scripts, swift, etc. directories and files)
+EMEWS_ROOT=$2
+
+# Each model run, runs in its own "instance" directory
+# Set INSTANCE_DIRECTORY to that and cd into it.
+INSTANCE_DIRECTORY=$3
+cd $INSTANCE_DIRECTORY
+----
+
+The final section defines the model executable in `MODEL_CMD` and runs
+the model with the optional timeout.
+
+[source, bash]
+----
+# TODO: Define the command to run the model. For example,
+# MODEL_CMD="python"
+MODEL_CMD=""    <1>
+# TODO: Define the arguments to the MODEL_CMD. Each argument should be
+# surrounded by quotes and separated by spaces. For example,
+# arg_array=("$EMEWS_ROOT/python/my_model.py" "$PARAM_LINE")
+arg_array=("arg1" "arg2" "arg3")    <2>
+COMMAND="$MODEL_CMD ${arg_array[@]}"
+
+# Turn bash error checking off. This is
+# required to properly handle the model execution
+# return values and the optional timeout.
+set +e
+echo "Running $COMMAND"
+
+$TIMEOUT_CMD $COMMAND    <3>
+# $? is the exit status of the most recently executed command (i.e the
+# line above)
+RES=$?
+if [ "$RES" -ne 0 ]; then
+	if [ "$RES" == 124 ]; then
+    echo "---> Timeout error in $COMMAND"
+  else
+	   echo "---> Error in $COMMAND"
+  fi
+fi
+----
+<1> Define the model executable. For a stand alone compiled executable, this will be
+path to that executable. For example, something like `$HOME/sfw/epi_model-1.0/bin/epimodel`.
+For a model written in an interpreted language such as R or Python, this will be the R/RScript or Python
+executable. 
+<2> Define the array of arguments to pass to the `MODEL_CMD` executable. At the very
+least, this will typically include the `PARAM_LINE` variable in order to pass the
+upf line to the model. For an R or Python application, this will also include
+the path to the R or Python code to run.
+<3> Run the model with the optional `TIMEOUT_CMD`. If no `TIMEOUT` was specified, this
+will be empty.
+
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/cfgs/sweep_workflow.cfg#L1[`*sweep_workflow.cfg*`,window=UC1,pts="noopener,nofollow"]
+
+The final file produced by the emewscreator for the sweep workflow is 
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/cfgs/sweep_workflow.cfg#L1[`sweep_workflow.cfg`,window=UC1,pts="noopener,nofollow"].
+This file is sourced by the submission script https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/run_sweep_workflow.sh#L1[`run_sweep_workflow.sh`,window=UC1,pts="noopener,nofollow"] to retrieve the HPC scheduler parameters for the workflow and the location
+of the upf file. The intention here is that these parameters are the most frequently changed between
+different workflow runs, and rather than edit the submission script itself, it is easier to edit
+a configuration file.
+
+[source, bash]
+----
+CFG_WALLTIME=24:00:00   <1>
+CFG_QUEUE=queue    <2>
+CFG_PROJECT=project    <3>
+NODES=4    <4>
+CFG_PPN=4    <5>
+CFG_PROCS=$(( NODES * CFG_PPN ))    <6>
+# TODO: Update with path to upf file, relative
+# to emews project root directory.
+CFG_UPF=data/upf.txt    <7>
+----
+<1> Set the estimated duration of the workflow.
+<2> Set the queue on which to run the workflow.
+<3> Set the project with which to run the workflow.
+<4> Set the number of HPC nodes to run the workflow with.
+<5> Set the number of process per node (PPN) to use.
+<6> Compute the total number of processes to allocate to the job
+by multiplying the number of nodes by the PPN.
+<7> Set the path to the UPF file. For convenience, this is relative to the 
+emews project root directory.
+
+NOTE: See your HPC resource's documentation for details on the appropriate values and formats
+for `CFG_WALLTIME`, `CFG_QUEUE`, and `CFG_PROJECT`.
+
+// ==== EQPy
+
+// The EQPy workflow template creates a workflow that uses EMEWS Queues for Python (EQPy) to 
+// run an application using input parameters provided by a
+// Python model exploration (ME) algorithm. The workflow will start the Python ME
+// which then iteratively provides json format input parameters for model
+// execution.
+
+// Usage:
+
+// ```
+// $ emewscreator eqpy -h
+
+// Usage: emewscreator eqpy [OPTIONS]
+
+// Options:
+//   -c, --config PATH              Path to the template configuration file
+//                                  [required if any command line arguments are
+//                                  missing]
+
+//   -n, --workflow-name TEXT       Name of the workflow
+//   --module-name TEXT             Python model exploration algorithm module
+//                                  name
+
+//   --me-cfg-file PATH             Configuration file for the model exploration
+//                                  algorithm
+
+//   --trials INTEGER               Number of trials / replicates to perform for
+//                                  each model run. Defaults to 1
+
+//   --model-output-file-name TEXT  Model output base file name, file name only
+//                                  (e.g., "output.csv")
+
+//   --eqpy-dir PATH                Directory where the eqpy extension is
+//                                  located. If the extension does not exist at
+//                                  this location it will be installed there.
+//                                  Defaults to {output_dir}/ext/EQ-Py
+
+//   -h, --help                     Show this message and exit.
+// ```
+
+// In addition to the common configuration arguments described [above](#workflow_templates),
+// the eqpy template also has the following:
+
+// * `--module-name` - the Python module implementing the ME algorithm
+// * `--me-cfg-file` - the path to a configuration file for the Python ME algorithm. This
+// path will be passed to the Python ME when it is initialized. This is relative to the
+// directory specified in `--output-dir`.
+// * `--trials` - the number of trials or replicates to perform for each model run. Defaults to 1.
+// * `model-output-file-name` - each model run is passed a file path for writing its output.
+// This is the name of that file.
+
+// In addition to the default set of files described in the
+// [EMEWS Project Structure](#emews-project-structure) section, the eqpy workflow template will also
+// install the EQPy EMEWS Swift-t extension. By default, the extension will be installed in
+// in `ext/EQ-Py`. An alternative location can be specified with the `--eqpy-dir`
+// configuration parameter.
+
+// * `--eqpy-dir` - specifies the location of the eqpy extension (defaults to `ext/EQ-Py`)
+
+// You can set this to use an existing EQ-Py extension, or if the specified location
+// doesn't exist, the extension will be installed there.
+
+// The extension consists of the following files.
+
+// * `eqpy.py`
+// * `EQPy.swift`
+
+// These should not be edited by the user.
+
+// A sample `eqpy` configuration file can be found [here](https://github.com/emews/emews-project-creator/blob/master/example_cfgs/eqpy.yaml).
+
+// For a more thorough explanation of Python-based ME workflows, see the [EMEWS Tutorial](https://www.mcs.anl.gov/~emews/tutorial/).
+
+// ### EQR ###
+
+// The EQR template creates a workflow that uses EMEWS Queues for R (EQR) to 
+// run an application using input parameters provided by a
+// R model exploration (ME) algorithm. The workflow will start the R ME
+// which then iteratively provides json format input parameters for model
+// execution.
+
+// *Note*: The EQR extension requires an additional compilation step. Once the template has been run,
+// see `{eqr_dir}/src/README.md` for compilation instructions.
+
+// Usage:
+
+// ```
+// $ emewscreator eqr -h
+// Usage: emewscreator eqr [OPTIONS]
+
+// Options:
+//   -c, --config PATH              Path to the template configuration file
+//                                  [required if any command line arguments are
+//                                  missing]
+
+//   -n, --workflow-name TEXT       Name of the workflow
+//   --script-file TEXT             Path to the R model exploration algorithm
+//   --me-cfg-file PATH             Configuration file for the model exploration
+//                                  algorithm
+
+//   --trials INTEGER               Number of trials / replicates to perform for
+//                                  each model run
+
+//   --model-output-file-name TEXT  Model output base file name, file name only
+//                                  (e.g., "output.csv")
+
+//   --eqr-dir PATH                 Directory where the eqr extension is located.
+//                                  If the extension does not exist at this
+//                                  location it will be installed there. Defaults
+//                                  to {output_dir}/ext/EQ-R
+
+//   -h, --help                     Show this message and exit.
+
+// ```
+
+// In addition to the common configuration parameters described [above](#workflow_templates),
+// the `eqr` template also has the following:
+
+// * `--script-file` - the path to the R script implementing the ME algorithm
+// * `--me-cfg-file` - the path to a configuration file for the R ME algorithm. This
+// path will be passed to the R ME when it is initialized. This path is relative
+// to the directory specified by `--output-dir`.
+// * `--trials` - the number of trials or replicates to perform for each model run
+// * `--model_output_file_name` - each model run is passed a file path for writing its output.
+// This is the name of that file.
+
+// In addition to the default set of files described in the
+// [EMEWS Project Structure](#emews-project-structure) section, the eqr workflow template will also
+// install the source for the EQ/R EMEWS Swift-t extension. By default, the extension will be installed 
+// in `ext/EQ-R`. An alternative location can be specified with the `--eqr-dir` configuration argument.
+
+// * `--eqr-dir` - specifies the location of the eqr extension (defaults to `ext/EQ-R`)
+
+// You can set this to use an existing EQ-R extension, or if the specified location
+// doesn't exist, the extension will be installed there. 
+
+// The extension needs to be compiled before it can be used. See `{eqr_dir}/src/README.md` for compilation instructions.
+
+// A sample EQR configuration file can be found [here](https://github.com/emews/emews-project-creator/blob/master/example_cfgs/eqr.yaml).
+
+// For a more thorough explanation of R-based ME workflows, see the [EMEWS Tutorial](https://www.mcs.anl.gov/~emews/tutorial/).
+
+// ### HPC Parameters ###
+
+// The workflow templates' configuration file (specified with the `--config` argument)
+// can also contain **optional** entries for running the workflow on an HPC system
+// where a job is submitted via an HPC scheduler (e.g., the slurm scheduler).
+// See your HPC resource's documentation for details on how to set these. 
+
+// * `walltime` - the estimated duration of the workflow job. The value must be surrounded by single quotes.
+// * `queue` - the queue to run the workflow job on
+// * `project` - the project to run the workflow job with
+// * `nodes` - the number of nodes to allocate to the workflow job
+// * `ppn` - the number of processes per node to allocate to the workflow job
+
+
