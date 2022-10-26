@@ -172,7 +172,7 @@ Options:
   -h, --help                Show this message and exit.
 ----
 
-A sample sweep configuration file can be found https://github.com/emews/emews-project-creator/blob/master/example_cfgs/sweep.yaml[here]. 
+A sample sweep configuration file can be found https://github.com/emews/emews-project-creator/blob/master/example_cfgs/sweep.yaml[here,window=sweep.yaml,pts="noopener,nofollow"]. 
 
 Generating a sweep workflow creates the following files. The exact file names are dependent on 
 the workflow_name and model_name configuration parameters. Here the workflow name is `sweep workflow`
