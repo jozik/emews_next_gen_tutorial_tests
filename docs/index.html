@@ -1486,18 +1486,23 @@ This workflow project has the following directory structure and files:</p>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="text"><span></span>uc1
 ├── R
+│   └── test
+├── README.md
 ├── data
 ├── etc
 │   └── emews_utils.sh
-├── output
+├── ext
+│   └── emews
+│       └── emews.swift
+├── python
+│   └── test
 ├── scripts
-│   ├── outputcombiner.sh
-│   ├── pbs_outputcombiner.sh
-│   └── repast.sh
+│   └── run_my_model_sweep_workflow.sh
 └── swift
-    ├── swiftrun.swift
-    ├── swiftrun_R.swift
-    └── workflow.sh</code></pre>
+    ├── cfgs
+    │   └── sweep_workflow.cfg
+    ├── run_sweep_workflow.sh
+    └── sweep_workflow.swift</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1523,7 +1528,7 @@ See the <a href="http://swift-lang.github.io/swift-t/guide.html#build_r" target=
 (<a href="https://repast.github.io/docs/RepastJavaGettingStarted.pdf" target="_blank" rel="noopener">Nick Collier and Michael North 2015</a>). This is only an example model. Any simulation
 or scientific application that can be
 launched from the command line can be adapted to this paradigm. The fictional Zombies
-versus Humans model is intended to illustrate that Swift/T and Repast Simphony are domain agnostic.</p>
+versus Humans model is intended to illustrate that EMEWS, Swift/T, and Repast Simphony are domain agnostic.</p>
 </div>
 <div class="sect3">
 <h4 id="_model_details">2.3.1. Model details</h4>
@@ -1788,196 +1793,6 @@ is the set of parameters for an individual run. A foreach loop is then
 used to iterate over the array, lauching parallel model runs each with
 their own parameters. In this way the number of model runs that can be
 performed in parallel is limited only by hardware resources.</p>
-</div>
-<div class="paragraph">
-<p>&lt;p&gt;</p>
-</div>
-<div class="paragraph">
-<p>&lt;/p&gt;</p>
-</div>
-<div class="paragraph">
-<p>&lt;p&gt;
-&lt;b&gt;&lt;/b&gt;
-        &lt;/p&gt;</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;h2&gt; Results Analysis &lt;/h2&gt;
-  &lt;p&gt;
-    In our initial script we have seen how to run multiple instances of the Zombies model in parallel, each with a different set of parameters.
-    Our next example builds on this by adding some post-run analysis that explores the effect of simulated step size on the final
-    number of humans. This analysis will be performed in R and executed within the Swift workflow.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>The new scripts consists of the following steps:</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  &lt;ol id="myol"&gt;
-    &lt;li&gt;Read the the list of a parameters into a `file` object.
-    &lt;li&gt;Split the contents of the file into an array where each line of
-      file is an array element.
-    &lt;li&gt;Iterate over the array in parallel, launching a model run
-      for each parameter set (i.e. array element) in the array, using
-      the repast app function.
-    &lt;li&gt;Get the final human count from each run using R, and add it to
-      an array.
-    &lt;li&gt;Also using R, determine the maximum human
-      counts.
-    &lt;li&gt;Get the parameters that produced those maximum human
-      counts.
-    &lt;li&gt;Write those parameters to a file.
-  &lt;/ol&gt;
-&lt;/p&gt;&lt;p&gt;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  We present this in two parts. The first describes the changes to the `foreach` loop to gather the output and the
-  second describes how that output is analyzed to determine the "best" parameter combination.
-&lt;/p&gt;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;h3 id="gather_results"&gt; Gathering the Results &lt;/h3&gt;
-&lt;p&gt;
-  This example assumes an existing parameter file in which zombie_step_size and human_step_size are varied.
-  For each run of the model, that is, for each combination of parameters, the model records a count of
-  each agent type at each time step in an output file. As before the script will iterate through the
-  file performing as many runs as possible in parallel. However, an additional step that reads each output file and
-  determines the parameter combination or combinations that resulted in the most humans surviving at the
-  final time step has been added.
-&lt;/p&gt;&lt;p&gt;
-  The updated swift code is in &lt;open-code code="uc1/swift/swiftrun_R.swift"&gt;swiftrun_R.swift&lt;/open-code&gt;.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  Here the repast call is now followed by the execution of an R script in line
-  &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="46" to="46"&gt;47&lt;/highlight-code&gt;.
-  This uses Swift/T's support for the R language. R code can be run using
-  Swift's `R` function. `R` takes two arguments, the R code to run,
-  and an additional R statement that generates the desired return value of the R
-  code as a string. The return statement is typically something like `"toString(res)"`
-  where R's `toString` function is passed a variable that contains what
-  you want to return from the R script. Our R script reads the CSV file produced by a model run into a data frame,
-  accesses the last row of that data frame, and then the value of the human_count column in that row is
-  assigned to the `res` variable.
-  This script itself (lines
-  &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="6" to="9"&gt;7-10&lt;/highlight-code&gt;)
-  is assigned to the `count_humans` string variable. The string contains a template character, "%s",
-  (line &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="7" to="7"&gt;8&lt;/highlight-code&gt;)
-  that can be replaced with the actual directory in which the output file (counts.csv) is written.
-  Line
-  &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="45" to="45"&gt;46&lt;/highlight-code&gt;
-  performs this substitution with the directory for the current run, using the "%" format Swift operator.
-  The resulting R code string is evaluated in line
-  &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="46" to="46"&gt;47&lt;/highlight-code&gt;
-  using the Swift `R` function.
-  In this case, the `res` variable in the R script (line
-  &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="8" to="8"&gt;9&lt;/highlight-code&gt;)
-  contains the number of surviving humans. This string is then placed in the results array at the ith index.
-&lt;/p&gt;&lt;p&gt;
-  &lt;h3 id="finding_best"&gt; Finding the Best Parameters&lt;/h3&gt;
-  &lt;p&gt;
-    The final workflow steps are to determine which runs yielded the maximum
-    number of humans and write out the parameters for those runs. The core idea here is
-    that we find the indices of the elements in the
-    results array that contain the maximum human counts and use those indices
-    to retrieve the parameters from the parameters array.&lt;/p&gt;
-    &lt;p&gt;
-      First Swift's `string_join` function (requiring importing the
-       &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="3" to="3"&gt;string&lt;/highlight-code&gt; module)
-      is used to join all the elements of the results array (i.e., all the final human counts)
-      into a comma separated string
-      (line &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="51" to="51"&gt;52&lt;/highlight-code&gt;).
-      We then use
-    R to find the indices of the maximum values in the results array
-    by substituting the template variable in the R code template
-    contained in the string variable `find_max`
-    (lines &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="11" to="14"&gt;12-15&lt;/highlight-code&gt;)
-    with this comma separated string
-    (line &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="52" to="52"&gt;53&lt;/highlight-code&gt;)
-    to create the working R code. The R code is executed in line
-    line &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="53" to="53"&gt;54&lt;/highlight-code&gt;
-    using the `R` function. The R code returns a comma separated string
-    of numbers where each number is the index in the results array that contained
-    a maximum value. This string is split into a `max_idxs` array using Swift's `split`
-    function
-    (line &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="54" to="54"&gt;55&lt;/highlight-code&gt;).
-    The `split` function takes two arguments, the string to split and the string
-    to split on, and returns an array of strings.
-  &lt;/p&gt;
-  &lt;p&gt;
-  The foreach loop (lines
-  &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="56" to="59"&gt;57-60&lt;/highlight-code&gt;)
-  iterates through `max_idxs` array, converts the string representation of the number to an
-  integer, retrieves the corresponding parameter string from the `upf_lines` array, and
-  adds it to the `best_params` array.
-  Given that the value in `results`[i] (from which the max indices are derived) is produced from the parameter combination in
-  `upf_lines`[i],
-  the index of the maximum value or values in the `max_idxs` array is the index of the best parameter combination or combinations.
-  Note that we subtract one from `idx` because R indices start at 1 while Swift's start at 0.
-  The final step is to write the best parameters to a file as seen in lines
-  &lt;highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="60" to="61"&gt;61-62&lt;/highlight-code&gt;,
-  using Swift's `write` function.
-&lt;/p&gt;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;h2&gt;Running the Swift Script&lt;/h2&gt;
-&lt;p&gt;
-Swift scripts are typically launched using a shell script. This allows
-you to export useful values as environment variables and to properly
-configure the swift workflow to be run on HPC resources. If you use
-the &lt;modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="EMEWS_templates"&gt;EMEWS templates&lt;/modal-data&gt;
-such a shell script will automatically be created for you. The shell script for running
-our simple workflow can be see in
-&lt;open-code code="uc1/swift/workflow.sh"&gt;workflow.sh&lt;/open-code&gt;.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  The workflow.sh file assumes the canonical EMEWS directory structure
-  (see the EMEWS templates tutorial for more details) where
-  a so-called EMEWS project root directory contains other directories
-  such as a `swift` directory in which your swift scripts are
-  located. workflow.sh defines and exports EMEWS_PROJECT_ROOT in line
-  &lt;highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="12" to="12"&gt;13&lt;/highlight-code&gt;,
-  and you can see EMEWS_PROJECT_ROOT being used in line
-  &lt;highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="4" to="4"&gt;5&lt;/highlight-code&gt; of swiftrun.swift.
-&lt;/p&gt;
-&lt;p&gt;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>  workflow.sh takes 1 required argument: an experiment id (e.g., experiment_1).
-  The experiment id is used to define a TURBINE_OUTPUT directory
-  (line &lt;highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="17" to="17"&gt;18&lt;/highlight-code&gt;)
-  into which per workflow output can be written. Swift will also write its own
-  log files into this directory as the workflow executes. workflow.sh
-  also defines additional environment variables that are required for
-  cluster execution such as `WALLTIME`, `PPN`, `MACHINE`
-  and so forth. The final line of workflow.sh (line
-  &lt;highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="66" to="66"&gt;67&lt;/highlight-code&gt;)
-  runs the swift script by
-  calling `swift-t` with the script as the argument followed by any
-  arguments to the swift script itself (i.e. "-f="). The `-n` argument
-  specifies the total number of processes on which to run. Additional
-  help for the arguments to `swift-t` can be seen by running
-  `swift-t -h`. More information on shell script used to
-  launch the Swift/T workflow can be seen in the description of the
-  &lt;modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="swift_run_sweep_sh"&gt;&lt;tt id="myfn"&gt;swift_run_sweep.sh`&lt;/modal-data&gt;
-  section of the templating tutorial.
-&lt;/p&gt;
-////</pre>
-</div>
 </div>
 </div>
 </div>

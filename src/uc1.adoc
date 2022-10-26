@@ -20,22 +20,28 @@ and that should be read before this.
 === Workflow Project Structure
 The full source code for this tutorial use case can be accessed https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc1[here,window=UC1,pts="noopener,nofollow"].
 This workflow project has the following directory structure and files:
+// NB: Generated using tree.
 [source,text]
 ----
 uc1
 ├── R
+│   └── test
+├── README.md
 ├── data
 ├── etc
 │   └── emews_utils.sh
-├── output
+├── ext
+│   └── emews
+│       └── emews.swift
+├── python
+│   └── test
 ├── scripts
-│   ├── outputcombiner.sh
-│   ├── pbs_outputcombiner.sh
-│   └── repast.sh
+│   └── run_my_model_sweep_workflow.sh
 └── swift
-    ├── swiftrun.swift
-    ├── swiftrun_R.swift
-    └── workflow.sh
+    ├── cfgs
+    │   └── sweep_workflow.cfg
+    ├── run_sweep_workflow.sh
+    └── sweep_workflow.swift
 ----
 
 
@@ -51,7 +57,7 @@ The example model used here is an adaptation of the JZombies demonstration model
 (https://repast.github.io/docs/RepastJavaGettingStarted.pdf[Nick Collier and Michael North 2015,window=_blank,pts="noopener,nofollow"]). This is only an example model. Any simulation
 or scientific application that can be
 launched from the command line can be adapted to this paradigm. The fictional Zombies
-versus Humans model is intended to illustrate that Swift/T and Repast Simphony are domain agnostic.
+versus Humans model is intended to illustrate that EMEWS, Swift/T, and Repast Simphony are domain agnostic.
 
 ==== Model details
 
