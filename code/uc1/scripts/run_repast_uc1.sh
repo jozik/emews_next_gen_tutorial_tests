@@ -25,33 +25,29 @@ if [ -n "$TIMEOUT" ]; then
   TIMEOUT_CMD="timeout $TIMEOUT"
 fi
 
-# Set param_line from the first argument to this script
-# param_line is the string containing the model parameters for a run.
-param_line=$1
+# Set PARAM_LINE from the first argument to this script
+# PARAM_LINE is the string containing the model parameters for a run.
+PARAM_LINE=$1
 
-# Set emews_root to the root directory of the project (i.e. the directory
+# Set EMEWS_ROOT to the root directory of the project (i.e. the directory
 # that contains the scripts, swift, etc. directories and files)
-emews_root=$2
+EMEWS_ROOT=$2
 
 # Each model run, runs in its own "instance" directory
-# Set instance_directory to that and cd into it.
-instance_directory=$3
-
+# Set INSTANCE_DIRECTORY to that and cd into it.
+INSTANCE_DIRECTORY=$3
+cd $INSTANCE_DIRECTORY
 # directory that contains the repast model
-model_directory=$emews_root"/complete_model/"
-
-#
-cd $instance_directory
-
+MODEL_DIRECTORY=$emews_root"/complete_model/"
 # create a symbolic link to the model data directory
 # within the instance directory
-ln -s $model_directory"data" data
+ln -s $MODEL_DIRECTORY"data" data
 
-cPath=$model_directory"lib/*"
+cPath=$MODEL_DIRECTORY"lib/*"
 
-pxml=$model_directory"scenario.rs/batch_params.xml"
+pxml=$MODEL_DIRECTORY"scenario.rs/batch_params.xml"
 
-scenario=$model_directory"scenario.rs"
+scenario=$MODEL_DIRECTORY"scenario.rs"
 
 # check for java defined as environment variable
 if [[ ${JAVA:-0} == 0 ]]
@@ -64,16 +60,17 @@ fi
 # and run java explicitly below.
 #MODEL_CMD=""
 
+
 # Turn bash error checking off. This is
-# required to properly handle the model execution return value
-# the optional timeout.
+# required to properly handle the model execution
+# return values and the optional timeout.
 set +e
-
-
+echo "$param_line"
 $TIMEOUT_CMD $JAVA -Xmx1536m -XX:-UseLargePages -cp "$cPath" repast.simphony.batch.InstanceRunner \
    -pxml "$pxml" \
    -scenario "$scenario" \
    -id 1 "$param_line"
+
 
 # $? is the exit status of the most recently executed command (i.e the
 # line above)
@@ -82,6 +79,6 @@ if [ "$RES" -ne 0 ]; then
 	if [ "$RES" == 124 ]; then
     echo "---> Timeout error in model"
   else
-	   echo "---> Error in while running model"
+	   echo "---> Error while running model"
   fi
 fi
