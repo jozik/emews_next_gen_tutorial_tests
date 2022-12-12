@@ -280,7 +280,6 @@ the code on its left-hand side must complete execution before the code on the ri
 <4> Read the `upf` file into an array of strings where each line of the file is an element in the array.
 The built-in Swift `file_lines` function (requires import of files module at the #top of# https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1.swift#L3[uc1.swift,window=uc1.swift,pts="noopener,nofollow"])
 is used to read the upf file into this array of strings.
-// TODO: change to point to correct swift file uc1.swift.
 <5> The `foreach` loop 
 executes its loop iterations in parallel. In the `foreach` loop, the variable `s` is set to an
 array element (that is, a single parameter set represented as a string) while the variable `i` is the index of that array element.
