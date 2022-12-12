@@ -46,7 +46,7 @@ uc1
 ----
 
 An initial version of the project was created using the EMEWS creator with the following command issued #here#:
-// TODO: link to code directory in the repo? https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code[here,window=UC1_code_directory,pts="noopener,nofollow"]
+// TODO: link to code directory in the repo? https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code[here,window=UC1_code_directory,pts="noopener,nofollow"] or just say that it was issued in the code directory in this repo?
 [source#uc1-creator,bash]
 ----
 emewscreator -o uc1 sweep -c tutorial_cfgs/sweep.yaml
@@ -87,7 +87,7 @@ time step is specified by the parameters zombie step size and human step size.
 
 === Calling a Repast Simphony simulation from Swift/T
 
-The full Swift/T script can be seen in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/swiftrun.swift#L1[swiftrun.swift,window=swiftrun.swift,pts="noopener,nofollow"].
+The full Swift/T script can be seen in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1.swift#L1[uc1.swift,window=uc1.swift,pts="noopener,nofollow"].
 The scripts consists of defining variables from environment variables and user input:
 // Note: Using "java" for *.swift files
 
@@ -196,8 +196,7 @@ app (file out, file err) run_model(file shfile, string param_line, string instan
 }
 ----
 <1> The app function definition begins. The function returns two files, one for standard output and one for standard error.
-The function arguments are those required to #run# https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/repast.sh#L1[repast.sh,window=repast.sh,pts="noopener,nofollow"], that is,
-// TODO: change path to repast.sh replacement
+The function arguments are those required to #run# https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/run_repast_uc1.sh#L1[repast.sh,window=run_repast_uc1.sh,pts="noopener,nofollow"], that is,
 the full path of the script, the parameters to run and the directory where the model run output should be written.
 <2> The body of the function calls the bash interpreter passing it the name of the script file to execute and the other function
 arguments as well as the project root, that is, `emews_root` directory.
@@ -279,7 +278,7 @@ However, in our case, the Repast Simphony logging configuration file must be in 
 The `=>` symbol enforces the required sequential execution:
 the code on its left-hand side must complete execution before the code on the right-hand side begins execution.
 <4> Read the `upf` file into an array of strings where each line of the file is an element in the array.
-The built-in Swift `file_lines` function (requires import of files module at the #top of# https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/swiftrun.swift#L3[swiftrun.swift,window=swiftrun.swift,pts="noopener,nofollow"])
+The built-in Swift `file_lines` function (requires import of files module at the #top of# https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1.swift#L3[uc1.swift,window=uc1.swift,pts="noopener,nofollow"])
 is used to read the upf file into this array of strings.
 // TODO: change to point to correct swift file uc1.swift.
 <5> The `foreach` loop 
