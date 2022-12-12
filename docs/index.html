@@ -1506,7 +1506,7 @@ The completed workflow project has the following directory <mark>structure and f
 </div>
 </div>
 <div class="paragraph">
-<p>An initial version of the project was created using the EMEWS creator with the following command issued <mark>TODO, where?</mark>:</p>
+<p>An initial version of the project was created using the EMEWS creator with the following command issued <mark>here</mark>:</p>
 </div>
 <div id="uc1-creator" class="listingblock">
 <div class="content">
@@ -1629,9 +1629,11 @@ choice for integrating the model into a Swift script. See the Swift/T Tutorial f
 via an InstanceRunner class, for passing a set of parameters to a model and performing a single headless
 run of the model using those parameters. Using the InstanceRunner main class, Repast Simphony models can be launched by other
 control applications such as a bash, PBS, or Swift scripts.  We have wrapped the command line invocation of
-Repast Simphony&#8217;s InstanceRunner in a <mark>bash script</mark> <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/repast.sh#L1" target="repast.sh">repast.sh</a>
- to ease command line usage.
-Other non-Repast Simphony models or scientific applications with command line interfaces can be wrapped
+Repast Simphony&#8217;s InstanceRunner in a bash script <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/run_repast_uc1.sh#L1" target="run_repast_uc1.sh">repast.sh</a>
+ to ease command line usage.</p>
+</div>
+<div class="paragraph">
+<p>Other non-Repast Simphony models or scientific applications with command line interfaces can be wrapped
 and run similarly.</p>
 </div>
 <div class="paragraph">
@@ -1815,7 +1817,7 @@ redirected by the <a href="#repast-app-annot">run_model</a> function.</td>
 <div class="paragraph">
 <p>This is a common pattern in EMEWS. Some collection of parameters is parsed into an array in which each element
 is the set of parameters for an individual run. A foreach loop is then
-used to iterate over the array, lauching parallel model runs each with
+used to iterate over the array, launching parallel model runs each with
 their own parameters. In this way the number of model runs that can be
 performed in parallel is limited only by hardware resources.</p>
 </div>
@@ -1826,7 +1828,7 @@ performed in parallel is limited only by hardware resources.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-10-24 11:00:01 -0500
+Last updated 2022-10-25 00:00:01 +0800
 </div>
 </div>
 </body>
