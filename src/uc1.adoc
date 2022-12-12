@@ -88,7 +88,7 @@ time step is specified by the parameters zombie step size and human step size.
 === Calling a Repast Simphony simulation from Swift/T
 
 The full Swift/T script can be seen in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1.swift#L1[uc1.swift,window=uc1.swift,pts="noopener,nofollow"].
-The scripts consists of defining variables from environment variables and user input:
+The script consists of defining variables from environment variables and user input:
 // Note: Using "java" for *.swift files
 
 [source#variables,java]
@@ -156,6 +156,8 @@ main() {
   }
 }
 ----
+
+Here we see how the EMEWS Creator allows for very minimal adjustment of the workflow code to adapt to specific use cases.
 
 ==== Calling the External Application
 
