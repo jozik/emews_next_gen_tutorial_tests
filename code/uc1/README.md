@@ -7,7 +7,7 @@ versions will NOT work.
 The project consists of the following directories:
 
 ```
-uc1_v2/
+uc1/
   data/
   ext/
   etc/

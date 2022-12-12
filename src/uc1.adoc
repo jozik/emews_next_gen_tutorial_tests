@@ -356,6 +356,8 @@ The updated swift code is in https://github.com/jozik/emews_next_gen_tutorial_te
             <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="8" to="8">9</highlight-code>)
             contains the number of surviving humans. This string is then placed in the results array at the ith index.
           </p><p>
+
+
             <h3 id="finding_best"> Finding the Best Parameters</h3>
             <p>
               The final workflow steps are to determine which runs yielded the maximum
@@ -400,6 +402,8 @@ The updated swift code is in https://github.com/jozik/emews_next_gen_tutorial_te
             <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="60" to="61">61-62</highlight-code>,
             using Swift's `write` function.
           </p>
+
+
 
           <h2>Running the Swift Script</h2>
           <p>
