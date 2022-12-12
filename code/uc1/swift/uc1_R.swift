@@ -3,6 +3,18 @@ import sys;
 import files;
 import string;
 import emews;
+import R;
+
+string count_humans = ----
+ last.row <- tail(read.csv("%s/counts.csv"), 1)
+ res <- last.row['human_count']
+----;
+
+string find_max =  ----
+v <- c(%s)
+res <- which(v == max(v))
+----;
+
 
 string emews_root = getenv("EMEWS_PROJECT_ROOT");
 string turbine_output = getenv("TURBINE_OUTPUT");
@@ -32,15 +44,30 @@ app (void o) run_prerequisites() {
 // Iterate over each line in the upf file, passing each line 
 // to the model script to run
 main() {
-    run_prerequisites() => {
-        string upf_lines[] = file_lines(upf);
-        foreach s,i in upf_lines {
-            string instance = "%s/instance_%i/" % (turbine_output, i+1);
-            make_dir(instance) => {
-                file out <instance+"out.txt">;
-                file err <instance+"err.txt">;
-                (out,err) = run_model(model_sh, s, instance);
-            }
+  run_prerequisites() => {
+    string upf_lines[] = file_lines(upf);
+    foreach s,i in upf_lines {
+      string instance = "%s/instance_%i/" % (turbine_output, i+1);
+      make_dir(instance) => {
+        file out <instance+"out.txt">;
+        file err <instance+"err.txt">;
+        (out,err) = run_model(model_sh, s, instance) => {
+          string code = count_humans % instance;
+          results[i] = R(code, "toString(res)");
         }
+      }
     }
+    
+    string results_str = string_join(results, ",");
+    string code = find_max % results_str;
+    string maxs = R(code, "toString(res)");
+    string max_idxs[] = split(maxs, ",");
+    string best_params[];
+    foreach s, i in max_idxs {
+      int idx = toint(trim(s));
+      best_params[i] = upf_lines[idx - 1];
+    }
+    file best_out <emews_root + "/output/best_parameters.txt"> =
+      write(string_join(best_params, "\n"));
+  }
 }
