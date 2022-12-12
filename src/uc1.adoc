@@ -294,7 +294,7 @@ redirected by the <<repast-app-annot,run_model>> function.
 
 This is a common pattern in EMEWS. Some collection of parameters is parsed into an array in which each element
 is the set of parameters for an individual run. A foreach loop is then
-used to iterate over the array, lauching parallel model runs each with
+used to iterate over the array, launching parallel model runs each with
 their own parameters. In this way the number of model runs that can be
 performed in parallel is limited only by hardware resources.
 
