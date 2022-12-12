@@ -330,34 +330,52 @@ final time step has been added.
 
 The updated swift code is in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1_R.swift#L1[uc1_R.swift,window=uc1_R.swift,pts="noopener,nofollow"].
 
+
+
 ////
+import R;
+
+string count_humans = ----
+ last.row <- tail(read.csv("%s/counts.csv"), 1)
+ res <- last.row['human_count']
+----;
+
+string find_max =  ----
+v <- c(%s)
+res <- which(v == max(v))
+----;
+
+REST OF code
 
 
-            Here the repast call is now followed by the execution of an R script in line
-            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="46" to="46">47</highlight-code>.
-            This uses Swift/T's support for the R language. R code can be run using
-            Swift's `R` function. `R` takes two arguments, the R code to run,
-            and an additional R statement that generates the desired return value of the R
-            code as a string. The return statement is typically something like `"toString(res)"`
-            where R's `toString` function is passed a variable that contains what
-            you want to return from the R script. Our R script reads the CSV file produced by a model run into a data frame,
-            accesses the last row of that data frame, and then the value of the human_count column in that row is
-            assigned to the `res` variable.
-            This script itself (lines
-            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="6" to="9">7-10</highlight-code>)
-            is assigned to the `count_humans` string variable. The string contains a template character, "%s",
-            (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="7" to="7">8</highlight-code>)
-            that can be replaced with the actual directory in which the output file (counts.csv) is written.
-            Line
-            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="45" to="45">46</highlight-code>
-            performs this substitution with the directory for the current run, using the "%" format Swift operator.
-            The resulting R code string is evaluated in line
-            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="46" to="46">47</highlight-code>
-            using the Swift `R` function.
-            In this case, the `res` variable in the R script (line
-            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="8" to="8">9</highlight-code>)
-            contains the number of surviving humans. This string is then placed in the results array at the ith index.
-          </p><p>
+
+
+Here the repast call is now followed by the execution of an R script in line
+<highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="46" to="46">47</highlight-code>.
+This uses Swift/T's support for the R language. R code can be run using
+Swift's `R` function. `R` takes two arguments, the R code to run,
+and an additional R statement that generates the desired return value of the R
+code as a string. The return statement is typically something like `"toString(res)"`
+where R's `toString` function is passed a variable that contains what
+you want to return from the R script. Our R script reads the CSV file produced by a model run into a data frame,
+accesses the last row of that data frame, and then the value of the human_count column in that row is
+assigned to the `res` variable.
+This script itself (lines
+<highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="6" to="9">7-10</highlight-code>)
+is assigned to the `count_humans` string variable. The string contains a template character, "%s",
+(line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="7" to="7">8</highlight-code>)
+that can be replaced with the actual directory in which the output file (counts.csv) is written.
+Line
+<highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="45" to="45">46</highlight-code>
+performs this substitution with the directory for the current run, using the "%" format Swift operator.
+The resulting R code string is evaluated in line
+<highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="46" to="46">47</highlight-code>
+using the Swift `R` function.
+In this case, the `res` variable in the R script (line
+<highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="8" to="8">9</highlight-code>)
+contains the number of surviving humans. This string is then placed in the results array at the ith index.
+
+
 
 
             <h3 id="finding_best"> Finding the Best Parameters</h3>
