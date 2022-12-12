@@ -224,7 +224,7 @@ the current working directory.
 
 Both of these are used by the parameter sweeping part of the script.
 
-==== Parameter Sweeping
+=== Parameter Sweeping
 
 The remainder of the Swift script performs a simple parameter sweep using the `run_model` app function to run the model.
 The parameters over which we want to sweep are defined in an external file, the so-called unrolled parameter file (UPF),
@@ -296,55 +296,40 @@ used to iterate over the array, launching parallel model runs each with
 their own parameters. In this way the number of model runs that can be
 performed in parallel is limited only by hardware resources.
 
+=== Results Analysis
+
+In our initial script we have seen how to run multiple instances of the Zombies model in parallel, each with a different set of parameters.
+Our next example builds on this by adding some post-run analysis that explores the effect of simulated step size on the final
+number of humans. This analysis will be performed in R and executed within the Swift workflow.
+
+The new scripts consists of the following steps:
+
+* Read the the list of a parameters into a `file` object.
+* Split the contents of the file into an array where each line of file is an array element.
+* Iterate over the array in parallel, launching a model run
+for each parameter set (i.e. array element) in the array, using
+the repast app function.
+* Get the final human count from each run using R, and add it to an array.
+* Also using R, determine the maximum human counts.
+* Get the parameters that produced those maximum human counts.
+* Write those parameters to a file.
+
+We present this in two parts. The first describes the changes to the `foreach` loop to gather the output and the
+second describes how that output is analyzed to determine the "best" parameter combination.
+
+==== Gathering the Results
+
+This example assumes an existing parameter file in which zombie_step_size and human_step_size are varied.
+For each run of the model, that is, for each combination of parameters, the model records a count of
+each agent type at each time step in an output file. As before the script will iterate through the
+file performing as many runs as possible in parallel. However, an additional step that reads each output file and
+determines the parameter combination or combinations that resulted in the most humans surviving at the
+final time step has been added.
+
+The updated swift code is in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1_R.swift#L1[uc1_R.swift,window=uc1_R.swift,pts="noopener,nofollow"].
 
 ////
-<p>
 
-</p>
-
-<p>
-<b></b>
-        </p>
-
-        <h2> Results Analysis </h2>
-          <p>
-            In our initial script we have seen how to run multiple instances of the Zombies model in parallel, each with a different set of parameters.
-            Our next example builds on this by adding some post-run analysis that explores the effect of simulated step size on the final
-            number of humans. This analysis will be performed in R and executed within the Swift workflow.
-
-            The new scripts consists of the following steps:
-
-            <ol id="myol">
-              <li>Read the the list of a parameters into a `file` object.
-              <li>Split the contents of the file into an array where each line of
-                file is an array element.
-              <li>Iterate over the array in parallel, launching a model run
-                for each parameter set (i.e. array element) in the array, using
-                the repast app function.
-              <li>Get the final human count from each run using R, and add it to
-                an array.
-              <li>Also using R, determine the maximum human
-                counts.
-              <li>Get the parameters that produced those maximum human
-                counts.
-              <li>Write those parameters to a file.
-            </ol>
-          </p><p>
-
-            We present this in two parts. The first describes the changes to the `foreach` loop to gather the output and the
-            second describes how that output is analyzed to determine the "best" parameter combination.
-          </p>
-
-          <h3 id="gather_results"> Gathering the Results </h3>
-          <p>
-            This example assumes an existing parameter file in which zombie_step_size and human_step_size are varied.
-            For each run of the model, that is, for each combination of parameters, the model records a count of
-            each agent type at each time step in an output file. As before the script will iterate through the
-            file performing as many runs as possible in parallel. However, an additional step that reads each output file and
-            determines the parameter combination or combinations that resulted in the most humans surviving at the
-            final time step has been added.
-          </p><p>
-            The updated swift code is in <open-code code="uc1/swift/swiftrun_R.swift">swiftrun_R.swift</open-code>.
 
             Here the repast call is now followed by the execution of an R script in line
             <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="46" to="46">47</highlight-code>.

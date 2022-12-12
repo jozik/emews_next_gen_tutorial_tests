@@ -548,7 +548,12 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <ul class="sectlevel3">
 <li><a href="#_calling_the_external_application">2.4.1. Calling the External Application</a></li>
 <li><a href="#_utility_functions">2.4.2. Utility Functions</a></li>
-<li><a href="#_parameter_sweeping">2.4.3. Parameter Sweeping</a></li>
+</ul>
+</li>
+<li><a href="#_parameter_sweeping">2.5. Parameter Sweeping</a></li>
+<li><a href="#_results_analysis">2.6. Results Analysis</a>
+<ul class="sectlevel3">
+<li><a href="#_gathering_the_results">2.6.1. Gathering the Results</a></li>
 </ul>
 </li>
 </ul>
@@ -1561,7 +1566,7 @@ time step is specified by the parameters zombie step size and human step size.</
 <div class="sect2">
 <h3 id="_calling_a_repast_simphony_simulation_from_swiftt">2.4. Calling a Repast Simphony simulation from Swift/T</h3>
 <div class="paragraph">
-<p>The full Swift/T script can be seen in <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/swiftrun.swift#L1" target="swiftrun.swift">swiftrun.swift</a>.
+<p>The full Swift/T script can be seen in <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1.swift#L1" target="uc1.swift">uc1.swift</a>.
 The scripts consists of defining variables from environment variables and user input:</p>
 </div>
 <div id="variables" class="listingblock">
@@ -1662,7 +1667,7 @@ For more on these variables see the
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>The app function definition begins. The function returns two files, one for standard output and one for standard error.
-The function arguments are those required to <mark>run</mark> <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/repast.sh#L1" target="repast.sh">repast.sh</a>, that is,
+The function arguments are those required to <mark>run</mark> <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/run_repast_uc1.sh#L1" target="run_repast_uc1.sh">repast.sh</a>, that is,
 the full path of the script, the parameters to run and the directory where the model run output should be written.</td>
 </tr>
 <tr>
@@ -1710,8 +1715,9 @@ the current working directory.</td>
 <p>Both of these are used by the parameter sweeping part of the script.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_parameter_sweeping">2.4.3. Parameter Sweeping</h4>
+</div>
+<div class="sect2">
+<h3 id="_parameter_sweeping">2.5. Parameter Sweeping</h3>
 <div class="paragraph">
 <p>The remainder of the Swift script performs a simple parameter sweep using the <code>run_model</code> app function to run the model.
 The parameters over which we want to sweep are defined in an external file, the so-called unrolled parameter file (UPF),
@@ -1788,7 +1794,7 @@ the code on its left-hand side must complete execution before the code on the ri
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>Read the <code>upf</code> file into an array of strings where each line of the file is an element in the array.
-The built-in Swift <code>file_lines</code> function (requires import of files module at the <mark>top of</mark> <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/swiftrun.swift#L3" target="swiftrun.swift">swiftrun.swift</a>)
+The built-in Swift <code>file_lines</code> function (requires import of files module at the <mark>top of</mark> <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1.swift#L3" target="uc1.swift">uc1.swift</a>)
 is used to read the upf file into this array of strings.</td>
 </tr>
 <tr>
@@ -1820,6 +1826,61 @@ is the set of parameters for an individual run. A foreach loop is then
 used to iterate over the array, launching parallel model runs each with
 their own parameters. In this way the number of model runs that can be
 performed in parallel is limited only by hardware resources.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_results_analysis">2.6. Results Analysis</h3>
+<div class="paragraph">
+<p>In our initial script we have seen how to run multiple instances of the Zombies model in parallel, each with a different set of parameters.
+Our next example builds on this by adding some post-run analysis that explores the effect of simulated step size on the final
+number of humans. This analysis will be performed in R and executed within the Swift workflow.</p>
+</div>
+<div class="paragraph">
+<p>The new scripts consists of the following steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Read the the list of a parameters into a <code>file</code> object.</p>
+</li>
+<li>
+<p>Split the contents of the file into an array where each line of file is an array element.</p>
+</li>
+<li>
+<p>Iterate over the array in parallel, launching a model run
+for each parameter set (i.e. array element) in the array, using
+the repast app function.</p>
+</li>
+<li>
+<p>Get the final human count from each run using R, and add it to an array.</p>
+</li>
+<li>
+<p>Also using R, determine the maximum human counts.</p>
+</li>
+<li>
+<p>Get the parameters that produced those maximum human counts.</p>
+</li>
+<li>
+<p>Write those parameters to a file.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We present this in two parts. The first describes the changes to the <code>foreach</code> loop to gather the output and the
+second describes how that output is analyzed to determine the "best" parameter combination.</p>
+</div>
+<div class="sect3">
+<h4 id="_gathering_the_results">2.6.1. Gathering the Results</h4>
+<div class="paragraph">
+<p>This example assumes an existing parameter file in which zombie_step_size and human_step_size are varied.
+For each run of the model, that is, for each combination of parameters, the model records a count of
+each agent type at each time step in an output file. As before the script will iterate through the
+file performing as many runs as possible in parallel. However, an additional step that reads each output file and
+determines the parameter combination or combinations that resulted in the most humans surviving at the
+final time step has been added.</p>
+</div>
+<div class="paragraph">
+<p>The updated swift code is in <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1_R.swift#L1" target="uc1_R.swift">uc1_R.swift</a>.</p>
 </div>
 </div>
 </div>
