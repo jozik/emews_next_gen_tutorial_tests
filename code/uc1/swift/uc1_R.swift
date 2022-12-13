@@ -6,8 +6,8 @@ import emews;
 import R;
 
 string count_humans = ----
- last.row <- tail(read.csv("%s/counts.csv"), 1)
- res <- last.row['human_count']
+last.row <- tail(read.csv("%s/counts.csv"), 1)
+res <- last.row['human_count']
 ----;
 
 string find_max =  ----
@@ -57,7 +57,7 @@ main() {
         }
       }
     }
-    
+
     string results_str = string_join(results, ",");
     string code = find_max % results_str;
     string maxs = R(code, "toString(res)");
