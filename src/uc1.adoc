@@ -11,7 +11,7 @@ EMEWS #<<_sweep_template,sweep template>>#,
 and that should be read before this.
 
 
-=== Tutorial goals:
+=== Tutorial goals
 
 * Run an ABM simulation using Repast in Swift/T
 * Execute parallel parameters sweep of ABM simulation model 
