@@ -535,7 +535,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </li>
 </ul>
 </li>
-<li><a href="#uc1">2. Simple Workflows with ABM</a>
+<li><a href="#uc1">2. <mark>Simple</mark> Workflows with ABM</a>
 <ul class="sectlevel2">
 <li><a href="#_tutorial_goals">2.1. Tutorial goals</a></li>
 <li><a href="#_workflow_project_structure">2.2. Workflow Project Structure</a></li>
@@ -554,6 +554,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_results_analysis">2.6. Results Analysis</a>
 <ul class="sectlevel3">
 <li><a href="#_gathering_the_results">2.6.1. Gathering the Results</a></li>
+<li><a href="#_finding_the_best_parameters">2.6.2. Finding the Best Parameters</a></li>
 </ul>
 </li>
 </ul>
@@ -1456,7 +1457,7 @@ for <code>CFG_WALLTIME</code>, <code>CFG_QUEUE</code>, and <code>CFG_PROJECT</co
 </div>
 </div>
 <div class="sect1">
-<h2 id="uc1">2. Simple Workflows with ABM</h2>
+<h2 id="uc1">2. <mark>Simple</mark> Workflows with ABM</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>For a first demonstration ABM use case, we begin with an example of a Swift/T
@@ -1869,12 +1870,6 @@ the repast app function.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>We present this in two parts. The first describes the changes to the <code>foreach</code> loop to gather the output and the
-second describes how that output is analyzed to determine the "best" parameter combination.</p>
-</div>
-<div class="sect3">
-<h4 id="_gathering_the_results">2.6.1. Gathering the Results</h4>
-<div class="paragraph">
 <p>This example assumes an existing parameter file in which zombie_step_size and human_step_size are varied.
 For each run of the model, that is, for each combination of parameters, the model records a count of
 each agent type at each time step in an output file. As before the script will iterate through the
@@ -1883,8 +1878,137 @@ determines the parameter combination or combinations that resulted in the most h
 final time step has been added.</p>
 </div>
 <div class="paragraph">
-<p>The updated swift code is in <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1_R.swift#L1" target="uc1_R.swift">uc1_R.swift</a>.</p>
+<p>The full updated swift code is in <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1_R.swift#L1" target="uc1_R.swift">uc1_R.swift</a>.</p>
 </div>
+<div class="paragraph">
+<p>The updated code includes embedded R code that can be invoked using Swift&#8217;s <code>R</code> function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-kn">import</span> <span class="tok-nn">R</span><span class="tok-p">;</span>
+
+<span class="tok-n">string</span> <span class="tok-n">count_humans</span> <span class="tok-o">=</span> <span class="tok-o">----</span>
+<span class="tok-n">last</span><span class="tok-p">.</span><span class="tok-na">row</span> <span class="tok-o">&lt;-</span> <span class="tok-n">tail</span><span class="tok-p">(</span><span class="tok-n">read</span><span class="tok-p">.</span><span class="tok-na">csv</span><span class="tok-p">(</span><span class="tok-s">&quot;%s/counts.csv&quot;</span><span class="tok-p">),</span> <span class="tok-mi">1</span><span class="tok-p">)</span>
+<span class="tok-n">res</span> <span class="tok-o">&lt;-</span> <span class="tok-n">last</span><span class="tok-p">.</span><span class="tok-na">row</span><span class="tok-o">[</span><span class="tok-s">&quot;human_count&quot;</span><span class="tok-o">]</span>
+<span class="tok-o">----</span><span class="tok-p">;</span>
+
+<span class="tok-n">string</span> <span class="tok-n">find_max</span> <span class="tok-o">=</span>  <span class="tok-o">----</span>
+<span class="tok-n">v</span> <span class="tok-o">&lt;-</span> <span class="tok-n">c</span><span class="tok-p">(</span><span class="tok-o">%</span><span class="tok-n">s</span><span class="tok-p">)</span>
+<span class="tok-n">res</span> <span class="tok-o">&lt;-</span> <span class="tok-n">which</span><span class="tok-p">(</span><span class="tok-n">v</span> <span class="tok-o">==</span> <span class="tok-n">max</span><span class="tok-p">(</span><span class="tok-n">v</span><span class="tok-p">))</span>
+<span class="tok-o">----</span><span class="tok-p">;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>an expanded <code>foreach</code> loop:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">string</span> <span class="tok-n">upf_lines</span><span class="tok-o">[]</span> <span class="tok-o">=</span> <span class="tok-n">file_lines</span><span class="tok-p">(</span><span class="tok-n">upf</span><span class="tok-p">);</span>
+<span class="tok-n">string</span> <span class="tok-n">results</span><span class="tok-o">[]</span><span class="tok-p">;</span>
+<span class="tok-n">foreach</span> <span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-n">i</span> <span class="tok-n">in</span> <span class="tok-n">upf_lines</span> <span class="tok-p">{</span>
+  <span class="tok-n">string</span> <span class="tok-n">instance</span> <span class="tok-o">=</span> <span class="tok-s">&quot;%s/instance_%i/&quot;</span> <span class="tok-o">%</span> <span class="tok-p">(</span><span class="tok-n">turbine_output</span><span class="tok-p">,</span> <span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">);</span>
+  <span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">instance</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+    <span class="tok-n">file</span> <span class="tok-n">out</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;out.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+    <span class="tok-n">file</span> <span class="tok-n">err</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;err.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+    <span class="tok-p">(</span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">model_sh</span><span class="tok-p">,</span> <span class="tok-n">s</span><span class="tok-p">,</span> <span class="tok-n">instance</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+      <span class="tok-n">string</span> <span class="tok-n">code</span> <span class="tok-o">=</span> <span class="tok-n">count_humans</span> <span class="tok-o">%</span> <span class="tok-n">instance</span><span class="tok-p">;</span>
+      <span class="tok-n">results</span><span class="tok-o">[</span><span class="tok-n">i</span><span class="tok-o">]</span> <span class="tok-o">=</span> <span class="tok-n">R</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span> <span class="tok-s">&quot;toString(res)&quot;</span><span class="tok-p">);</span>
+    <span class="tok-p">}</span>
+  <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and calls to the post processing code:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">string</span> <span class="tok-n">results_str</span> <span class="tok-o">=</span> <span class="tok-n">string_join</span><span class="tok-p">(</span><span class="tok-n">results</span><span class="tok-p">,</span> <span class="tok-s">&quot;,&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">string</span> <span class="tok-n">code</span> <span class="tok-o">=</span> <span class="tok-n">find_max</span> <span class="tok-o">%</span> <span class="tok-n">results_str</span><span class="tok-p">;</span>
+<span class="tok-n">string</span> <span class="tok-n">maxs</span> <span class="tok-o">=</span> <span class="tok-n">R</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span> <span class="tok-s">&quot;toString(res)&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">string</span> <span class="tok-n">max_idxs</span><span class="tok-o">[]</span> <span class="tok-o">=</span> <span class="tok-n">split</span><span class="tok-p">(</span><span class="tok-n">maxs</span><span class="tok-p">,</span> <span class="tok-s">&quot;,&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">string</span> <span class="tok-n">best_params</span><span class="tok-o">[]</span><span class="tok-p">;</span>
+<span class="tok-n">foreach</span> <span class="tok-n">s</span><span class="tok-p">,</span> <span class="tok-n">i</span> <span class="tok-n">in</span> <span class="tok-n">max_idxs</span> <span class="tok-p">{</span>
+  <span class="tok-kt">int</span> <span class="tok-n">idx</span> <span class="tok-o">=</span> <span class="tok-n">toint</span><span class="tok-p">(</span><span class="tok-n">trim</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">));</span>
+  <span class="tok-n">best_params</span><span class="tok-o">[</span><span class="tok-n">i</span><span class="tok-o">]</span> <span class="tok-o">=</span> <span class="tok-n">upf_lines</span><span class="tok-o">[</span><span class="tok-n">idx</span> <span class="tok-o">-</span> <span class="tok-mi">1</span><span class="tok-o">]</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
+<span class="tok-n">file</span> <span class="tok-n">best_out</span> <span class="tok-o">&lt;</span><span class="tok-n">emews_root</span> <span class="tok-o">+</span> <span class="tok-s">&quot;/output/best_parameters.txt&quot;</span><span class="tok-o">&gt;</span> <span class="tok-o">=</span>
+  <span class="tok-n">write</span><span class="tok-p">(</span><span class="tok-n">string_join</span><span class="tok-p">(</span><span class="tok-n">best_params</span><span class="tok-p">,</span> <span class="tok-s">&quot;\n&quot;</span><span class="tok-p">));</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We describe this in two parts. The first describes the changes to the <code>foreach</code> loop to gather the output and the
+second describes how that output is analyzed to determine the "best" parameter combination.</p>
+</div>
+<div class="sect3">
+<h4 id="_gathering_the_results">2.6.1. Gathering the Results</h4>
+<div id="enhanced-foreach-annot" class="listingblock">
+<div class="title">Enhanced foreach loop</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-kn">import</span> <span class="tok-nn">R</span><span class="tok-p">;</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="tok-n">string</span> <span class="tok-n">count_humans</span> <span class="tok-o">=</span> <span class="tok-o">----</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-n">last</span><span class="tok-p">.</span><span class="tok-na">row</span> <span class="tok-o">&lt;-</span> <span class="tok-n">tail</span><span class="tok-p">(</span><span class="tok-n">read</span><span class="tok-p">.</span><span class="tok-na">csv</span><span class="tok-p">(</span><span class="tok-s">&quot;%s/counts.csv&quot;</span><span class="tok-p">),</span> <span class="tok-mi">1</span><span class="tok-p">)</span>  <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-n">res</span> <span class="tok-o">&lt;-</span> <span class="tok-n">last</span><span class="tok-p">.</span><span class="tok-na">row</span><span class="tok-o">[</span><span class="tok-s">&quot;human_count&quot;</span><span class="tok-o">]</span>  <i class="conum" data-value="4"></i><b>(4)</b>
+
+<span class="tok-n">string</span> <span class="tok-n">upf_lines</span><span class="tok-o">[]</span> <span class="tok-o">=</span> <span class="tok-n">file_lines</span><span class="tok-p">(</span><span class="tok-n">upf</span><span class="tok-p">);</span>
+<span class="tok-n">string</span> <span class="tok-n">results</span><span class="tok-o">[]</span><span class="tok-p">;</span>  <i class="conum" data-value="5"></i><b>(5)</b>
+<span class="tok-n">foreach</span> <span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-n">i</span> <span class="tok-n">in</span> <span class="tok-n">upf_lines</span> <span class="tok-p">{</span>
+  <span class="tok-n">string</span> <span class="tok-n">instance</span> <span class="tok-o">=</span> <span class="tok-s">&quot;%s/instance_%i/&quot;</span> <span class="tok-o">%</span> <span class="tok-p">(</span><span class="tok-n">turbine_output</span><span class="tok-p">,</span> <span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">);</span>
+  <span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">instance</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+    <span class="tok-n">file</span> <span class="tok-n">out</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;out.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+    <span class="tok-n">file</span> <span class="tok-n">err</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;err.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+    <span class="tok-p">(</span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">model_sh</span><span class="tok-p">,</span> <span class="tok-n">s</span><span class="tok-p">,</span> <span class="tok-n">instance</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+      <span class="tok-n">string</span> <span class="tok-n">code</span> <span class="tok-o">=</span> <span class="tok-n">count_humans</span> <span class="tok-o">%</span> <span class="tok-n">instance</span><span class="tok-p">;</span>  <i class="conum" data-value="6"></i><b>(6)</b>
+      <span class="tok-n">results</span><span class="tok-o">[</span><span class="tok-n">i</span><span class="tok-o">]</span> <span class="tok-o">=</span> <span class="tok-n">R</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span> <span class="tok-s">&quot;toString(res)&quot;</span><span class="tok-p">);</span>  <i class="conum" data-value="7"></i><b>(7)</b>
+    <span class="tok-p">}</span>
+  <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>To use Swift/T&#8217;s support for the R language, the R module is imported.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>A multiline R script, delineated by <code>----</code>, is assigned to the <code>count_humans</code> string variable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The string contains a template character, "%s", which is replaced with the actual directory (described below) in which the output file (counts.csv) is written.
+The R script reads the CSV file produced by a model run into a data frame.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The last row of the data frame is accessed and the value of the <code>human_count</code> column in that row is
+assigned to a <code>res</code> variable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>A <code>results</code> array is initialized.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>The <code>run_model</code> call is followed by the execution of the R script. First, the template substitution is performed with the directory for the current run, using the "%" format Swift operator.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>R code can be run using Swift&#8217;s <code>R</code> function. <code>R</code> takes two arguments, the R code to run,
+and an additional R statement that generates the desired return value of the R
+code as a string. The return statement is typically, as seen here, something like <code>"toString(res)"</code>
+where R&#8217;s <code>toString</code> function is passed a variable that contains what
+you want to return from the R script. In this case, the <code>res</code> variable contains the number of surviving humans.
+This string is then placed in the <code>results</code> array at the ith index.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_finding_the_best_parameters">2.6.2. Finding the Best Parameters</h4>
+
 </div>
 </div>
 </div>

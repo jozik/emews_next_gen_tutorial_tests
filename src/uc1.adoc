@@ -1,7 +1,7 @@
 IMPORTANT: #Highlights# below have in source TODOs.
 [[uc1, Use Case 1 Tutorial - Simple Workflows with ABM]]
-== Simple Workflows with ABM
-
+== #Simple# Workflows with ABM
+// TODO: try to unify the voice used throughout
 
 For a first demonstration ABM use case, we begin with an example of a Swift/T
 parallel parameter sweep to explore the parameter space of a model.
@@ -86,6 +86,7 @@ time step is specified by the parameters zombie step size and human step size.
 
 
 === Calling a Repast Simphony simulation from Swift/T
+
 
 The full Swift/T script can be seen in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1.swift#L1[uc1.swift,window=uc1.swift,pts="noopener,nofollow"].
 The script consists of defining variables from environment variables and user input:
@@ -316,11 +317,6 @@ the repast app function.
 * Get the parameters that produced those maximum human counts.
 * Write those parameters to a file.
 
-We present this in two parts. The first describes the changes to the `foreach` loop to gather the output and the
-second describes how that output is analyzed to determine the "best" parameter combination.
-
-==== Gathering the Results
-
 This example assumes an existing parameter file in which zombie_step_size and human_step_size are varied.
 For each run of the model, that is, for each combination of parameters, the model records a count of
 each agent type at each time step in an output file. As before the script will iterate through the
@@ -328,52 +324,107 @@ file performing as many runs as possible in parallel. However, an additional ste
 determines the parameter combination or combinations that resulted in the most humans surviving at the
 final time step has been added.
 
-The updated swift code is in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1_R.swift#L1[uc1_R.swift,window=uc1_R.swift,pts="noopener,nofollow"].
+The full updated swift code is in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1_R.swift#L1[uc1_R.swift,window=uc1_R.swift,pts="noopener,nofollow"].
 
-
-
-////
+The updated code includes embedded R code that can be invoked using Swift's `R` function:
+[source,java]
+----
 import R;
 
 string count_humans = ----
- last.row <- tail(read.csv("%s/counts.csv"), 1)
- res <- last.row['human_count']
+last.row <- tail(read.csv("%s/counts.csv"), 1)
+res <- last.row["human_count"]
 ----;
 
 string find_max =  ----
 v <- c(%s)
 res <- which(v == max(v))
 ----;
+----
 
-REST OF code
+an expanded `foreach` loop:
+
+[source,java]
+----
+string upf_lines[] = file_lines(upf);
+string results[];
+foreach s,i in upf_lines {
+  string instance = "%s/instance_%i/" % (turbine_output, i+1);
+  make_dir(instance) => {
+    file out <instance+"out.txt">;
+    file err <instance+"err.txt">;
+    (out,err) = run_model(model_sh, s, instance) => {
+      string code = count_humans % instance;
+      results[i] = R(code, "toString(res)");
+    }
+  }
+}
+----
+
+and calls to the post processing code:
+[source,java]
+----
+string results_str = string_join(results, ",");
+string code = find_max % results_str;
+string maxs = R(code, "toString(res)");
+string max_idxs[] = split(maxs, ",");
+string best_params[];
+foreach s, i in max_idxs {
+  int idx = toint(trim(s));
+  best_params[i] = upf_lines[idx - 1];
+}
+file best_out <emews_root + "/output/best_parameters.txt"> =
+  write(string_join(best_params, "\n"));
+----
+
+We describe this in two parts. The first describes the changes to the `foreach` loop to gather the output and the
+second describes how that output is analyzed to determine the "best" parameter combination.
 
 
+==== Gathering the Results
 
+[source#enhanced-foreach-annot,java]
+.Enhanced foreach loop
+----
+import R;  <1>
 
-Here the repast call is now followed by the execution of an R script in line
-<highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="46" to="46">47</highlight-code>.
-This uses Swift/T's support for the R language. R code can be run using
-Swift's `R` function. `R` takes two arguments, the R code to run,
+string count_humans = ----  <2>
+last.row <- tail(read.csv("%s/counts.csv"), 1)  <3>
+res <- last.row["human_count"]  <4>
+
+string upf_lines[] = file_lines(upf);
+string results[];  <5>
+foreach s,i in upf_lines {
+  string instance = "%s/instance_%i/" % (turbine_output, i+1);
+  make_dir(instance) => {
+    file out <instance+"out.txt">;
+    file err <instance+"err.txt">;
+    (out,err) = run_model(model_sh, s, instance) => {
+      string code = count_humans % instance;  <6>
+      results[i] = R(code, "toString(res)");  <7>
+    }
+  }
+}
+----
+<1> To use Swift/T's support for the R language, the R module is imported.
+<2> A multiline R script, delineated by `----`, is assigned to the `count_humans` string variable.
+<3> The string contains a template character, "%s", which is replaced with the actual directory (described below) in which the output file (counts.csv) is written.
+The R script reads the CSV file produced by a model run into a data frame.
+<4> The last row of the data frame is accessed and the value of the `human_count` column in that row is
+assigned to a `res` variable.
+<5> A `results` array is initialized.
+<6> The `run_model` call is followed by the execution of the R script. First, the template substitution is performed with the directory for the current run, using the "%" format Swift operator.
+<7> R code can be run using Swift's `R` function. `R` takes two arguments, the R code to run,
 and an additional R statement that generates the desired return value of the R
-code as a string. The return statement is typically something like `"toString(res)"`
+code as a string. The return statement is typically, as seen here, something like `"toString(res)"`
 where R's `toString` function is passed a variable that contains what
-you want to return from the R script. Our R script reads the CSV file produced by a model run into a data frame,
-accesses the last row of that data frame, and then the value of the human_count column in that row is
-assigned to the `res` variable.
-This script itself (lines
-<highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="6" to="9">7-10</highlight-code>)
-is assigned to the `count_humans` string variable. The string contains a template character, "%s",
-(line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="7" to="7">8</highlight-code>)
-that can be replaced with the actual directory in which the output file (counts.csv) is written.
-Line
-<highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="45" to="45">46</highlight-code>
-performs this substitution with the directory for the current run, using the "%" format Swift operator.
-The resulting R code string is evaluated in line
-<highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="46" to="46">47</highlight-code>
-using the Swift `R` function.
-In this case, the `res` variable in the R script (line
-<highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="8" to="8">9</highlight-code>)
-contains the number of surviving humans. This string is then placed in the results array at the ith index.
+you want to return from the R script. In this case, the `res` variable contains the number of surviving humans.
+This string is then placed in the `results` array at the ith index.
+
+==== Finding the Best Parameters
+
+
+////
 
 
 
