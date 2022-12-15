@@ -46,6 +46,7 @@ app (void o) run_prerequisites() {
 main() {
   run_prerequisites() => {
     string upf_lines[] = file_lines(upf);
+    string results[];
     foreach s,i in upf_lines {
       string instance = "%s/instance_%i/" % (turbine_output, i+1);
       make_dir(instance) => {
