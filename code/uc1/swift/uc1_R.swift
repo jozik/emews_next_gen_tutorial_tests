@@ -7,7 +7,7 @@ import R;
 
 string count_humans = ----
 last.row <- tail(read.csv("%s/counts.csv"), 1)
-res <- last.row['human_count']
+res <- last.row["human_count"]
 ----;
 
 string find_max =  ----
