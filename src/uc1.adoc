@@ -470,51 +470,92 @@ Note that we subtract one from `idx` because R indices start at 1 while Swift's 
 
 
 === Running the Swift Script
+Swift scripts are typically launched using a shell script. This allows
+one to export useful values as environment variables and to properly
+configure the Swift workflow to be run on HPC resources.
+The EMEWS Creator will automatically create such a shell script. The shell script for running
+our simple workflow can be see in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/run_uc1.sh#L1[run_uc1.sh,window=run_uc1.sh,pts="noopener,nofollow"].
 
+[source#run-uc1-front-annot,bash]
+.run_uc1.sh selected parts
+----
+if [ "$#" -ne 2 ]; then  <1>
+  script_name=$(basename $0)
+  echo "Usage: ${script_name} exp_id cfg_file"
+  exit 1
+fi
 
+# Uncomment to turn on swift/t logging. Can also set TURBINE_LOG,
+# TURBINE_DEBUG, and ADLB_DEBUG to 0 to turn off logging
+# export TURBINE_LOG=1 TURBINE_DEBUG=1 ADLB_DEBUG=1  <2>
+export EMEWS_PROJECT_ROOT=$( cd $( dirname $0 )/.. ; /bin/pwd )  <3>
 
-////
+... 
 
+export EXPID=$1
+export TURBINE_OUTPUT=$EMEWS_PROJECT_ROOT/experiments/$EXPID  <4>
+check_directory_exists
 
+CFG_FILE=$2
+source $CFG_FILE  <5>
 
-          <h2>Running the Swift Script</h2>
-          <p>
-          Swift scripts are typically launched using a shell script. This allows
-          you to export useful values as environment variables and to properly
-          configure the swift workflow to be run on HPC resources. If you use
-          the <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="EMEWS_templates">EMEWS templates</modal-data>
-          such a shell script will automatically be created for you. The shell script for running
-          our simple workflow can be see in
-          <open-code code="uc1/swift/workflow.sh">workflow.sh</open-code>.
+echo "--------------------------"
+echo "WALLTIME:              $CFG_WALLTIME"
+echo "PROCS:                 $CFG_PROCS"
+echo "PPN:                   $CFG_PPN"
+echo "QUEUE:                 $CFG_QUEUE"
+echo "PROJECT:               $CFG_PROJECT"
+echo "UPF FILE:              $CFG_UPF"
+echo "--------------------------"
 
-          The workflow.sh file assumes the canonical EMEWS directory structure
-          (see the EMEWS templates tutorial for more details) where
-          a so-called EMEWS project root directory contains other directories
-          such as a `swift` directory in which your swift scripts are
-          located. workflow.sh defines and exports EMEWS_PROJECT_ROOT in line
-          <highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="12" to="12">13</highlight-code>,
-          and you can see EMEWS_PROJECT_ROOT being used in line
-          <highlight-code code="uc1/swift/swiftrun.swift" color="rgba(255,255,255,0.3)" from="4" to="4">5</highlight-code> of swiftrun.swift.
-        </p>
-        <p>
+export PROCS=$CFG_PROCS
+export QUEUE=$CFG_QUEUE
+export PROJECT=$CFG_PROJECT
+export WALLTIME=$CFG_WALLTIME
+export PPN=$CFG_PPN
 
-          workflow.sh takes 1 required argument: an experiment id (e.g., experiment_1).
-          The experiment id is used to define a TURBINE_OUTPUT directory
-          (line <highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="17" to="17">18</highlight-code>)
-          into which per workflow output can be written. Swift will also write its own
-          log files into this directory as the workflow executes. workflow.sh
-          also defines additional environment variables that are required for
-          cluster execution such as `WALLTIME`, `PPN`, `MACHINE`
-          and so forth. The final line of workflow.sh (line
-          <highlight-code code="uc1/swift/workflow.sh" color="rgba(255,255,255,0.3)" from="66" to="66">67</highlight-code>)
-          runs the swift script by
-          calling `swift-t` with the script as the argument followed by any
-          arguments to the swift script itself (i.e. "-f="). The `-n` argument
-          specifies the total number of processes on which to run. Additional
-          help for the arguments to `swift-t` can be seen by running
-          `swift-t -h`. More information on shell script used to
-          launch the Swift/T workflow can be seen in the description of the
-          <modal-data data="plugins/Tutorial-View/tutorial/templating.html" ref="swift_run_sweep_sh"><tt id="myfn">swift_run_sweep.sh`</modal-data>
-          section of the templating tutorial.
-        </p>
-////
+...
+# Copies UPF file to experiment directory
+U_UPF_FILE=$EMEWS_PROJECT_ROOT/$CFG_UPF  <6>
+UPF_FILE=$TURBINE_OUTPUT/upf.txt
+cp $U_UPF_FILE $UPF_FILE
+
+CMD_LINE_ARGS="$* -f=$UPF_FILE "  <7>
+...
+
+SWIFT_FILE=uc1.swift  <8>
+swift-t -n $PROCS $MACHINE -p \
+    -I $EMEWS_EXT -r $EMEWS_EXT \
+    -e TURBINE_MPI_THREAD \
+    -e TURBINE_OUTPUT \
+    -e EMEWS_PROJECT_ROOT \
+    $EMEWS_PROJECT_ROOT/swift/$SWIFT_FILE \
+    $CMD_LINE_ARGS
+----
+<1> run_uc1.sh takes 2 required arguments (exp_id and cfg_file).
+The first is an experiment id (e.g., "experiment_1"), which is used to define a directory (TURBINE_OUTPUT, defined below)
+into which per workflow output can be written. Swift will also write its own
+log files into this directory as the workflow executes.
+The second required argument is the workflow configuration file. EMEWS Creator will have auto-generated
+a configuration file based on the information provided to it, and can be seen in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/cfgs/uc1.cfg#L1[uc1.cfg,window=uc1.cfg,pts="noopener,nofollow"].
+<2> Additional logging, including debugging logs, can be enabled by uncommenting.
+<3> EMEWS_PROJECT_ROOT is defined and exported here. The workflow launch script assumes the canonical EMEWS directory structure, where
+the so-called EMEWS project root directory contains other directories
+such as a `swift` directory in which the swift scripts are
+located.
+<4> The TURBINE_OUTPUT directory is defined, using the EMEWS_PROJECT_ROOT and EXP_ID environment variables.
+<5> The configuration file is sourced, bringing in the specific CFG_X environment variables defined there.
+These include environment variables that are required for
+cluster execution such as queue name (`QUEUE`), project name (`PROJECT`), requested walltime (`WALLTIME`),
+processes per node (`PPN`), and so forth. Any additional environment variables can be included here
+and optionally also provided through the configuration file mechanism.
+<6> The utilized unrolled parameter file is copied to the TURBINE_OUTPUT directory to document
+the details of the workflow and also to prevent any inadvertent overwriting between script submission and the job run.
+<7> The command line arguments provided to the Swift script are constructed. Here the "-f=" argument points to the unrolled parameter file.
+<8> The final lines run the swift script by
+calling `swift-t` with Swift specific, e.g., "-n" specifies the total number of processes on which to run,
+and script specific arguments, here the CMD_LINE_ARGS defined above.
+Additional help for the arguments to `swift-t` can be seen by running
+`swift-t -h`. More information on shell script used to
+launch the Swift/T workflow can be seen in the #EMEWS Creator tutorial#.
+// TODO: Include link to project creator section.

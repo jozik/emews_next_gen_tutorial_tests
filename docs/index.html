@@ -557,6 +557,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_finding_the_best_parameters">2.6.2. Finding the Best Parameters</a></li>
 </ul>
 </li>
+<li><a href="#_running_the_swift_script">2.7. Running the Swift Script</a></li>
 </ul>
 </li>
 </ul>
@@ -2087,6 +2088,127 @@ Note that we subtract one from <code>idx</code> because R indices start at 1 whi
 </tr>
 </table>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_the_swift_script">2.7. Running the Swift Script</h3>
+<div class="paragraph">
+<p>Swift scripts are typically launched using a shell script. This allows
+one to export useful values as environment variables and to properly
+configure the Swift workflow to be run on HPC resources.
+The EMEWS Creator will automatically create such a shell script. The shell script for running
+our simple workflow can be see in <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/run_uc1.sh#L1" target="run_uc1.sh">run_uc1.sh</a>.</p>
+</div>
+<div id="run-uc1-front-annot" class="listingblock">
+<div class="title">run_uc1.sh selected parts</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$#</span><span class="tok-s2">&quot;</span> -ne <span class="tok-m">2</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="tok-nv">script_name</span><span class="tok-o">=</span><span class="tok-k">$(</span>basename <span class="tok-nv">$0</span><span class="tok-k">)</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Usage: </span><span class="tok-si">${</span><span class="tok-nv">script_name</span><span class="tok-si">}</span><span class="tok-s2"> exp_id cfg_file&quot;</span>
+  <span class="tok-nb">exit</span> <span class="tok-m">1</span>
+<span class="tok-k">fi</span>
+
+<span class="tok-c1"># Uncomment to turn on swift/t logging. Can also set TURBINE_LOG,</span>
+<span class="tok-c1"># TURBINE_DEBUG, and ADLB_DEBUG to 0 to turn off logging</span>
+<span class="tok-c1"># export TURBINE_LOG=1 TURBINE_DEBUG=1 ADLB_DEBUG=1  </span><i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">EMEWS_PROJECT_ROOT</span><span class="tok-o">=</span><span class="tok-k">$(</span> <span class="tok-nb">cd</span> <span class="tok-k">$(</span> dirname <span class="tok-nv">$0</span> <span class="tok-k">)</span>/.. <span class="tok-p">;</span> /bin/pwd <span class="tok-k">)</span>  <i class="conum" data-value="3"></i><b>(3)</b>
+
+...
+
+<span class="tok-nb">export</span> <span class="tok-nv">EXPID</span><span class="tok-o">=</span><span class="tok-nv">$1</span>
+<span class="tok-nb">export</span> <span class="tok-nv">TURBINE_OUTPUT</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/experiments/<span class="tok-nv">$EXPID</span>  <i class="conum" data-value="4"></i><b>(4)</b>
+check_directory_exists
+
+<span class="tok-nv">CFG_FILE</span><span class="tok-o">=</span><span class="tok-nv">$2</span>
+<span class="tok-nb">source</span> <span class="tok-nv">$CFG_FILE</span>  <i class="conum" data-value="5"></i><b>(5)</b>
+
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;--------------------------&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;WALLTIME:              </span><span class="tok-nv">$CFG_WALLTIME</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;PROCS:                 </span><span class="tok-nv">$CFG_PROCS</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;PPN:                   </span><span class="tok-nv">$CFG_PPN</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;QUEUE:                 </span><span class="tok-nv">$CFG_QUEUE</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;PROJECT:               </span><span class="tok-nv">$CFG_PROJECT</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;UPF FILE:              </span><span class="tok-nv">$CFG_UPF</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;--------------------------&quot;</span>
+
+<span class="tok-nb">export</span> <span class="tok-nv">PROCS</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROCS</span>
+<span class="tok-nb">export</span> <span class="tok-nv">QUEUE</span><span class="tok-o">=</span><span class="tok-nv">$CFG_QUEUE</span>
+<span class="tok-nb">export</span> <span class="tok-nv">PROJECT</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROJECT</span>
+<span class="tok-nb">export</span> <span class="tok-nv">WALLTIME</span><span class="tok-o">=</span><span class="tok-nv">$CFG_WALLTIME</span>
+<span class="tok-nb">export</span> <span class="tok-nv">PPN</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PPN</span>
+
+...
+<span class="tok-c1"># Copies UPF file to experiment directory</span>
+<span class="tok-nv">U_UPF_FILE</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/<span class="tok-nv">$CFG_UPF</span>  <i class="conum" data-value="6"></i><b>(6)</b>
+<span class="tok-nv">UPF_FILE</span><span class="tok-o">=</span><span class="tok-nv">$TURBINE_OUTPUT</span>/upf.txt
+cp <span class="tok-nv">$U_UPF_FILE</span> <span class="tok-nv">$UPF_FILE</span>
+
+<span class="tok-nv">CMD_LINE_ARGS</span><span class="tok-o">=</span><span class="tok-s2">&quot;</span><span class="tok-nv">$*</span><span class="tok-s2"> -f=</span><span class="tok-nv">$UPF_FILE</span><span class="tok-s2"> &quot;</span>  <i class="conum" data-value="7"></i><b>(7)</b>
+...
+
+<span class="tok-nv">SWIFT_FILE</span><span class="tok-o">=</span>uc1.swift  <i class="conum" data-value="8"></i><b>(8)</b>
+swift-t -n <span class="tok-nv">$PROCS</span> <span class="tok-nv">$MACHINE</span> -p <span class="tok-se">\</span>
+    -I <span class="tok-nv">$EMEWS_EXT</span> -r <span class="tok-nv">$EMEWS_EXT</span> <span class="tok-se">\</span>
+    -e TURBINE_MPI_THREAD <span class="tok-se">\</span>
+    -e TURBINE_OUTPUT <span class="tok-se">\</span>
+    -e EMEWS_PROJECT_ROOT <span class="tok-se">\</span>
+    <span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/swift/<span class="tok-nv">$SWIFT_FILE</span> <span class="tok-se">\</span>
+    <span class="tok-nv">$CMD_LINE_ARGS</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>run_uc1.sh takes 2 required arguments (exp_id and cfg_file).
+The first is an experiment id (e.g., "experiment_1"), which is used to define a directory (TURBINE_OUTPUT, defined below)
+into which per workflow output can be written. Swift will also write its own
+log files into this directory as the workflow executes.
+The second required argument is the workflow configuration file. EMEWS Creator will have auto-generated
+a configuration file based on the information provided to it, and can be seen in <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/cfgs/uc1.cfg#L1" target="uc1.cfg">uc1.cfg</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Additional logging, including debugging logs, can be enabled by uncommenting.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>EMEWS_PROJECT_ROOT is defined and exported here. The workflow launch script assumes the canonical EMEWS directory structure, where
+the so-called EMEWS project root directory contains other directories
+such as a <code>swift</code> directory in which the swift scripts are
+located.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The TURBINE_OUTPUT directory is defined, using the EMEWS_PROJECT_ROOT and EXP_ID environment variables.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The configuration file is sourced, bringing in the specific CFG_X environment variables defined there.
+These include environment variables that are required for
+cluster execution such as queue name (<code>QUEUE</code>), project name (<code>PROJECT</code>), requested walltime (<code>WALLTIME</code>),
+processes per node (<code>PPN</code>), and so forth. Any additional environment variables can be included here
+and optionally also provided through the configuration file mechanism.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>The utilized unrolled parameter file is copied to the TURBINE_OUTPUT directory to document
+the details of the workflow and also to prevent any inadvertent overwriting between script submission and the job run.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>The command line arguments provided to the Swift script are constructed. Here the "-f=" argument points to the unrolled parameter file.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>The final lines run the swift script by
+calling <code>swift-t</code> with Swift specific, e.g., "-n" specifies the total number of processes on which to run,
+and script specific arguments, here the CMD_LINE_ARGS defined above.
+Additional help for the arguments to <code>swift-t</code> can be seen by running
+<code>swift-t -h</code>. More information on shell script used to
+launch the Swift/T workflow can be seen in the <mark>EMEWS Creator tutorial</mark>.</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
