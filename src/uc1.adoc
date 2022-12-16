@@ -290,7 +290,8 @@ array element (that is, a single parameter set represented as a string) while th
 is used to create the directory. The `=>` keyword is again used to ensure that the directory is created before the actual model
 run that uses that directory is performed.
 <7> Create file objects into which the standard out and standard error streams are
-redirected by the <<repast-app-annot,run_model>> function.
+redirected by the <<repast-app-annot,run_model>> #function#.
+// TODO: Do we explain the <... + ...> syntax anywhere?
 <8> Lastly the `run_model` app function that performs the Zombie model run is called with the required arguments.
 
 This is a common pattern in EMEWS. Some collection of parameters is parsed into an array in which each element
@@ -305,7 +306,7 @@ In our initial script we have seen how to run multiple instances of the Zombies 
 Our next example builds on this by adding some post-run analysis that explores the effect of simulated step size on the final
 number of humans. This analysis will be performed in R and executed within the Swift workflow.
 
-The new scripts consists of the following steps:
+The new script consists of the following steps:
 
 * Read the the list of a parameters into a `file` object.
 * Split the contents of the file into an array where each line of file is an array element.
@@ -423,56 +424,56 @@ This string is then placed in the `results` array at the ith index.
 
 ==== Finding the Best Parameters
 
+The final workflow steps are to determine which runs yielded the maximum
+number of humans and write out the parameters for those runs. The core idea here is
+that we find the indices of the elements in the
+results array that contain the maximum human counts and use those indices
+to retrieve the parameters from the parameters array.
+
+[source#find-best-param-annot,java]
+.Finding the best parameter
+----
+string find_max =  ----
+v <- c(%s)  <1>
+res <- which(v == max(v))  <2>
+----;
+
+string results_str = string_join(results, ",");  <3>
+string code = find_max % results_str;  <4>
+string maxs = R(code, "toString(res)");  <5>
+string max_idxs[] = split(maxs, ",");  <6>
+string best_params[];
+foreach s, i in max_idxs {  <7>
+  int idx = toint(trim(s));  <8>
+  best_params[i] = upf_lines[idx - 1];  <9>
+}
+file best_out <emews_root + "/output/best_parameters.txt"> =
+  write(string_join(best_params, "\n"));  <10>
+----
+<1> The R script takes in the results from all of the model runs, as a comma separated string of values, through the "%s" template character (assigned below).
+<2> The (1-based) indices of the maximum values are found and stored in the `res` variable.
+<3> Swift's `string_join` function (requiring importing the string module) is used to join all the elements of the results array,
+i.e., all the final human counts, into a comma separated string.
+<4> The comma separated string is assigned to the template character in the `find_max` R script and assigned to the `code` string.
+<5> As before, Swift's R function is called with the `code` string to yield the max indices.
+<6> This string is split into a `max_idxs` array using Swift's `split` function.
+The `split` function takes two arguments, the string to split and the string
+to split on, and returns an array of strings.
+<7> The foreach loop iterates through `max_idxs` array.
+<8> The string representation of each number is converted to an integer.
+<9> The corresponding parameter string is retrieved from the `upf_lines` array, and
+is added to the `best_params` array.
+Given that the value in `results`[i] (from which the max indices are derived) is produced from the parameter combination in
+`upf_lines`[i], the index of the maximum value or values in the `max_idxs` array is the index of the best parameter combination or combinations.
+Note that we subtract one from `idx` because R indices start at 1 while Swift's start at 0.
+<10> The final step is to write the best parameters to a file using Swift's `write` function.
+
+
+=== Running the Swift Script
+
+
 
 ////
-
-
-
-
-            <h3 id="finding_best"> Finding the Best Parameters</h3>
-            <p>
-              The final workflow steps are to determine which runs yielded the maximum
-              number of humans and write out the parameters for those runs. The core idea here is
-              that we find the indices of the elements in the
-              results array that contain the maximum human counts and use those indices
-              to retrieve the parameters from the parameters array.</p>
-              <p>
-                First Swift's `string_join` function (requiring importing the
-                 <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="3" to="3">string</highlight-code> module)
-                is used to join all the elements of the results array (i.e., all the final human counts)
-                into a comma separated string
-                (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="51" to="51">52</highlight-code>).
-                We then use
-              R to find the indices of the maximum values in the results array
-              by substituting the template variable in the R code template
-              contained in the string variable `find_max`
-              (lines <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="11" to="14">12-15</highlight-code>)
-              with this comma separated string
-              (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="52" to="52">53</highlight-code>)
-              to create the working R code. The R code is executed in line
-              line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="53" to="53">54</highlight-code>
-              using the `R` function. The R code returns a comma separated string
-              of numbers where each number is the index in the results array that contained
-              a maximum value. This string is split into a `max_idxs` array using Swift's `split`
-              function
-              (line <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="54" to="54">55</highlight-code>).
-              The `split` function takes two arguments, the string to split and the string
-              to split on, and returns an array of strings.
-            </p>
-            <p>
-            The foreach loop (lines
-            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="56" to="59">57-60</highlight-code>)
-            iterates through `max_idxs` array, converts the string representation of the number to an
-            integer, retrieves the corresponding parameter string from the `upf_lines` array, and
-            adds it to the `best_params` array.
-            Given that the value in `results`[i] (from which the max indices are derived) is produced from the parameter combination in
-            `upf_lines`[i],
-            the index of the maximum value or values in the `max_idxs` array is the index of the best parameter combination or combinations.
-            Note that we subtract one from `idx` because R indices start at 1 while Swift's start at 0.
-            The final step is to write the best parameters to a file as seen in lines
-            <highlight-code code="uc1/swift/swiftrun_R.swift" color="rgba(255,255,255,0.3)" from="60" to="61">61-62</highlight-code>,
-            using Swift's `write` function.
-          </p>
 
 
 
