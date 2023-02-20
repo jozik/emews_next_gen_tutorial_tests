@@ -38,7 +38,7 @@ EMEWS_ROOT=$2
 INSTANCE_DIRECTORY=$3
 cd $INSTANCE_DIRECTORY
 # directory that contains the repast model
-MODEL_DIRECTORY=$emews_root"/complete_model/"
+MODEL_DIRECTORY=$EMEWS_ROOT"/complete_model/"
 # create a symbolic link to the model data directory
 # within the instance directory
 ln -s $MODEL_DIRECTORY"data" data
@@ -58,18 +58,17 @@ fi
 # Getting the classpath to properly resolve can be tricky
 # when running java from a variable so we ignore MODEL_CMD
 # and run java explicitly below.
-#MODEL_CMD=""
-
+#MODEL_CMD="
 
 # Turn bash error checking off. This is
 # required to properly handle the model execution
 # return values and the optional timeout.
 set +e
-echo "$param_line"
+echo "$PARAM_LINE"
 $TIMEOUT_CMD $JAVA -Xmx1536m -XX:-UseLargePages -cp "$cPath" repast.simphony.batch.InstanceRunner \
    -pxml "$pxml" \
    -scenario "$scenario" \
-   -id 1 "$param_line"
+   -id 1 "$PARAM_LINE"
 
 
 # $? is the exit status of the most recently executed command (i.e the
