@@ -1,0 +1,13 @@
+# TODO: Edit DB properties if necessary
+db_path: /home/nick/tmp/db
+db_host: localhost
+db_user: eqsql_user
+db_name: EQ_SQL
+# db_port can be empty for local run
+db_port:
+
+worker_pool_id: default
+task_type: 0
+
+pool_launch_script: /home/nick/Documents/repos/emews_next_gen_tutorial_tests/code/eqsql_project/swift/run_eqsql_worker_pool.sh
+pool_cfg_file: /home/nick/Documents/repos/emews_next_gen_tutorial_tests/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg

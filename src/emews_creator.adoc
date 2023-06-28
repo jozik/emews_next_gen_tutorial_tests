@@ -34,6 +34,8 @@ Options:
 Commands:
   eqpy   create an eqpy workflow
   eqr    create an eqr workflow
+  eqsql    create an eqsql workflow
+  init_db  initialize an eqsql database
   sweep  create a sweep workflow
 ----
 
@@ -193,7 +195,7 @@ below.
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/run_sweep_workflow.sh#L1[`*run_sweep_workflow.sh*`,window=UC1,pts="noopener,nofollow"]
 
 NOTE: The launch scripts produced by the emews creator _source_ other files. Doing this in a bash script
-makes any variables and functions defined in those files available to the current file. as if they had been
+makes any variables and functions defined in those files available to the current file, as if they had been
 defined in the current file.
 
 The initial section of the file processes the input arguments to the file,
@@ -454,7 +456,7 @@ them `out.txt` and `err.txt`.
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/scripts/run_my_model_sweep_workflow.sh#L1[`*run_my_model_sweep_workflow.sh*`,window=UC1,pts="noopener,nofollow"]
 
 `run_my_model_sweep_workflow.sh` is called by `sweep_workflow.swift` to execute
-the model as if the model has been run from the command line. The script passed 
+the model as if the model has been run from the command line. The script is passed 
 single line of parameters from the upf file, the
 emews root directory location, and the instance directory created in `sweep_workflow.swift`.
 You will need to update the `MODEL_CMD` variable to specify the model executable.
@@ -744,4 +746,757 @@ for `CFG_WALLTIME`, `CFG_QUEUE`, and `CFG_PROJECT`.
 // * `nodes` - the number of nodes to allocate to the workflow job
 // * `ppn` - the number of processes per node to allocate to the workflow job
 
+==== EQSQL
 
+#TODO: text that distinguishes between local run (db on same machine, swift-t non-scheduled
+submission), and swift-t scheduled worker pool submission#
+
+The eqsql command creates a workflow that submits tasks (such as
+application runs) to a queue implemented in a database. Worker pools pop tasks 
+off this queue for evaluation, and push the results back to a database input queue. 
+The tasks can be provided by a Python or R language model exploration (ME) algorithm. 
+
+Usage:
+
+----
+$emewscreator eqsql -h
+Usage: emewscreator eqsql [OPTIONS]
+
+Options:
+  -c, --config PATH              Path to the template configuration file.
+                                 [required if any command line arguments are
+                                 missing]
+  --pool-id TEXT                 The name of the task worker pool.
+  --task-type INTEGER            The task type id for the tasks consumed by
+                                 the worker pool.
+  -n, --workflow-name TEXT       Name of the workflow.
+  --trials INTEGER               Number of trials / replicates to perform for
+                                 each model run. Defaults to 1.
+  --model-output-file-name TEXT  Model output base file name, file name only
+                                 (e.g., "output.csv").
+  --me-language [python|R|None]  Model exploration algorithm programming
+                                 language: Python, R, or None.
+  --me-file-name TEXT            The name of the model exploration algorithm
+                                 template file to generate. Omit the extension
+                                 (e.g., "algo", not "algo.py").
+  --me-cfg-file-name TEXT        The name of the model exploration algorithm
+                                 configuration file.
+  --esql-db-path PATH            The path to the eqsql database.
+  -h, --help                     Show this message and exit.
+----
+
+A sample eqsql configuration file can be found https://github.com/emews/emews-project-creator/blob/master/example_cfgs/eqsql.yaml[here,window=eqsql.yaml,pts="noopener,nofollow"]. 
+
+In addition to the common configuration arguments described [above](#workflow_templates),
+the eqsql template also has the following:
+
+* `--pool-id` - a unique identifier for the swift-t worker pool created by the template.
+* `--task-type` - an integer identifying the type of task the worker pool will consume. 
+* `--trials` - the number of trials or replicates to perform for each task evalution. Defaults to 1.
+* `--model-output-file-name` - each task evaulation is passed a file path for writing its output.
+This is the name of that file.
+* `--me-language` - the ME programming language (R, Python, None). The template will create an example ME written
+in this language. If the value is `None`, then no ME example will be created.
+* `--me-cfg-file-name` - the name of the yaml format configuration file that gets passed to the
+example ME to configure it.
+* `--esql-db-path` - the path to the eqsql database. This is used in the example ME to start
+the database.
+
+
+Generating an eqsql workflow, creates the following files, the contents of which reflect the
+arguments (e.g., `pool_id`.) above. The exact file names are dependent on 
+the workflow_name, can model_name configuration parameters. Here the workflow name is `eqsql`, and the model name is `my model`. If Python or R is specified in the `me_language` parameter, then an example
+ME algorithm and configuration files are created. Here, the me language is Python, the me file name is `algo`, and the me cfg file name is `algo_cfg`. 
+
+* `swift/run_eqsql_worker_pool.sh` - a bash script used to launch the worker pool
+* `swift/eqsql_worker_pool.swift` - a swift script the implements an eqsql worker pool
+* `scripts/run_my_model.sh` - a bash script for executing the model. The swift script calls this script, passing it task parameters from the ME via the database.
+* `python/algo.py` - an example eqsql ME in Python. The file name is specified by the `me_file_name` configuration parameter.
+* `python/algo_cfg.yaml` - the configuration file for the example ME. The file name is specified by the `me_cfg_file_name` parameter
+* `ext/EQ-SQL/EQSQL.swift` - swift code used by worker pools to retrieve tasks and report results to the
+eqsql database. Typically, this should not need to be edited by a user.
+* `ext/EQ-SQL/eqsql_swift.py` - Python code used by worker pools to retrieve tasks and report results to the eqsql database. Typically, this should not need to be edited by a user.
+
+These files (excluding those in `ext/EQ-SQL`) contain lines or sections marked with *TODO* where that line or section needs
+to be edited to customize the file for your model and workflow. See TODO*<<uc4>>* for a fully fleshed out
+sweep workflow created using emews creator. We will look more closely at relevant parts of these files
+below.
+
+#TODO: run_eqsql_worker_pool.sh link#
+// https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/eqa l_project/swift/run_eqsql_worker_pool.sh#L1[`*run_eqsql_worker_pool.sh*`,window=eqsql_worker_pool.sh,pts="noopener,nofollow"]
+
+NOTE: The launch scripts produced by the emews creator _source_ other files. Doing this in a bash script
+makes any variables and functions defined in those files available to the current file, as if they had been
+defined in the current file.
+
+The initial section of the file processes the input arguments to the file,
+initalizing some variables that used in the following parts of the file.
+
+[source,bash]
+----
+#! /usr/bin/env bash
+set -eu
+
+if [ "$#" -ne 2 ]; then    <1>
+  script_name=$(basename $0)
+  echo "Usage: ${script_name} exp_id cfg_file"
+  exit 1
+fi
+
+# Uncomment to turn on swift/t logging. Can also set TURBINE_LOG,
+# TURBINE_DEBUG, and ADLB_DEBUG to 0 to turn off logging
+# export TURBINE_LOG=1 TURBINE_DEBUG=1 ADLB_DEBUG=1
+export EMEWS_PROJECT_ROOT=$( cd $( dirname $0 )/.. ; /bin/pwd )    <2>
+# source some utility functions used by EMEWS in this script
+source "${EMEWS_PROJECT_ROOT}/etc/emews_utils.sh"    <3>
+
+export EXPID=$1
+export TURBINE_OUTPUT=$EMEWS_PROJECT_ROOT/experiments/$EXPID    <4>
+check_directory_exists
+
+CFG_FILE=$2
+source $CFG_FILE     <5>
+----
+<1> Check that the number of arguments passed to the script is equal to 2. The first should
+be the name of the experiment, and the second a configuration file that will be sourced
+into the current environment.
+<2> Define an `EMEWS_PROJECT_ROOT` environment variable that specifies the root directory of the project.
+This corresponds to the root project directory specified in `--output-dir` when running
+emewscreator.
+<3> Source some utiliity functions that are used later in the script. These are: `check_directory_exists` which checks if the `TURBINE_OUTPUT` directory exists and prompts the user to continue; and `log_script` which logs the relevant environment variables and a copy of script to the `TURBINE_OUTPUT` directory.
+<4> Creates and exports an `EXPID` (an experiment id) environment variable from the experiment id passed into the script and then defines the `TURBINE_OUTPUT` directory using this `EXPID`. The `TURBINE_OUTPUT` directory is used by swift as the
+output location for all the files that it produces.
+<5> Creates a CFG_FILE environment variable from the second argument passed into the script, and sources this file.
+In this way the configuration variables, such as the file to sweep over, are made available to the launch script.
+
+The second part of the file exports some variables that are used by swift
+when submitting the workflow on an HPC resource. Typically such machines use
+a job scheduler that requires the user to provide the number of processes
+to use, the name of the compute queue, the project to charge the compute time
+to, and an estimate of how long the job will take. This section exports
+those values so that they are available to swift when creating the job submission
+script. These are set from values defined in the workflow configuration file
+(i.e., swift/cfgs/eqsql_worker_pool.cfg). See the discussion of that file below.
+#TODO: make link#
+
+[source, bash]
+----
+export PROCS=$CFG_PROCS    <1>
+export QUEUE=$CFG_QUEUE
+export PROJECT=$CFG_PROJECT
+export WALLTIME=$CFG_WALLTIME
+export PPN=$CFG_PPN 
+export TURBINE_JOBNAME="${EXPID}_job"    <2>
+export TURBINE_MPI_THREAD=1    <3>
+----
+<1> `PROCS`, `QUEUE`, `PROJECT`, `WALLTIME`, and `PPN` are set from variables defined
+in the configuration file. See that section for more info #TODO#
+<2> `TURBINE_JOBNAME` is used to set the name of the job in the HPC submission script.
+When querying the HPC resource for the status of your job, you will see your job
+name as the experiment id following by `_job`.
+<3> Set `TURBINE_MPI_THREAD` to one to run MPI in a thread-safe mode to prevent any errors
+if the model is multi-threaded.
+
+The launch scripts for all the available workflow types copy all the relevant
+files into the experiment directory (i.e., `TURBINE_OUTPUT`) so that the original
+files can be changed without corrupting the workflow. We see that in the next
+section together with some variable declarations and some potential TODOs.
+
+[source, bash]
+----
+mkdir -p $TURBINE_OUTPUT    <1>
+cp $CFG_FILE $TURBINE_OUTPUT/cfg.cfg    <2>
+
+# TODO: If R cannot be found, then these will need to be   <3>
+# uncommented and set correctly.
+# export R_HOME=/path/to/R
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$R_HOME/lib
+
+# EQSQL swift extension location
+EQSQL=$EMEWS_PROJECT_ROOT/ext/EQ-SQL    <4>
+EMEWS_EXT=$EMEWS_PROJECT_ROOT/ext/emews    <5>
+
+# TODO: if Python cannot be found then uncomment    <6>
+# and edit this line.
+# export PYTHONHOME=/path/to/python
+
+# TODO: if there are "Cannot find 
+# X package" type Python errors then append
+# the missing package's path to the PYTHONPATH
+# variable below, separating the entries with ":"
+export PYTHONPATH=$EMEWS_PROJECT_ROOT/python:$EQSQL    <7>
+----
+<1> Make the `TURBINE_OUTPUT` experiment directory
+<2> Copy the workflow configuration file into the experiment directory
+<3> If there are errors when running R code in workflows, this section
+can be edited appropriately and uncommented.
+<4> Set an environment variable for the EQ/SQL swift extension. This is
+used internally by the workflow, and should not be edited.
+<5> Set an environment directory for the EMEWS swift extensions. This is
+used internally by the workflow, and should not be edited.
+<6> If there are errors when running Python code in workflows, this section
+can be edited appropriately and uncommented.
+<7> If any required Python packages cannot be found, their locations
+can be appended to the PYTHONPATH environment variable. 
+
+The launch script also exports some database related variables:
+the database host, user, port and name. These are used by the
+swift-t script to communicate with the database. The values
+are sourced from the configuration file and they should be
+edited there if necessary. This variables will be further explained
+in the configuration file section #TODO: make link#.
+
+[source, bash]
+----
+# EQSQ DB variables, set from the CFG file.
+# To change, these edit the CFG file.
+export DB_HOST=$CFG_DB_HOST
+export DB_USER=$CFG_DB_USER
+export DB_PORT=${CFG_DB_PORT:-}
+export DB_NAME=$CFG_DB_NAME
+export EQ_DB_RETRY_THRESHOLD=$CFG_DB_RETRY_THRESHOLD
+----
+
+When submitting the workflow on an HPC machine, the type of job scheduled must be set in order for
+swift to correctly submit the job. This is done in the next section. The else clause writes
+the worker pools stdout and stderr to a file when running on a non-scheduled resource.
+
+[source, bash]
+----
+#TODO: Set MACHINE to your schedule type (e.g. pbs, slurm, cobalt etc.),
+# or empty for an immediate non-queued unscheduled run
+MACHINE=""
+
+if [ -n "$MACHINE" ]; then
+  MACHINE="-m $MACHINE"
+else
+  echo "Logging output to $TURBINE_OUTPUT/output.txt"
+  # Redirect stdout and stderr to output.txt
+  # if running without a scheduler.
+  exec &> "$TURBINE_OUTPUT/output.txt"
+fi
+----
+
+The launch script passes some arguments to the swift script via the command line.
+We define a variable that represents the command line and pass the number of trials
+(replicates), the worker pool task type, batch size, batch threshold and worker pool
+id using that. These arguments are all set via the configuration file and will be discussed
+in more detail there. #TODO: make link#.
+
+[source, bash]
+----
+CMD_LINE_ARGS="--trials=$CFG_TRIALS --task_type=$CFG_TASK_TYPE --batch_size=$CFG_BATCH_SIZE "
+CMD_LINE_ARGS+="--batch_threshold=$CFG_BATCH_THRESHOLD --worker_pool_id=$CFG_POOL_ID $*"
+----
+
+The final section logs a copy of the submission script to the experiment directory and
+calls swift-t to submit the job and execute the workflow swift script.
+
+[source, bash]
+----
+# TODO: Add any script variables that you want to log as
+# part of the experiment meta data to the USER_VARS array,
+# for example, USER_VARS=("VAR_1" "VAR_2")
+USER_VARS=()
+# log variables and script to to TURBINE_OUTPUT directory
+log_script    <1>
+# echo's anything following this to standard out
+set -x
+SWIFT_FILE=eqsql_worker_pool.swift    <2>
+swift-t -n $PROCS $MACHINE -p -I $EQSQL -r $EQSQL \   <3>
+    -I $EMEWS_EXT -r $EMEWS_EXT \
+    -e TURBINE_MPI_THREAD \    <4>
+    -e TURBINE_OUTPUT \
+    -e EMEWS_PROJECT_ROOT \
+    -e DB_HOST \
+    -e DB_USER \
+    -e DB_PORT \
+    -e DB_NAME \
+    -e EQ_DB_RETRY_THRESHOLD \
+    -e PYTHONPATH \
+    -e RESIDENT_WORK_RANK \
+    $EMEWS_PROJECT_ROOT/swift/$SWIFT_FILE \
+    $CMD_LINE_ARGS     <5>
+----
+<1> Log a copy of this submission script including any of the variables
+in `USER_VARS` to the experiment directory.
+<2> Define a variable containing the name of the swift workflow script to
+execute.
+<3> Call swift-t passing it the relevant variables and the path of the swift script to be executed. At this point the script is compiled and then either executed immediately or scheduled for execution depending on the value of the MACHINE variable.
+<4> The `-e` agument to swift-t adds the specified variable to the script execution environment. On some HPC machines,
+the login environment is separate from the compute environment. Consequently, variables defined in the login environment
+that are referenced in the swift script when it executes in the compute environment need to be made available for the
+script to work correctly. The `-e` argument does this, adding the specified variables to the compute environment.
+<5> Pass the `CMD_LINE_ARGS` to the swift script.
+
+#TODO: eqsql_worker_pool.swift link#
+// https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/eqa l_project/swift/run_eqsql_worker_pool.sh#L1[`*run_eqsql_worker_pool.sh*`,window=eqsql_worker_pool.sh,pts="noopener,nofollow"]
+
+This file is the swift script that implements the worker pool. The worker poll pops tasks off of the database
+output queue and executes those tasks. When a task has completed, the worker pool pushes the result 
+into the database input queue where it can be retrieved by the ME. The following will describe the general
+structure of the script, highlighting those areas most relevant to the user.
+
+The script begins with by defining some variables. The ones defined using the `getenv` function are
+set from environment variables, while those those defined using `argv` are set from command
+line arguments passed to the swift script from `run_eqsql_worker_pool.sh`.
+
+[source, swift]
+----
+string emews_root = getenv("EMEWS_PROJECT_ROOT");    <1>
+string turbine_output = getenv("TURBINE_OUTPUT");
+int resident_work_rank = string2int(getenv("RESIDENT_WORK_RANK"));
+
+int TASK_TYPE = string2int(argv("task_type", "0"));    <2>
+int BATCH_SIZE = string2int(argv("batch_size"));
+int BATCH_THRESHOLD = string2int(argv("batch_threshold", "1"));
+string WORKER_POOL_ID = argv("worker_pool_id", "default");
+
+file model_sh = input(emews_root+"/scripts/run_my_model_eqsql_worker_pool.sh");    <3>
+int n_trials = string2int(argv("trials", "1"));    <4>
+----
+<1> Set emews_root and turbine_output from the EMEWS_PROJECT_ROOT and TURBINE_OUTPUT environment variables. These were exported in the #TODO: make link# run_eqsql_worker_pool.sh script.
+<2> Set the TASK_TYPE, BATCH_SIZE, BATCH_THRESHOLD, and WORKER_POOL_ID variables. These are used
+by the swift script when fetchting tasks and reporting their output.
+<3> Get the bash script that will be used to launch the model. Swift calls this script (scripts/run_my_model.sh) to perform a model run.
+<4> Get the number of trials (replicates) to perform for each model run.
+
+The script executions begins by calling the start function in which batch querying
+for tasks from the database is initialized. 
+
+[source, swift]
+----
+(void o) start() {
+  location querier_loc = locationFromRank(resident_work_rank);
+  eq_init_batch_querier(querier_loc, WORKER_POOL_ID, BATCH_SIZE, BATCH_THRESHOLD, TASK_TYPE) =>    <1>
+  loop(querier_loc) => {    <2>
+    eq_stop_batch_querier(querier_loc);    <3>
+    o = propagate();
+  }
+}
+
+start() => printf("worker pool: normal exit.");
+----
+<1> Initialize the batch querier for the worker pool identified by `WORKER_POOL_ID`,
+requesting tasks of `TASK_TYPE` with the specified `BATCH_SIZE`, and `BATCH_THRESHOLD`.
+<2> Call the loop function in which tasks are retrieved, executed, and results reported.
+<3> Stop the batch querier, and exit the script.
+
+[IMPORTANT]
+====
+Batch querying allows a worker pool to request up to `BATCH_SIZE` number of tasks to consume at a time, while accounting for the number of tasks a worker pool already has obtained but have not completed. So, for example, if a worker pool is configured to possess 33 tasks at a time, if it owns 30 uncompleted tasks when querying the output queue, it will only obtain 3 additional tasks. This can be tweaked using `BATCH_THRESHOLD` value that specifies how large the deficit between requested tasks and owned tasks must be before more tasks are obtained.
+Querying for tasks in this way allows a worker pool to tune its query to the number of available workers such that all its workers are busy while equitably sharing work among multiple worker pools, when those exist.
+====
+
+In the loop function, tasks are retrieved and dispatched for execution.
+[source, swift]
+----
+message msgs[] = eq_batch_task_query(querier_loc);    <1>
+boolean c;
+if (msgs[0].msg_type == "status") {    <2>
+  if (msgs[0].payload == "EQ_STOP") {
+    printf("loop.swift: STOP") =>
+      v = propagate() =>
+      c = false;
+  } else {
+    // sleep to give time for Python etc.
+    // to flush messages
+    sleep(5);
+    printf("loop.swift: got %s: exiting!", msgs[0].payload) =>
+    v = propagate() =>
+    c = false;
+  }
+} else {
+  run(msgs);    <3>
+  c = true;
+}
+----
+<1> Query for an array tasks to execute. The tasks are formatted as `message`-s. Each message
+has an integer task_id, a string msg_type, and string payload. The task_id is a unique
+identifier for the task, the msg_type specifies the type of message: a `status` or `work`.
+The payload consists of either a status specification, or parameters for the task to be performed in JSON format.
+<2> If the first of the messsage types is `status` then exit the loop with the appropriate output.
+<3> If the first of the message types is not `status`, then execute the array of task messages.
+
+The run function executes the tasks concurrently in a swift `foreach` loop, and reports the results back.
+
+[source, swift]
+----
+run(message msgs[]) {
+  // printf("MSGS SIZE: %d", size(msgs));
+  foreach msg, i in msgs {
+    result_payload = run_task(msg.eq_task_id, msg.payload);
+    eq_task_report(msg.eq_task_id, TASK_TYPE, result_payload);
+  }
+}
+----
+
+`run_task` executes the specifed number of trials for an individual task (a model run), running the task with the same parameters and varying a random seed parameter. All the trials will run in an `instance_N` directory
+where N is the task's task_id. 
+
+[source, swift]
+----
+(string obj_result) run_task(int task_id, string task_payload) {
+    float results[];
+
+    string instance = "%s/instance_%i/" % (turbine_output, task_id);
+    mkdir(instance) => {    <1>
+        foreach i in [0:n_trials-1:1] {    <2>
+            int trial = i + 1;
+            string instance_id = "i_%i" % (task_id, trial);
+            results[i] = run_obj(task_payload, trial, instance, instance_id);    <3>
+        }
+    }
+
+    obj_result = float2string(get_aggregate_result(results)); // =>    <4>
+    // TODO: delete the ";" above, uncomment the ""=>"" above and 
+    // and the rm_dir below to delete the instance directory if
+    // it is not needed after the result have been computed.
+    // rm_dir(instance);
+}
+----
+<1> Create the instance directory
+<2> Iterate concurrently over the number of trials.
+<3> For each trial, call `run_obj`, passing the task payload (input parameters), 
+trial number, instance direcdtory, and instance_id. The result from each trail
+is added to the `results` array.
+<4> Call `get_aggregate_result` passing it the results from each trial to compute the
+aggregate result over all the trials.
+
+`run_obj` creates files for logging model run's standard output and error streams, as well as path location for the model results, and calls the swift app function `run_task_app`. 
+
+[source, swift]
+----
+(float result) run_obj(string task_payload, int trial, string instance_dir, string instance_id) {
+    file out <instance_dir + "/" + instance_id+"_out.txt">;    <1>
+    file err <instance_dir + "/" + instance_id+"_err.txt">;
+    string output_file = "%s/output_%s.csv" % (instance_dir, instance_id);    <2>
+    (out,err) = run_task_app(model_sh, task_payload, output_file,  trial, instance_dir) =>    <3>
+    result = get_result(output_file);    <4>
+}
+----
+<1> Creates swift file objects to capture the standard out and standard error from the `run_task_app`
+function.
+<2> Create a unique output file name for the trial run that can be passed to the model to write its
+output.
+<3> Call `run_task_app`.
+<4> Call `get_result`, passing the output file to retrieve the output of the model run from the
+output file.
+
+`run_task_app` calls `scripts/run_my_model.sh` (#TODO: make link#) passing it the task payload,
+the output file path, the trial number, the emews_root location, and the instance directory. The
+`@stdout` and `@stderr` commands are used by swift to redirect the standard out and standard
+error streams.
+
+[source, swift]
+----
+// app function used to run the task
+app (file out, file err) run_task_app(file shfile, string task_payload, string output_file, int trial, string instance_dir) {
+    "bash" shfile task_payload output_file trial emews_root instance_dir @stdout=out @stderr=err;
+}
+----
+
+The final two functions are the result calcualtions. These need to be completed by the user
+and are marked with the appropriate TODOs.
+
+[source, swift]
+----
+(float result) get_result(string output_file) {
+    // TODO given the model output, set the the model result 
+    result = 0.0;
+}
+
+(float agg_result) get_aggregate_result(float model_results[]) {
+    // TODO replace with aggregate result calculation (e.g.,
+    // take the average of model results with avg(model_results);
+    agg_result = 0.0;
+}
+----
+
+#TODO: link to eqsql_worker_pool.cfg#
+// https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/cfgs/sweep_workflow.cfg#L1[`*eqsql_worker_pool.cfg*`,window=UC1,pts="noopener,nofollow"]
+`eqsql_worker_pool.cfg` contains configuration variables for running the worker pool. It is sourced
+by the submission script #TODO: make link# `run_eqsql_worker_pool.sh` to retrieve the database connection parameters, the HPC scheduler parameters, and the other variables required by the workflow.
+The intention here is that these parameters are the most frequently changed between
+different workflow runs, and rather than edit the submission script itself, it is easier to edit
+a configuration file.
+
+The cfg file begins with the HPC and general workflow setup parameters.
+
+[source, bash]
+----
+CFG_WALLTIME=01:00:00    <1>
+CFG_QUEUE=queue    <2>
+CFG_PROJECT=project    <3>
+NODES=4    <4>
+CFG_PPN=4    <5>
+CFG_PROCS=$(( NODES * CFG_PPN ))    <6>
+----
+<1> Set the estimated duration of the workflow.
+<2> Set the queue on which to run the workflow.
+<3> Set the project with which to run the workflow.
+<4> Set the number of HPC nodes to run the workflow with.
+<5> Set the number of process per node (PPN) to use.
+<6> Compute the total number of processes to allocate to the job
+by multiplying the number of nodes by the PPN.
+
+The database connection parameters are used by the swift script to connect to the EQSQL database.
+The postgresql database requires a user, database, hostname, and optional port when connecting.
+Those are specified here.
+
+[source, bash]
+----
+# Database port - this can be left empty
+# for local conda postgresql install
+CFG_DB_PORT=    <1>
+CFG_DB_USER=eqsql_user    <2>
+CFG_DB_NAME=EQ_SQL    <3>
+CFG_DB_HOST=localhost     <4>
+----
+<1> Set the database port. If using the default local database configuration, no port needs
+to be specified.
+<2> Set the database user name. This defaults to `eqsql_user` under the default local database
+configuration.
+<3> Set the database name. This defaults to `EQ_SQL` under the default local database configuration.
+<4> Set the database host name. This defaults to `localhost` under the default local database
+configuration.
+
+The final set of parameters set the number of trials, the worker pool id, the task type 
+the worker pool will retrieve, and the task query parameters.
+
+[source, bash]
+----
+CFG_TRIALS=10    <1>
+CFG_POOL_ID=default    <2>
+# Update this to match the task / work type
+CFG_TASK_TYPE=0    <3>
+CFG_BATCH_SIZE=$(( CFG_PROCS + 2 ))    <4>
+CFG_BATCH_THRESHOLD=1    <5>
+CFG_DB_RETRY_THRESHOLD=10      <6>
+----
+<1> Set the number of trials / replicates to perform
+<2> Set the unique identifier for the worker pool
+<3> Set the task type that the worker pool will retrieve from the database.
+<4> Set the batch size for batch task querying. The worker pool will request up to this number
+of tasks to own at a time. For example, if the batch size is 33, and the worker pool currently owns 30 uncompleted tasks, it will only obtain 3 additional tasks when querying the output queue.
+<5> Set the batch query threshold which specifies how large the deficit between requested tasks and owned tasks must be before more tasks are obtained.
+
+NOTE: A worker pool can request and own all the task in the database by setting `CFG_BATCH_SIZE` to a number
+greater than the number of expected tasks. A smaller number, however, allows an ME to manipulate the database output queue re-prioritizing existing unowned tasks, for example.
+
+#TODO: link to run_my_model.sh#
+// https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/sweep_workflow.swift#L1[`*run_my_model.sh*`,window=UC1,pts="noopener,nofollow"]
+
+`run_my_model.sh` is called by `eqsql_worker_pool.swift` to execute the model as if the model has been run from the command line. The script passed model input parameters (the payload string), the output file for the
+model to use, the trial number for this set of parameters, the emews root directory location, and the instance directory that was created in `eqsql_worker_pool.swift`. `run_my_model.sh` in clues two important *TODOs*. 
+Y ou will need to update the `MODEL_CMD` variable to specify the model executable, and the `arg_array` to
+specify the command line parameters to the model command. 
+
+The script begins with defining an optional `TIMEOUT` that will timeout the model if its 
+run duration exceeds that value.
+
+[source, bash]
+----
+# Check for an optional timeout threshold in seconds. If the duration of the
+# model run as executed below, takes longer that this threshhold
+# then the run will be aborted. Note that the "timeout" command
+# must be supported by executing OS.
+
+# The timeout argument is optional. By default the "run_model" swift
+# app fuction sends 5 arguments, and no timeout value is set. If there
+# is a 6th (the TIMEOUT_ARG_INDEX) argument, we use that as the timeout value.
+
+# !!! IF YOU CHANGE THE NUMBER OF ARGUMENTS PASSED TO THIS SCRIPT, YOU MUST
+# CHANGE THE TIMEOUT_ARG_INDEX !!!
+TIMEOUT=""
+TIMEOUT_ARG_INDEX=6    <1>
+if [[ $# ==  $TIMEOUT_ARG_INDEX ]]
+then
+	TIMEOUT=${!TIMEOUT_ARG_INDEX}
+fi
+
+TIMEOUT_CMD=""
+if [ -n "$TIMEOUT" ]; then
+  TIMEOUT_CMD="timeout $TIMEOUT"
+fi
+----
+<1> If this script is passed `TIMEOUT_ARG_INDEX` number of arguments,
+then that argument (defaulting to the 6th argument) will be used as
+the number of seconds after which to timeout. 
+
+The next section of the script assigns the scripts command line arguments to
+some variables and changes directory to the instance directory passed to
+the script.
+
+[source, bash]
+----
+# Set PARAM_LINE from the first argument to this script
+# PARAM_LINE is the string containing the model parameters for a run.
+PARAM_LINE=$1
+
+# Set the name of the file to write model output to.
+OUTPUT_FILE=$2
+
+# Set the TRIAL_ID - this can be used to pass a random seed (for example)
+# to the model
+TRIAL_ID=$3
+
+# Set EMEWS_ROOT to the root directory of the project (i.e. the directory
+# that contains the scripts, swift, etc. directories and files)
+EMEWS_ROOT=$4
+
+# Each model run, runs in its own "instance" directory
+# Set INSTANCE_DIRECTORY to that and cd into it.
+INSTANCE_DIRECTORY=$5
+cd $INSTANCE_DIRECTORY
+----
+
+The final section defines the model executable in `MODEL_CMD`, the arguments to
+that executable in `arg_array` and runs the model with the optional timeout.
+
+[source, bash]
+----
+# TODO: Define the command to run the model. For example,
+# MODEL_CMD="python"
+MODEL_CMD=""    <1>
+# TODO: Define the arguments to the MODEL_CMD. Each argument should be
+# surrounded by quotes and separated by spaces. For example,
+# arg_array=("$EMEWS_ROOT/python/my_model.py" "$PARAM_LINE" "$OUTPUT_FILE" "$TRIAL_ID")
+arg_array=("arg1" "arg2" "arg3")    <2>
+
+# Turn bash error checking off. This is
+# required to properly handle the model execution
+# return values and the optional timeout.
+set +e
+echo "Running $MODEL_CMD ${arg_array[@]}"
+
+$TIMEOUT_CMD "$MODEL_CMD" "${arg_array[@]}"    <3>
+
+# $? is the exit status of the most recently executed command (i.e the
+# line above)
+RES=$?
+if [ "$RES" -ne 0 ]; then
+	if [ "$RES" == 124 ]; then
+    echo "---> Timeout error in $COMMAND"
+  else
+	   echo "---> Error in $COMMAND"
+  fi
+fi
+----
+<1> Define the model executable. For a stand alone compiled executable, this will be
+path to that executable. For example, something like `$HOME/sfw/epi_model-1.0/bin/epimodel`.
+For a model written in an interpreted language such as R or Python, this will be the RScript or Python
+executable.
+<2> Define the array of arguments to pass to the `MODEL_CMD` executable. At the very
+least, this will typically include the `PARAM_LINE` variable in order to pass the
+upf line to the model. For an R or Python application, this will also include
+the path to the R or Python code to run.
+<3> Run the model with the optional `TIMEOUT_CMD`. If no `TIMEOUT` was specified, the `TIMEOUT_CMD`
+will be an ignored empty string.
+
+
+#TODO: link to algo.py#
+// https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/cfgs/sweep_workflow.cfg#L1[`*algo.py*`,window=UC1,pts="noopener,nofollow"]
+
+If the `me_language` argument to the `esql` command is `python`, then an example Python ME and ME configuration file will be produced. The ME can be run from the command line as follows:
+
+#TODO: text about local vs. remote run#
+
+----
+$ python3 algo.py -h
+usage: algo.py [-h] exp_id config_file
+
+positional arguments:
+  exp_id       experiment id
+  config_file  yaml format configuration file
+
+optional arguments:
+  -h, --help   show this help message and exit
+----
+
+* `exp_id` - an identifier for the current run the workflow (e.g., epi_model_experiment_3).
+* `config_file` - the path to ME configuration file (e.g., `algo_cfg.yaml`)
+
+The example ME contains two functions and a `if __name__ == 'main'` section. 
+
+[source, python]
+----
+def create_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('exp_id', help='experiment id')
+    parser.add_argument('config_file', help="yaml format configuration file")
+    return parser
+
+
+if __name__ == '__main__':
+    parser = create_parser()
+    args = parser.parse_args()
+    with open(args.config_file) as fin:
+        params = yaml.safe_load(fin)
+
+    run(args.exp_id, params)
+----
+
+The `create_parser` function creates the command line arguments, and the `__main__` section
+loads the configuration file into a Python dictionary, and calls the `run` function, passing it
+the  `params` dictionary.
+
+The `run` function starts the EQ/SQL database, and the worker pool, and creates a task queue
+for submitting tasks to the database output queue to be retrieved by the worker pool for
+execution.
+
+[source, python]
+----
+def run(exp_id: str, params: Dict):    <1>
+  ...
+  # start database
+  db_tools.start_db(params['db_path'])    <2>
+  db_started = True
+
+  # start task queue
+  task_queue = eq.init_task_queue(params['db_host'], params['db_user'],    <3>
+                                  port=None, db_name=params['db_name'])
+
+  # check if the input and output queues are empty,
+  # if not, then exit with a warning.
+  if not task_queue.are_queues_empty():    <4>
+      print("WARNING: db input / output queues are not empty. Aborting run", flush=True)
+      return
+
+  # start worker pool
+  pool_params = worker_pool.cfg_file_to_dict(params['pool_cfg_file'])
+  pool = worker_pool.start_local_pool(params['worker_pool_id'], params['pool_launch_script'],    <5>
+                                      exp_id, pool_params)
+  task_type = params['task_type']
+  fts = []
+
+  # TODO: submit some tasks to DB, and append the returned eqsql.eq.futures to    <6>
+  # the list of futures. For example:
+
+  # payload = {'x': random.uniform(0, 10), 'y': random.uniform(0, 10)}
+  # _ , ft = task_queue.submit_task(exp_id, task_type, json.dumps(payload))
+  # fts.append(ft)
+
+  # TODO: do something with the completed futures. See esql.eq documentation
+  # for more options. For example:
+  # for ft in eq.as_completed(fts):
+  #     print(ft.result())
+----
+<1> The params dictionary contains all the parameters used to initialize the workflow.
+These will be explained in more detail in the #TODO: make link# ME configuration file
+discussion.
+<2> Start the database located at the `db_path` parameter.
+<3> Initialize a task queue for submitting tasks to the database output queue.
+<4> Check if the database input and output queues are empty before submitting
+tasks. If not, then abort the run. 
+<5> Start the worker pool using the worker pool related configuration parameters.
+<6> Once the initialization is complete, the `task_queue` can be used to submit
+tasks (model input parameters) to the database output queue, and to retrieve
+and use the results returned by the worker pool to the database input queue. 
+
+IMPORTANT: See the eqsql package documentation #TODO: create and make link# for 
+more details.
+
+NOTE: The body of the `run` function is wrapped in a `try ... finally` clause
+in order to shutdown the database, worker pool, and task queue as cleanly 
+as possible in the event of an error occurring. 
