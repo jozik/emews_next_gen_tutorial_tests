@@ -49,7 +49,7 @@ An initial version of the project was created using the EMEWS creator with the f
 // TODO: link to code directory in the repo? https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code[here,window=UC1_code_directory,pts="noopener,nofollow"] or just say that it was issued in the code directory in this repo?
 [source#uc1-creator,bash]
 ----
-emewscreator -o uc1 sweep -c tutorial_cfgs/sweep.yaml
+emewscreator -o uc1 sweep -c tutorial_cfgs/UC1.yaml
 ----
 
 
