@@ -1500,3 +1500,31 @@ more details.
 NOTE: The body of the `run` function is wrapped in a `try ... finally` clause
 in order to shutdown the database, worker pool, and task queue as cleanly 
 as possible in the event of an error occurring. 
+
+### INIT DB ###
+
+Emews Creator also includes an `init_db` command that does not create a workflow, but rather creates 
+creates the EQSQL database in a user specified directory for use by an EQ/SQL workflow. It assumes that the postgresql
+binaries are availble in the user PATH, and that the eqsql package has been installed. The database name will
+default to `EQ_SQL`, and the database user to `eqsql_user`. Database log messages will be written to
+a `db.log` file in the database directory.
+
+Usage:
+
+```
+emewscreator init_db -h
+Usage: emewscreator init_db [OPTIONS]
+
+Options:
+  -d, --db-path PATH  Database directory path. The database will be created in
+                      this directory.  [required]
+  -p, --port INTEGER  The database port, if any.
+  -h, --help          Show this message and exit.
+```
+
+`init_db` takes the following arguments:
+
+* `--db-path` - the directory in which to create the database. This must not already exist,
+and will be created by the running template.
+* `--port` - an optional port number for the database to listen for connections on. This is not
+required for a local database.
