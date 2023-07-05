@@ -1,0 +1,11 @@
+
+swift-t install notes
+
+* install conda
+* Create swift-t env
+* install swift-t conda package
+* pip3 install -e EQ/SQL
+* conda install numpy, scipy, scikit-learn
+
+
+Dealing with worker pool error -- short timeout in as completed to check, check output.txt

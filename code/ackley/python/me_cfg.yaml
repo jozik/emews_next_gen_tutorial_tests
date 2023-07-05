@@ -1,0 +1,21 @@
+# TODO: Edit DB properties if necessary
+db_path: /home/nick/tmp/db
+db_host: localhost
+db_user: eqsql_user
+db_name: EQ_SQL
+# db_port can be empty for local run
+db_port:
+
+worker_pool_id: default
+task_type: 0
+
+pool_launch_script: /home/nick/Documents/repos/emews_next_gen_tutorial_tests/code/ackley/swift/run_ackley_worker_pool.sh
+pool_cfg_file: /home/nick/Documents/repos/emews_next_gen_tutorial_tests/code/ackley/swift/cfgs/ackley_worker_pool.cfg
+
+# Ackely Example ME configuration
+search_space_size: 50
+sample_dimensions: 4
+mean_rt: 1
+std_rt: 0.25
+total_completed: 40
+retrain_after: 10
