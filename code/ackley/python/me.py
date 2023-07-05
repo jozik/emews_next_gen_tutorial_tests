@@ -1,0 +1,164 @@
+import argparse
+import yaml
+from typing import Dict
+import numpy as np
+import json
+from dataclasses import dataclass
+
+import scipy
+from sklearn.gaussian_process import GaussianProcessRegressor, kernels
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.pipeline import Pipeline
+
+from eqsql import eq, worker_pool, db_tools
+
+
+@dataclass
+class Task:
+    future: eq.Future
+    sample: np.array
+    result: float
+
+    def training_data(self):
+        return [self.sample, self.result]
+
+    def running_data(self):
+        return [self.future, self.sample]
+
+
+def submit_initial_tasks(task_queue, exp_id: str, params: Dict) -> Dict[int, Task]:
+    """Submits the initial parameters to the task queue for evaluation
+
+    args:
+        task_queue:
+        exp_id:
+        params:
+    """
+    search_space_size = params['search_space_size']
+    dim = params['sample_dimensions']
+    sampled_space = np.random.uniform(size=(search_space_size, dim), low=-32.768, high=32.768)
+
+    task_type = params['task_type']
+    mean_rt = params['mean_rt']
+    std_rt = params['std_rt']
+
+    payloads = []
+    for sample in sampled_space:
+        payload = json.dumps({'x': list(sample), 'mean_rt': mean_rt, 'std_rt': std_rt})
+        payloads.append(payload)
+    _, fts = task_queue.submit_tasks(exp_id, eq_type=task_type, payload=payloads)
+
+    tasks = {ft.eq_task_id: Task(future=ft, sample=sampled_space[i], result=None)
+             for i, ft in enumerate(fts)}
+
+    return tasks
+
+
+def fit_gpr(training_data, pred_data):
+    gpr = Pipeline([('scale', MinMaxScaler(feature_range=(-1, 1))),
+                    ('gpr', GaussianProcessRegressor(normalize_y=True, kernel=kernels.RBF() * kernels.ConstantKernel()))
+                    ])
+    train_x, train_y = zip(*training_data)
+    # fit grp with completed tasks results
+    gpr.fit(np.vstack(train_x), train_y)
+
+    pred_y, pred_std = gpr.predict(pred_data, return_std=True)
+    best_so_far = np.min(train_y)
+    ei = (best_so_far - pred_y) * scipy.stats.norm(0, 1).cdf((best_so_far - pred_y) / pred_std) + pred_std * \
+          scipy.stats.norm(0, 1).pdf((best_so_far - pred_y) / pred_std)
+
+    return np.argsort(-1 * ei)
+
+
+def reprioritize(task_queue, tasks: Dict[int, Task]):
+    # separate tasks into completed and uncompleted
+    completed = []
+    uncompleted = []
+    pred_data = []
+    for t in tasks.values():
+        if t.result is None:
+            uncompleted.append(t.running_data())
+            pred_data.append(t.sample)
+        else:
+            completed.append(t.training_data())
+
+    if len(uncompleted) > 0:
+        fts = []
+        priorities = []
+        max_priority = len(uncompleted)
+        new_order = fit_gpr(completed, pred_data)
+        for i, idx in enumerate(new_order):
+            ft = uncompleted[idx][0]
+            priority = max_priority - i
+            fts.append(ft)
+            priorities.append(priority)
+
+        print("Reprioritizing ...", flush=True)
+        eq.update_priority(fts, priorities)
+
+
+def run(exp_id: str, params: Dict):
+    db_started = False
+    pool = None
+    task_queue = None
+    try:
+        # start database
+        db_tools.start_db(params['db_path'])
+        db_started = True
+
+        # start task queue
+        task_queue = eq.init_task_queue(params['db_host'], params['db_user'],
+                                        port=None, db_name=params['db_name'])
+
+        # check if the input and output queues are empty,
+        # if not, then exit with a warning.
+        if not task_queue.are_queues_empty():
+            task_queue.clear_queues()
+            print("WARNING: db input / output queues are not empty. Aborting run", flush=True)
+            return
+
+        # start worker pool
+        pool_params = worker_pool.cfg_file_to_dict(params['pool_cfg_file'])
+        pool = worker_pool.start_local_pool(params['worker_pool_id'], params['pool_launch_script'],
+                                            exp_id, pool_params)
+
+        tasks = submit_initial_tasks(task_queue, exp_id, params)
+        total_completed = params['total_completed']
+        tasks_completed = 0
+        retrain_after = params['retrain_after']
+        # list of futures for the submitted tasks
+        fts = [t.future for t in tasks.values()]
+
+        while tasks_completed < total_completed:
+            # add the result to the completed Tasks.
+            for ft in eq.as_completed(fts, pop=True, n=retrain_after):
+                _, result = ft.result()
+                tasks[ft.eq_task_id].result = json.loads(result)
+                tasks_completed += 1
+
+            reprioritize(task_queue, tasks)
+            
+
+    finally:
+        if task_queue is not None:
+            task_queue.close()
+        if pool is not None:
+            pool.cancel()
+        if db_started:
+            db_tools.stop_db(params['db_path'])
+
+
+def create_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('exp_id', help='experiment id')
+    parser.add_argument('config_file', help="yaml format configuration file")
+    return parser
+
+
+if __name__ == '__main__':
+    parser = create_parser()
+    args = parser.parse_args()
+    with open(args.config_file) as fin:
+        params = yaml.safe_load(fin)
+
+    run(args.exp_id, params)
