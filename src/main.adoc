@@ -14,3 +14,5 @@ Version 1.0 Jan 12 2022
 include::emews_creator.adoc[]
 
 include::uc1.adoc[]
+
+include::eqsql.adoc[]

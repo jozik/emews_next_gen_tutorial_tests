@@ -19,12 +19,6 @@ class Task:
     sample: np.array
     result: float
 
-    def training_data(self):
-        return [self.sample, self.result]
-
-    def running_data(self):
-        return [self.future, self.sample]
-
 
 def submit_initial_tasks(task_queue, exp_id: str, params: Dict) -> Dict[int, Task]:
     """Submits the initial parameters to the task queue for evaluation
@@ -39,12 +33,10 @@ def submit_initial_tasks(task_queue, exp_id: str, params: Dict) -> Dict[int, Tas
     sampled_space = np.random.uniform(size=(search_space_size, dim), low=-32.768, high=32.768)
 
     task_type = params['task_type']
-    mean_rt = params['mean_rt']
-    std_rt = params['std_rt']
 
     payloads = []
     for sample in sampled_space:
-        payload = json.dumps({'x': list(sample), 'mean_rt': mean_rt, 'std_rt': std_rt})
+        payload = json.dumps({'x': list(sample)})
         payloads.append(payload)
     _, fts = task_queue.submit_tasks(exp_id, eq_type=task_type, payload=payloads)
 
@@ -70,25 +62,25 @@ def fit_gpr(training_data, pred_data):
     return np.argsort(-1 * ei)
 
 
-def reprioritize(task_queue, tasks: Dict[int, Task]):
-    # separate tasks into completed and uncompleted
-    completed = []
-    uncompleted = []
-    pred_data = []
+def reprioritize(tasks: Dict[int, Task]):
+    # separate tasks into training and prediction data
+    training = []
+    uncompleted_fts = []
+    prediction = []
     for t in tasks.values():
         if t.result is None:
-            uncompleted.append(t.running_data())
-            pred_data.append(t.sample)
+            uncompleted_fts.append(t.future)
+            prediction.append(t.sample)
         else:
-            completed.append(t.training_data())
+            training.append([t.sample, t.result])
 
-    if len(uncompleted) > 0:
+    if len(uncompleted_fts) > 0:
         fts = []
         priorities = []
-        max_priority = len(uncompleted)
-        new_order = fit_gpr(completed, pred_data)
+        max_priority = len(uncompleted_fts)
+        new_order = fit_gpr(training, prediction)
         for i, idx in enumerate(new_order):
-            ft = uncompleted[idx][0]
+            ft = uncompleted_fts[idx]
             priority = max_priority - i
             fts.append(ft)
             priorities.append(priority)
@@ -125,19 +117,18 @@ def run(exp_id: str, params: Dict):
         tasks = submit_initial_tasks(task_queue, exp_id, params)
         total_completed = params['total_completed']
         tasks_completed = 0
-        retrain_after = params['retrain_after']
+        reprioritize_after = params['reprioritize_after']
         # list of futures for the submitted tasks
         fts = [t.future for t in tasks.values()]
 
         while tasks_completed < total_completed:
             # add the result to the completed Tasks.
-            for ft in eq.as_completed(fts, pop=True, n=retrain_after):
+            for ft in eq.as_completed(fts, pop=True, n=reprioritize_after):
                 _, result = ft.result()
                 tasks[ft.eq_task_id].result = json.loads(result)
                 tasks_completed += 1
 
-            reprioritize(task_queue, tasks)
-            
+            reprioritize(tasks)
 
     finally:
         if task_queue is not None:

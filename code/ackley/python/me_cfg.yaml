@@ -15,7 +15,5 @@ pool_cfg_file: /home/nick/Documents/repos/emews_next_gen_tutorial_tests/code/ack
 # Ackely Example ME configuration
 search_space_size: 50
 sample_dimensions: 4
-mean_rt: 1
-std_rt: 0.25
 total_completed: 40
-retrain_after: 10
+reprioritize_after: 10
