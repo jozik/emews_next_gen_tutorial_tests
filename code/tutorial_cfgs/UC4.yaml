@@ -1,0 +1,27 @@
+# --model-name, emewscreator argument
+model_name: ackley
+# --workflow-name, eqpy argument
+workflow_name: ackley
+
+pool_id: default
+task_type: 0
+
+# --trials, eqpy argument
+trials: 1
+# --model-output-file-name, eqpy argument
+model_output_file_name : output.csv
+
+# R, python, None
+me_language: python
+# omit file extension
+me_file_name: ackley
+me_cfg_file_name: ackley_cfg
+
+eqsql_db_path: /home/nick/tmp/db
+
+# Optional HPC arguments
+walltime : '01:00:00'
+queue : queue
+project : project
+nodes : 4
+ppn : 4

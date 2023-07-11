@@ -6,18 +6,22 @@ import sys
 np.random.seed(42)
 
 
-def run(payload: str) -> str:
-    args = json.loads(payload)
-    x = np.array(args['x'])
-    mean_rt = args['mean_rt']
-    std_rt = args['std_rt']
+def run(param_str: str) -> str:
+    """Run the Ackely function on the specified JSON
+    payload.
 
-    result = ackley(x, mean_rt=mean_rt, std_rt=std_rt)
+    Return:
+        The Ackley function result as a JSON formatted string.
+    """
+    args = json.loads(param_str)
+    x = np.array(args['x'])
+
+    result = ackley(x)
     # print(f'Result: {result}', flush=True)
     return json.dumps(result)
 
 
-def ackley(x: np.ndarray, a=20, b=0.2, c=2 * np.pi, mean_rt=0, std_rt=0.1) -> np.float64:
+def ackley(x: np.array, a=20, b=0.2, c=2 * np.pi, mean_rt=1, std_rt=0.5) -> np.float64:
     """The Ackley function (http://www.sfu.ca/~ssurjano/ackley.html)
     Args:
         x (ndarray): Points to be evaluated. Can be a single or list of points
@@ -32,9 +36,6 @@ def ackley(x: np.ndarray, a=20, b=0.2, c=2 * np.pi, mean_rt=0, std_rt=0.1) -> np
     # Simulate this actually taking awhile
     runtime = np.random.lognormal(mean_rt, std_rt)
     time.sleep(runtime)
-
-    # Make x an array
-    x = np.array(x)
 
     # Get the dimensionality of the problem
     if x.ndim == 0:
