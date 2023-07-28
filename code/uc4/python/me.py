@@ -78,8 +78,8 @@ def reprioritize(tasks: Dict[int, Task]):
         fts = []
         priorities = []
         max_priority = len(uncompleted_fts)
-        new_order = fit_gpr(training, prediction)
-        for i, idx in enumerate(new_order):
+        ranking = fit_gpr(training, prediction)
+        for i, idx in enumerate(ranking):
             ft = uncompleted_fts[idx]
             priority = max_priority - i
             fts.append(ft)
