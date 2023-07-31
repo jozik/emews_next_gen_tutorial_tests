@@ -7,7 +7,7 @@ np.random.seed(42)
 
 
 def run(param_str: str) -> str:
-    """Run the Ackely function on the specified JSON
+    """Run the Ackley function on the specified JSON
     payload.
 
     Return:

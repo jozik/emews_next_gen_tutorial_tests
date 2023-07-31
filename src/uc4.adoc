@@ -1,11 +1,11 @@
 IMPORTANT: #Highlights# below have in source TODOs.
 [[uc4, Use Case 4 Tutorial - An EQSQL Workflow]]
-== Minimizing the Ackely function with an EQSQL Workflow
+== Minimizing the Ackley function with an EQSQL Workflow
 
 Our 4th use case workflow implements an example EQSQL optimization workflow
 that attempts to find the minimum of the Ackley function using a 
 Gaussian process regression model (GPR). Our implementation,
-is based on a similar example problem provided as part of the Colmena(https://github.com/exalearn/colmena/blob/bd334e0a582fb79d97652d67d05666f13d178f83/demo_apps/optimizer-examples/streaming.py#L1)[documentation,window=colmena,pts="noopener,nofollow"].
+is based on a similar example problem provided as part of the Colmena https://github.com/exalearn/colmena/blob/bd334e0a582fb79d97652d67d05666f13d178f83/demo_apps/optimizer-examples/streaming.py#L1[documentation,window=colmena,pts="noopener,nofollow"].
 We begin with a sample set containing a number of randomly generated n-dimensional points. 
 Each of these points is submitted as a task to the Ackley function for evaluation. When
 a specified number of tasks have completed (i.e., that number of Ackley function evaluation results
@@ -99,7 +99,7 @@ and executed by a worker pool, which then submits the results back where they ca
 worker pool evalutes those inputs in parallel by executing the Ackley function on them, and pushes the results back to the database. Periodically, the ME uses a Gaussian process regression model (GPR) to re-prioritize the unevaluated
 remaining inputs, assigning a higher priority to those it deems more likey produce a minimum. The following files implement this workflow.
 
-* `python/me.py` - the Python language ME that submits the Ackely inputs and re-prioritizes them
+* `python/me.py` - the Python language ME that submits the Ackley inputs and re-prioritizes them
 * `python/me_cfg.yaml` - the configuration file for the ME
 * `swift/ackley_worker_pool.swft` - the worker pool that retrieves the inputs for evaluation by the Ackley function
 * `swift/run_ackley_worker_pool.sh` - a bash script used to lauch the worker pool
@@ -110,7 +110,7 @@ remaining inputs, assigning a higher priority to those it deems more likey produ
 === The Ackley Function
 
 The http://www.sfu.ca/~ssurjano/ackley.html[Ackley,window=ackley_doc,pts="noopener,nofollow"] function is widely used for testing optimization algorithms.
-In our example project, it is implemented in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L1[`uc4/python/ackley.py`,window=ackely_py,pts="noopener,nofollow"] 
+In our example project, it is implemented in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L1[`uc4/python/ackley.py`,window=ackley_py,pts="noopener,nofollow"] 
 
 [NOTE]
 ====
@@ -170,7 +170,7 @@ arg_array=( "$EMEWS_ROOT/python/ackley.py"    <2>
 $TIMEOUT_CMD "$MODEL_CMD" "${arg_array[@]}"    <3>
 ----
 <1> Set the Python interpreter to use for running the Ackley Python code.
-<2> Set the Ackely python implementation file, the input parameters, and
+<2> Set the Ackley python implementation file, the input parameters, and
 the file to write the Ackley function output to as arguments to the Python command.
 <3> Execute the Python command with the provided arguments. 
 
@@ -209,14 +209,14 @@ if __name__ == '__main__':
 ----
 <1> Unpack the command line arguments.
 <2> Call the run function, passing the Ackley function input.
-<3> Write the Ackely function result to the output file.
+<3> Write the Ackley function result to the output file.
 
-`run` unpacks the Ackely function parameters and calls the Ackley function itself.
+`run` unpacks the Ackley function parameters and calls the Ackley function itself.
 
 [source, python]
 ----
 def run(param_str: str) -> str:
-    """Run the Ackely function on the specified JSON
+    """Run the Ackley function on the specified JSON
     payload.
     """
     args = json.loads(param_str)    <1>
@@ -228,7 +228,7 @@ def run(param_str: str) -> str:
 <1> Load the parameter string in to a dictionary. The parameter string
 is formatted as a JSON map where each entry in the map is an input variable.
 <2> Convert the parameter `x` entry into a numpy array. `x` is a JSON list in the
-parameter string and needs to be converted to an array for the Ackely function.
+parameter string and needs to be converted to an array for the Ackley function.
 <3> Run the Ackley function.
 <4> Return the Ackley function result as a JSON string.
 
