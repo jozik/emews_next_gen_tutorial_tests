@@ -5,7 +5,7 @@ IMPORTANT: #Highlights# below have in source TODOs.
 Our 4th use case workflow implements an example EQSQL optimization workflow
 that attempts to find the minimum of the Ackley function using a 
 Gaussian process regression model (GPR). Our implementation,
-is based on a similar example problem provided as part of the Colmena [documentation](https://github.com/exalearn/colmena/blob/bd334e0a582fb79d97652d67d05666f13d178f83/demo_apps/optimizer-examples/streaming.py#L1).
+is based on a similar example problem provided as part of the Colmena(https://github.com/exalearn/colmena/blob/bd334e0a582fb79d97652d67d05666f13d178f83/demo_apps/optimizer-examples/streaming.py#L1)[documentation,window=colmena,pts="noopener,nofollow"].
 We begin with a sample set containing a number of randomly generated n-dimensional points. 
 Each of these points is submitted as a task to the Ackley function for evaluation. When
 a specified number of tasks have completed (i.e., that number of Ackley function evaluation results
@@ -14,7 +14,7 @@ reorder the evaluation of the remaining tasks, increasing the priority of those 
 likely to find an optimal result according to the GPR. This repeats until all the evaluations complete.
 
 This tutorial uses the project structure and files created from the
-emews creator <<eqsql_top, eqsql template>>, and that should be read before this.
+emews creator <<eqsql_top,eqsql>> template, and that should be read before this.
 
 === Tutorial Goals
 // TODO: goals
@@ -92,7 +92,7 @@ The initial version of this project was created using the EMEWS creator with the
 emewscreator -o uc4 eqsql -c tutorial_cfgs/UC4.yaml
 ----
 
-See the <<eqsql_top, eqsql section>> in the emews creator documentation for additional information on the general project structure.
+See the eqsql <<eqsql_top, section>> in the emews creator documentation for additional information on the general project structure.
 
 As an eqsql project, the ME algorithm in the UC4 example submits tasks to a database. Those tasks are retrieived
 and executed by a worker pool, which then submits the results back where they can be used by the ME. Here, the ME produces inputs to the Ackley function submitting those as tasks to the database. The
@@ -109,7 +109,7 @@ remaining inputs, assigning a higher priority to those it deems more likey produ
 
 === The Ackley Function
 
-The http://www.sfu.ca/~ssurjano/ackley.html[Ackley] function is widely used for testing optimization algorithms.
+The http://www.sfu.ca/~ssurjano/ackley.html[Ackley,window=ackley_doc,pts="noopener,nofollow"] function is widely used for testing optimization algorithms.
 In our example project, it is implemented in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L1[`uc4/python/ackley.py`,window=ackely_py,pts="noopener,nofollow"] 
 
 [NOTE]
@@ -282,7 +282,8 @@ def submit_initial_tasks(task_queue, exp_id: str, params: Dict) -> Dict[int, Tas
     ...
     search_space_size = params['search_space_size']    <1>
     dim = params['sample_dimensions']    <2>
-    sampled_space = np.random.uniform(size=(search_space_size, dim), low=-32.768, high=32.768)    <3>
+    sampled_space = np.random.uniform(size=(search_space_size, dim),    <3>
+                                      low=-32.768, high=32.768)
 
     task_type = params['task_type']    <4>
 

@@ -823,7 +823,7 @@ eqsql database. Typically this should not be edited by the user.
 Typically, this should not be edited by the user.
 
 These files (excluding those in `ext/EQ-SQL`) contain lines or sections marked with *TODO* where that line or section needs
-to be edited to customize the file for your model and workflow. See TODO*<<uc4>>* for a fully fleshed out
+to be edited to customize the file for your model and workflow. See <<uc4>> for a fully fleshed out
 eqsql workflow created using emews creator. We will look more closely at relevant parts of these files
 below.
 
@@ -888,8 +888,7 @@ to use, the name of the compute queue, the project to charge the compute time
 to, and an estimate of how long the job will take. This section exports
 those values so that they are available to swift when creating the job submission
 script. These are set from values defined in the workflow configuration file
-(i.e., https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg#L1[`swift/cfgs/eqsql_worker_pool.cfg`,`,window=eqsql_worker_pool.sh,pts="noopener,nofollow"]
-).
+(i.e., https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg#L1[`swift/cfgs/eqsql_worker_pool.cfg`,`,window=eqsql_worker_pool.sh,pts="noopener,nofollow"]).
 
 [source, bash]
 ----
@@ -989,7 +988,7 @@ else
 fi
 ----
 
-[[pass_cmd_args, CMD_LINE_ARGS]
+[[pass_cmd_args, CMD_LINE_ARGS]]
 The launch script passes some arguments to the swift script, that it calls, via the command line.
 We define a variable that represents the command line and pass the number of trials
 (replicates), the worker pool task type, batch size, batch threshold and worker pool
@@ -1053,7 +1052,7 @@ structure of the script, highlighting those areas most relevant to the user.
 
 The script begins with by defining some variables. The ones defined using the `getenv` function are
 set from environment variables, while those those defined using `argv` are set from command
-line arguments passed to the swift script from <<pass_cmd_args, `run_eqsql_worker_pool.sh`>>.
+line arguments passed to the swift script from <<pass_cmd_args,`run_eqsql_worker_pool.sh`>>.
 
 [source, swift]
 ----
@@ -1229,7 +1228,7 @@ and are marked with the appropriate TODOs.
 ----
 
 [[pool_cfg, eqsql_worker_pool.cfg]]
-https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg#L1[`*eqsql_worker_pool.cfg*,window=eqsql_worker_pool,pts="noopener,nofollow"]
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg#L1[`*eqsql_worker_pool.cfg*`,window=eqsql_worker_pool,pts="noopener,nofollow"]
 
 `eqsql_worker_pool.cfg` contains configuration variables for running the worker pool. It is sourced
 by the submission <<submit_init, script>> `run_eqsql_worker_pool.sh` to retrieve the database connection parameters, the HPC scheduler parameters, and the other variables required by the workflow.
@@ -1411,7 +1410,7 @@ the path to the R or Python code to run.
 will be an ignored empty string.
 
 
-https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo.py#L1[`*algo.py*,window=algo,pts="noopener,nofollow"]
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo.py#L1[`*algo.py*`,window=algo,pts="noopener,nofollow"]
 
 If the `me_language` argument to the `esql` template command is `python`, then an example Python ME and ME configuration file will be produced. The ME can be run from the command line as follows:
 
@@ -1484,7 +1483,8 @@ def run(exp_id: str, params: Dict):    <1>
 
   # start worker pool
   pool_params = worker_pool.cfg_file_to_dict(params['pool_cfg_file'])
-  pool = worker_pool.start_local_pool(params['worker_pool_id'], params['pool_launch_script'],    <5>
+  pool = worker_pool.start_local_pool(params['worker_pool_id'],    <5>
+                                      params['pool_launch_script'],
                                       exp_id, pool_params)
   task_type = params['task_type']
   fts = []
@@ -1523,7 +1523,7 @@ as possible in the event of an error occurring.
 #TODO: R example ME discussion#
 
 [[algo_cfg]]
-https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo_cfg.yaml#L1[*algo_cfg.yaml*,window=algo_cfg,pts="noopener,nofollow"]]
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo_cfg.yaml#L1[`*algo_cfg.yaml*`,window=algo_cfg,pts="noopener,nofollow"]
 
 `algo_cfg.yaml` is a yaml format file used configure the example ME. The file begins with the
 database related parameters. These parameters are used by the example ME algorithm to 
