@@ -827,7 +827,7 @@ to be edited to customize the file for your model and workflow. See TODO*<<uc4>>
 eqsql workflow created using emews creator. We will look more closely at relevant parts of these files
 below.
 
-
+[[eqsql_launch_script]]
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/run_eqsql_worker_pool.sh#L1[`*run_eqsql_worker_pool.sh*`,window=eqsql_worker_pool.sh,pts="noopener,nofollow"]
 
 NOTE: The launch scripts produced by the emews creator _source_ other files. Doing this in a bash script
@@ -1043,7 +1043,7 @@ that are referenced in the swift script when it executes in the compute environm
 script to work correctly. The `-e` argument does this, adding the specified variables to the compute environment.
 <5> Pass `CMD_LINE_ARGS` to the swift script.
 
-
+[[swift_worker_pool]]
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/eqsql_worker_pool.swift#L1[`*eqsql_worker_pool.swift*`,window=eqsql_worker_pool.swift,pts="noopener,nofollow"]
 
 This file is the swift script that implements the worker pool. The worker poll pops tasks off of the database
@@ -1411,7 +1411,7 @@ the path to the R or Python code to run.
 will be an ignored empty string.
 
 
-https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo.py#L1[`*algo.py*`,window=algo,pts="noopener,nofollow"]
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo.py#L1[`*algo.py*,window=algo,pts="noopener,nofollow"]
 
 If the `me_language` argument to the `esql` template command is `python`, then an example Python ME and ME configuration file will be produced. The ME can be run from the command line as follows:
 
@@ -1434,7 +1434,7 @@ The two command line parameters to `algo.py` are:
 * `exp_id` - an experiment identifier for the current run the workflow (e.g., epi_model_experiment_3).
 * `config_file` - the path to the ME configuration file (e.g., `algo_cfg.yaml`)
 
-
+[[me_main]]
 The bare example ME contains two functions and a `if __name__ == 'main'` section. 
 
 [source, python]
@@ -1459,6 +1459,7 @@ The `create_parser` function creates the command line arguments, and the `__main
 loads the configuration file into a Python dictionary, and calls the `run` function, passing it
 the  `params` dictionary.
 
+[[me_init]]
 The `run` function starts the EQ/SQL database, and the worker pool, and creates a task queue
 for submitting tasks to the database output queue to be retrieved by the worker pool for
 execution.

@@ -14,12 +14,11 @@ reorder the evaluation of the remaining tasks, increasing the priority of those 
 likely to find an optimal result according to the GPR. This repeats until all the evaluations complete.
 
 This tutorial uses the project structure and files created from the
-// TODO: Include link to project creator section.
-EMEWS #eqsql template#,  and that should be read before this.
+emews creator <<eqsql_top, eqsql template>>, and that should be read before this.
 
 === Tutorial Goals
 // TODO: goals
-#GOALS#
+#TODO: GOALS#
 
 === Running the Workflow
 
@@ -33,33 +32,34 @@ The workflow is designed to be run with a local swift-t conda install:
 * pip3 install -e EQ/SQL
 * pip3 install emews_creator
 * conda install postgres, numpy, scipy, scikit-learn
-* emews_create init_db
+* emewscreator init_db
 
 
-The workflow can be run using the `ackley/python/me.py` python script. It takes two arguments:
+The workflow can be run using the https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L1[`uc4/python/me.py`,window=me,pts="noopener,nofollow"] python script. It takes two arguments:
 
 1. An experiment id, e.g. "test_ackley".
-2. The path to the ME configuration file, i.e., `ackley/python/me_cfg.yaml`
+2. The path to the ME configuration file, i.e., `uc4/python/me_cfg.yaml`
 
 For example,
 
 [source, bash]
 ----
-$ cd ackley/python
+$ cd uc4/python
 $ python3 me.py test_ackley me_cfg.yaml
 ----
 
-Running the workflow will create an experiment directory named the experiment id followed by a timestamp. 
-The workflow runs within this directory.
+Running the workflow will create an experiment directory whose name 
+consists of th eexperiment id followed by a timestamp. The workflow runs 
+within this directory.
 
 === Workflow Project Structure
-The full source code for this tutorial use case can be accessed https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/ackley[here,window=ACKLEY,pts="noopener,nofollow"].
+The full source code for this tutorial use case can be accessed https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc4[here,window=uc4,pts="noopener,nofollow"].
 // TODO: modify the structure and files to reflect the final version. Just run tree on completed version.
-The completed workflow project has the following directory #structure and files#:
+The completed workflow project has the following directory structure and files:
 // NB: Generated using tree.
 [source,text]
 ----
-ackley/
+uc4/
 ├── data
 ├── etc
 │   └── emews_utils.sh
@@ -89,32 +89,28 @@ ackley/
 The initial version of this project was created using the EMEWS creator with the following command:
 [source#uc4-creator,bash]
 ----
-emewscreator -o ackley eqsql -c tutorial_cfgs/UC4.yaml
+emewscreator -o uc4 eqsql -c tutorial_cfgs/UC4.yaml
 ----
 
-See #TODO: make link# the eqsql section in the emews creator documentation for additional information on the general project structure.
+See the <<eqsql_top, eqsql section>> in the emews creator documentation for additional information on the general project structure.
 
-As an eqsql project, in the Ackley example, a ME algorithm submits tasks to a database. Those tasks are retrieived
-and executed by a worker pool, which then submits the results back where they can be used by the ME. Here, in the
-Ackley use case, the ME produces inputs to the Ackley function submitting those as tasks to the database. The
-worker pool evalutes those inputs in parallel by executing the Ackley function, and pushes the results back to the database. 
-Periodically, the ME uses a Gaussian process regression model (GPR) to re-prioritize the unevaluated
-remaining inputs, assigning a higher priority to those more likey to be the minima. The following files implement
-this workflow.
+As an eqsql project, the ME algorithm in the UC4 example submits tasks to a database. Those tasks are retrieived
+and executed by a worker pool, which then submits the results back where they can be used by the ME. Here, the ME produces inputs to the Ackley function submitting those as tasks to the database. The
+worker pool evalutes those inputs in parallel by executing the Ackley function on them, and pushes the results back to the database. Periodically, the ME uses a Gaussian process regression model (GPR) to re-prioritize the unevaluated
+remaining inputs, assigning a higher priority to those it deems more likey produce a minimum. The following files implement this workflow.
 
 * `python/me.py` - the Python language ME that submits the Ackely inputs and re-prioritizes them
 * `python/me_cfg.yaml` - the configuration file for the ME
 * `swift/ackley_worker_pool.swft` - the worker pool that retrieves the inputs for evaluation by the Ackley function
 * `swift/run_ackley_worker_pool.sh` - a bash script used to lauch the worker pool
 * `swift/cfgs/ackley_worker_pool.cfg` - the configuration file for the worker pool
-* `scripts/run_ackley.sh` - a bash script called by the worker pool to the run Python Ackley function
-* `python/ackley.py` - the Ackley function implement in Python and called by the `run_ackley.sh` bash script
-
+* `scripts/run_ackley.sh` - a bash script called by the worker pool to run the Python Ackley function
+* `python/ackley.py` - the Ackley function implemented in Python and called by the `run_ackley.sh` bash script
 
 === The Ackley Function
 
 The http://www.sfu.ca/~ssurjano/ackley.html[Ackley] function is widely used for testing optimization algorithms.
-In our example project, it is implemented in `ackley/python/ackley.py`  #TODO: make link#. 
+In our example project, it is implemented in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L1[`uc4/python/ackley.py`,window=ackely_py,pts="noopener,nofollow"] 
 
 [NOTE]
 ====
@@ -124,9 +120,10 @@ We have added a lognormally distributed sleep delay to the Ackley function imple
 === Calling the Ackley Function from Swift/T
 
 The Ackley function is implemented in Python and is called by the Swift/T worker pool 
-using a bash script (`ackley/scripts/run_ackley.sh`) #TODO: make link#. 
+using a bash script https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/scripts/run_ackley.sh#L1[`uc4/scripts/run_ackley.sh`,window=run_ackley,pts="noopener,nofollow"] 
 
-The `run_ackley.sh` scripts takes 5 inputs which are passed from the worker pool when
+
+The `run_ackley.sh` script takes 5 inputs which are passed from the worker pool swift code when
 the script is called. 
 
 [source, bash]
@@ -147,7 +144,7 @@ TRIAL_ID=$3
 EMEWS_ROOT=$4
 
 # Each model run, runs in its own "instance" directory
-# Set INSTANCE_DIRECTORY to that and cd into it.
+# Set INSTANCE_DIRECTORY to that.
 INSTANCE_DIRECTORY=$5
 ----
 
@@ -172,7 +169,7 @@ arg_array=( "$EMEWS_ROOT/python/ackley.py"    <2>
 
 $TIMEOUT_CMD "$MODEL_CMD" "${arg_array[@]}"    <3>
 ----
-<1> Set the Python to use run the Ackley Python code.
+<1> Set the Python interpreter to use for running the Ackley Python code.
 <2> Set the Ackely python implementation file, the input parameters, and
 the file to write the Ackley function output to as arguments to the Python command.
 <3> Execute the Python command with the provided arguments. 
@@ -194,14 +191,10 @@ are retreived by the worker pool, passed to the bash script, and from there
 to the model execution itself.
 ====
 
-The `run_ackley.sh` scripts calls `python/ackley.py` #TODO: make link# to execute the
-Ackley function on the provided input. The script contains a `__main__` section,
-a function function that parses the function input, and the Ackley function itself. 
-
-The `__main__` section receives the Ackley function input (the `$PARAM_LINE` variable in 
+When the `run_ackley.sh` scripts calls `python/ackley.py` to execute the
+Ackley function on the provided input, the https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L50[`__main__`,window=ackley_main,pts="noopener,nofollow"] section of `ackley.py` is executed. The `__main__` section receives the Ackley function input (the `$PARAM_LINE` variable in 
 `run_ackley.sh`), and the path to the output file as comand line arguments. It unpacks
-these arguments, calls the `run`, and writes the result to the output file.
-
+these arguments, calls the `run` function, and writes the result to the output file.
 
 [source, python]
 ----
@@ -214,11 +207,11 @@ if __name__ == '__main__':
     with open(output_file, 'w') as fout:    <3>
         fout.write(f'{y}')
 ----
-<1> Unpack the command line arguments
-<2> Call the run function, passing the Ackley function input
+<1> Unpack the command line arguments.
+<2> Call the run function, passing the Ackley function input.
 <3> Write the Ackely function result to the output file.
 
-`run` unpacks the Ackely function parameters and calls the Ackley function
+`run` unpacks the Ackely function parameters and calls the Ackley function itself.
 
 [source, python]
 ----
@@ -236,12 +229,12 @@ def run(param_str: str) -> str:
 is formatted as a JSON map where each entry in the map is an input variable.
 <2> Convert the parameter `x` entry into a numpy array. `x` is a JSON list in the
 parameter string and needs to be converted to an array for the Ackely function.
-<3> Run the Ackley function
+<3> Run the Ackley function.
 <4> Return the Ackley function result as a JSON string.
 
 
 The Swift/T worker pool script is largely unchanged from what is created by the
-esql emews creator template which is described here #TODO: make link#. We have, 
+esql emews creator template which is described <<swift_worker_pool, here>>. We have, 
 however, edited the `get_result` function to return the result of an
 Ackley evaluation.
 
@@ -254,31 +247,34 @@ Ackley evaluation.
 }
 ----
 <1> Initialize the output file as a swift-t file object. `output_file` is the path
-passed to `ackley.py` as a command line argument and where it writes the result
-of an Ackley function evaluation. 
+passed to `ackley.py` as a command line argument. The Ackley function result is
+written to this file in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L56[`python/ackley.py`,
+window=ackley_write_result,pts="noopener,nofollow"]
 <2> Read the first line of that file, which contains the result, and convert the
 string to a float.
 
-The worker pool configuration file (`ackley_worker_pool.cfg`) and the worker pool launch script
-are unchanged from those produced by eqsql template. A discussion of them can be found here and here
-#TODO: make links#
+The worker pool configuration file (https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/swift/cfgs/ackley_worker_pool.cfg#L1[`swift/cfgs/ackley_worker_pool.cfg`,window=ackley_worker_pool_cfg,pts="noopener,nofollow"]) and the worker pool launch script
+(https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/swift/run_ackley_worker_pool.sh#L1[`swift/run_ackley_worker_pool.sh`,window=run_ackley_worker_pool_sh,pts="noopener,nofollow"]))
+are unchanged from those produced by eqsql template. A discussion of them can be found <<pool_cfg,here>>
+and <<eqsql_launch_script,here>>
 
 === The Ackley ME
 
-The Ackley workflow can be run by executing the Python script `python/me.py` #TODO: make link#. The code begins by
+The Ackley workflow can be run by executing the Python script https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L1[`python/me.py`,window=me_py,pts="noopener,nofollow"]
+The code begins by
 starting the EQ/SQL database, the worker pool, and initializing a task queue through which tasks can be sent to the worker pool via the database. The code then submits a user specified amount of initial tasks to the database, and waits
 for some number of tasks to complete. When that number has completed, the remaining unexecuted tasks are reprioritized 
 using a GPR model. This continues until some total number have been completed. The intention is to illustrate a typical
-ME workflow where tasks are submitted to a task queue, and the ME then waits for some number to complete, at which point, it can submit ew tasks based on the existing results, and / or, reprioritize unexecuted tasks. 
+ME workflow where tasks are submitted to a task queue, and the ME then waits for some number to complete, at which point, it can submit new tasks based on the existing results, and reprioritize unexecuted tasks, if necessary.
 
-The code consists of a Python dataclass for encapsulating a task, 5 functions, and a `__main__` block. The `create_parser`, and
-`__main__` block were discussed in the emews creator eqsql section (#TODO: make link#) and won't be discussed here. 
-Similarily, the task queue creation, starting the database, and worker pool performed in the `run` function were also discussed
-in the  emews creator eqsql section (#TODO: make link#) and will not be covered here. 
+The code consists of a Python `dataclass` for encapsulating a task, 5 functions, and a `__main__` block. The `create_parser`, and
+`__main__` block are discussed in the emews creator eqsql <<me_main,section>> and won't be discussed here. 
+Similarily, creating the task queue, and starting the database, and worker pool which are performed in the `run` function were also discussed
+in the  emews creator eqsql <<me_init,section>> and will not be covered here. 
 
-After initialization, the `run` function calls `submit_initial_tasks` (#TODO: make link#), passing it the created task_queue
-user provided experiment id, and the ME input parameters as a dictionary. There the random samples of Ackley function
-input data are created and submitted as tasks for evaluation.
+After initialization, the `run` function calls https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L23[`submit_initial_tasks`,window=submit_initial_tasks,pts="noopener,nofollow"], passing it the created task_queue
+user provided experiment id, and the ME input parameters as a dictionary. There the random samples 
+used as Ackley function input data are created and submitted as tasks for evaluation.
 
 [source, python]
 ----
@@ -301,21 +297,21 @@ def submit_initial_tasks(task_queue, exp_id: str, params: Dict) -> Dict[int, Tas
 
     return tasks
 ----
-<1> Get the search space size, i.e., the number of initial samples to evaluate
-<2> Get the number of dimensions in each sample
+<1> Get the search space size, i.e., the number of initial samples to evaluate.
+<2> Get the number of dimensions in each sample.
 <3> Create a numpy 2D array of `search_space_size` where each row is an array of `dim` size
 containing random numbers between -32.768 and 32.768.
 <4> Get the task type id to be used in task submission. A worker pool will query for
 tasks of a specific type, and this identifies that type.
-<5> For each sample in the sampled space, create a JSON map with a single item `x`
+<5> For each sample in the sampled space, create a JSON map with a single key, `x`,
 whose value is the sample array. Add that JSON string to a list of payloads
-to submit to the database.
+to submit to the database queue.
 <6> Submit the list of payloads as tasks to be executed, passing the experiment id, and
 task type. The submission returns a status, which we assume to be successful and ignore,
-and list of `eqsql.eq.Future` objects.
-<7> Create and return a Python dictionary of Task dataclass objects. Each Task contains the
-future, the numpy array that was submitted as that task input, and a result (which is initially
-None).
+and a list of `eqsql.eq.Future` objects.
+<7> Create and return a Python dictionary of Task dataclass objects. Each Task contains
+the `Future` for that tasks, the numpy array that was submitted as that task's input,
+and a result (which is initially None, indicating that the task has not yet been evaluated).
 
 [NOTE]
 ====
@@ -323,7 +319,13 @@ Numpy structures such as arrays are not directly JSON-ifiable, and so
 we need to convert them into Python structures that are, such as lists.
 ====
 
-Having submitted the initial tasks, `run` now begins the optimization loop (#TODO: make link#)
+Having submitted the initial tasks, `run` now begins the optimization https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L117[loop,
+window=opt_loop,pts="noopener,nofollow"]. The loop repeatedly queries for
+some number of completed tasks using eqsql's `as_completed` function which returns
+an iterator over that number of completed tasks, waiting for tasks to complete, if necessary.
+When `as_completed` finishes returning completed tasks, we reprioritize the remaining
+uncompleted tasks using the results provided by the completed tasks. The loop continues
+calling `as_completed` and reprioritizing until some total number of tasks have completed.
 
 [source, python]
 ----
@@ -345,24 +347,24 @@ while tasks_completed < total_completed:    <4>
 ----
 <1> Get the total number of tasks to complete (i.e., the total number of Ackley function evaluatations
 to perform) before stopping.
-<2> Get the number of tasks to complete, before reprioritizing.
+<2> Get the number of tasks to complete before reprioritizing.
 <3> Create a list containing all the Task futures. Most of the eqsql functions that
 return some number of completed tasks, or tasks as they complete, use a list of Futures
 as an argument, so we create that here.
 <4> While the number of completed tasks is less than the total number to complete,
-wait for `reprioritze_after` number of tasks to complete, and then reprioritize.
+wait for another `reprioritze_after` number of tasks to complete, and then reprioritize.
 <5> Iterate through `reprioritize_after` number of completed Futures. Those futures 
 are popped off the `fts` list of futures. 
 <6> Get the result of a completed Future.
 <7> JSON-ify that result and set the result attribute of the Task associated with that
 Future. 
-<8> Increment the number of completed tasks.
-<9> After `reprioritize_after` number of tasks have completed, and their results
+<8> Increment the number of total completed tasks.
+<9> After another `reprioritize_after` number of tasks have completed, and their results
 assigned to the corresponding Task object, reprioritize the uncompleted tasks.
 
-The `reprioritize` function (#TODO: make link#) uses the completed task results captured in the `result` attribute of the
-Tasks objects to reprioritize the remaining tasks. It begins by separating the Task objects 
-into training and prediction data.
+The https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L65[`reprioritize`,window=reprioritize,pts="noopener,nofollow"] function uses the completed task results
+captured in the `result` attribute of the Tasks objects to reprioritize the remaining tasks. It begins by separating
+the Task objects into training and prediction data sets.
 
 [source, python]
 ----
@@ -378,15 +380,16 @@ def reprioritize(tasks: Dict[int, Task]):
             training.append([t.sample, t.result])    <3>
 ----
 <1> Iterate through all the Tasks, separating them into
-test and prediction data.
+test and prediction data sets.
 <2> If the Task's result is None (i.e., it hasn't completed) then
-add it's sample to the prediction data, and it's future to the list
-of completed futures.
-<3> Add the completed Task's sample and result values to the training data.
+add its sample input to the prediction data set, and it's future to the list
+of uncompleted futures.
+<3> Add the completed Task's sample input and result values to the training data.
 
-With the training and prediction data created, `reprioritize` calls the GPR
-to rank the uncompeleted tasks by likelyhood of minimizing the Ackley function.
-Using that ranking, it then reprioritizes the remaining uncompleted tasks.
+With the training and prediction data created, `reprioritize` fits the GPR
+using the training data and ranks the uncompeleted tasks by likelihood
+of minimizing the Ackley function. Using that ranking, it then reprioritizes the remaining 
+uncompleted tasks.
 
 [source, python]
 ----
@@ -407,16 +410,17 @@ eq.update_priority(fts, priorities)     <5>
 <2> Call the GPR to get the Task ranking. The returned ranking
 is a ranked list of indicies into the prediction data.
 <3> For each index in the ranking, get the Future corresponding
-to that index, assign a priority, and those to their respective lists.
+to that index, assign a priority, and add the Future and the
+priority to their respective lists.
 <4> Compute a priority by subtracting the current iteration index
 from the max priority.
 <5> Update the priorities of the specified futures to the priorities
 in the specified list.
 
-
-The ME itself is configured using a yaml format configuration file, `python/me_cfg.yaml` (#TODO: make link#). The ME
+The ME itself is configured using a yaml format configuration file,
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me_cfg.yaml#L1[`python/me_cfg.yaml`, window=me_cfg,pts="noopener,nofollow"]. The ME
 code reads in this file, and creates a `params` Python dictionary from it. In addition to 
-those entries described in the emews creator eqsql template section (#TODO: make link#), the file contains
+those entries described in the emews creator eqsql template <<algo_cfg,section>>, the file contains
 the following entries:
 
 [source, yaml]
@@ -426,13 +430,12 @@ sample_dimensions: 4    <2>
 total_completed: 40    <3>
 reprioritize_after: 10    <4>
 ----
-<1> The size of sample search space. This many samples are created and submitted as tasks for Ackley function
-evaluation by the worker pool.
+<1> The size of the sample search space. This many samples are created and submitted as 
+tasks for Ackley function evaluation by the worker pool.
 <2> The number of dimensions in each sample.
 <3> The total number of Ackley function evaluations to complete before stopping.
-<4> Each time this number of Ackley function evaluations have completed, reprioritize the
-remaining uncompleted tasks.
-
+<4> The number of tasks to complete before reprioritizing. Each time this number of additional Ackley function
+evaluations have completed, reprioritize the remaining uncompleted tasks.
 
 
 #TODO:# 
