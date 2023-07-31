@@ -537,8 +537,10 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#wflow_templates">1.4. Workflow Templates</a>
 <ul class="sectlevel3">
 <li><a href="#_sweep">1.4.1. Sweep</a></li>
+<li><a href="#eqsql_top">1.4.2. EQSQL</a></li>
 </ul>
 </li>
+<li><a href="#_init_db">1.5. INIT DB</a></li>
 </ul>
 </li>
 <li><a href="#uc1">2. <mark>Simple</mark> Workflows with ABM</a>
@@ -564,6 +566,16 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </ul>
 </li>
 <li><a href="#_running_the_swift_script">2.7. Running the Swift Script</a></li>
+</ul>
+</li>
+<li><a href="#uc4">3. Minimizing the Ackely function with an EQSQL Workflow</a>
+<ul class="sectlevel2">
+<li><a href="#_tutorial_goals_2">3.1. Tutorial Goals</a></li>
+<li><a href="#_running_the_workflow">3.2. Running the Workflow</a></li>
+<li><a href="#_workflow_project_structure_2">3.3. Workflow Project Structure</a></li>
+<li><a href="#_the_ackley_function">3.4. The Ackley Function</a></li>
+<li><a href="#_calling_the_ackley_function_from_swiftt">3.5. Calling the Ackley Function from Swift/T</a></li>
+<li><a href="#_the_ackley_me">3.6. The Ackley ME</a></li>
 </ul>
 </li>
 </ul>
@@ -612,6 +624,8 @@ Options:
 Commands:
   eqpy   create an eqpy workflow
   eqr    create an eqr workflow
+  eqsql    create an eqsql workflow
+  init_db  initialize an eqsql database
   sweep  create a sweep workflow</pre>
 </div>
 </div>
@@ -864,7 +878,7 @@ below.</p>
 </td>
 <td class="content">
 The launch scripts produced by the emews creator <em>source</em> other files. Doing this in a bash script
-makes any variables and functions defined in those files available to the current file. as if they had been
+makes any variables and functions defined in those files available to the current file, as if they had been
 defined in the current file.
 </td>
 </tr>
@@ -1253,7 +1267,7 @@ them <code>out.txt</code> and <code>err.txt</code>.</td>
 </div>
 <div class="paragraph">
 <p><code>run_my_model_sweep_workflow.sh</code> is called by <code>sweep_workflow.swift</code> to execute
-the model as if the model has been run from the command line. The script passed
+the model as if the model has been run from the command line. The script is passed
 single line of parameters from the upf file, the
 emews root directory location, and the instance directory created in <code>sweep_workflow.swift</code>.
 You will need to update the <code>MODEL_CMD</code> variable to specify the model executable.</p>
@@ -1447,6 +1461,1279 @@ for <code>CFG_WALLTIME</code>, <code>CFG_QUEUE</code>, and <code>CFG_PROJECT</co
 </tr>
 </table>
 </div>
+</div>
+<div class="sect3">
+<h4 id="eqsql_top">1.4.2. EQSQL</h4>
+<div class="paragraph">
+<p><mark>TODO</mark>: text that distinguishes between local run (db on same machine, swift-t non-scheduled
+submission), and swift-t scheduled worker pool submission, and how that applies to the code
+created by the template.</p>
+</div>
+<div class="paragraph">
+<p>The eqsql command creates a workflow that submits tasks (such as
+application runs) to a database queue. Worker pools pop tasks
+off this queue for evaluation, and push the results back to a database input queue.
+The tasks can be provided by a Python or R language model exploration (ME) algorithm.</p>
+</div>
+<div class="paragraph">
+<p>Usage:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$emewscreator eqsql -h
+Usage: emewscreator eqsql [OPTIONS]
+
+Options:
+  -c, --config PATH              Path to the template configuration file.
+                                 [required if any command line arguments are
+                                 missing]
+  --pool-id TEXT                 The name of the task worker pool.
+  --task-type INTEGER            The task type id for the tasks consumed by
+                                 the worker pool.
+  -n, --workflow-name TEXT       Name of the workflow.
+  --trials INTEGER               Number of trials / replicates to perform for
+                                 each model run. Defaults to 1.
+  --model-output-file-name TEXT  Model output base file name, file name only
+                                 (e.g., "output.csv").
+  --me-language [python|R|None]  Model exploration algorithm programming
+                                 language: Python, R, or None.
+  --me-file-name TEXT            The name of the model exploration algorithm
+                                 template file to generate. Omit the extension
+                                 (e.g., "algo", not "algo.py").
+  --me-cfg-file-name TEXT        The name of the model exploration algorithm
+                                 configuration file.
+  --esql-db-path PATH            The path to the eqsql database.
+  -h, --help                     Show this message and exit.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A sample eqsql configuration file can be found <a href="https://github.com/emews/emews-project-creator/blob/master/example_cfgs/eqsql.yaml" target="eqsql.yaml">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>In addition to the common configuration arguments described [above](#workflow_templates),
+the eqsql template also has the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>--pool-id</code> - a unique identifier for the swift-t worker pool created by the template.</p>
+</li>
+<li>
+<p><code>--task-type</code> - an integer identifying the type of task the worker pool will consume.</p>
+</li>
+<li>
+<p><code>--trials</code> - the number of trials or replicates to perform for each task evalution. Defaults to 1.</p>
+</li>
+<li>
+<p><code>--model-output-file-name</code> - each task evaulation is passed a file path for writing its output.
+This is the name of that file.</p>
+</li>
+<li>
+<p><code>--me-language</code> - the ME programming language (R, Python, None). The template will create an example ME written
+in this language. If the value is <code>None</code>, then no ME example file will be created.</p>
+</li>
+<li>
+<p><code>--me-cfg-file-name</code> - the name of the yaml format configuration file used to configure the example ME.</p>
+</li>
+<li>
+<p><code>--esql-db-path</code> - the path to the eqsql database. This is used by the example ME to start
+the database.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Generating an eqsql workflow, creates the following files, the contents of which reflect the
+arguments (e.g., <code>pool_id</code>.) above. The exact file names are dependent on
+the <code>workflow_name</code>, and <code>model_name</code> configuration parameters. In the following, the workflow name
+was set to <code>eqsql</code>, and the model name to <code>my model</code>.
+If Python or R is specified in the <code>me_language</code> parameter, then an example
+ME algorithm and configuration file are created. Here, the <code>me_language</code> is Python,
+the <code>me_file_name</code> is <code>algo</code>, and the <code>me_cfg_file_name</code> is <code>algo_cfg</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>swift/run_eqsql_worker_pool.sh</code> - a bash script used to launch the worker pool</p>
+</li>
+<li>
+<p><code>swift/eqsql_worker_pool.swift</code> - a swift script the implements an eqsql worker pool</p>
+</li>
+<li>
+<p><code>scripts/run_my_model.sh</code> - a bash script for executing the model. The swift script calls this script, passing it task parameters from the ME via the database.</p>
+</li>
+<li>
+<p><code>python/algo.py</code> - an example eqsql ME in Python. The file name is specified by the <code>me_file_name</code> configuration parameter.</p>
+</li>
+<li>
+<p><code>python/algo_cfg.yaml</code> - the configuration file for the example ME. The file name is specified by the <code>me_cfg_file_name</code> parameter</p>
+</li>
+<li>
+<p><code>ext/EQ-SQL/EQSQL.swift</code> - swift code used by worker pools to retrieve tasks and report results to the
+eqsql database. Typically this should not be edited by the user.</p>
+</li>
+<li>
+<p><code>ext/EQ-SQL/eqsql_swift.py</code> - Python code used by worker pools to retrieve tasks and report results to the eqsql database.
+Typically, this should not be edited by the user.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These files (excluding those in <code>ext/EQ-SQL</code>) contain lines or sections marked with <strong>TODO</strong> where that line or section needs
+to be edited to customize the file for your model and workflow. See TODO*<a href="#uc4">Use Case 4 Tutorial - An EQSQL Workflow</a>* for a fully fleshed out
+eqsql workflow created using emews creator. We will look more closely at relevant parts of these files
+below.</p>
+</div>
+<div id="eqsql_launch_script" class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/run_eqsql_worker_pool.sh#L1" target="eqsql_worker_pool.sh"><code><strong>run_eqsql_worker_pool.sh</strong></code></a></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The launch scripts produced by the emews creator <em>source</em> other files. Doing this in a bash script
+makes any variables and functions defined in those files available to the current file, as if they had been
+defined in the current file.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The initial section of the file processes the input arguments to the file,
+and initalizes some variables that are used in the following parts of the file.</p>
+</div>
+<div id="submit_init" class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#! /usr/bin/env bash</span>
+<span class="tok-nb">set</span> -eu
+
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$#</span><span class="tok-s2">&quot;</span> -ne <span class="tok-m">2</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="tok-nv">script_name</span><span class="tok-o">=</span><span class="tok-k">$(</span>basename <span class="tok-nv">$0</span><span class="tok-k">)</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Usage: </span><span class="tok-si">${</span><span class="tok-nv">script_name</span><span class="tok-si">}</span><span class="tok-s2"> exp_id cfg_file&quot;</span>
+  <span class="tok-nb">exit</span> <span class="tok-m">1</span>
+<span class="tok-k">fi</span>
+
+<span class="tok-c1"># Uncomment to turn on swift/t logging. Can also set TURBINE_LOG,</span>
+<span class="tok-c1"># TURBINE_DEBUG, and ADLB_DEBUG to 0 to turn off logging</span>
+<span class="tok-c1"># export TURBINE_LOG=1 TURBINE_DEBUG=1 ADLB_DEBUG=1</span>
+<span class="tok-nb">export</span> <span class="tok-nv">EMEWS_PROJECT_ROOT</span><span class="tok-o">=</span><span class="tok-k">$(</span> <span class="tok-nb">cd</span> <span class="tok-k">$(</span> dirname <span class="tok-nv">$0</span> <span class="tok-k">)</span>/.. <span class="tok-p">;</span> /bin/pwd <span class="tok-k">)</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-c1"># source some utility functions used by EMEWS in this script</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">EMEWS_PROJECT_ROOT</span><span class="tok-si">}</span><span class="tok-s2">/etc/emews_utils.sh&quot;</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+
+<span class="tok-nb">export</span> <span class="tok-nv">EXPID</span><span class="tok-o">=</span><span class="tok-nv">$1</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">TURBINE_OUTPUT</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/experiments/<span class="tok-nv">$EXPID</span>    <i class="conum" data-value="5"></i><b>(5)</b>
+check_directory_exists
+
+<span class="tok-nv">CFG_FILE</span><span class="tok-o">=</span><span class="tok-nv">$2</span>    <i class="conum" data-value="6"></i><b>(6)</b>
+<span class="tok-nb">source</span> <span class="tok-nv">$CFG_FILE</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Check that the number of arguments passed to the script is equal to 2. The first should
+be the name of the experiment, and the second a configuration file that will be sourced
+into the current environment.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Define an <code>EMEWS_PROJECT_ROOT</code> environment variable that specifies the root directory of the project.
+This corresponds to the root project directory specified in <code>--output-dir</code> when running
+emewscreator.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Source some utiliity functions that are used later in the script. These are: <code>check_directory_exists</code>
+which checks if the <code>TURBINE_OUTPUT</code> directory exists and prompts the user to continue; and <code>log_script</code>
+which logs the relevant environment variables and a copy of script to the <code>TURBINE_OUTPUT</code> directory.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Define and export an <code>EXPID</code> (an experiment id) environment variable from the experiment id passed
+into the script.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Define the <code>TURBINE_OUTPUT</code> directory using the <code>EXPID</code>. The <code>TURBINE_OUTPUT</code> directory is the
+sandbox directory in which the application runs, and is used by swift as the
+output location for all the files that it produces.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Create a CFG_FILE environment variable from the second argument passed into the script, and source this file.
+In this way the configuration variables which may change from workflow run to workflow run are included
+into this submission script.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The second part of the file exports some variables that are used by swift
+when submitting the workflow on an HPC resource. Typically such machines use
+a job scheduler that requires the user to provide the number of processes
+to use, the name of the compute queue, the project to charge the compute time
+to, and an estimate of how long the job will take. This section exports
+those values so that they are available to swift when creating the job submission
+script. These are set from values defined in the workflow configuration file
+(i.e., <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg#L1" target="eqsql_worker_pool.sh"><code>swift/cfgs/eqsql_worker_pool.cfg</code></a>
+).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">export</span> <span class="tok-nv">PROCS</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROCS</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">QUEUE</span><span class="tok-o">=</span><span class="tok-nv">$CFG_QUEUE</span>
+<span class="tok-nb">export</span> <span class="tok-nv">PROJECT</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROJECT</span>
+<span class="tok-nb">export</span> <span class="tok-nv">WALLTIME</span><span class="tok-o">=</span><span class="tok-nv">$CFG_WALLTIME</span>
+<span class="tok-nb">export</span> <span class="tok-nv">PPN</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PPN</span>
+<span class="tok-nb">export</span> <span class="tok-nv">TURBINE_JOBNAME</span><span class="tok-o">=</span><span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">EXPID</span><span class="tok-si">}</span><span class="tok-s2">_job&quot;</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">TURBINE_MPI_THREAD</span><span class="tok-o">=</span><span class="tok-m">1</span>    <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>PROCS</code>, <code>QUEUE</code>, <code>PROJECT</code>, <code>WALLTIME</code>, and <code>PPN</code> are set from variables defined
+in the configuration file. See that <a href="#pool_cfg">section</a> for more information.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>TURBINE_JOBNAME</code> is used to set the name of the job in the HPC submission script.
+When querying the HPC resource for the status of your job, you will see your job
+name as the experiment id following by <code>_job</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Set <code>TURBINE_MPI_THREAD</code> to one to run MPI in a thread-safe mode to prevent any errors
+if the model is multi-threaded.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The launch script copies all the relevant
+files into the experiment directory (i.e., the  <code>TURBINE_OUTPUT</code> value) so that the original
+files can be changed without corrupting the workflow. We see that in the next
+section together with some variable declarations and some potential TODOs.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p <span class="tok-nv">$TURBINE_OUTPUT</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+cp <span class="tok-nv">$CFG_FILE</span> <span class="tok-nv">$TURBINE_OUTPUT</span>/cfg.cfg    <i class="conum" data-value="2"></i><b>(2)</b>
+
+<span class="tok-c1"># TODO: If R cannot be found, then these will need to be   </span><i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-c1"># uncommented and set correctly.</span>
+<span class="tok-c1"># export R_HOME=/path/to/R</span>
+<span class="tok-c1"># export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$R_HOME/lib</span>
+
+<span class="tok-c1"># EQSQL swift extension location</span>
+<span class="tok-nv">EQSQL</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/ext/EQ-SQL    <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-nv">EMEWS_EXT</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/ext/emews    <i class="conum" data-value="5"></i><b>(5)</b>
+
+<span class="tok-c1"># TODO: if Python cannot be found then uncomment    </span><i class="conum" data-value="6"></i><b>(6)</b>
+<span class="tok-c1"># and edit this line.</span>
+<span class="tok-c1"># export PYTHONHOME=/path/to/python</span>
+
+<span class="tok-c1"># TODO: if there are &quot;Cannot find</span>
+<span class="tok-c1"># X package&quot; type Python errors then append</span>
+<span class="tok-c1"># the missing package&#39;s path to the PYTHONPATH</span>
+<span class="tok-c1"># variable below, separating the entries with &quot;:&quot;</span>
+<span class="tok-nb">export</span> <span class="tok-nv">PYTHONPATH</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/python:<span class="tok-nv">$EQSQL</span>    <i class="conum" data-value="7"></i><b>(7)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Make the <code>TURBINE_OUTPUT</code> experiment directory</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Copy the workflow configuration file into the experiment directory</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>If there are errors when running R code in workflows, this section
+can be edited appropriately and uncommented.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Set an environment variable for the EQ/SQL swift extension location. This is
+used internally by the workflow, and should not be edited.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Set an environment directory for the EMEWS swift extension location. This is
+used internally by the workflow, and should not be edited.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>If there are errors when running Python code in workflows, this section
+can be edited appropriately and uncommented.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>If any required Python packages cannot be found, their locations
+can be appended to the PYTHONPATH environment variable.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The launch script also exports some database related variables:
+the database host, user, port and name. These are used by the
+swift-t script to communicate with the database. The values
+are sourced from the configuration file and they should be
+edited there if necessary. These variables will be further explained
+in the configuration file <a href="#pool_cfg">section</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># EQSQL DB variables, set from the CFG file.</span>
+<span class="tok-c1"># To change these, edit the CFG file.</span>
+<span class="tok-nb">export</span> <span class="tok-nv">DB_HOST</span><span class="tok-o">=</span><span class="tok-nv">$CFG_DB_HOST</span>
+<span class="tok-nb">export</span> <span class="tok-nv">DB_USER</span><span class="tok-o">=</span><span class="tok-nv">$CFG_DB_USER</span>
+<span class="tok-nb">export</span> <span class="tok-nv">DB_PORT</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">CFG_DB_PORT</span><span class="tok-k">:-</span><span class="tok-si">}</span>
+<span class="tok-nb">export</span> <span class="tok-nv">DB_NAME</span><span class="tok-o">=</span><span class="tok-nv">$CFG_DB_NAME</span>
+<span class="tok-nb">export</span> <span class="tok-nv">EQ_DB_RETRY_THRESHOLD</span><span class="tok-o">=</span><span class="tok-nv">$CFG_DB_RETRY_THRESHOLD</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When submitting the workflow on an HPC machine, the type of HPC job scheduler must be set in order for
+swift to correctly submit the job. This is done in the next section. The <strong>else</strong> clause writes
+the worker pools stdout and stderr to a file when running on a non-queued unscheduled resource.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1">#TODO: Set MACHINE to your schedule type (e.g. pbs, slurm, cobalt etc.),</span>
+<span class="tok-c1"># or empty for an immediate non-queued unscheduled run</span>
+<span class="tok-nv">MACHINE</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span>
+
+<span class="tok-k">if</span> <span class="tok-o">[</span> -n <span class="tok-s2">&quot;</span><span class="tok-nv">$MACHINE</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+  <span class="tok-nv">MACHINE</span><span class="tok-o">=</span><span class="tok-s2">&quot;-m </span><span class="tok-nv">$MACHINE</span><span class="tok-s2">&quot;</span>
+<span class="tok-k">else</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Logging output to </span><span class="tok-nv">$TURBINE_OUTPUT</span><span class="tok-s2">/output.txt&quot;</span>
+  <span class="tok-c1"># Redirect stdout and stderr to output.txt</span>
+  <span class="tok-c1"># if running without a scheduler.</span>
+  <span class="tok-nb">exec</span> <span class="tok-p">&amp;</span>&gt; <span class="tok-s2">&quot;</span><span class="tok-nv">$TURBINE_OUTPUT</span><span class="tok-s2">/output.txt&quot;</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>[[pass_cmd_args, CMD_LINE_ARGS]
+The launch script passes some arguments to the swift script, that it calls, via the command line.
+We define a variable that represents the command line and pass the number of trials
+(replicates), the worker pool task type, batch size, batch threshold and worker pool
+id using that variable. These arguments are all set via the configuration file and will be discussed
+in more detail <a href="#pool_cfg">there</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">CMD_LINE_ARGS</span><span class="tok-o">=</span><span class="tok-s2">&quot;--trials=</span><span class="tok-nv">$CFG_TRIALS</span><span class="tok-s2"> --task_type=</span><span class="tok-nv">$CFG_TASK_TYPE</span><span class="tok-s2"> --batch_size=</span><span class="tok-nv">$CFG_BATCH_SIZE</span><span class="tok-s2"> &quot;</span>
+<span class="tok-nv">CMD_LINE_ARGS</span><span class="tok-o">+=</span><span class="tok-s2">&quot;--batch_threshold=</span><span class="tok-nv">$CFG_BATCH_THRESHOLD</span><span class="tok-s2"> --worker_pool_id=</span><span class="tok-nv">$CFG_POOL_ID</span><span class="tok-s2"> </span><span class="tok-nv">$*</span><span class="tok-s2">&quot;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The final section logs a copy of the submission script to the experiment directory and
+calls swift-t to submit the job and execute the workflow swift script.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># TODO: Add any script variables that you want to log as</span>
+<span class="tok-c1"># part of the experiment meta data to the USER_VARS array,</span>
+<span class="tok-c1"># for example, USER_VARS=(&quot;VAR_1&quot; &quot;VAR_2&quot;)</span>
+<span class="tok-nv">USER_VARS</span><span class="tok-o">=()</span>
+<span class="tok-c1"># log variables and script to to TURBINE_OUTPUT directory</span>
+log_script    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-c1"># echo&#39;s anything following this to standard out</span>
+<span class="tok-nb">set</span> -x
+<span class="tok-nv">SWIFT_FILE</span><span class="tok-o">=</span>eqsql_worker_pool.swift    <i class="conum" data-value="2"></i><b>(2)</b>
+swift-t -n <span class="tok-nv">$PROCS</span> <span class="tok-nv">$MACHINE</span> -p -I <span class="tok-nv">$EQSQL</span> -r <span class="tok-nv">$EQSQL</span> <span class="tok-se">\ </span>  <i class="conum" data-value="3"></i><b>(3)</b>
+    -I <span class="tok-nv">$EMEWS_EXT</span> -r <span class="tok-nv">$EMEWS_EXT</span> <span class="tok-se">\</span>
+    -e TURBINE_MPI_THREAD <span class="tok-se">\ </span>   <i class="conum" data-value="4"></i><b>(4)</b>
+    -e TURBINE_OUTPUT <span class="tok-se">\</span>
+    -e EMEWS_PROJECT_ROOT <span class="tok-se">\</span>
+    -e DB_HOST <span class="tok-se">\</span>
+    -e DB_USER <span class="tok-se">\</span>
+    -e DB_PORT <span class="tok-se">\</span>
+    -e DB_NAME <span class="tok-se">\</span>
+    -e EQ_DB_RETRY_THRESHOLD <span class="tok-se">\</span>
+    -e PYTHONPATH <span class="tok-se">\</span>
+    -e RESIDENT_WORK_RANK <span class="tok-se">\</span>
+    <span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/swift/<span class="tok-nv">$SWIFT_FILE</span> <span class="tok-se">\</span>
+    <span class="tok-nv">$CMD_LINE_ARGS</span>     <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Log a copy of this submission script including any of the variables
+in <code>USER_VARS</code> to the experiment directory.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Define a variable containing the name of the swift workflow script to
+execute.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Call swift-t passing it the relevant variables and the path of the swift script to be executed. At this point
+the script is compiled and then either executed immediately or scheduled for execution depending on the value of the <code>MACHINE</code> variable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The <code>-e</code> agument to swift-t adds the specified variable to the script execution environment. On some HPC machines,
+the login environment is separate from the compute environment. Consequently, variables defined in the login environment
+that are referenced in the swift script when it executes in the compute environment need to be made available for the
+script to work correctly. The <code>-e</code> argument does this, adding the specified variables to the compute environment.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Pass <code>CMD_LINE_ARGS</code> to the swift script.</td>
+</tr>
+</table>
+</div>
+<div id="swift_worker_pool" class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/eqsql_worker_pool.swift#L1" target="eqsql_worker_pool.swift"><code><strong>eqsql_worker_pool.swift</strong></code></a></p>
+</div>
+<div class="paragraph">
+<p>This file is the swift script that implements the worker pool. The worker poll pops tasks off of the database
+output queue and executes those tasks. When a task has completed, the worker pool pushes the result
+into the database input queue where it can be retrieved by the ME. The following will describe the general
+structure of the script, highlighting those areas most relevant to the user.</p>
+</div>
+<div class="paragraph">
+<p>The script begins with by defining some variables. The ones defined using the <code>getenv</code> function are
+set from environment variables, while those those defined using <code>argv</code> are set from command
+line arguments passed to the swift script from <a href="#pass_cmd_args"><code>run_eqsql_worker_pool.sh</code></a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="swift"><span></span><span class="tok-n">string</span> <span class="tok-n">emews_root</span> <span class="tok-p">=</span> <span class="tok-n">getenv</span><span class="tok-p">(</span><span class="tok-s">&quot;EMEWS_PROJECT_ROOT&quot;</span><span class="tok-p">);</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">string</span> <span class="tok-n">turbine_output</span> <span class="tok-p">=</span> <span class="tok-n">getenv</span><span class="tok-p">(</span><span class="tok-s">&quot;TURBINE_OUTPUT&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">int</span> <span class="tok-n">resident_work_rank</span> <span class="tok-p">=</span> <span class="tok-n">string2int</span><span class="tok-p">(</span><span class="tok-n">getenv</span><span class="tok-p">(</span><span class="tok-s">&quot;RESIDENT_WORK_RANK&quot;</span><span class="tok-p">));</span>
+
+<span class="tok-n">int</span> <span class="tok-n">TASK_TYPE</span> <span class="tok-p">=</span> <span class="tok-n">string2int</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">(</span><span class="tok-s">&quot;task_type&quot;</span><span class="tok-p">,</span> <span class="tok-s">&quot;0&quot;</span><span class="tok-p">));</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-n">int</span> <span class="tok-n">BATCH_SIZE</span> <span class="tok-p">=</span> <span class="tok-n">string2int</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">(</span><span class="tok-s">&quot;batch_size&quot;</span><span class="tok-p">));</span>
+<span class="tok-n">int</span> <span class="tok-n">BATCH_THRESHOLD</span> <span class="tok-p">=</span> <span class="tok-n">string2int</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">(</span><span class="tok-s">&quot;batch_threshold&quot;</span><span class="tok-p">,</span> <span class="tok-s">&quot;1&quot;</span><span class="tok-p">));</span>
+<span class="tok-n">string</span> <span class="tok-n">WORKER_POOL_ID</span> <span class="tok-p">=</span> <span class="tok-n">argv</span><span class="tok-p">(</span><span class="tok-s">&quot;worker_pool_id&quot;</span><span class="tok-p">,</span> <span class="tok-s">&quot;default&quot;</span><span class="tok-p">);</span>
+
+<span class="tok-n">file</span> <span class="tok-n">model_sh</span> <span class="tok-p">=</span> <span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">emews_root</span><span class="tok-o">+</span><span class="tok-s">&quot;/scripts/run_my_model_eqsql_worker_pool.sh&quot;</span><span class="tok-p">);</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-n">int</span> <span class="tok-n">n_trials</span> <span class="tok-p">=</span> <span class="tok-n">string2int</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">(</span><span class="tok-s">&quot;trials&quot;</span><span class="tok-p">,</span> <span class="tok-s">&quot;1&quot;</span><span class="tok-p">));</span>    <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Set emews_root and turbine_output from the EMEWS_PROJECT_ROOT and TURBINE_OUTPUT environment variables. These were exported in the <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/run_eqsql_worker_pool.sh#L13" target="run_eqsql_worker_pool.sh"><code><strong>run_eqsql_worker_pool.sh</strong></code></a> script.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Set the TASK_TYPE, BATCH_SIZE, BATCH_THRESHOLD, and WORKER_POOL_ID variables. These are used
+by the swift script when fetchting tasks and reporting task results.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Get the bash script that will be used to launch the model. Swift calls this <a href="#run_my_model">script</a> (<code>scripts/run_my_model.sh</code>) to perform a model run.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Get the number of trials (replicates) to perform for each model run.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The script execution begins by calling the start function in which we initialize the
+task batch querying from the database.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="swift"><span></span><span class="tok-p">(</span><span class="tok-n">void</span> <span class="tok-n">o</span><span class="tok-p">)</span> <span class="tok-n">start</span><span class="tok-p">()</span> <span class="tok-p">{</span>
+  <span class="tok-n">location</span> <span class="tok-n">querier_loc</span> <span class="tok-p">=</span> <span class="tok-n">locationFromRank</span><span class="tok-p">(</span><span class="tok-n">resident_work_rank</span><span class="tok-p">);</span>
+  <span class="tok-n">eq_init_batch_querier</span><span class="tok-p">(</span><span class="tok-n">querier_loc</span><span class="tok-p">,</span> <span class="tok-n">WORKER_POOL_ID</span><span class="tok-p">,</span> <span class="tok-n">BATCH_SIZE</span><span class="tok-p">,</span> <span class="tok-n">BATCH_THRESHOLD</span><span class="tok-p">,</span> <span class="tok-n">TASK_TYPE</span><span class="tok-p">)</span> <span class="tok-p">=</span><span class="tok-o">&gt;</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="tok-n">loop</span><span class="tok-p">(</span><span class="tok-n">querier_loc</span><span class="tok-p">)</span> <span class="tok-p">=</span><span class="tok-o">&gt;</span> <span class="tok-p">{</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-n">eq_stop_batch_querier</span><span class="tok-p">(</span><span class="tok-n">querier_loc</span><span class="tok-p">);</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tok-n">o</span> <span class="tok-p">=</span> <span class="tok-n">propagate</span><span class="tok-p">();</span>
+  <span class="tok-p">}</span>
+<span class="tok-p">}</span>
+
+<span class="tok-n">start</span><span class="tok-p">()</span> <span class="tok-p">=</span><span class="tok-o">&gt;</span> <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;worker pool: normal exit.&quot;</span><span class="tok-p">);</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Initialize the batch querier for the worker pool identified by <code>WORKER_POOL_ID</code>,
+requesting tasks of <code>TASK_TYPE</code> with the specified <code>BATCH_SIZE</code>, and <code>BATCH_THRESHOLD</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Call the loop function in which tasks are retrieved, executed, and results reported.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Stop the batch querier, and exit the script.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Batch querying allows a worker pool to request up to <code>BATCH_SIZE</code> number of tasks to consume at a time, while accounting for the number of tasks a worker pool has already obtained but have not yet completed. So, for example, if a worker pool is configured to possess 33 tasks at a time, if it owns 30 uncompleted tasks when querying the output queue, it will only obtain 3 additional tasks. This can be tweaked using a <code>BATCH_THRESHOLD</code> value that specifies how large the deficit between requested tasks and owned tasks must be before more tasks are obtained.
+Querying for tasks in this way allows a worker pool to tune its query to the number of available workers such that all its workers are busy while equitably sharing work among multiple possible worker pools.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the loop function, tasks are retrieved and dispatched for execution.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="swift"><span></span><span class="tok-n">message</span> <span class="tok-n">msgs</span><span class="tok-p">[]</span> <span class="tok-p">=</span> <span class="tok-n">eq_batch_task_query</span><span class="tok-p">(</span><span class="tok-n">querier_loc</span><span class="tok-p">);</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">boolean</span> <span class="tok-n">c</span><span class="tok-p">;</span>
+<span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">msgs</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">].</span><span class="tok-n">msg_type</span> <span class="tok-p">==</span> <span class="tok-s">&quot;status&quot;</span><span class="tok-p">)</span> <span class="tok-p">{</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+  <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">msgs</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">].</span><span class="tok-n">payload</span> <span class="tok-p">==</span> <span class="tok-s">&quot;EQ_STOP&quot;</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+    <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;loop.swift: STOP&quot;</span><span class="tok-p">)</span> <span class="tok-p">=</span><span class="tok-o">&gt;</span>
+      <span class="tok-n">v</span> <span class="tok-p">=</span> <span class="tok-n">propagate</span><span class="tok-p">()</span> <span class="tok-p">=</span><span class="tok-o">&gt;</span>
+      <span class="tok-n">c</span> <span class="tok-p">=</span> <span class="tok-kc">false</span><span class="tok-p">;</span>
+  <span class="tok-p">}</span> <span class="tok-k">else</span> <span class="tok-p">{</span>
+    <span class="tok-c1">// sleep to give time for Python etc.</span>
+    <span class="tok-c1">// to flush messages</span>
+    <span class="tok-n">sleep</span><span class="tok-p">(</span><span class="tok-mi">5</span><span class="tok-p">);</span>
+    <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-s">&quot;loop.swift: got %s: exiting!&quot;</span><span class="tok-p">,</span> <span class="tok-n">msgs</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">].</span><span class="tok-n">payload</span><span class="tok-p">)</span> <span class="tok-p">=</span><span class="tok-o">&gt;</span>
+    <span class="tok-n">v</span> <span class="tok-p">=</span> <span class="tok-n">propagate</span><span class="tok-p">()</span> <span class="tok-p">=</span><span class="tok-o">&gt;</span>
+    <span class="tok-n">c</span> <span class="tok-p">=</span> <span class="tok-kc">false</span><span class="tok-p">;</span>
+  <span class="tok-p">}</span>
+<span class="tok-p">}</span> <span class="tok-k">else</span> <span class="tok-p">{</span>
+  <span class="tok-n">run</span><span class="tok-p">(</span><span class="tok-n">msgs</span><span class="tok-p">);</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+  <span class="tok-n">c</span> <span class="tok-p">=</span> <span class="tok-kc">true</span><span class="tok-p">;</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Query for tasks to execute, retreiving them in swift array. The tasks are formatted as <code>message</code>-s. Each message
+has an integer <code>task_id</code>, a string <code>msg_type</code>, and string <code>payload</code>. The <code>task_id</code> is a unique
+identifier for the task, the <code>msg_type</code> specifies the type of message: <code>status</code> or <code>work</code>.
+The <code>payload</code> consists of either a status update, or input to the task to be performed in JSON format.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>If the first of the messsage types is <code>status</code> then exit the loop with the appropriately.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>If the first of the message types is not <code>status</code>, then execute the task messages in the array.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The run function executes the tasks in parallel in a swift <code>foreach</code> loop, and reports the results back
+to the database.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="swift"><span></span><span class="tok-n">run</span><span class="tok-p">(</span><span class="tok-n">message</span> <span class="tok-n">msgs</span><span class="tok-p">[])</span> <span class="tok-p">{</span>
+  <span class="tok-c1">// printf(&quot;MSGS SIZE: %d&quot;, size(msgs));</span>
+  <span class="tok-n">foreach</span> <span class="tok-n">msg</span><span class="tok-p">,</span> <span class="tok-n">i</span> <span class="tok-k">in</span> <span class="tok-n">msgs</span> <span class="tok-p">{</span>
+    <span class="tok-n">result_payload</span> <span class="tok-p">=</span> <span class="tok-n">run_task</span><span class="tok-p">(</span><span class="tok-n">msg</span><span class="tok-p">.</span><span class="tok-n">eq_task_id</span><span class="tok-p">,</span> <span class="tok-n">msg</span><span class="tok-p">.</span><span class="tok-n">payload</span><span class="tok-p">);</span>
+    <span class="tok-n">eq_task_report</span><span class="tok-p">(</span><span class="tok-n">msg</span><span class="tok-p">.</span><span class="tok-n">eq_task_id</span><span class="tok-p">,</span> <span class="tok-n">TASK_TYPE</span><span class="tok-p">,</span> <span class="tok-n">result_payload</span><span class="tok-p">);</span>
+  <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>run_task</code> executes the specifed number of trials for an individual task (e.g., a model run), running the task with the same parameters and varying a random seed parameter. All the trials will run in an <code>instance_N</code> directory
+where <code>N</code> is the task&#8217;s task_id.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="swift"><span></span><span class="tok-p">(</span><span class="tok-n">string</span> <span class="tok-n">obj_result</span><span class="tok-p">)</span> <span class="tok-n">run_task</span><span class="tok-p">(</span><span class="tok-n">int</span> <span class="tok-n">task_id</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">task_payload</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+    <span class="tok-n">float</span> <span class="tok-n">results</span><span class="tok-p">[];</span>
+
+    <span class="tok-n">string</span> <span class="tok-n">instance</span> <span class="tok-p">=</span> <span class="tok-s">&quot;%s/instance_%i/&quot;</span> <span class="tok-o">%</span> <span class="tok-p">(</span><span class="tok-n">turbine_output</span><span class="tok-p">,</span> <span class="tok-n">task_id</span><span class="tok-p">);</span>
+    <span class="tok-n">mkdir</span><span class="tok-p">(</span><span class="tok-n">instance</span><span class="tok-p">)</span> <span class="tok-p">=</span><span class="tok-o">&gt;</span> <span class="tok-p">{</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tok-n">foreach</span> <span class="tok-n">i</span> <span class="tok-k">in</span> <span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">:</span><span class="tok-n">n_trials</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">:</span><span class="tok-mi">1</span><span class="tok-p">]</span> <span class="tok-p">{</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="tok-n">int</span> <span class="tok-n">trial</span> <span class="tok-p">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span><span class="tok-p">;</span>
+            <span class="tok-n">string</span> <span class="tok-n">instance_id</span> <span class="tok-p">=</span> <span class="tok-s">&quot;i_%i&quot;</span> <span class="tok-o">%</span> <span class="tok-p">(</span><span class="tok-n">task_id</span><span class="tok-p">,</span> <span class="tok-n">trial</span><span class="tok-p">);</span>
+            <span class="tok-n">results</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">]</span> <span class="tok-p">=</span> <span class="tok-n">run_obj</span><span class="tok-p">(</span><span class="tok-n">task_payload</span><span class="tok-p">,</span> <span class="tok-n">trial</span><span class="tok-p">,</span> <span class="tok-n">instance</span><span class="tok-p">,</span> <span class="tok-n">instance_id</span><span class="tok-p">);</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="tok-p">}</span>
+    <span class="tok-p">}</span>
+
+    <span class="tok-n">obj_result</span> <span class="tok-p">=</span> <span class="tok-n">float2string</span><span class="tok-p">(</span><span class="tok-n">get_aggregate_result</span><span class="tok-p">(</span><span class="tok-n">results</span><span class="tok-p">));</span> <span class="tok-c1">// =&gt;    </span><i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="tok-c1">// </span><span class="tok-cs">TODO:</span><span class="tok-c1"> delete the &quot;;&quot; above, uncomment the &quot;&quot;=&gt;&quot;&quot; above and</span>
+    <span class="tok-c1">// and the rm_dir below to delete the instance directory if</span>
+    <span class="tok-c1">// it is not needed after the result have been computed.</span>
+    <span class="tok-c1">// rm_dir(instance);</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create the instance directory</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Iterate concurrently over the number of trials.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>For each trial, call <code>run_obj</code>, passing the task payload (input parameters),
+trial number, instance direcdtory, and instance_id. The result from each trial
+is added to the <code>results</code> array.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Call <code>get_aggregate_result</code> passing it the results from each trial to compute the
+aggregate result over all the trials.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>run_obj</code> creates files for logging model run&#8217;s standard output and error streams, as well as path location for the model results, and calls the swift app function <code>run_task_app</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="swift"><span></span><span class="tok-p">(</span><span class="tok-n">float</span> <span class="tok-n">result</span><span class="tok-p">)</span> <span class="tok-n">run_obj</span><span class="tok-p">(</span><span class="tok-n">string</span> <span class="tok-n">task_payload</span><span class="tok-p">,</span> <span class="tok-n">int</span> <span class="tok-n">trial</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">instance_dir</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">instance_id</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+    <span class="tok-n">file</span> <span class="tok-n">out</span> <span class="tok-p">&lt;</span><span class="tok-n">instance_dir</span> <span class="tok-o">+</span> <span class="tok-s">&quot;/&quot;</span> <span class="tok-o">+</span> <span class="tok-n">instance_id</span><span class="tok-o">+</span><span class="tok-s">&quot;_out.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">file</span> <span class="tok-n">err</span> <span class="tok-p">&lt;</span><span class="tok-n">instance_dir</span> <span class="tok-o">+</span> <span class="tok-s">&quot;/&quot;</span> <span class="tok-o">+</span> <span class="tok-n">instance_id</span><span class="tok-o">+</span><span class="tok-s">&quot;_err.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+    <span class="tok-n">string</span> <span class="tok-n">output_file</span> <span class="tok-p">=</span> <span class="tok-s">&quot;%s/output_%s.csv&quot;</span> <span class="tok-o">%</span> <span class="tok-p">(</span><span class="tok-n">instance_dir</span><span class="tok-p">,</span> <span class="tok-n">instance_id</span><span class="tok-p">);</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-p">(</span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-p">=</span> <span class="tok-n">run_task_app</span><span class="tok-p">(</span><span class="tok-n">model_sh</span><span class="tok-p">,</span> <span class="tok-n">task_payload</span><span class="tok-p">,</span> <span class="tok-n">output_file</span><span class="tok-p">,</span>  <span class="tok-n">trial</span><span class="tok-p">,</span> <span class="tok-n">instance_dir</span><span class="tok-p">)</span> <span class="tok-p">=</span><span class="tok-o">&gt;</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tok-n">result</span> <span class="tok-p">=</span> <span class="tok-n">get_result</span><span class="tok-p">(</span><span class="tok-n">output_file</span><span class="tok-p">);</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create swift file objects to capture the standard out and standard error from the <code>run_task_app</code>
+function.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Create a unique output file name for the trial run that can be passed to the model to write its
+output.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Call <code>run_task_app</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Call <code>get_result</code>, passing the output file to retrieve the output of the model run from the
+output file.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>run_task_app</code> calls <a href="#run_my_model"><code>scripts/run_my_model.sh</code></a> passing it the task payload,
+the output file path, the trial number, the emews_root location, and the instance directory. The
+<code>@stdout</code> and <code>@stderr</code> commands are used by swift to redirect the standard out and standard
+error streams to files specfied in <code>run_obj</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="swift"><span></span><span class="tok-c1">// app function used to run the task</span>
+<span class="tok-n">app</span> <span class="tok-p">(</span><span class="tok-n">file</span> <span class="tok-n">out</span><span class="tok-p">,</span> <span class="tok-n">file</span> <span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-n">run_task_app</span><span class="tok-p">(</span><span class="tok-n">file</span> <span class="tok-n">shfile</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">task_payload</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">output_file</span><span class="tok-p">,</span> <span class="tok-n">int</span> <span class="tok-n">trial</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">instance_dir</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+    <span class="tok-s">&quot;bash&quot;</span> <span class="tok-n">shfile</span> <span class="tok-n">task_payload</span> <span class="tok-n">output_file</span> <span class="tok-n">trial</span> <span class="tok-n">emews_root</span> <span class="tok-n">instance_dir</span> <span class="tok-p">@</span><span class="tok-n">stdout</span><span class="tok-p">=</span><span class="tok-n">out</span> <span class="tok-p">@</span><span class="tok-n">stderr</span><span class="tok-p">=</span><span class="tok-n">err</span><span class="tok-p">;</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The final two functions are the result calculations. These need to be completed by the user
+and are marked with the appropriate TODOs.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="swift"><span></span><span class="tok-p">(</span><span class="tok-n">float</span> <span class="tok-n">result</span><span class="tok-p">)</span> <span class="tok-n">get_result</span><span class="tok-p">(</span><span class="tok-n">string</span> <span class="tok-n">output_file</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+    <span class="tok-c1">// TODO given the model output, set the the model result</span>
+    <span class="tok-n">result</span> <span class="tok-p">=</span> <span class="tok-mf">0.0</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
+
+<span class="tok-p">(</span><span class="tok-n">float</span> <span class="tok-n">agg_result</span><span class="tok-p">)</span> <span class="tok-n">get_aggregate_result</span><span class="tok-p">(</span><span class="tok-n">float</span> <span class="tok-n">model_results</span><span class="tok-p">[])</span> <span class="tok-p">{</span>
+    <span class="tok-c1">// TODO replace with aggregate result calculation (e.g.,</span>
+    <span class="tok-c1">// take the average of model results with avg(model_results);</span>
+    <span class="tok-n">agg_result</span> <span class="tok-p">=</span> <span class="tok-mf">0.0</span><span class="tok-p">;</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div id="pool_cfg" class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg#L1" target="eqsql_worker_pool">`<strong>eqsql_worker_pool.cfg</strong></a></p>
+</div>
+<div class="paragraph">
+<p><code>eqsql_worker_pool.cfg</code> contains configuration variables for running the worker pool. It is sourced
+by the submission <a href="#submit_init">script</a> <code>run_eqsql_worker_pool.sh</code> to retrieve the database connection parameters, the HPC scheduler parameters, and the other variables required by the workflow.
+The intention here is that these parameters are the most frequently changed between
+different workflow runs, and rather than edit the submission script itself, it is easier to edit
+a short configuration file.</p>
+</div>
+<div class="paragraph">
+<p>The cfg file begins with the HPC and general workflow setup parameters.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">CFG_WALLTIME</span><span class="tok-o">=</span><span class="tok-m">01</span>:00:00    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nv">CFG_QUEUE</span><span class="tok-o">=</span>queue    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nv">CFG_PROJECT</span><span class="tok-o">=</span>project    <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nv">NODES</span><span class="tok-o">=</span><span class="tok-m">4</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-nv">CFG_PPN</span><span class="tok-o">=</span><span class="tok-m">4</span>    <i class="conum" data-value="5"></i><b>(5)</b>
+<span class="tok-nv">CFG_PROCS</span><span class="tok-o">=</span><span class="tok-k">$((</span> NODES <span class="tok-o">*</span> CFG_PPN <span class="tok-k">))</span>    <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Set the estimated duration of the workflow.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Set the queue on which to run the workflow.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Set the project under which to run the workflow.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Set the number of HPC nodes to run the workflow with.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Set the number of process per node (PPN) to use.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Compute the total number of processes to allocate to the job
+by multiplying the number of nodes by the PPN.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The database connection parameters are used by the swift script to connect to the EQSQL database.
+The postgresql database requires a user, database, hostname, and optional port when connecting.
+Those are specified here.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># Database port - this can be left empty</span>
+<span class="tok-c1"># for local conda postgresql install</span>
+<span class="tok-nv">CFG_DB_PORT</span><span class="tok-o">=</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nv">CFG_DB_USER</span><span class="tok-o">=</span>eqsql_user    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nv">CFG_DB_NAME</span><span class="tok-o">=</span>EQ_SQL    <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nv">CFG_DB_HOST</span><span class="tok-o">=</span>localhost     <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Set the database port. If using the default local database configuration, no port needs
+to be specified.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Set the database user name. This defaults to <code>eqsql_user</code> under the default local database
+configuration.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Set the database name. This defaults to <code>EQ_SQL</code> under the default local database configuration.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Set the database host name. This defaults to <code>localhost</code> under the default local database
+configuration.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The final set of parameters sets the number of trials, the worker pool id, the task type
+the worker pool will retrieve, and the task query parameters.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">CFG_TRIALS</span><span class="tok-o">=</span><span class="tok-m">10</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nv">CFG_POOL_ID</span><span class="tok-o">=</span>default    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-c1"># Update this to match the task / work type</span>
+<span class="tok-nv">CFG_TASK_TYPE</span><span class="tok-o">=</span><span class="tok-m">0</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nv">CFG_BATCH_SIZE</span><span class="tok-o">=</span><span class="tok-k">$((</span> CFG_PROCS <span class="tok-o">+</span> <span class="tok-m">2</span> <span class="tok-k">))</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-nv">CFG_BATCH_THRESHOLD</span><span class="tok-o">=</span><span class="tok-m">1</span>    <i class="conum" data-value="5"></i><b>(5)</b>
+<span class="tok-nv">CFG_DB_RETRY_THRESHOLD</span><span class="tok-o">=</span><span class="tok-m">10</span>      <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Set the number of trials / replicates to perform</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Set the unique identifier for the worker pool</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Set the task type that the worker pool will retrieve from the database.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Set the batch size for batch task querying. The worker pool will request up to this number
+of tasks to own at a time. For example, if the batch size is 33, and the worker pool currently owns 30 uncompleted tasks, it will only obtain 3 additional tasks when querying the output queue.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Set the batch query threshold which specifies how large the deficit between requested tasks and owned tasks must be before more tasks are obtained.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A worker pool can request and own all the task in the database by setting <code>CFG_BATCH_SIZE</code> to a number
+greater than the number of expected tasks. A smaller number, however, allows an ME to manipulate the database output queue re-prioritizing existing unowned tasks, for example.
+</td>
+</tr>
+</table>
+</div>
+<div id="run_my_model" class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/scripts/run_my_model.sh#L1" target="run_my_model.sh"><code><strong>run_my_model.sh</strong></code></a></p>
+</div>
+<div class="paragraph">
+<p><code>run_my_model.sh</code> is called by <code>eqsql_worker_pool.swift</code> to execute the model as if the model has been run from the command line. The script passes model input parameters (the payload string), the output file for the
+model to use, the trial number for this set of parameters, the emews root directory location, and the instance directory that was created in <code>eqsql_worker_pool.swift</code>. <code>run_my_model.sh</code> includes two important <strong>TODOs</strong>.
+You will need to update the <code>MODEL_CMD</code> variable to specify the model executable, and the <code>arg_array</code> to
+specify the command line parameters to the model command.</p>
+</div>
+<div class="paragraph">
+<p>The script begins with defining an optional <code>TIMEOUT</code> that will timeout the model if its
+run duration exceeds that value.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># Check for an optional timeout threshold in seconds. If the duration of the</span>
+<span class="tok-c1"># model run as executed below, takes longer that this threshhold</span>
+<span class="tok-c1"># then the run will be aborted. Note that the &quot;timeout&quot; command</span>
+<span class="tok-c1"># must be supported by executing OS.</span>
+
+<span class="tok-c1"># The timeout argument is optional. By default the &quot;run_model&quot; swift</span>
+<span class="tok-c1"># app fuction sends 5 arguments, and no timeout value is set. If there</span>
+<span class="tok-c1"># is a 6th (the TIMEOUT_ARG_INDEX) argument, we use that as the timeout value.</span>
+
+<span class="tok-c1"># !!! IF YOU CHANGE THE NUMBER OF ARGUMENTS PASSED TO THIS SCRIPT, YOU MUST</span>
+<span class="tok-c1"># CHANGE THE TIMEOUT_ARG_INDEX !!!</span>
+<span class="tok-nv">TIMEOUT</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span>
+<span class="tok-nv">TIMEOUT_ARG_INDEX</span><span class="tok-o">=</span><span class="tok-m">6</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-k">if</span> <span class="tok-o">[[</span> <span class="tok-nv">$#</span> <span class="tok-o">==</span>  <span class="tok-nv">$TIMEOUT_ARG_INDEX</span> <span class="tok-o">]]</span>
+<span class="tok-k">then</span>
+	<span class="tok-nv">TIMEOUT</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-p">!TIMEOUT_ARG_INDEX</span><span class="tok-si">}</span>
+<span class="tok-k">fi</span>
+
+<span class="tok-nv">TIMEOUT_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> -n <span class="tok-s2">&quot;</span><span class="tok-nv">$TIMEOUT</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+  <span class="tok-nv">TIMEOUT_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;timeout </span><span class="tok-nv">$TIMEOUT</span><span class="tok-s2">&quot;</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>If this script is passed <code>TIMEOUT_ARG_INDEX</code> number of arguments,
+then that argument (defaulting to the 6th argument) will be used as
+the number of seconds after which to timeout.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The next section of the script assigns the scripts command line arguments to
+some variables and changes the directory to the instance directory passed to
+the script.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># Set PARAM_LINE from the first argument to this script</span>
+<span class="tok-c1"># PARAM_LINE is the string containing the model parameters for a run.</span>
+<span class="tok-nv">PARAM_LINE</span><span class="tok-o">=</span><span class="tok-nv">$1</span>
+
+<span class="tok-c1"># Set the name of the file to write model output to.</span>
+<span class="tok-nv">OUTPUT_FILE</span><span class="tok-o">=</span><span class="tok-nv">$2</span>
+
+<span class="tok-c1"># Set the TRIAL_ID - this can be used to pass a random seed (for example)</span>
+<span class="tok-c1"># to the model</span>
+<span class="tok-nv">TRIAL_ID</span><span class="tok-o">=</span><span class="tok-nv">$3</span>
+
+<span class="tok-c1"># Set EMEWS_ROOT to the root directory of the project (i.e. the directory</span>
+<span class="tok-c1"># that contains the scripts, swift, etc. directories and files)</span>
+<span class="tok-nv">EMEWS_ROOT</span><span class="tok-o">=</span><span class="tok-nv">$4</span>
+
+<span class="tok-c1"># Each model run, runs in its own &quot;instance&quot; directory</span>
+<span class="tok-c1"># Set INSTANCE_DIRECTORY to that and cd into it.</span>
+<span class="tok-nv">INSTANCE_DIRECTORY</span><span class="tok-o">=</span><span class="tok-nv">$5</span>
+<span class="tok-nb">cd</span> <span class="tok-nv">$INSTANCE_DIRECTORY</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The final section defines the model executable in <code>MODEL_CMD</code>, the arguments to
+that executable in <code>arg_array</code> and runs the model with the optional timeout.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># TODO: Define the command to run the model. For example,</span>
+<span class="tok-c1"># MODEL_CMD=&quot;python&quot;</span>
+<span class="tok-nv">MODEL_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-c1"># TODO: Define the arguments to the MODEL_CMD. Each argument should be</span>
+<span class="tok-c1"># surrounded by quotes and separated by spaces. For example,</span>
+<span class="tok-c1"># arg_array=(&quot;$EMEWS_ROOT/python/my_model.py&quot; &quot;$PARAM_LINE&quot; &quot;$OUTPUT_FILE&quot; &quot;$TRIAL_ID&quot;)</span>
+<span class="tok-nv">arg_array</span><span class="tok-o">=(</span><span class="tok-s2">&quot;arg1&quot;</span> <span class="tok-s2">&quot;arg2&quot;</span> <span class="tok-s2">&quot;arg3&quot;</span><span class="tok-o">)</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+
+<span class="tok-c1"># Turn bash error checking off. This is</span>
+<span class="tok-c1"># required to properly handle the model execution</span>
+<span class="tok-c1"># return values and the optional timeout.</span>
+<span class="tok-nb">set</span> +e
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Running </span><span class="tok-nv">$MODEL_CMD</span><span class="tok-s2"> </span><span class="tok-si">${</span><span class="tok-nv">arg_array</span><span class="tok-p">[@]</span><span class="tok-si">}</span><span class="tok-s2">&quot;</span>
+
+<span class="tok-nv">$TIMEOUT_CMD</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$MODEL_CMD</span><span class="tok-s2">&quot;</span> <span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">arg_array</span><span class="tok-p">[@]</span><span class="tok-si">}</span><span class="tok-s2">&quot;</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+
+<span class="tok-c1"># $? is the exit status of the most recently executed command (i.e the</span>
+<span class="tok-c1"># line above)</span>
+<span class="tok-nv">RES</span><span class="tok-o">=</span><span class="tok-nv">$?</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$RES</span><span class="tok-s2">&quot;</span> -ne <span class="tok-m">0</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+	<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$RES</span><span class="tok-s2">&quot;</span> <span class="tok-o">==</span> <span class="tok-m">124</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+    <span class="tok-nb">echo</span> <span class="tok-s2">&quot;---&gt; Timeout error in </span><span class="tok-nv">$COMMAND</span><span class="tok-s2">&quot;</span>
+  <span class="tok-k">else</span>
+	   <span class="tok-nb">echo</span> <span class="tok-s2">&quot;---&gt; Error in </span><span class="tok-nv">$COMMAND</span><span class="tok-s2">&quot;</span>
+  <span class="tok-k">fi</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Define the model executable. For a stand alone compiled executable, this will be
+the path to that executable. For example, something like <code>$HOME/sfw/epi_model-1.0/bin/epimodel</code>.
+For a model written in an interpreted language such as R or Python, this will be the <code>Rscript</code> or <code>python</code>
+executable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Define the array of arguments to pass to the <code>MODEL_CMD</code> executable. At the very
+least, this will typically include the <code>PARAM_LINE</code> variable in order to pass the
+task payload input parameters to the model. For an R or Python application, this will also include
+the path to the R or Python code to run.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Run the model with the optional <code>TIMEOUT_CMD</code>. If no <code>TIMEOUT</code> was specified, the <code>TIMEOUT_CMD</code>
+will be an ignored empty string.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo.py#L1" target="algo">`<strong>algo.py</strong></a></p>
+</div>
+<div class="paragraph">
+<p>If the <code>me_language</code> argument to the <code>esql</code> template command is <code>python</code>, then an example Python ME and ME configuration file will be produced. The ME can be run from the command line as follows:</p>
+</div>
+<div class="paragraph">
+<p><mark>TODO: text about local vs. remote run</mark></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ python3 algo.py -h
+usage: algo.py [-h] exp_id config_file
+
+positional arguments:
+  exp_id       experiment id
+  config_file  yaml format configuration file
+
+optional arguments:
+  -h, --help   show this help message and exit</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The two command line parameters to <code>algo.py</code> are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>exp_id</code> - an experiment identifier for the current run the workflow (e.g., epi_model_experiment_3).</p>
+</li>
+<li>
+<p><code>config_file</code> - the path to the ME configuration file (e.g., <code>algo_cfg.yaml</code>)</p>
+</li>
+</ul>
+</div>
+<div id="me_main" class="paragraph">
+<p>The bare example ME contains two functions and a <code>if <em>name</em> == 'main'</code> section.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">create_parser</span><span class="tok-p">():</span>
+    <span class="tok-n">parser</span> <span class="tok-o">=</span> <span class="tok-n">argparse</span><span class="tok-o">.</span><span class="tok-n">ArgumentParser</span><span class="tok-p">()</span>
+    <span class="tok-n">parser</span><span class="tok-o">.</span><span class="tok-n">add_argument</span><span class="tok-p">(</span><span class="tok-s1">&#39;exp_id&#39;</span><span class="tok-p">,</span> <span class="tok-n">help</span><span class="tok-o">=</span><span class="tok-s1">&#39;experiment id&#39;</span><span class="tok-p">)</span>
+    <span class="tok-n">parser</span><span class="tok-o">.</span><span class="tok-n">add_argument</span><span class="tok-p">(</span><span class="tok-s1">&#39;config_file&#39;</span><span class="tok-p">,</span> <span class="tok-n">help</span><span class="tok-o">=</span><span class="tok-s2">&quot;yaml format configuration file&quot;</span><span class="tok-p">)</span>
+    <span class="tok-k">return</span> <span class="tok-n">parser</span>
+
+
+<span class="tok-k">if</span> <span class="tok-vm">__name__</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;__main__&#39;</span><span class="tok-p">:</span>
+    <span class="tok-n">parser</span> <span class="tok-o">=</span> <span class="tok-n">create_parser</span><span class="tok-p">()</span>
+    <span class="tok-n">args</span> <span class="tok-o">=</span> <span class="tok-n">parser</span><span class="tok-o">.</span><span class="tok-n">parse_args</span><span class="tok-p">()</span>
+    <span class="tok-k">with</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-n">args</span><span class="tok-o">.</span><span class="tok-n">config_file</span><span class="tok-p">)</span> <span class="tok-k">as</span> <span class="tok-n">fin</span><span class="tok-p">:</span>
+        <span class="tok-n">params</span> <span class="tok-o">=</span> <span class="tok-n">yaml</span><span class="tok-o">.</span><span class="tok-n">safe_load</span><span class="tok-p">(</span><span class="tok-n">fin</span><span class="tok-p">)</span>
+
+    <span class="tok-n">run</span><span class="tok-p">(</span><span class="tok-n">args</span><span class="tok-o">.</span><span class="tok-n">exp_id</span><span class="tok-p">,</span> <span class="tok-n">params</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>create_parser</code> function creates the command line arguments, and the <code><em>main</em></code> section
+loads the configuration file into a Python dictionary, and calls the <code>run</code> function, passing it
+the  <code>params</code> dictionary.</p>
+</div>
+<div id="me_init" class="paragraph">
+<p>The <code>run</code> function starts the EQ/SQL database, and the worker pool, and creates a task queue
+for submitting tasks to the database output queue to be retrieved by the worker pool for
+execution.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">run</span><span class="tok-p">(</span><span class="tok-n">exp_id</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">,</span> <span class="tok-n">params</span><span class="tok-p">:</span> <span class="tok-n">Dict</span><span class="tok-p">):</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="tok-o">...</span>
+  <span class="tok-c1"># start database</span>
+  <span class="tok-n">db_tools</span><span class="tok-o">.</span><span class="tok-n">start_db</span><span class="tok-p">(</span><span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;db_path&#39;</span><span class="tok-p">])</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+  <span class="tok-n">db_started</span> <span class="tok-o">=</span> <span class="tok-kc">True</span>
+
+  <span class="tok-c1"># start task queue</span>
+  <span class="tok-n">task_queue</span> <span class="tok-o">=</span> <span class="tok-n">eq</span><span class="tok-o">.</span><span class="tok-n">init_task_queue</span><span class="tok-p">(</span><span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;db_host&#39;</span><span class="tok-p">],</span> <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;db_user&#39;</span><span class="tok-p">],</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+                                  <span class="tok-n">port</span><span class="tok-o">=</span><span class="tok-kc">None</span><span class="tok-p">,</span> <span class="tok-n">db_name</span><span class="tok-o">=</span><span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;db_name&#39;</span><span class="tok-p">])</span>
+
+  <span class="tok-c1"># check if the input and output queues are empty,</span>
+  <span class="tok-c1"># if not, then exit with a warning.</span>
+  <span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">task_queue</span><span class="tok-o">.</span><span class="tok-n">are_queues_empty</span><span class="tok-p">():</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+      <span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;WARNING: db input / output queues are not empty. Aborting run&quot;</span><span class="tok-p">,</span> <span class="tok-n">flush</span><span class="tok-o">=</span><span class="tok-kc">True</span><span class="tok-p">)</span>
+      <span class="tok-k">return</span>
+
+  <span class="tok-c1"># start worker pool</span>
+  <span class="tok-n">pool_params</span> <span class="tok-o">=</span> <span class="tok-n">worker_pool</span><span class="tok-o">.</span><span class="tok-n">cfg_file_to_dict</span><span class="tok-p">(</span><span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;pool_cfg_file&#39;</span><span class="tok-p">])</span>
+  <span class="tok-n">pool</span> <span class="tok-o">=</span> <span class="tok-n">worker_pool</span><span class="tok-o">.</span><span class="tok-n">start_local_pool</span><span class="tok-p">(</span><span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;worker_pool_id&#39;</span><span class="tok-p">],</span> <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;pool_launch_script&#39;</span><span class="tok-p">],</span>    <i class="conum" data-value="5"></i><b>(5)</b>
+                                      <span class="tok-n">exp_id</span><span class="tok-p">,</span> <span class="tok-n">pool_params</span><span class="tok-p">)</span>
+  <span class="tok-n">task_type</span> <span class="tok-o">=</span> <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;task_type&#39;</span><span class="tok-p">]</span>
+  <span class="tok-n">fts</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
+
+  <span class="tok-c1"># TODO: submit some tasks to DB, and append the returned eqsql.eq.futures to    </span><i class="conum" data-value="6"></i><b>(6)</b>
+  <span class="tok-c1"># the list of futures. For example:</span>
+
+  <span class="tok-c1"># payload = {&#39;x&#39;: random.uniform(0, 10), &#39;y&#39;: random.uniform(0, 10)}</span>
+  <span class="tok-c1"># _ , ft = task_queue.submit_task(exp_id, task_type, json.dumps(payload))</span>
+  <span class="tok-c1"># fts.append(ft)</span>
+
+  <span class="tok-c1"># TODO: do something with the completed futures. See esql.eq documentation</span>
+  <span class="tok-c1"># for more options. For example:</span>
+  <span class="tok-c1"># for ft in eq.as_completed(fts):</span>
+  <span class="tok-c1">#     print(ft.result())</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The params dictionary contains all the parameters used to initialize the workflow.
+These will be explained in more detail in the <a href="#algo_cfg">configuration file</a>
+discussion.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Start the database located at the <code>db_path</code> parameter.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Initialize a task queue for submitting tasks to the database queue.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Check if the database input and output queues are empty before submitting
+tasks. If not, then abort the run.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Start the worker pool using the worker pool related configuration parameters.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Once the initialization is complete, the <code>task_queue</code> can be used to submit
+tasks (model input parameters) to the database output queue, and to retrieve
+and use the results returned by the worker pool to the database input queue.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+See the eqsql package documentation <mark>TODO: create and make link</mark> for
+more details.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The body of the <code>run</code> function is wrapped in a <code>try &#8230;&#8203; finally</code> clause
+in order to shutdown the database, worker pool, and task queue as cleanly
+as possible in the event of an error occurring.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><mark>TODO: R example ME discussion</mark></p>
+</div>
+<div id="algo_cfg" class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo_cfg.yaml#L1" target="algo_cfg"><strong>algo_cfg.yaml</strong></a>]</p>
+</div>
+<div class="paragraph">
+<p><code>algo_cfg.yaml</code> is a yaml format file used configure the example ME. The file begins with the
+database related parameters. These parameters are used by the example ME algorithm to
+start and connect to the database.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># TODO: Edit DB properties if necessary</span>
+db_path: /home/nick/tmp/db    <i class="conum" data-value="1"></i><b>(1)</b>
+db_host: localhost    <i class="conum" data-value="2"></i><b>(2)</b>
+db_user: eqsql_user    <i class="conum" data-value="3"></i><b>(3)</b>
+db_name: EQ_SQL    <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-c1"># db_port can be empty for local run</span>
+db_port:    <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Set the db_path variable to the location of the db directory. The ME will use this
+to start the database.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Set the database host name. This defaults to <code>localhost</code> under the default local database
+configuration.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Set the database user name. This defaults to <code>eqsql_user</code> under the default local database
+configuration.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Set the database name. This defaults to <code>EQ_SQL</code> under the default local database configuration.
+&lt;5&gt;Set the database port. If using the default local database configuration, no port needs
+to be specified.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The remaining parameters are used by the ME when working with the worker pool.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>worker_pool_id: default    <i class="conum" data-value="1"></i><b>(1)</b>
+task_type: <span class="tok-m">0</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+
+pool_launch_script: /home/nick/Documents/repos/emews_next_gen_tutorial_tests/code/eqsql_project/swift/run_eqsql_worker_pool.sh    <i class="conum" data-value="3"></i><b>(3)</b>
+pool_cfg_file: /home/nick/Documents/repos/emews_next_gen_tutorial_tests/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg    <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Set a worker pool id. The example ME assigns this id to the worker pool when it starts it using
+the <code>pool_launch_script</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Set the type of task for the worker pool to consume.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Set the worker pool launch script. The example ME will use this script to start the worker pool.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Set the configuration file for the worker pool.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_init_db">1.5. INIT DB</h3>
+<div class="paragraph">
+<p>Emews Creator also includes an <code>init_db</code> command that
+creates the EQSQL database in a user specified directory for use by an EQ/SQL workflow. It assumes that the postgresql
+binaries are availble in the user PATH, and that the eqsql package has been installed. The database name will
+default to <code>EQ_SQL</code>, and the database user to <code>eqsql_user</code>. Database log messages will be written to
+a <code>db.log</code> file in the database directory.</p>
+</div>
+<div class="paragraph">
+<p>Usage:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>emewscreator init_db -h
+Usage: emewscreator init_db [OPTIONS]
+
+Options:
+  -d, --db-path PATH  Database directory path. The database will be created in
+                      this directory.  [required]
+  -p, --port INTEGER  The database port, if any.
+  -h, --help          Show this message and exit.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>init_db</code> takes the following arguments:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>--db-path</code> - the directory in which to create the database. This must not already exist,
+and will be created by the running template.</p>
+</li>
+<li>
+<p><code>--port</code> - an optional port number for the database to listen for connections on. This is not
+required for a local database.</p>
+</li>
+</ul>
+</div>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -1458,7 +2745,6 @@ for <code>CFG_WALLTIME</code>, <code>CFG_QUEUE</code>, and <code>CFG_PROJECT</co
 </td>
 </tr>
 </table>
-</div>
 </div>
 </div>
 </div>
@@ -1523,7 +2809,7 @@ The completed workflow project has the following directory <mark>structure and f
 </div>
 <div id="uc1-creator" class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>emewscreator -o uc1 sweep -c tutorial_cfgs/sweep.yaml</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>emewscreator -o uc1 sweep -c tutorial_cfgs/UC1.yaml</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2220,13 +3506,740 @@ launch the Swift/T workflow can be seen in the <mark>EMEWS Creator tutorial</mar
 </tr>
 </table>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<mark>Highlights</mark> below have in source TODOs.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="uc4">3. Minimizing the Ackely function with an EQSQL Workflow</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Our 4th use case workflow implements an example EQSQL optimization workflow
+that attempts to find the minimum of the Ackley function using a
+Gaussian process regression model (GPR). Our implementation,
+is based on a similar example problem provided as part of the Colmena [documentation](<a href="https://github.com/exalearn/colmena/blob/bd334e0a582fb79d97652d67d05666f13d178f83/demo_apps/optimizer-examples/streaming.py#L1" class="bare">https://github.com/exalearn/colmena/blob/bd334e0a582fb79d97652d67d05666f13d178f83/demo_apps/optimizer-examples/streaming.py#L1</a>).
+We begin with a sample set containing a number of randomly generated n-dimensional points.
+Each of these points is submitted as a task to the Ackley function for evaluation. When
+a specified number of tasks have completed (i.e., that number of Ackley function evaluation results
+are available), we train a GPR using the results, and
+reorder the evaluation of the remaining tasks, increasing the priority of those more
+likely to find an optimal result according to the GPR. This repeats until all the evaluations complete.</p>
+</div>
+<div class="paragraph">
+<p>This tutorial uses the project structure and files created from the
+emews creator <a href="#eqsql_top">eqsql template</a>, and that should be read before this.</p>
+</div>
+<div class="sect2">
+<h3 id="_tutorial_goals_2">3.1. Tutorial Goals</h3>
+<div class="paragraph">
+<p><mark>TODO: GOALS</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_the_workflow">3.2. Running the Workflow</h3>
+<div class="paragraph">
+<p>The workflow is designed to be run with a local swift-t conda install:</p>
+</div>
+<div class="paragraph">
+<p><mark>TODO: proper install instructions</mark></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>install conda</p>
+</li>
+<li>
+<p>Create swift-t env</p>
+</li>
+<li>
+<p>install swift-t conda package</p>
+</li>
+<li>
+<p>pip3 install -e EQ/SQL</p>
+</li>
+<li>
+<p>pip3 install emews_creator</p>
+</li>
+<li>
+<p>conda install postgres, numpy, scipy, scikit-learn</p>
+</li>
+<li>
+<p>emewscreator init_db</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The workflow can be run using the <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L1" target="me"><code>uc4/python/me.py</code></a> python script. It takes two arguments:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>An experiment id, e.g. "test_ackley".</p>
+</li>
+<li>
+<p>The path to the ME configuration file, i.e., <code>uc4/python/me_cfg.yaml</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>For example,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>$ <span class="tok-nb">cd</span> uc4/python
+$ python3 me.py test_ackley me_cfg.yaml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Running the workflow will create an experiment directory whose name
+consists of th eexperiment id followed by a timestamp. The workflow runs
+within this directory.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_workflow_project_structure_2">3.3. Workflow Project Structure</h3>
+<div class="paragraph">
+<p>The full source code for this tutorial use case can be accessed <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc4" target="uc4">here</a>.
+The completed workflow project has the following directory structure and files:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="text"><span></span>uc4/
+├── data
+├── etc
+│   └── emews_utils.sh
+├── ext
+│   ├── emews
+│   │   └── emews.swift
+│   └── EQ-SQL
+│       ├── EQSQL.swift
+│       └── eqsql_swift.py
+├── python
+│   ├── ackley.py
+│   ├── me_cfg.yaml
+│   ├── me.py
+│   └── test
+├── R
+│   └── test
+├── README.md
+├── scripts
+│   └── run_ackley.sh
+└── swift
+    ├── ackley_worker_pool.swift
+    ├── cfgs
+    │   └── ackley_worker_pool.cfg
+    └── run_ackley_worker_pool.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The initial version of this project was created using the EMEWS creator with the following command:</p>
+</div>
+<div id="uc4-creator" class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>emewscreator -o uc4 eqsql -c tutorial_cfgs/UC4.yaml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See the <a href="#eqsql_top">eqsql section</a> in the emews creator documentation for additional information on the general project structure.</p>
+</div>
+<div class="paragraph">
+<p>As an eqsql project, the ME algorithm in the UC4 example submits tasks to a database. Those tasks are retrieived
+and executed by a worker pool, which then submits the results back where they can be used by the ME. Here, the ME produces inputs to the Ackley function submitting those as tasks to the database. The
+worker pool evalutes those inputs in parallel by executing the Ackley function on them, and pushes the results back to the database. Periodically, the ME uses a Gaussian process regression model (GPR) to re-prioritize the unevaluated
+remaining inputs, assigning a higher priority to those it deems more likey produce a minimum. The following files implement this workflow.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>python/me.py</code> - the Python language ME that submits the Ackely inputs and re-prioritizes them</p>
+</li>
+<li>
+<p><code>python/me_cfg.yaml</code> - the configuration file for the ME</p>
+</li>
+<li>
+<p><code>swift/ackley_worker_pool.swft</code> - the worker pool that retrieves the inputs for evaluation by the Ackley function</p>
+</li>
+<li>
+<p><code>swift/run_ackley_worker_pool.sh</code> - a bash script used to lauch the worker pool</p>
+</li>
+<li>
+<p><code>swift/cfgs/ackley_worker_pool.cfg</code> - the configuration file for the worker pool</p>
+</li>
+<li>
+<p><code>scripts/run_ackley.sh</code> - a bash script called by the worker pool to run the Python Ackley function</p>
+</li>
+<li>
+<p><code>python/ackley.py</code> - the Ackley function implemented in Python and called by the <code>run_ackley.sh</code> bash script</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_ackley_function">3.4. The Ackley Function</h3>
+<div class="paragraph">
+<p>The <a href="http://www.sfu.ca/~ssurjano/ackley.html">Ackley</a> function is widely used for testing optimization algorithms.
+In our example project, it is implemented in <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L1" target="ackely_py"><code>uc4/python/ackley.py</code></a></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We have added a lognormally distributed sleep delay to the Ackley function implementation to increase the otherwise millisecond runtime and to add task runtime heterogeneity for demonstration purposes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_calling_the_ackley_function_from_swiftt">3.5. Calling the Ackley Function from Swift/T</h3>
+<div class="paragraph">
+<p>The Ackley function is implemented in Python and is called by the Swift/T worker pool
+using a bash script <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/scripts/run_ackley.sh#L1" target="run_ackley"><code>uc4/scripts/run_ackley.sh</code></a></p>
+</div>
+<div class="paragraph">
+<p>The <code>run_ackley.sh</code> script takes 5 inputs which are passed from the worker pool swift code when
+the script is called.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span> Set PARAM_LINE from the first argument to this script
+<span class="tok-c1"># PARAM_LINE is the string containing the model parameters for a run.</span>
+<span class="tok-nv">PARAM_LINE</span><span class="tok-o">=</span><span class="tok-nv">$1</span>
+
+<span class="tok-c1"># Set the name of the file to write model output to.</span>
+<span class="tok-nv">OUTPUT_FILE</span><span class="tok-o">=</span><span class="tok-nv">$2</span>
+
+<span class="tok-c1"># Set the TRIAL_ID - this can be used to pass a random seed (for example)</span>
+<span class="tok-c1"># to the model</span>
+<span class="tok-nv">TRIAL_ID</span><span class="tok-o">=</span><span class="tok-nv">$3</span>
+
+<span class="tok-c1"># Set EMEWS_ROOT to the root directory of the project (i.e. the directory</span>
+<span class="tok-c1"># that contains the scripts, swift, etc. directories and files)</span>
+<span class="tok-nv">EMEWS_ROOT</span><span class="tok-o">=</span><span class="tok-nv">$4</span>
+
+<span class="tok-c1"># Each model run, runs in its own &quot;instance&quot; directory</span>
+<span class="tok-c1"># Set INSTANCE_DIRECTORY to that.</span>
+<span class="tok-nv">INSTANCE_DIRECTORY</span><span class="tok-o">=</span><span class="tok-nv">$5</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>TRIAL_ID</code> is not used when running the Ackley function</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After cd-ing to the <code>INSTANCE_DIRECTORY</code>, the script then runs the Ackley function Python code using these inputs.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> <span class="tok-nv">$INSTANCE_DIRECTORY</span>
+
+<span class="tok-c1"># TODO: Define the command to run the model.</span>
+<span class="tok-nv">MODEL_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;</span><span class="tok-nv">$HOME</span><span class="tok-s2">/anaconda3/envs/swift-t-r-py3.9/bin/python3&quot;</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-c1"># TODO: Define the arguments to the MODEL_CMD. Each argument should be</span>
+<span class="tok-c1"># surrounded by quotes and separated by spaces.</span>
+<span class="tok-nv">arg_array</span><span class="tok-o">=(</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$EMEWS_ROOT</span><span class="tok-s2">/python/ackley.py&quot;</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="tok-s2">&quot;</span><span class="tok-nv">$PARAM_LINE</span><span class="tok-s2">&quot;</span>
+            <span class="tok-s2">&quot;</span><span class="tok-nv">$OUTPUT_FILE</span><span class="tok-s2">&quot;</span><span class="tok-o">)</span>
+
+<span class="tok-nv">$TIMEOUT_CMD</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$MODEL_CMD</span><span class="tok-s2">&quot;</span> <span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">arg_array</span><span class="tok-p">[@]</span><span class="tok-si">}</span><span class="tok-s2">&quot;</span>    <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Set the Python interpreter to use for running the Ackley Python code.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Set the Ackely python implementation file, the input parameters, and
+the file to write the Ackley function output to as arguments to the Python command.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Execute the Python command with the provided arguments.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>$TIMEOUT_CMD</code>
+is an optional argument that can be set at the top of the bash script to
+provide a duration after which the command called by the bash script times out.
+By default it is an empty string and has no effect.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We typically use JSON formatted strings to describe model input parameters. The
+ME will push JSON formatted dictionaries to the database, and those strings
+are retreived by the worker pool, passed to the bash script, and from there
+to the model execution itself.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When the <code>run_ackley.sh</code> scripts calls <code>python/ackley.py</code> to execute the
+Ackley function on the provided input, the <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L50" target="ackley_main"><code><em>main</em></code></a> section of <code>ackley.py</code> is executed. The <code><em>main</em></code> section receives the Ackley function input (the <code>$PARAM_LINE</code> variable in
+<code>run_ackley.sh</code>), and the path to the output file as comand line arguments. It unpacks
+these arguments, calls the <code>run</code> function, and writes the result to the output file.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">if</span> <span class="tok-vm">__name__</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;__main__&#39;</span><span class="tok-p">:</span>
+    <span class="tok-c1"># param_line, output_file</span>
+    <span class="tok-n">param_str</span> <span class="tok-o">=</span> <span class="tok-n">sys</span><span class="tok-o">.</span><span class="tok-n">argv</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">]</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">output_file</span> <span class="tok-o">=</span> <span class="tok-n">sys</span><span class="tok-o">.</span><span class="tok-n">argv</span><span class="tok-p">[</span><span class="tok-mi">2</span><span class="tok-p">]</span>
+
+    <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">run</span><span class="tok-p">(</span><span class="tok-n">param_str</span><span class="tok-p">)</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-k">with</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-n">output_file</span><span class="tok-p">,</span> <span class="tok-s1">&#39;w&#39;</span><span class="tok-p">)</span> <span class="tok-k">as</span> <span class="tok-n">fout</span><span class="tok-p">:</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="tok-n">fout</span><span class="tok-o">.</span><span class="tok-n">write</span><span class="tok-p">(</span><span class="tok-sa">f</span><span class="tok-s1">&#39;</span><span class="tok-si">{</span><span class="tok-n">y</span><span class="tok-si">}</span><span class="tok-s1">&#39;</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Unpack the command line arguments.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Call the run function, passing the Ackley function input.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Write the Ackely function result to the output file.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>run</code> unpacks the Ackely function parameters and calls the Ackley function itself.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">run</span><span class="tok-p">(</span><span class="tok-n">param_str</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">str</span><span class="tok-p">:</span>
+    <span class="tok-sd">&quot;&quot;&quot;Run the Ackely function on the specified JSON</span>
+<span class="tok-sd">    payload.</span>
+<span class="tok-sd">    &quot;&quot;&quot;</span>
+    <span class="tok-n">args</span> <span class="tok-o">=</span> <span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">loads</span><span class="tok-p">(</span><span class="tok-n">param_str</span><span class="tok-p">)</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">array</span><span class="tok-p">(</span><span class="tok-n">args</span><span class="tok-p">[</span><span class="tok-s1">&#39;x&#39;</span><span class="tok-p">])</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+
+    <span class="tok-n">result</span> <span class="tok-o">=</span> <span class="tok-n">ackley</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">)</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tok-k">return</span> <span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">dumps</span><span class="tok-p">(</span><span class="tok-n">result</span><span class="tok-p">)</span>     <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Load the parameter string in to a dictionary. The parameter string
+is formatted as a JSON map where each entry in the map is an input variable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Convert the parameter <code>x</code> entry into a numpy array. <code>x</code> is a JSON list in the
+parameter string and needs to be converted to an array for the Ackely function.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Run the Ackley function.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Return the Ackley function result as a JSON string.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The Swift/T worker pool script is largely unchanged from what is created by the
+esql emews creator template which is described <a href="#swift_worker_pool">here</a>. We have,
+however, edited the <code>get_result</code> function to return the result of an
+Ackley evaluation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="swift"><span></span><span class="tok-p">(</span><span class="tok-n">float</span> <span class="tok-n">result</span><span class="tok-p">)</span> <span class="tok-n">get_result</span><span class="tok-p">(</span><span class="tok-n">string</span> <span class="tok-n">output_file</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+    <span class="tok-c1">// Read the output file to get result</span>
+    <span class="tok-n">file</span> <span class="tok-n">of</span> <span class="tok-p">=</span> <span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">output_file</span><span class="tok-p">);</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">result</span> <span class="tok-p">=</span> <span class="tok-n">string2float</span><span class="tok-p">(</span><span class="tok-n">read</span><span class="tok-p">(</span><span class="tok-n">of</span><span class="tok-p">));</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Initialize the output file as a swift-t file object. <code>output_file</code> is the path
+passed to <code>ackley.py</code> as a command line argument. The Ackley function result is
+written to this file in <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L56" target="ackley_write_result"><code>python/ackley.py</code></a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Read the first line of that file, which contains the result, and convert the
+string to a float.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The worker pool configuration file (<a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/swift/cfgs/ackley_worker_pool.cfg#L1" target="ackley_worker_pool_cfg"><code>swift/cfgs/ackley_worker_pool.cfg</code></a>) and the worker pool launch script
+(<a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/swift/run_ackley_worker_pool.sh#L1" target="run_ackley_worker_pool_sh"><code>swift/run_ackley_worker_pool.sh</code></a>))
+are unchanged from those produced by eqsql template. A discussion of them can be found <a href="#pool_cfg">here</a>
+and <a href="#eqsql_launch_script">here</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_ackley_me">3.6. The Ackley ME</h3>
+<div class="paragraph">
+<p>The Ackley workflow can be run by executing the Python script <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L1" target="me_py"><code>python/me.py</code></a>
+The code begins by
+starting the EQ/SQL database, the worker pool, and initializing a task queue through which tasks can be sent to the worker pool via the database. The code then submits a user specified amount of initial tasks to the database, and waits
+for some number of tasks to complete. When that number has completed, the remaining unexecuted tasks are reprioritized
+using a GPR model. This continues until some total number have been completed. The intention is to illustrate a typical
+ME workflow where tasks are submitted to a task queue, and the ME then waits for some number to complete, at which point, it can submit new tasks based on the existing results, and reprioritize unexecuted tasks, if necessary.</p>
+</div>
+<div class="paragraph">
+<p>The code consists of a Python <code>dataclass</code> for encapsulating a task, 5 functions, and a <code><em>main</em></code> block. The <code>create_parser</code>, and
+<code><em>main</em></code> block are discussed in the emews creator eqsql <a href="#me_main">section</a> and won&#8217;t be discussed here.
+Similarily, creating the task queue, and starting the database, and worker pool which are performed in the <code>run</code> function were also discussed
+in the  emews creator eqsql <a href="#me_init">section</a> and will not be covered here.</p>
+</div>
+<div class="paragraph">
+<p>After initialization, the <code>run</code> function calls <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L23" target="submit_initial_tasks"><code>submit_initial_tasks</code></a>, passing it the created task_queue
+user provided experiment id, and the ME input parameters as a dictionary. There the random samples
+used as Ackley function input data are created and submitted as tasks for evaluation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">submit_initial_tasks</span><span class="tok-p">(</span><span class="tok-n">task_queue</span><span class="tok-p">,</span> <span class="tok-n">exp_id</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">,</span> <span class="tok-n">params</span><span class="tok-p">:</span> <span class="tok-n">Dict</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">Dict</span><span class="tok-p">[</span><span class="tok-nb">int</span><span class="tok-p">,</span> <span class="tok-n">Task</span><span class="tok-p">]:</span>
+    <span class="tok-o">...</span>
+    <span class="tok-n">search_space_size</span> <span class="tok-o">=</span> <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;search_space_size&#39;</span><span class="tok-p">]</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">dim</span> <span class="tok-o">=</span> <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;sample_dimensions&#39;</span><span class="tok-p">]</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-n">sampled_space</span> <span class="tok-o">=</span> <span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">uniform</span><span class="tok-p">(</span><span class="tok-n">size</span><span class="tok-o">=</span><span class="tok-p">(</span><span class="tok-n">search_space_size</span><span class="tok-p">,</span> <span class="tok-n">dim</span><span class="tok-p">),</span> <span class="tok-n">low</span><span class="tok-o">=-</span><span class="tok-mf">32.768</span><span class="tok-p">,</span> <span class="tok-n">high</span><span class="tok-o">=</span><span class="tok-mf">32.768</span><span class="tok-p">)</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+
+    <span class="tok-n">task_type</span> <span class="tok-o">=</span> <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;task_type&#39;</span><span class="tok-p">]</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+
+    <span class="tok-n">payloads</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
+    <span class="tok-k">for</span> <span class="tok-n">sample</span> <span class="tok-ow">in</span> <span class="tok-n">sampled_space</span><span class="tok-p">:</span>    <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="tok-n">payload</span> <span class="tok-o">=</span> <span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">dumps</span><span class="tok-p">({</span><span class="tok-s1">&#39;x&#39;</span><span class="tok-p">:</span> <span class="tok-nb">list</span><span class="tok-p">(</span><span class="tok-n">sample</span><span class="tok-p">)})</span>
+        <span class="tok-n">payloads</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-n">payload</span><span class="tok-p">)</span>
+    <span class="tok-n">_</span><span class="tok-p">,</span> <span class="tok-n">fts</span> <span class="tok-o">=</span> <span class="tok-n">task_queue</span><span class="tok-o">.</span><span class="tok-n">submit_tasks</span><span class="tok-p">(</span><span class="tok-n">exp_id</span><span class="tok-p">,</span> <span class="tok-n">eq_type</span><span class="tok-o">=</span><span class="tok-n">task_type</span><span class="tok-p">,</span> <span class="tok-n">payload</span><span class="tok-o">=</span><span class="tok-n">payloads</span><span class="tok-p">)</span>    <i class="conum" data-value="6"></i><b>(6)</b>
+
+    <span class="tok-n">tasks</span> <span class="tok-o">=</span> <span class="tok-p">{</span><span class="tok-n">ft</span><span class="tok-o">.</span><span class="tok-n">eq_task_id</span><span class="tok-p">:</span> <span class="tok-n">Task</span><span class="tok-p">(</span><span class="tok-n">future</span><span class="tok-o">=</span><span class="tok-n">ft</span><span class="tok-p">,</span> <span class="tok-n">sample</span><span class="tok-o">=</span><span class="tok-n">sampled_space</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">],</span> <span class="tok-n">result</span><span class="tok-o">=</span><span class="tok-kc">None</span><span class="tok-p">)</span>    <i class="conum" data-value="7"></i><b>(7)</b>
+             <span class="tok-k">for</span> <span class="tok-n">i</span><span class="tok-p">,</span> <span class="tok-n">ft</span> <span class="tok-ow">in</span> <span class="tok-nb">enumerate</span><span class="tok-p">(</span><span class="tok-n">fts</span><span class="tok-p">)}</span>
+
+    <span class="tok-k">return</span> <span class="tok-n">tasks</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Get the search space size, i.e., the number of initial samples to evaluate.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Get the number of dimensions in each sample.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Create a numpy 2D array of <code>search_space_size</code> where each row is an array of <code>dim</code> size
+containing random numbers between -32.768 and 32.768.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Get the task type id to be used in task submission. A worker pool will query for
+tasks of a specific type, and this identifies that type.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>For each sample in the sampled space, create a JSON map with a single key, <code>x</code>,
+whose value is the sample array. Add that JSON string to a list of payloads
+to submit to the database queue.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Submit the list of payloads as tasks to be executed, passing the experiment id, and
+task type. The submission returns a status, which we assume to be successful and ignore,
+and a list of <code>eqsql.eq.Future</code> objects.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Create and return a Python dictionary of Task dataclass objects. Each Task contains
+the <code>Future</code> for that tasks, the numpy array that was submitted as that task&#8217;s input,
+and a result (which is initially None, indicating that the task has not yet been evaluated).</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Numpy structures such as arrays are not directly JSON-ifiable, and so
+we need to convert them into Python structures that are, such as lists.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Having submitted the initial tasks, <code>run</code> now begins the optimization <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L117" target="opt_loop">loop</a>. The loop repeatedly queries for
+some number of completed tasks using eqsql&#8217;s <code>as_completed</code> function which returns
+an iterator over that number of completed tasks, waiting for tasks to complete, if necessary.
+When <code>as_completed</code> finishes returning completed tasks, we reprioritize the remaining
+uncompleted tasks using the results provided by the completed tasks. The loop continues
+calling <code>as_completed</code> and reprioritizing until some total number of tasks have completed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">tasks</span> <span class="tok-o">=</span> <span class="tok-n">submit_initial_tasks</span><span class="tok-p">(</span><span class="tok-n">task_queue</span><span class="tok-p">,</span> <span class="tok-n">exp_id</span><span class="tok-p">,</span> <span class="tok-n">params</span><span class="tok-p">)</span>
+<span class="tok-n">total_completed</span> <span class="tok-o">=</span> <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;total_completed&#39;</span><span class="tok-p">]</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">tasks_completed</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-n">reprioritize_after</span> <span class="tok-o">=</span> <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;reprioritize_after&#39;</span><span class="tok-p">]</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-c1"># list of futures for the submitted tasks</span>
+<span class="tok-n">fts</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-n">t</span><span class="tok-o">.</span><span class="tok-n">future</span> <span class="tok-k">for</span> <span class="tok-n">t</span> <span class="tok-ow">in</span> <span class="tok-n">tasks</span><span class="tok-o">.</span><span class="tok-n">values</span><span class="tok-p">()]</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+
+<span class="tok-k">while</span> <span class="tok-n">tasks_completed</span> <span class="tok-o">&lt;</span> <span class="tok-n">total_completed</span><span class="tok-p">:</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="tok-c1"># add the result to the completed Tasks.</span>
+    <span class="tok-k">for</span> <span class="tok-n">ft</span> <span class="tok-ow">in</span> <span class="tok-n">eq</span><span class="tok-o">.</span><span class="tok-n">as_completed</span><span class="tok-p">(</span><span class="tok-n">fts</span><span class="tok-p">,</span> <span class="tok-n">pop</span><span class="tok-o">=</span><span class="tok-kc">True</span><span class="tok-p">,</span> <span class="tok-n">n</span><span class="tok-o">=</span><span class="tok-n">reprioritize_after</span><span class="tok-p">):</span>    <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="tok-n">_</span><span class="tok-p">,</span> <span class="tok-n">result</span> <span class="tok-o">=</span> <span class="tok-n">ft</span><span class="tok-o">.</span><span class="tok-n">result</span><span class="tok-p">()</span>    <i class="conum" data-value="6"></i><b>(6)</b>
+        <span class="tok-n">tasks</span><span class="tok-p">[</span><span class="tok-n">ft</span><span class="tok-o">.</span><span class="tok-n">eq_task_id</span><span class="tok-p">]</span><span class="tok-o">.</span><span class="tok-n">result</span> <span class="tok-o">=</span> <span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">loads</span><span class="tok-p">(</span><span class="tok-n">result</span><span class="tok-p">)</span>    <i class="conum" data-value="7"></i><b>(7)</b>
+        <span class="tok-n">tasks_completed</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>    <i class="conum" data-value="8"></i><b>(8)</b>
+
+    <span class="tok-n">reprioritize</span><span class="tok-p">(</span><span class="tok-n">tasks</span><span class="tok-p">)</span>    <i class="conum" data-value="9"></i><b>(9)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Get the total number of tasks to complete (i.e., the total number of Ackley function evaluatations
+to perform) before stopping.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Get the number of tasks to complete before reprioritizing.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Create a list containing all the Task futures. Most of the eqsql functions that
+return some number of completed tasks, or tasks as they complete, use a list of Futures
+as an argument, so we create that here.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>While the number of completed tasks is less than the total number to complete,
+wait for another <code>reprioritze_after</code> number of tasks to complete, and then reprioritize.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Iterate through <code>reprioritize_after</code> number of completed Futures. Those futures
+are popped off the <code>fts</code> list of futures.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Get the result of a completed Future.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>JSON-ify that result and set the result attribute of the Task associated with that
+Future.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Increment the number of total completed tasks.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>After another <code>reprioritize_after</code> number of tasks have completed, and their results
+assigned to the corresponding Task object, reprioritize the uncompleted tasks.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L65" target="reprioritize"><code>reprioritize</code></a> function uses the completed task results
+captured in the <code>result</code> attribute of the Tasks objects to reprioritize the remaining tasks. It begins by separating
+the Task objects into training and prediction data sets.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">reprioritize</span><span class="tok-p">(</span><span class="tok-n">tasks</span><span class="tok-p">:</span> <span class="tok-n">Dict</span><span class="tok-p">[</span><span class="tok-nb">int</span><span class="tok-p">,</span> <span class="tok-n">Task</span><span class="tok-p">]):</span>
+    <span class="tok-n">training</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
+    <span class="tok-n">uncompleted_fts</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
+    <span class="tok-n">prediction</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
+    <span class="tok-k">for</span> <span class="tok-n">t</span> <span class="tok-ow">in</span> <span class="tok-n">tasks</span><span class="tok-o">.</span><span class="tok-n">values</span><span class="tok-p">():</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tok-k">if</span> <span class="tok-n">t</span><span class="tok-o">.</span><span class="tok-n">result</span> <span class="tok-ow">is</span> <span class="tok-kc">None</span><span class="tok-p">:</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="tok-n">uncompleted_fts</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-n">t</span><span class="tok-o">.</span><span class="tok-n">future</span><span class="tok-p">)</span>
+            <span class="tok-n">prediction</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-n">t</span><span class="tok-o">.</span><span class="tok-n">sample</span><span class="tok-p">)</span>
+        <span class="tok-k">else</span><span class="tok-p">:</span>
+            <span class="tok-n">training</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">([</span><span class="tok-n">t</span><span class="tok-o">.</span><span class="tok-n">sample</span><span class="tok-p">,</span> <span class="tok-n">t</span><span class="tok-o">.</span><span class="tok-n">result</span><span class="tok-p">])</span>    <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Iterate through all the Tasks, separating them into
+test and prediction data sets.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>If the Task&#8217;s result is None (i.e., it hasn&#8217;t completed) then
+add its sample input to the prediction data set, and it&#8217;s future to the list
+of uncompleted futures.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Add the completed Task&#8217;s sample input and result values to the training data.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With the training and prediction data created, <code>reprioritize</code> fits the GPR
+using the training data and ranks the uncompeleted tasks by likelihood
+of minimizing the Ackley function. Using that ranking, it then reprioritizes the remaining
+uncompleted tasks.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">fts</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
+<span class="tok-n">priorities</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
+<span class="tok-n">max_priority</span> <span class="tok-o">=</span> <span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">uncompleted_fts</span><span class="tok-p">)</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">ranking</span> <span class="tok-o">=</span> <span class="tok-n">fit_gpr</span><span class="tok-p">(</span><span class="tok-n">training</span><span class="tok-p">,</span> <span class="tok-n">prediction</span><span class="tok-p">)</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-k">for</span> <span class="tok-n">i</span><span class="tok-p">,</span> <span class="tok-n">idx</span> <span class="tok-ow">in</span> <span class="tok-nb">enumerate</span><span class="tok-p">(</span><span class="tok-n">ranking</span><span class="tok-p">):</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tok-n">ft</span> <span class="tok-o">=</span> <span class="tok-n">uncompleted_fts</span><span class="tok-p">[</span><span class="tok-n">idx</span><span class="tok-p">]</span>
+    <span class="tok-n">priority</span> <span class="tok-o">=</span> <span class="tok-n">max_priority</span> <span class="tok-o">-</span> <span class="tok-n">i</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="tok-n">fts</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-n">ft</span><span class="tok-p">)</span>
+    <span class="tok-n">priorities</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-n">priority</span><span class="tok-p">)</span>
+
+<span class="tok-nb">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Reprioritizing ...&quot;</span><span class="tok-p">,</span> <span class="tok-n">flush</span><span class="tok-o">=</span><span class="tok-kc">True</span><span class="tok-p">)</span>
+<span class="tok-n">eq</span><span class="tok-o">.</span><span class="tok-n">update_priority</span><span class="tok-p">(</span><span class="tok-n">fts</span><span class="tok-p">,</span> <span class="tok-n">priorities</span><span class="tok-p">)</span>     <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Set the maximum priority to the number of uncompleted tasks.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Call the GPR to get the Task ranking. The returned ranking
+is a ranked list of indicies into the prediction data.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>For each index in the ranking, get the Future corresponding
+to that index, assign a priority, and add the Future and the
+priority to their respective lists.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Compute a priority by subtracting the current iteration index
+from the max priority.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Update the priorities of the specified futures to the priorities
+in the specified list.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The ME itself is configured using a yaml format configuration file,
+<a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me_cfg.yaml#L1" target="me_cfg"><code>python/me_cfg.yaml</code></a>. The ME
+code reads in this file, and creates a <code>params</code> Python dictionary from it. In addition to
+those entries described in the emews creator eqsql template <a href="#algo_cfg">section</a>, the file contains
+the following entries:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-nt">search_space_size</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">50</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nt">sample_dimensions</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">4</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nt">total_completed</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">40</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nt">reprioritize_after</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">10</span>    <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The size of the sample search space. This many samples are created and submitted as
+tasks for Ackley function evaluation by the worker pool.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The number of dimensions in each sample.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The total number of Ackley function evaluations to complete before stopping.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The number of tasks to complete before reprioritizing. Each time this number of additional Ackley function
+evaluations have completed, reprioritize the remaining uncompleted tasks.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><mark>TODO:</mark>
+TIPS:
+Dealing with worker pool error&#8201;&#8212;&#8201;short timeout in as completed to check, check output.txt</p>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-20 15:29:08 -0500
+Last updated 2023-07-28 16:47:06 -0400
 </div>
 </div>
 </body>
