@@ -568,7 +568,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_running_the_swift_script">2.7. Running the Swift Script</a></li>
 </ul>
 </li>
-<li><a href="#uc4">3. Minimizing the Ackely function with an EQSQL Workflow</a>
+<li><a href="#uc4">3. Minimizing the Ackley function with an EQSQL Workflow</a>
 <ul class="sectlevel2">
 <li><a href="#_tutorial_goals_2">3.1. Tutorial Goals</a></li>
 <li><a href="#_running_the_workflow">3.2. Running the Workflow</a></li>
@@ -1579,7 +1579,7 @@ Typically, this should not be edited by the user.</p>
 </div>
 <div class="paragraph">
 <p>These files (excluding those in <code>ext/EQ-SQL</code>) contain lines or sections marked with <strong>TODO</strong> where that line or section needs
-to be edited to customize the file for your model and workflow. See TODO*<a href="#uc4">Use Case 4 Tutorial - An EQSQL Workflow</a>* for a fully fleshed out
+to be edited to customize the file for your model and workflow. See <a href="#uc4">Use Case 4 Tutorial - An EQSQL Workflow</a> for a fully fleshed out
 eqsql workflow created using emews creator. We will look more closely at relevant parts of these files
 below.</p>
 </div>
@@ -1677,8 +1677,7 @@ to use, the name of the compute queue, the project to charge the compute time
 to, and an estimate of how long the job will take. This section exports
 those values so that they are available to swift when creating the job submission
 script. These are set from values defined in the workflow configuration file
-(i.e., <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg#L1" target="eqsql_worker_pool.sh"><code>swift/cfgs/eqsql_worker_pool.cfg</code></a>
-).</p>
+(i.e., <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg#L1" target="eqsql_worker_pool.sh"><code>swift/cfgs/eqsql_worker_pool.cfg</code></a>).</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1819,9 +1818,8 @@ the worker pools stdout and stderr to a file when running on a non-queued unsche
 <span class="tok-k">fi</span></code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>[[pass_cmd_args, CMD_LINE_ARGS]
-The launch script passes some arguments to the swift script, that it calls, via the command line.
+<div id="pass_cmd_args" class="paragraph">
+<p>The launch script passes some arguments to the swift script, that it calls, via the command line.
 We define a variable that represents the command line and pass the number of trials
 (replicates), the worker pool task type, batch size, batch threshold and worker pool
 id using that variable. These arguments are all set via the configuration file and will be discussed
@@ -2173,7 +2171,7 @@ and are marked with the appropriate TODOs.</p>
 </div>
 </div>
 <div id="pool_cfg" class="paragraph">
-<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg#L1" target="eqsql_worker_pool">`<strong>eqsql_worker_pool.cfg</strong></a></p>
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg#L1" target="eqsql_worker_pool"><code><strong>eqsql_worker_pool.cfg</strong></code></a></p>
 </div>
 <div class="paragraph">
 <p><code>eqsql_worker_pool.cfg</code> contains configuration variables for running the worker pool. It is sourced
@@ -2450,7 +2448,7 @@ will be an ignored empty string.</td>
 </table>
 </div>
 <div class="paragraph">
-<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo.py#L1" target="algo">`<strong>algo.py</strong></a></p>
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo.py#L1" target="algo"><code><strong>algo.py</strong></code></a></p>
 </div>
 <div class="paragraph">
 <p>If the <code>me_language</code> argument to the <code>esql</code> template command is <code>python</code>, then an example Python ME and ME configuration file will be produced. The ME can be run from the command line as follows:</p>
@@ -2535,7 +2533,8 @@ execution.</p>
 
   <span class="tok-c1"># start worker pool</span>
   <span class="tok-n">pool_params</span> <span class="tok-o">=</span> <span class="tok-n">worker_pool</span><span class="tok-o">.</span><span class="tok-n">cfg_file_to_dict</span><span class="tok-p">(</span><span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;pool_cfg_file&#39;</span><span class="tok-p">])</span>
-  <span class="tok-n">pool</span> <span class="tok-o">=</span> <span class="tok-n">worker_pool</span><span class="tok-o">.</span><span class="tok-n">start_local_pool</span><span class="tok-p">(</span><span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;worker_pool_id&#39;</span><span class="tok-p">],</span> <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;pool_launch_script&#39;</span><span class="tok-p">],</span>    <i class="conum" data-value="5"></i><b>(5)</b>
+  <span class="tok-n">pool</span> <span class="tok-o">=</span> <span class="tok-n">worker_pool</span><span class="tok-o">.</span><span class="tok-n">start_local_pool</span><span class="tok-p">(</span><span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;worker_pool_id&#39;</span><span class="tok-p">],</span>    <i class="conum" data-value="5"></i><b>(5)</b>
+                                      <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;pool_launch_script&#39;</span><span class="tok-p">],</span>
                                       <span class="tok-n">exp_id</span><span class="tok-p">,</span> <span class="tok-n">pool_params</span><span class="tok-p">)</span>
   <span class="tok-n">task_type</span> <span class="tok-o">=</span> <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;task_type&#39;</span><span class="tok-p">]</span>
   <span class="tok-n">fts</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
@@ -2617,7 +2616,7 @@ as possible in the event of an error occurring.
 <p><mark>TODO: R example ME discussion</mark></p>
 </div>
 <div id="algo_cfg" class="paragraph">
-<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo_cfg.yaml#L1" target="algo_cfg"><strong>algo_cfg.yaml</strong></a>]</p>
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo_cfg.yaml#L1" target="algo_cfg"><code><strong>algo_cfg.yaml</strong></code></a></p>
 </div>
 <div class="paragraph">
 <p><code>algo_cfg.yaml</code> is a yaml format file used configure the example ME. The file begins with the
@@ -3522,13 +3521,13 @@ launch the Swift/T workflow can be seen in the <mark>EMEWS Creator tutorial</mar
 </div>
 </div>
 <div class="sect1">
-<h2 id="uc4">3. Minimizing the Ackely function with an EQSQL Workflow</h2>
+<h2 id="uc4">3. Minimizing the Ackley function with an EQSQL Workflow</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Our 4th use case workflow implements an example EQSQL optimization workflow
 that attempts to find the minimum of the Ackley function using a
 Gaussian process regression model (GPR). Our implementation,
-is based on a similar example problem provided as part of the Colmena [documentation](<a href="https://github.com/exalearn/colmena/blob/bd334e0a582fb79d97652d67d05666f13d178f83/demo_apps/optimizer-examples/streaming.py#L1" class="bare">https://github.com/exalearn/colmena/blob/bd334e0a582fb79d97652d67d05666f13d178f83/demo_apps/optimizer-examples/streaming.py#L1</a>).
+is based on a similar example problem provided as part of the Colmena <a href="https://github.com/exalearn/colmena/blob/bd334e0a582fb79d97652d67d05666f13d178f83/demo_apps/optimizer-examples/streaming.py#L1" target="colmena">documentation</a>.
 We begin with a sample set containing a number of randomly generated n-dimensional points.
 Each of these points is submitted as a task to the Ackley function for evaluation. When
 a specified number of tasks have completed (i.e., that number of Ackley function evaluation results
@@ -3538,7 +3537,7 @@ likely to find an optimal result according to the GPR. This repeats until all th
 </div>
 <div class="paragraph">
 <p>This tutorial uses the project structure and files created from the
-emews creator <a href="#eqsql_top">eqsql template</a>, and that should be read before this.</p>
+emews creator <a href="#eqsql_top">eqsql</a> template, and that should be read before this.</p>
 </div>
 <div class="sect2">
 <h3 id="_tutorial_goals_2">3.1. Tutorial Goals</h3>
@@ -3651,7 +3650,7 @@ The completed workflow project has the following directory structure and files:<
 </div>
 </div>
 <div class="paragraph">
-<p>See the <a href="#eqsql_top">eqsql section</a> in the emews creator documentation for additional information on the general project structure.</p>
+<p>See the eqsql <a href="#eqsql_top">section</a> in the emews creator documentation for additional information on the general project structure.</p>
 </div>
 <div class="paragraph">
 <p>As an eqsql project, the ME algorithm in the UC4 example submits tasks to a database. Those tasks are retrieived
@@ -3662,7 +3661,7 @@ remaining inputs, assigning a higher priority to those it deems more likey produ
 <div class="ulist">
 <ul>
 <li>
-<p><code>python/me.py</code> - the Python language ME that submits the Ackely inputs and re-prioritizes them</p>
+<p><code>python/me.py</code> - the Python language ME that submits the Ackley inputs and re-prioritizes them</p>
 </li>
 <li>
 <p><code>python/me_cfg.yaml</code> - the configuration file for the ME</p>
@@ -3688,8 +3687,8 @@ remaining inputs, assigning a higher priority to those it deems more likey produ
 <div class="sect2">
 <h3 id="_the_ackley_function">3.4. The Ackley Function</h3>
 <div class="paragraph">
-<p>The <a href="http://www.sfu.ca/~ssurjano/ackley.html">Ackley</a> function is widely used for testing optimization algorithms.
-In our example project, it is implemented in <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L1" target="ackely_py"><code>uc4/python/ackley.py</code></a></p>
+<p>The <a href="http://www.sfu.ca/~ssurjano/ackley.html" target="ackley_doc">Ackley</a> function is widely used for testing optimization algorithms.
+In our example project, it is implemented in <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L1" target="ackley_py"><code>uc4/python/ackley.py</code></a></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3778,7 +3777,7 @@ the script is called.</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Set the Ackely python implementation file, the input parameters, and
+<td>Set the Ackley python implementation file, the input parameters, and
 the file to write the Ackley function output to as arguments to the Python command.</td>
 </tr>
 <tr>
@@ -3851,17 +3850,17 @@ these arguments, calls the <code>run</code> function, and writes the result to t
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Write the Ackely function result to the output file.</td>
+<td>Write the Ackley function result to the output file.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p><code>run</code> unpacks the Ackely function parameters and calls the Ackley function itself.</p>
+<p><code>run</code> unpacks the Ackley function parameters and calls the Ackley function itself.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">run</span><span class="tok-p">(</span><span class="tok-n">param_str</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">str</span><span class="tok-p">:</span>
-    <span class="tok-sd">&quot;&quot;&quot;Run the Ackely function on the specified JSON</span>
+    <span class="tok-sd">&quot;&quot;&quot;Run the Ackley function on the specified JSON</span>
 <span class="tok-sd">    payload.</span>
 <span class="tok-sd">    &quot;&quot;&quot;</span>
     <span class="tok-n">args</span> <span class="tok-o">=</span> <span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">loads</span><span class="tok-p">(</span><span class="tok-n">param_str</span><span class="tok-p">)</span>    <i class="conum" data-value="1"></i><b>(1)</b>
@@ -3881,7 +3880,7 @@ is formatted as a JSON map where each entry in the map is an input variable.</td
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>Convert the parameter <code>x</code> entry into a numpy array. <code>x</code> is a JSON list in the
-parameter string and needs to be converted to an array for the Ackely function.</td>
+parameter string and needs to be converted to an array for the Ackley function.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -3957,7 +3956,8 @@ used as Ackley function input data are created and submitted as tasks for evalua
     <span class="tok-o">...</span>
     <span class="tok-n">search_space_size</span> <span class="tok-o">=</span> <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;search_space_size&#39;</span><span class="tok-p">]</span>    <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="tok-n">dim</span> <span class="tok-o">=</span> <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;sample_dimensions&#39;</span><span class="tok-p">]</span>    <i class="conum" data-value="2"></i><b>(2)</b>
-    <span class="tok-n">sampled_space</span> <span class="tok-o">=</span> <span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">uniform</span><span class="tok-p">(</span><span class="tok-n">size</span><span class="tok-o">=</span><span class="tok-p">(</span><span class="tok-n">search_space_size</span><span class="tok-p">,</span> <span class="tok-n">dim</span><span class="tok-p">),</span> <span class="tok-n">low</span><span class="tok-o">=-</span><span class="tok-mf">32.768</span><span class="tok-p">,</span> <span class="tok-n">high</span><span class="tok-o">=</span><span class="tok-mf">32.768</span><span class="tok-p">)</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tok-n">sampled_space</span> <span class="tok-o">=</span> <span class="tok-n">np</span><span class="tok-o">.</span><span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">uniform</span><span class="tok-p">(</span><span class="tok-n">size</span><span class="tok-o">=</span><span class="tok-p">(</span><span class="tok-n">search_space_size</span><span class="tok-p">,</span> <span class="tok-n">dim</span><span class="tok-p">),</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+                                      <span class="tok-n">low</span><span class="tok-o">=-</span><span class="tok-mf">32.768</span><span class="tok-p">,</span> <span class="tok-n">high</span><span class="tok-o">=</span><span class="tok-mf">32.768</span><span class="tok-p">)</span>
 
     <span class="tok-n">task_type</span> <span class="tok-o">=</span> <span class="tok-n">params</span><span class="tok-p">[</span><span class="tok-s1">&#39;task_type&#39;</span><span class="tok-p">]</span>    <i class="conum" data-value="4"></i><b>(4)</b>
 
