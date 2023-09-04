@@ -2,7 +2,7 @@
 
 EMEWS Creator is a Python application for creating workflow projects for EMEWS from
 the command line. The project consists of the canonical EMEWS directory layout and 
-various files that can be customized by the user for their particular model.
+various files that can be customized by the user for their particular use case.
 
 
 === Installation
@@ -40,16 +40,16 @@ Commands:
 ----
 
 Each of the commands creates a particular type of workflow: a sweep, an eqpy-based workflow, 
-or an eqr-based workflow. Each of the commands has its own arguments specific to that
+an eqr-based workflow, on an eqsql-based workflow. Each of the commands has its own arguments specific to that
 workflow type. These are specified on the command line after the COMMAND argument, and will 
 be covered in the <<wflow_templates>> section below.
 
-The options supplied to `emewscreator` are common to all the workflow types.
+The following options supplied to `emewscreator` are common to all the workflow types:
 
 *  `--output-dir` - the root directory of the directory structure and files created
 by EMEWS Creator. 
 * `--model-name` - the name  of the model that will be run during the workflow. 
-This will be used in the model execution bash script. Spaces will be replaced by underscores.
+This will be used in the model execution bash script. Note that spaces will be replaced by underscores.
 * `--overwrite` - if present, EMEWS Creator will overwrite any existing files in the
 `output-dir` directory when creating the workflow. By default, existing files will *not* be overwritten. 
 
@@ -98,22 +98,22 @@ my_emews_project/
 
 The directories are intended to contain the following:
 
- * `data` - date required by the model and algorithm (inputs, etc.).
+ * `data` - data required by the model and algorithm (e.g., input data).
  * `etc` - additional code used by EMEWS
- * `ext` - Swift/T extensions, including the default EMEWS utility code extension as well as
+ * `ext` - Swift/T (hereafter swift) extensions, including the default EMEWS utility code extension as well as
  the EQ/R and EQ/Py extensions when creating eqr or eqpy workflows
  * `python` - Python code (e.g., model exploration algorithms written in Python)
  * `python\test` - tests of the Python code
  * `R` - R code (e.g., model exploration algorithms written R)
  * `R\test` - tests of the R code
  * `scripts` - any necessary scripts (e.g., scripts to launch a model), excluding scripts used to run the workflow
- * `swift` - Swift/T code and scripts used to submit and run the workflow
+ * `swift` - swift code and scripts used run the workflow
 
 ==== Files 
 Each of the workflow types will generate the following files. The file names
 are derived from parameters specified in the workflow template configuration
 arguments. The names of those parameters are included in curly brackets
-in the file names below. (In the above directory listing, the workflow_name
+in the file names below. (Note that in the above directory listing, the workflow_name
 was `sweep_workflow`.)
 
 * `swift/run_{workflow_name}.sh` - a bash script used to launch / submit the workflow
@@ -125,7 +125,7 @@ was `sweep_workflow`.)
 These files may require some user customization before they can be used. The 
 relevant sections are marked with `TODO`.
 
-Once any edits have been completed, the workflows can be run with:
+Once the required edits are completed, the workflows can be run with:
 
 ----
 $ run_{workflow_name}.sh <experiment_name> cfgs/{workflow_name}.cfg
@@ -145,8 +145,8 @@ the required arguments are specified on the command line
 The workflow template configuration file can be used to specify any of a
 workflow template's configuration parameters when those parameters are
 not specified on the command line. This file is in yaml format.
-Sample configuration files can be found 
-https://github.com/emews/emews-project-creator/tree/master/example_cfgs[here].
+As mentioned above, sample configuration files can be found 
+https://github.com/emews/emews-project-creator/tree/master/example_cfgs[here] 
 in the `example_cfgs` directory in the EMEWS Creator github repository. Arguments
 supplied on the command line will override those supplied in a configuration file.
 If any required arguments are missing from the command line, then the
@@ -190,7 +190,7 @@ among other parameters.
 These files contain lines or sections marked with *TODO* where that line or section needs
 to be edited to customize the file for your model and workflow. See <<uc1>> for a fully fleshed out
 sweep workflow created using emews creator. We will look more closely at relevant parts of these files
-below.
+next.
 
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/run_sweep_workflow.sh#L1[`*run_sweep_workflow.sh*`,window=UC1,pts="noopener,nofollow"]
 
@@ -199,7 +199,7 @@ makes any variables and functions defined in those files available to the curren
 defined in the current file.
 
 The initial section of the file processes the input arguments to the file,
-initalizing some variables that used in the following parts of the file.
+initalizing some variables that are used in the following parts of the file.
 
 [source,bash]
 ----
@@ -229,16 +229,16 @@ source $CFG_FILE     <5>
 <1> Check that the number of arguments passed to the script is equal to 2. The first should
 be the name of the experiment, and the second a configuration file that will be sourced
 into the current environment.
-<2> Define an `EMEWS_PROJECT_ROOT`` environment variable that specifies the root directory of the project.
+<2> Define an `EMEWS_PROJECT_ROOT` environment variable that specifies the root directory of the project.
 This corresponds to the root project directory specified in `--output-dir` when running
 emewscreator.
-<3> Source some utiliity functions that are used later in the script. These are: `check_directory_exists` which checks if the `TURBINE_OUTPUT` directory exists and prompts the user to continue; and `log_script` which logs the relevant environment variables and a copy of script to the `TURBINE_OUTPUT` directory.
+<3> Source utility functions that are used later in the script. These are: `check_directory_exists` which checks if the `TURBINE_OUTPUT` directory exists and prompts the user to continue; and `log_script` which logs the relevant environment variables and a copy of script to the `TURBINE_OUTPUT` directory.
 <4> Creates and exports an `EXPID` (an experiment id) environment variable from the experiment id passed into the script and then defines the `TURBINE_OUTPUT` directory using this `EXPID`. The `TURBINE_OUTPUT` directory is used by swift as the
 output location for all the files that it produces.
 <5> Creates a CFG_FILE environment variable from the second argument passed into the script, and sources this file.
 In this way the configuration variables, such as the file to sweep over, are made available to the launch script.
 
-The second part of the file exports some variables that are used by swift
+The second part of the file exports variables that are used by swift
 when submitting the workflow on an HPC resource. Typically such machines use
 a job scheduler that requires the user to provide the number of processes
 to use, the name of the compute queue, the project to charge the compute time
@@ -246,6 +246,8 @@ to, and an estimate of how long the job will take. This section exports
 those values so that they are available to swift when creating the job submission
 script. These are set from values defined in the workflow configuration file
 (i.e., swift/cfgs/sweep_workflow.cfg). See the discussion of that file below.
+
+
 #TODO: make link#
 
 [source, bash]
