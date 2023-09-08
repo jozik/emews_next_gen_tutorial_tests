@@ -796,8 +796,8 @@ the eqsql template also has the following:
 
 * `--pool-id` - a unique identifier for the swift-t worker pool created by the template.
 * `--task-type` - an integer identifying the type of task the worker pool will consume. 
-* `--trials` - the number of trials or replicates to perform for each task evalution. Defaults to 1.
-* `--model-output-file-name` - each task evaulation is passed a file path for writing its output.
+* `--trials` - the number of trials or replicates to perform for each task evaluation. Defaults to 1.
+* `--model-output-file-name` - each task evaluation is passed a file path for writing its output.
 This is the name of that file.
 * `--me-language` - the ME programming language (R, Python, None). The template will create an example ME written
 in this language. If the value is `None`, then no ME example file will be created.
