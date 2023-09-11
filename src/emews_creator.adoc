@@ -593,13 +593,31 @@ emews project root directory.
 NOTE: See your HPC resource's documentation for details on the appropriate values and formats
 for `CFG_WALLTIME`, `CFG_QUEUE`, and `CFG_PROJECT`.
 
+[[eqpy_top]]
 ==== EQPy
 
-The EQPy workflow template creates a workflow that uses EMEWS Queues for Python (EQPy) to 
-run an application using input parameters provided by a
-Python model exploration (ME) algorithm. The workflow will start the Python ME
-which then iteratively provides json format input parameters for model
-execution.
+The EQPy workflow template creates a workflow that uses EMEWS Queues for Python (EQ/Py)
+to execute an application using input parameters provided by a
+Python model exploration (ME) algorithm.  EQ/Py is a Swift-t extension that adds two blocking queues through which a Swift script and a Python code algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/Py,
+
+image::EMEWS_figure_EQPy_black.png[EQPy, 640, 480]
+
+and this is a zoomed in picture showing the Python-based ME and Swift script queue coordination.
+
+image::EMEWS_figure_zoomed_EQPy_black.png[EQPy Zoomed, 640, 480]
+
+The eqpy template installs this extension and adds user customizable code that allows model runs and exploration to be controlled from a python code algorithm using the two queues. By default the coordinated execution of the two follows this pattern:
+
+1. The swift script initializes the EQ/Py extension, including the the python code, and then waits for the python code to produce parameters for a parallelized collection of model runs.
+2. The python code produces an initial set of parameters.
+3. The python code passes these parameters to the swift script.
+4. The python code then waits for the swift code.
+5. Having received the parameters for the model runs, the swift script launches those runs in parallel.
+6. When the model runs are finished, the swift script passes a result derived from the output of those runs back to the python code.
+7. The swift script then waits for the next set of parameters or a flag indicating that no more runs need to be performed.
+8. Having received the results from the swift script, the python code algorithm produces a new set of parameters based on the swift result, and passes those back to the waiting swift script.
+
+Steps 5 - 8 are repeated until some stopping condition (e.g. algorithm convergence or some maximum number of iterations) is reached.
 
 Usage:
 
@@ -679,90 +697,142 @@ These files contain lines or sections marked with *TODO* where that line or sect
 to be edited to customize the file for your model and workflow. 
 
 
+[[eqpy_launch_script]]
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqpy_project/swift/run_eqpy_workflow.sh#L1[`*run_eqpy_workflow.sh*`,window=run_eqpy_workflow.sh,pts="noopener,nofollow"]
+
+More details to come.
+
+[[eqpy_workflow_script]]
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqpy_project/swift/eqpy_workflow.swift#L1[`*eqpy_workflow.swift*`,window=eqpy_workflow.swift,pts="noopener,nofollow"]
+
+More details to come.
+
+[[run_eqpy_model_script]]
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqpy_project/scripts/run_my_model_eqpy_workflow.sh#L1[`*run_my_model_eqpy_workflow.sh*`,window=run_my_model_eqpy_workflow.sh,pts="noopener,nofollow"]
+
+More details to come.
+
+[[eqpy_workflow_cfg]]
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqpy_project/swift/cfgs/eqpy_workflow.cfg#L1[`*eqpy_workflow.cfg*`,window=eqpy_workflow.cfg,pts="noopener,nofollow"]
+
+More details to come.
+
+[[eqr_top]]
+==== EQR
+
+The eqr template works much the same as the eqpy template, but for model exploration algorithms written in R. It generates files and code for model exploration using the EQ/R EMEWS extension. The EQ/R extension adds two blocking queues through which a Swift/T script and a R code algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/R,
+
+image::EMEWS_figure_EQR_black.png[EQR, 640, 480]
+
+and this is a zoomed in picture showing the R-based ME and Swift script queue coordination.
+
+image::EMEWS_figure_zoomed_EQR_black.png[EQR Zoomed, 640, 480]
+
+The eqr template installs this extension and adds user customizable code that allows model runs and exploration to be controlled from a R code algorithm using the two queues. By default the coordinated execution of the two uses the following pattern (identical to that of the eqpy template).
+
+1. The swift script initializes the EQ/R extension, including the the R code, and then waits for the R code to produce parameters for a parallelized collection of model runs.
+2. The R code produces an initial set of parameters.
+3. The R code passes these parameters to the swift script.
+4. The R code then waits for the swift script.
+5. Having received the parameters for the model runs, the swift script launches those runs in parallel.
+6. When the model runs are finished, the swift script passes a result derived from the output of those runs back to the R code.
+7. The swift script then waits for the next set of parameters or a flag indicating that no more runs need to be performed.
+8. Having received the results from the swift script, the R code algorithm produces a new set of parameters based on the swift result, and passes those back to the waiting swift script.
+
+Steps 5 - 8 are repeated until some stopping condition (e.g. algorithm convergence or some maximum number of iterations) is reached.
 
 
+Usage:
 
-// ### EQR ###
+```
+$ emewscreator eqr -h
+Usage: emewscreator eqr [OPTIONS]
 
-// The EQR template creates a workflow that uses EMEWS Queues for R (EQR) to 
-// run an application using input parameters provided by a
-// R model exploration (ME) algorithm. The workflow will start the R ME
-// which then iteratively provides json format input parameters for model
-// execution.
+Options:
+  -c, --config PATH              Path to the template configuration file
+                                 [required if any command line arguments are
+                                 missing]
 
-// *Note*: The EQR extension requires an additional compilation step. Once the template has been run,
-// see `{eqr_dir}/src/README.md` for compilation instructions.
+  -n, --workflow-name TEXT       Name of the workflow
+  --script-file TEXT             Path to the R model exploration algorithm
+  --me-cfg-file PATH             Configuration file for the model exploration
+                                 algorithm
 
-// Usage:
+  --trials INTEGER               Number of trials / replicates to perform for
+                                 each model run
 
-// ```
-// $ emewscreator eqr -h
-// Usage: emewscreator eqr [OPTIONS]
+  --model-output-file-name TEXT  Model output base file name, file name only
+                                 (e.g., "output.csv")
 
-// Options:
-//   -c, --config PATH              Path to the template configuration file
-//                                  [required if any command line arguments are
-//                                  missing]
+  --eqr-dir PATH                 Directory where the eqr extension is located.
+                                 If the extension does not exist at this
+                                 location it will be installed there. Defaults
+                                 to {output_dir}/ext/EQ-R
 
-//   -n, --workflow-name TEXT       Name of the workflow
-//   --script-file TEXT             Path to the R model exploration algorithm
-//   --me-cfg-file PATH             Configuration file for the model exploration
-//                                  algorithm
+  -h, --help                     Show this message and exit.
 
-//   --trials INTEGER               Number of trials / replicates to perform for
-//                                  each model run
+```
 
-//   --model-output-file-name TEXT  Model output base file name, file name only
-//                                  (e.g., "output.csv")
+In addition to the common configuration parameters described in <<wflow_templates>>
+the `eqr` template also has the following:
 
-//   --eqr-dir PATH                 Directory where the eqr extension is located.
-//                                  If the extension does not exist at this
-//                                  location it will be installed there. Defaults
-//                                  to {output_dir}/ext/EQ-R
+* `--script-file` - the path to the R script implementing the ME algorithm
+* `--me-cfg-file` - the path to a configuration file for the R ME algorithm. This
+path will be passed to the R ME when it is initialized. This path is relative
+to the directory specified by `--output-dir`.
+* `--trials` - the number of trials or replicates to perform for each model run
+* `--model_output_file_name` - each model run is passed a file path for writing its output.
+This is the name of that file.
 
-//   -h, --help                     Show this message and exit.
+In addition to the default set of files described in the <<emews_proj_struc>> 
+section, the eqr workflow template will also
+install the source for the EQ/R EMEWS Swift-t extension. By default, the extension will be installed 
+in `ext/EQ-R`. An alternative location can be specified with the `--eqr-dir` configuration argument.
 
-// ```
+* `--eqr-dir` - specifies the location of the eqr extension (defaults to `ext/EQ-R`)
 
-// In addition to the common configuration parameters described [above](#workflow_templates),
-// the `eqr` template also has the following:
+You can set this to use an existing EQ-R extension, or if the specified location
+doesn't exist, the extension will be installed there. 
 
-// * `--script-file` - the path to the R script implementing the ME algorithm
-// * `--me-cfg-file` - the path to a configuration file for the R ME algorithm. This
-// path will be passed to the R ME when it is initialized. This path is relative
-// to the directory specified by `--output-dir`.
-// * `--trials` - the number of trials or replicates to perform for each model run
-// * `--model_output_file_name` - each model run is passed a file path for writing its output.
-// This is the name of that file.
+IMPORTANT: The extension needs to be compiled before it can be used. See `{eqr_dir}/src/README.md` for compilation instructions.
 
-// In addition to the default set of files described in the
-// [EMEWS Project Structure](#emews-project-structure) section, the eqr workflow template will also
-// install the source for the EQ/R EMEWS Swift-t extension. By default, the extension will be installed 
-// in `ext/EQ-R`. An alternative location can be specified with the `--eqr-dir` configuration argument.
+A sample EQR configuration file can be found https://github.com/emews/emews-project-creator/blob/master/example_cfgs/eqr.yaml[here].
 
-// * `--eqr-dir` - specifies the location of the eqr extension (defaults to `ext/EQ-R`)
 
-// You can set this to use an existing EQ-R extension, or if the specified location
-// doesn't exist, the extension will be installed there. 
+Generating an EQR workflow creates the following files. The exact file names are dependent on 
+the workflow_name and model_name configuration parameters. Here the workflow name is `eqr workflow`
+and the model name is `my model`.
 
-// The extension needs to be compiled before it can be used. See `{eqr_dir}/src/README.md` for compilation instructions.
+* `swift/run_eqr_workflow.sh` - a bash script used to launch the workflow
+* `swift/eqr_workflow.swift` - a swift script that will initialize a R ME algorithm, and wait for that
+algorithm to pass it parameters to execute in model runs.
+* `scripts/run_my_model_eqr_workflow.sh` - a bash script for executing the model. The swift script calls this script
+to run the model, passing it the parameters produced by the Python ME algorithm.
+* `swift/cfgs/eqr_workflow.cfg` - the configuration file for the workflow
 
-// A sample EQR configuration file can be found [here](https://github.com/emews/emews-project-creator/blob/master/example_cfgs/eqr.yaml).
+These files contain lines or sections marked with *TODO* where that line or section needs
+to be edited to customize the file for your model and workflow. 
 
-// For a more thorough explanation of R-based ME workflows, see the [EMEWS Tutorial](https://www.mcs.anl.gov/~emews/tutorial/).
+[[eqr_launch_script]]
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqr_project/swift/run_eqr_workflow.sh#L1[`*run_eqr_workflow.sh*`,window=run_eqr_workflow.sh,pts="noopener,nofollow"]
 
-// ### HPC Parameters ###
+More details to come.
 
-// The workflow templates' configuration file (specified with the `--config` argument)
-// can also contain **optional** entries for running the workflow on an HPC system
-// where a job is submitted via an HPC scheduler (e.g., the slurm scheduler).
-// See your HPC resource's documentation for details on how to set these. 
+[[eqr_workflow_script]]
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqr_project/swift/eqr_workflow.swift#L1[`*eqr_workflow.swift*`,window=eqr_workflow.swift,pts="noopener,nofollow"]
 
-// * `walltime` - the estimated duration of the workflow job. The value must be surrounded by single quotes.
-// * `queue` - the queue to run the workflow job on
-// * `project` - the project to run the workflow job with
-// * `nodes` - the number of nodes to allocate to the workflow job
-// * `ppn` - the number of processes per node to allocate to the workflow job
+More details to come.
+
+[[run_eqr_model_script]]
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqr_project/scripts/run_my_model_eqr_workflow.sh#L1[`*run_my_model_eqr_workflow.sh*`,window=run_my_model_eqr_workflow.sh,pts="noopener,nofollow"]
+
+More details to come.
+
+[[eqr_workflow_cfg]]
+https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqr_project/swift/cfgs/eqr_workflow.cfg#L1[`*eqr_workflow.cfg*`,window=eqr_workflow.cfg,pts="noopener,nofollow"]
+
+More details to come.
+
 
 [[eqsql_top]]
 ==== EQSQL
