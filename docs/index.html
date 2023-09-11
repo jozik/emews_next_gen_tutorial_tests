@@ -528,7 +528,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <ul class="sectlevel2">
 <li><a href="#_installation">1.1. Installation</a></li>
 <li><a href="#_using_emews_creator">1.2. Using EMEWS Creator</a></li>
-<li><a href="#_emews_project_structure">1.3. EMEWS Project Structure</a>
+<li><a href="#emews_proj_struc">1.3. EMEWS Project Structure</a>
 <ul class="sectlevel3">
 <li><a href="#_directories">1.3.1. Directories</a></li>
 <li><a href="#_files">1.3.2. Files</a></li>
@@ -537,7 +537,9 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#wflow_templates">1.4. Workflow Templates</a>
 <ul class="sectlevel3">
 <li><a href="#_sweep">1.4.1. Sweep</a></li>
-<li><a href="#eqsql_top">1.4.2. EQSQL</a></li>
+<li><a href="#eqpy_top">1.4.2. EQPy</a></li>
+<li><a href="#eqr_top">1.4.3. EQR</a></li>
+<li><a href="#eqsql_top">1.4.4. EQSQL</a></li>
 </ul>
 </li>
 <li><a href="#_init_db">1.5. INIT DB</a></li>
@@ -588,7 +590,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <div class="paragraph">
 <p>EMEWS Creator is a Python application for creating workflow projects for EMEWS from
 the command line. The project consists of the canonical EMEWS directory layout and
-various files that can be customized by the user for their particular model.</p>
+various files that can be customized by the user for their particular use case.</p>
 </div>
 <div class="sect2">
 <h3 id="_installation">1.1. Installation</h3>
@@ -631,12 +633,12 @@ Commands:
 </div>
 <div class="paragraph">
 <p>Each of the commands creates a particular type of workflow: a sweep, an eqpy-based workflow,
-or an eqr-based workflow. Each of the commands has its own arguments specific to that
+an eqr-based workflow, on an eqsql-based workflow. Each of the commands has its own arguments specific to that
 workflow type. These are specified on the command line after the COMMAND argument, and will
 be covered in the <a href="#wflow_templates">Workflow Templates</a> section below.</p>
 </div>
 <div class="paragraph">
-<p>The options supplied to <code>emewscreator</code> are common to all the workflow types.</p>
+<p>The following options supplied to <code>emewscreator</code> are common to all the workflow types:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -646,7 +648,7 @@ by EMEWS Creator.</p>
 </li>
 <li>
 <p><code>--model-name</code> - the name  of the model that will be run during the workflow.
-This will be used in the model execution bash script. Spaces will be replaced by underscores.</p>
+This will be used in the model execution bash script. Note that spaces will be replaced by underscores.</p>
 </li>
 <li>
 <p><code>--overwrite</code> - if present, EMEWS Creator will overwrite any existing files in the
@@ -661,7 +663,7 @@ in the <code>example_cfgs</code> directory in the EMEWS Creator github repositor
 </div>
 </div>
 <div class="sect2">
-<h3 id="_emews_project_structure">1.3. EMEWS Project Structure</h3>
+<h3 id="emews_proj_struc">1.3. EMEWS Project Structure</h3>
 <div class="paragraph">
 <p>Each of the workflow types will create the default EMEWS project structure
 in the directory specified by the <code>-o, --output-dir</code> argument.
@@ -708,13 +710,13 @@ produced by all the workflow types is:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>data</code> - date required by the model and algorithm (inputs, etc.).</p>
+<p><code>data</code> - data required by the model and algorithm (e.g., input data).</p>
 </li>
 <li>
 <p><code>etc</code> - additional code used by EMEWS</p>
 </li>
 <li>
-<p><code>ext</code> - Swift/T extensions, including the default EMEWS utility code extension as well as
+<p><code>ext</code> - Swift/T (hereafter swift) extensions, including the default EMEWS utility code extension as well as
 the EQ/R and EQ/Py extensions when creating eqr or eqpy workflows</p>
 </li>
 <li>
@@ -733,7 +735,7 @@ the EQ/R and EQ/Py extensions when creating eqr or eqpy workflows</p>
 <p><code>scripts</code> - any necessary scripts (e.g., scripts to launch a model), excluding scripts used to run the workflow</p>
 </li>
 <li>
-<p><code>swift</code> - Swift/T code and scripts used to submit and run the workflow</p>
+<p><code>swift</code> - swift code and scripts used run the workflow</p>
 </li>
 </ul>
 </div>
@@ -744,7 +746,7 @@ the EQ/R and EQ/Py extensions when creating eqr or eqpy workflows</p>
 <p>Each of the workflow types will generate the following files. The file names
 are derived from parameters specified in the workflow template configuration
 arguments. The names of those parameters are included in curly brackets
-in the file names below. (In the above directory listing, the workflow_name
+in the file names below. (Note that in the above directory listing, the workflow_name
 was <code>sweep_workflow</code>.)</p>
 </div>
 <div class="ulist">
@@ -771,7 +773,7 @@ was <code>sweep_workflow</code>.)</p>
 relevant sections are marked with <code>TODO</code>.</p>
 </div>
 <div class="paragraph">
-<p>Once any edits have been completed, the workflows can be run with:</p>
+<p>Once the required edits are completed, the workflows can be run with:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -802,8 +804,8 @@ the required arguments are specified on the command line</p>
 <p>The workflow template configuration file can be used to specify any of a
 workflow template&#8217;s configuration parameters when those parameters are
 not specified on the command line. This file is in yaml format.
-Sample configuration files can be found
-<a href="https://github.com/emews/emews-project-creator/tree/master/example_cfgs">here</a>.
+As mentioned above, sample configuration files can be found
+<a href="https://github.com/emews/emews-project-creator/tree/master/example_cfgs">here</a>
 in the <code>example_cfgs</code> directory in the EMEWS Creator github repository. Arguments
 supplied on the command line will override those supplied in a configuration file.
 If any required arguments are missing from the command line, then the
@@ -865,7 +867,7 @@ among other parameters.</p>
 <p>These files contain lines or sections marked with <strong>TODO</strong> where that line or section needs
 to be edited to customize the file for your model and workflow. See <a href="#uc1">Use Case 1 Tutorial - Simple Workflows with ABM</a> for a fully fleshed out
 sweep workflow created using emews creator. We will look more closely at relevant parts of these files
-below.</p>
+next.</p>
 </div>
 <div class="paragraph">
 <p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/run_sweep_workflow.sh#L1" target="UC1"><code><strong>run_sweep_workflow.sh</strong></code></a></p>
@@ -886,7 +888,7 @@ defined in the current file.
 </div>
 <div class="paragraph">
 <p>The initial section of the file processes the input arguments to the file,
-initalizing some variables that used in the following parts of the file.</p>
+initalizing some variables that are used in the following parts of the file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -924,13 +926,13 @@ into the current environment.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Define an <code>EMEWS_PROJECT_ROOT`</code> environment variable that specifies the root directory of the project.
+<td>Define an <code>EMEWS_PROJECT_ROOT</code> environment variable that specifies the root directory of the project.
 This corresponds to the root project directory specified in <code>--output-dir</code> when running
 emewscreator.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Source some utiliity functions that are used later in the script. These are: <code>check_directory_exists</code> which checks if the <code>TURBINE_OUTPUT</code> directory exists and prompts the user to continue; and <code>log_script</code> which logs the relevant environment variables and a copy of script to the <code>TURBINE_OUTPUT</code> directory.</td>
+<td>Source utility functions that are used later in the script. These are: <code>check_directory_exists</code> which checks if the <code>TURBINE_OUTPUT</code> directory exists and prompts the user to continue; and <code>log_script</code> which logs the relevant environment variables and a copy of script to the <code>TURBINE_OUTPUT</code> directory.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -945,15 +947,17 @@ In this way the configuration variables, such as the file to sweep over, are mad
 </table>
 </div>
 <div class="paragraph">
-<p>The second part of the file exports some variables that are used by swift
+<p>The second part of the file exports variables that are used by swift
 when submitting the workflow on an HPC resource. Typically such machines use
 a job scheduler that requires the user to provide the number of processes
 to use, the name of the compute queue, the project to charge the compute time
 to, and an estimate of how long the job will take. This section exports
 those values so that they are available to swift when creating the job submission
 script. These are set from values defined in the workflow configuration file
-(i.e., swift/cfgs/sweep_workflow.cfg). See the discussion of that file below.
-<mark>TODO: make link</mark></p>
+(i.e., swift/cfgs/sweep_workflow.cfg). See the discussion of that file below.</p>
+</div>
+<div class="paragraph">
+<p><mark>TODO: make link</mark></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1463,7 +1467,397 @@ for <code>CFG_WALLTIME</code>, <code>CFG_QUEUE</code>, and <code>CFG_PROJECT</co
 </div>
 </div>
 <div class="sect3">
-<h4 id="eqsql_top">1.4.2. EQSQL</h4>
+<h4 id="eqpy_top">1.4.2. EQPy</h4>
+<div class="paragraph">
+<p>The EQPy workflow template creates a workflow that uses EMEWS Queues for Python (EQ/Py)
+to execute an application using input parameters provided by a
+Python model exploration (ME) algorithm.  EQ/Py is a Swift-t extension that adds two blocking queues through which a Swift script and a Python code algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/Py,</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EMEWS_figure_EQPy_black.png" alt="EQPy" width="640" height="480">
+</div>
+</div>
+<div class="paragraph">
+<p>and this is a zoomed in picture showing the Python-based ME and Swift script queue coordination.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EMEWS_figure_zoomed_EQPy_black.png" alt="EQPy Zoomed" width="640" height="480">
+</div>
+</div>
+<div class="paragraph">
+<p>The eqpy template installs this extension and adds user customizable code that allows model runs and exploration to be controlled from a python code algorithm using the two queues. By default the coordinated execution of the two follows this pattern:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The swift script initializes the EQ/Py extension, including the the python code, and then waits for the python code to produce parameters for a parallelized collection of model runs.</p>
+</li>
+<li>
+<p>The python code produces an initial set of parameters.</p>
+</li>
+<li>
+<p>The python code passes these parameters to the swift script.</p>
+</li>
+<li>
+<p>The python code then waits for the swift code.</p>
+</li>
+<li>
+<p>Having received the parameters for the model runs, the swift script launches those runs in parallel.</p>
+</li>
+<li>
+<p>When the model runs are finished, the swift script passes a result derived from the output of those runs back to the python code.</p>
+</li>
+<li>
+<p>The swift script then waits for the next set of parameters or a flag indicating that no more runs need to be performed.</p>
+</li>
+<li>
+<p>Having received the results from the swift script, the python code algorithm produces a new set of parameters based on the swift result, and passes those back to the waiting swift script.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Steps 5 - 8 are repeated until some stopping condition (e.g. algorithm convergence or some maximum number of iterations) is reached.</p>
+</div>
+<div class="paragraph">
+<p>Usage:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>$ emewscreator eqpy -h
+
+Usage: emewscreator eqpy [OPTIONS]
+
+Options:
+  -c, --config PATH              Path to the template configuration file
+                                 [required if any command line arguments are
+                                 missing]
+
+  -n, --workflow-name TEXT       Name of the workflow
+  --module-name TEXT             Python model exploration algorithm module
+                                 name
+
+  --me-cfg-file PATH             Configuration file for the model exploration
+                                 algorithm
+
+  --trials INTEGER               Number of trials / replicates to perform for
+                                 each model run. Defaults to 1
+
+  --model-output-file-name TEXT  Model output base file name, file name only
+                                 (e.g., &quot;output.csv&quot;)
+
+  --eqpy-dir PATH                Directory where the eqpy extension is
+                                 located. If the extension does not exist at
+                                 this location it will be installed there.
+                                 Defaults to {output_dir}/ext/EQ-Py
+
+  -h, --help                     Show this message and exit.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition to the common configuration arguments described in <a href="#wflow_templates">Workflow Templates</a>
+the eqpy template also has the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>--module-name</code> - the Python module implementing the ME algorithm</p>
+</li>
+<li>
+<p><code>--me-cfg-file</code> - the path to a configuration file for the Python ME algorithm. This
+path will be passed to the Python ME when it is initialized. This is relative to the
+directory specified in <code>--output-dir</code>.</p>
+</li>
+<li>
+<p><code>--trials</code> - the number of trials or replicates to perform for each model run. Defaults to 1.</p>
+</li>
+<li>
+<p><code>model-output-file-name</code> - each model run is passed a file path for writing its output.
+This is the name of that file.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In addition to the default set of files described in the <a href="#emews_proj_struc">EMEWS Project Structure</a> section, the
+eqpy workflow template will also install the EQPy EMEWS Swift-t extension. By default, the extension will be installed in in <code>ext/EQ-Py</code>. An alternative location can be specified with the <code>--eqpy-dir</code>
+configuration parameter.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>--eqpy-dir</code> - specifies the location of the eqpy extension (defaults to <code>ext/EQ-Py</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can set this to use an existing EQ-Py extension, or if the specified location
+doesn&#8217;t exist, the extension will be installed there.</p>
+</div>
+<div class="paragraph">
+<p>The extension consists of the following files.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>eqpy.py</code></p>
+</li>
+<li>
+<p><code>EQPy.swift</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These should not be edited by the user.</p>
+</div>
+<div class="paragraph">
+<p>A sample <code>eqpy</code> configuration file can be found <a href="https://github.com/emews/emews-project-creator/blob/master/example_cfgs/eqpy.yaml">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>Generating an EQPy workflow creates the following files. The exact file names are dependent on
+the workflow_name and model_name configuration parameters. Here the workflow name is <code>eqpy workflow</code>
+and the model name is <code>my model</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>swift/run_eqpy_workflow.sh</code> - a bash script used to launch the workflow</p>
+</li>
+<li>
+<p><code>swift/eqpy_workflow.swift</code> - a swift script that will initialize a Python ME algorithm, and wait for that
+algorithm to pass it parameters to execute in model runs.</p>
+</li>
+<li>
+<p><code>scripts/run_my_model_eqpy_workflow.sh</code> - a bash script for executing the model. The swift script calls this script
+to run the model, passing it the parameters produced by the Python ME algorithm.</p>
+</li>
+<li>
+<p><code>swift/cfgs/eqpy_workflow.cfg</code> - the configuration file for the workflow</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These files contain lines or sections marked with <strong>TODO</strong> where that line or section needs
+to be edited to customize the file for your model and workflow.</p>
+</div>
+<div id="eqpy_launch_script" class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqpy_project/swift/run_eqpy_workflow.sh#L1" target="run_eqpy_workflow.sh"><code><strong>run_eqpy_workflow.sh</strong></code></a></p>
+</div>
+<div class="paragraph">
+<p>More details to come.</p>
+</div>
+<div id="eqpy_workflow_script" class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqpy_project/swift/eqpy_workflow.swift#L1" target="eqpy_workflow.swift"><code><strong>eqpy_workflow.swift</strong></code></a></p>
+</div>
+<div class="paragraph">
+<p>More details to come.</p>
+</div>
+<div id="run_eqpy_model_script" class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqpy_project/scripts/run_my_model_eqpy_workflow.sh#L1" target="run_my_model_eqpy_workflow.sh"><code><strong>run_my_model_eqpy_workflow.sh</strong></code></a></p>
+</div>
+<div class="paragraph">
+<p>More details to come.</p>
+</div>
+<div id="eqpy_workflow_cfg" class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqpy_project/swift/cfgs/eqpy_workflow.cfg#L1" target="eqpy_workflow.cfg"><code><strong>eqpy_workflow.cfg</strong></code></a></p>
+</div>
+<div class="paragraph">
+<p>More details to come.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="eqr_top">1.4.3. EQR</h4>
+<div class="paragraph">
+<p>The eqr template works much the same as the eqpy template, but for model exploration algorithms written in R. It generates files and code for model exploration using the EQ/R EMEWS extension. The EQ/R extension adds two blocking queues through which a Swift/T script and a R code algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/R,</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EMEWS_figure_EQR_black.png" alt="EQR" width="640" height="480">
+</div>
+</div>
+<div class="paragraph">
+<p>and this is a zoomed in picture showing the R-based ME and Swift script queue coordination.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EMEWS_figure_zoomed_EQR_black.png" alt="EQR Zoomed" width="640" height="480">
+</div>
+</div>
+<div class="paragraph">
+<p>The eqr template installs this extension and adds user customizable code that allows model runs and exploration to be controlled from a R code algorithm using the two queues. By default the coordinated execution of the two uses the following pattern (identical to that of the eqpy template).</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The swift script initializes the EQ/R extension, including the the R code, and then waits for the R code to produce parameters for a parallelized collection of model runs.</p>
+</li>
+<li>
+<p>The R code produces an initial set of parameters.</p>
+</li>
+<li>
+<p>The R code passes these parameters to the swift script.</p>
+</li>
+<li>
+<p>The R code then waits for the swift script.</p>
+</li>
+<li>
+<p>Having received the parameters for the model runs, the swift script launches those runs in parallel.</p>
+</li>
+<li>
+<p>When the model runs are finished, the swift script passes a result derived from the output of those runs back to the R code.</p>
+</li>
+<li>
+<p>The swift script then waits for the next set of parameters or a flag indicating that no more runs need to be performed.</p>
+</li>
+<li>
+<p>Having received the results from the swift script, the R code algorithm produces a new set of parameters based on the swift result, and passes those back to the waiting swift script.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Steps 5 - 8 are repeated until some stopping condition (e.g. algorithm convergence or some maximum number of iterations) is reached.</p>
+</div>
+<div class="paragraph">
+<p>Usage:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>$ emewscreator eqr -h
+Usage: emewscreator eqr [OPTIONS]
+
+Options:
+  -c, --config PATH              Path to the template configuration file
+                                 [required if any command line arguments are
+                                 missing]
+
+  -n, --workflow-name TEXT       Name of the workflow
+  --script-file TEXT             Path to the R model exploration algorithm
+  --me-cfg-file PATH             Configuration file for the model exploration
+                                 algorithm
+
+  --trials INTEGER               Number of trials / replicates to perform for
+                                 each model run
+
+  --model-output-file-name TEXT  Model output base file name, file name only
+                                 (e.g., &quot;output.csv&quot;)
+
+  --eqr-dir PATH                 Directory where the eqr extension is located.
+                                 If the extension does not exist at this
+                                 location it will be installed there. Defaults
+                                 to {output_dir}/ext/EQ-R
+
+  -h, --help                     Show this message and exit.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition to the common configuration parameters described in <a href="#wflow_templates">Workflow Templates</a>
+the <code>eqr</code> template also has the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>--script-file</code> - the path to the R script implementing the ME algorithm</p>
+</li>
+<li>
+<p><code>--me-cfg-file</code> - the path to a configuration file for the R ME algorithm. This
+path will be passed to the R ME when it is initialized. This path is relative
+to the directory specified by <code>--output-dir</code>.</p>
+</li>
+<li>
+<p><code>--trials</code> - the number of trials or replicates to perform for each model run</p>
+</li>
+<li>
+<p><code>--model_output_file_name</code> - each model run is passed a file path for writing its output.
+This is the name of that file.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In addition to the default set of files described in the <a href="#emews_proj_struc">EMEWS Project Structure</a>
+section, the eqr workflow template will also
+install the source for the EQ/R EMEWS Swift-t extension. By default, the extension will be installed
+in <code>ext/EQ-R</code>. An alternative location can be specified with the <code>--eqr-dir</code> configuration argument.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>--eqr-dir</code> - specifies the location of the eqr extension (defaults to <code>ext/EQ-R</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can set this to use an existing EQ-R extension, or if the specified location
+doesn&#8217;t exist, the extension will be installed there.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The extension needs to be compiled before it can be used. See <code>{eqr_dir}/src/README.md</code> for compilation instructions.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A sample EQR configuration file can be found <a href="https://github.com/emews/emews-project-creator/blob/master/example_cfgs/eqr.yaml">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>Generating an EQR workflow creates the following files. The exact file names are dependent on
+the workflow_name and model_name configuration parameters. Here the workflow name is <code>eqr workflow</code>
+and the model name is <code>my model</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>swift/run_eqr_workflow.sh</code> - a bash script used to launch the workflow</p>
+</li>
+<li>
+<p><code>swift/eqr_workflow.swift</code> - a swift script that will initialize a R ME algorithm, and wait for that
+algorithm to pass it parameters to execute in model runs.</p>
+</li>
+<li>
+<p><code>scripts/run_my_model_eqr_workflow.sh</code> - a bash script for executing the model. The swift script calls this script
+to run the model, passing it the parameters produced by the Python ME algorithm.</p>
+</li>
+<li>
+<p><code>swift/cfgs/eqr_workflow.cfg</code> - the configuration file for the workflow</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These files contain lines or sections marked with <strong>TODO</strong> where that line or section needs
+to be edited to customize the file for your model and workflow.</p>
+</div>
+<div id="eqr_launch_script" class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqr_project/swift/run_eqr_workflow.sh#L1" target="run_eqr_workflow.sh"><code><strong>run_eqr_workflow.sh</strong></code></a></p>
+</div>
+<div class="paragraph">
+<p>More details to come.</p>
+</div>
+<div id="eqr_workflow_script" class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqr_project/swift/eqr_workflow.swift#L1" target="eqr_workflow.swift"><code><strong>eqr_workflow.swift</strong></code></a></p>
+</div>
+<div class="paragraph">
+<p>More details to come.</p>
+</div>
+<div id="run_eqr_model_script" class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqr_project/scripts/run_my_model_eqr_workflow.sh#L1" target="run_my_model_eqr_workflow.sh"><code><strong>run_my_model_eqr_workflow.sh</strong></code></a></p>
+</div>
+<div class="paragraph">
+<p>More details to come.</p>
+</div>
+<div id="eqr_workflow_cfg" class="paragraph">
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/8b24e701c0eda35044cd5723a0d46e4aa5cfa26b/code/eqr_project/swift/cfgs/eqr_workflow.cfg#L1" target="eqr_workflow.cfg"><code><strong>eqr_workflow.cfg</strong></code></a></p>
+</div>
+<div class="paragraph">
+<p>More details to come.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="eqsql_top">1.4.4. EQSQL</h4>
 <div class="paragraph">
 <p><mark>TODO</mark>: text that distinguishes between local run (db on same machine, swift-t non-scheduled
 submission), and swift-t scheduled worker pool submission, and how that applies to the code
@@ -1522,10 +1916,10 @@ the eqsql template also has the following:</p>
 <p><code>--task-type</code> - an integer identifying the type of task the worker pool will consume.</p>
 </li>
 <li>
-<p><code>--trials</code> - the number of trials or replicates to perform for each task evalution. Defaults to 1.</p>
+<p><code>--trials</code> - the number of trials or replicates to perform for each task evaluation. Defaults to 1.</p>
 </li>
 <li>
-<p><code>--model-output-file-name</code> - each task evaulation is passed a file path for writing its output.
+<p><code>--model-output-file-name</code> - each task evaluation is passed a file path for writing its output.
 This is the name of that file.</p>
 </li>
 <li>
