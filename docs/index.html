@@ -618,17 +618,8 @@ various files that can be customized by the user for their particular use case.<
 </div>
 <div class="sect2">
 <h3 id="_installation">2.1. Installation</h3>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This part might be removed since it&#8217;ll be installed as part of the stack.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p><mark>NOTE: This part might be removed since it&#8217;ll be installed as part of the stack.</mark></p>
 </div>
 <div class="paragraph">
 <p>EMEWS Creator can be downloaded and installed from PyPI using pip.</p>
@@ -746,7 +737,7 @@ produced by all the workflow types is:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>data</code> - data required by the model and algorithm (e.g., input data).</p>
+<p><code>data</code> - data required by the model and model exploration algorithm (e.g., input data).</p>
 </li>
 <li>
 <p><code>etc</code> - additional code used by EMEWS</p>
@@ -902,8 +893,11 @@ among other parameters.</p>
 <div class="paragraph">
 <p>These files contain lines or sections marked with <strong>TODO</strong> where that line or section needs
 to be edited to customize the file for your model and workflow. See <a href="#uc1">Use Case 1 Tutorial - Simple Workflows with ABM</a> for a fully fleshed out
-sweep workflow created using emews creator. We will look more closely at relevant parts of these files
+sweep workflow created using EMEWS Creator. We will look more closely at relevant parts of these files
 next.</p>
+</div>
+<div class="paragraph">
+<p><mark>NOTE: do we need to update all the commit-specific permalinks like the one below?</mark></p>
 </div>
 <div class="paragraph">
 <p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/run_sweep_workflow.sh#L1" target="UC1"><code><strong>run_sweep_workflow.sh</strong></code></a></p>
@@ -915,7 +909,7 @@ next.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The launch scripts produced by the emews creator <em>source</em> other files. Doing this in a bash script
+The launch scripts produced by the EMEWS Creator <em>source</em> other files. Doing this in a bash script
 makes any variables and functions defined in those files available to the current file, as if they had been
 defined in the current file.
 </td>
@@ -1178,7 +1172,7 @@ script to work correctly. The <code>-e</code> argument does this, adding the spe
 </div>
 <div class="paragraph">
 <p>This file is the swift script that performs the actual sweep. The script consists of an opening section that
-defines some variables, and 3 functions, one (<code>run_model</code>) that calls the model itself, one (<code>make_dir</code>) utility
+defines some variables, and 3 functions, one <code>run_model</code> that calls the model itself, one <code>make_dir</code> utility
 function, and a <code>main</code> function that performs the sweep.</p>
 </div>
 <div class="listingblock">
@@ -1211,8 +1205,8 @@ as part of the <code>CMD_LINE_ARGS</code> in the <a href="https://github.com/joz
 </table>
 </div>
 <div class="paragraph">
-<p>The <code>run_model</code> function function executes a single model run via a bash script. It calls bash, passing it the name of the bash
-script to run, the parameter line (from the upf file) to use, the EMEWS_PROJECT_ROOT directory, and the path of an instance directory. The expectation is that each model run will execute in its own directory and instance is the path of that directory. Standard out and standard error are redirected to an out and err file respectively.</p>
+<p>The <code>run_model</code> function executes a single model run via a bash script. It calls bash, passing it the name of the bash
+script to run, the parameter line (from the upf file) to use, the EMEWS_PROJECT_ROOT directory, and the path of an instance directory. The expectation is that each model run will execute in its own directory and <code>instance</code> is the path of that directory. Standard out and standard error are redirected to an <code>out</code> and <code>err</code> file, respectively.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1228,13 +1222,13 @@ script to run, the parameter line (from the upf file) to use, the EMEWS_PROJECT_
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>Call <code>bash</code> to run the model script specified in the previous section, redirecting
-<code>stdout</code> and <code>stderr</code> to <code>file out</code> and <code>file in</code> respectively.</td>
+<code>stdout</code> and <code>stderr</code> to <code>file out</code> and <code>file err</code>, respectively.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>When we run the model, we want each to run in its own <em>instance</em> directory, and we
-need a function to create that directory. <code>make_dir</code> is a Swift app function
+<p>When we run the model, we want each to run in its own <code>instance</code> directory, and we
+need a function to create that directory. <code>make_dir</code> is a swift app function
 that calls the operating system&#8217;s <code>mkdir</code> command to create the directory.</p>
 </div>
 <div class="listingblock">
@@ -1307,7 +1301,7 @@ them <code>out.txt</code> and <code>err.txt</code>.</td>
 </div>
 <div class="paragraph">
 <p><code>run_my_model_sweep_workflow.sh</code> is called by <code>sweep_workflow.swift</code> to execute
-the model as if the model has been run from the command line. The script is passed
+the model as if the model has been run from the command line. The script is passed a
 single line of parameters from the upf file, the
 emews root directory location, and the instance directory created in <code>sweep_workflow.swift</code>.
 You will need to update the <code>MODEL_CMD</code> variable to specify the model executable.</p>
@@ -1319,12 +1313,12 @@ the model if its run duration exceeds that value.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># Check for an optional timeout threshold in seconds. If the duration of the</span>
-<span class="tok-c1"># model run as executed below, takes longer that this threshhold</span>
+<span class="tok-c1"># model run as executed below, takes longer that this threshold</span>
 <span class="tok-c1"># then the run will be aborted. Note that the &quot;timeout&quot; command</span>
 <span class="tok-c1"># must be supported by executing OS.</span>
 
 <span class="tok-c1"># The timeout argument is optional. By default the &quot;run_model&quot; swift</span>
-<span class="tok-c1"># app fuction sends 3 arguments, and no timeout value is set. If there</span>
+<span class="tok-c1"># app function sends 3 arguments, and no timeout value is set. If there</span>
 <span class="tok-c1"># is a 4th (the TIMEOUT_ARG_INDEX) argument, we use that as the timeout value.</span>
 
 <span class="tok-c1"># !!! IF YOU CHANGE THE NUMBER OF ARGUMENTS PASSED TO THIS SCRIPT, YOU MUST</span>
@@ -1411,7 +1405,7 @@ the model with the optional timeout.</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Define the model executable. For a stand alone compiled executable, this will be
+<td>Define the model executable. For a stand alone compiled executable, this will be the
 path to that executable. For example, something like <code>$HOME/sfw/epi_model-1.0/bin/epimodel</code>.
 For a model written in an interpreted language such as R or Python, this will be the R/RScript or Python
 executable.</td>
@@ -1470,11 +1464,11 @@ a configuration file.</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Set the number of HPC nodes to run the workflow with.</td>
+<td>Set the number of HPC nodes with which to run the workflow.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Set the number of process per node (PPN) to use.</td>
+<td>Set the number of processes per node (PPN) to use.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
@@ -2010,7 +2004,7 @@ Typically, this should not be edited by the user.</p>
 <div class="paragraph">
 <p>These files (excluding those in <code>ext/EQ-SQL</code>) contain lines or sections marked with <strong>TODO</strong> where that line or section needs
 to be edited to customize the file for your model and workflow. See <a href="#uc4">Use Case 4 Tutorial - An EQSQL Workflow</a> for a fully fleshed out
-eqsql workflow created using emews creator. We will look more closely at relevant parts of these files
+eqsql workflow created using EMEWS Creator. We will look more closely at relevant parts of these files
 below.</p>
 </div>
 <div id="eqsql_launch_script" class="paragraph">
@@ -2023,7 +2017,7 @@ below.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The launch scripts produced by the emews creator <em>source</em> other files. Doing this in a bash script
+The launch scripts produced by the EMEWS Creator <em>source</em> other files. Doing this in a bash script
 makes any variables and functions defined in those files available to the current file, as if they had been
 defined in the current file.
 </td>

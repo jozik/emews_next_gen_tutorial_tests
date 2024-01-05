@@ -7,7 +7,7 @@ various files that can be customized by the user for their particular use case.
 
 === Installation
 
-NOTE: This part might be removed since it'll be installed as part of the stack.
+#NOTE: This part might be removed since it'll be installed as part of the stack.#
 
 EMEWS Creator can be downloaded and installed from PyPI using pip.
 
@@ -101,7 +101,7 @@ my_emews_project/
 
 The directories are intended to contain the following:
 
- * `data` - data required by the model and algorithm (e.g., input data).
+ * `data` - data required by the model and model exploration algorithm (e.g., input data).
  * `etc` - additional code used by EMEWS
  * `ext` - Swift/T (hereafter swift) extensions, including the default EMEWS utility code extension as well as
  the EQ/R and EQ/Py extensions when creating eqr or eqpy workflows
@@ -192,12 +192,14 @@ among other parameters.
 
 These files contain lines or sections marked with *TODO* where that line or section needs
 to be edited to customize the file for your model and workflow. See <<uc1>> for a fully fleshed out
-sweep workflow created using emews creator. We will look more closely at relevant parts of these files
+sweep workflow created using EMEWS Creator. We will look more closely at relevant parts of these files
 next.
+
+#NOTE: do we need to update all the commit-specific permalinks like the one below?#
 
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/run_sweep_workflow.sh#L1[`*run_sweep_workflow.sh*`,window=UC1,pts="noopener,nofollow"]
 
-NOTE: The launch scripts produced by the emews creator _source_ other files. Doing this in a bash script
+NOTE: The launch scripts produced by the EMEWS Creator _source_ other files. Doing this in a bash script
 makes any variables and functions defined in those files available to the current file, as if they had been
 defined in the current file.
 
@@ -377,7 +379,7 @@ script to work correctly. The `-e` argument does this, adding the specified vari
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/sweep_workflow.swift#L1[`*sweep_workflow.swift*`,window=UC1,pts="noopener,nofollow"]
 
 This file is the swift script that performs the actual sweep. The script consists of an opening section that
-defines some variables, and 3 functions, one (`run_model`) that calls the model itself, one (`make_dir`) utility 
+defines some variables, and 3 functions, one `run_model` that calls the model itself, one `make_dir` utility 
 function, and a `main` function that performs the sweep.
 
 [source, swift]
@@ -396,8 +398,8 @@ https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f569
 <3> Get the upf file by parsing the `-f` argument to this script. The `-f` argument was specified in
 as part of the `CMD_LINE_ARGS` in the https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/run_sweep_workflow.sh#L1[`run_sweep_workflow.sh`,window=UC1,pts="noopener,nofollow"] script.
 
-The `run_model` function function executes a single model run via a bash script. It calls bash, passing it the name of the bash
-script to run, the parameter line (from the upf file) to use, the EMEWS_PROJECT_ROOT directory, and the path of an instance directory. The expectation is that each model run will execute in its own directory and instance is the path of that directory. Standard out and standard error are redirected to an out and err file respectively.
+The `run_model` function executes a single model run via a bash script. It calls bash, passing it the name of the bash
+script to run, the parameter line (from the upf file) to use, the EMEWS_PROJECT_ROOT directory, and the path of an instance directory. The expectation is that each model run will execute in its own directory and `instance` is the path of that directory. Standard out and standard error are redirected to an `out` and `err` file, respectively.
 
 [source, swift]
 ----
@@ -408,11 +410,11 @@ app (file out, file err) run_model(file shfile, string param_line, string instan
 }
 ----
 <1> Call `bash` to run the model script specified in the previous section, redirecting
-`stdout` and `stderr` to `file out` and `file in` respectively.
+`stdout` and `stderr` to `file out` and `file err`, respectively.
 
 
-When we run the model, we want each to run in its own _instance_ directory, and we
-need a function to create that directory. `make_dir` is a Swift app function
+When we run the model, we want each to run in its own `instance` directory, and we
+need a function to create that directory. `make_dir` is a swift app function
 that calls the operating system's `mkdir` command to create the directory.
 
 [source, swift]
@@ -461,7 +463,7 @@ them `out.txt` and `err.txt`.
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/scripts/run_my_model_sweep_workflow.sh#L1[`*run_my_model_sweep_workflow.sh*`,window=UC1,pts="noopener,nofollow"]
 
 `run_my_model_sweep_workflow.sh` is called by `sweep_workflow.swift` to execute
-the model as if the model has been run from the command line. The script is passed 
+the model as if the model has been run from the command line. The script is passed a
 single line of parameters from the upf file, the
 emews root directory location, and the instance directory created in `sweep_workflow.swift`.
 You will need to update the `MODEL_CMD` variable to specify the model executable.
@@ -469,15 +471,16 @@ You will need to update the `MODEL_CMD` variable to specify the model executable
 The script begins with defining an optional `TIMEOUT` that will timeout
 the model if its run duration exceeds that value.
 
+
 [source, bash]
 ----
 # Check for an optional timeout threshold in seconds. If the duration of the
-# model run as executed below, takes longer that this threshhold
+# model run as executed below, takes longer that this threshold
 # then the run will be aborted. Note that the "timeout" command
 # must be supported by executing OS.
 
 # The timeout argument is optional. By default the "run_model" swift
-# app fuction sends 3 arguments, and no timeout value is set. If there
+# app function sends 3 arguments, and no timeout value is set. If there
 # is a 4th (the TIMEOUT_ARG_INDEX) argument, we use that as the timeout value.
 
 # !!! IF YOU CHANGE THE NUMBER OF ARGUMENTS PASSED TO THIS SCRIPT, YOU MUST
@@ -550,7 +553,7 @@ if [ "$RES" -ne 0 ]; then
   fi
 fi
 ----
-<1> Define the model executable. For a stand alone compiled executable, this will be
+<1> Define the model executable. For a stand alone compiled executable, this will be the
 path to that executable. For example, something like `$HOME/sfw/epi_model-1.0/bin/epimodel`.
 For a model written in an interpreted language such as R or Python, this will be the R/RScript or Python
 executable. 
@@ -585,8 +588,8 @@ CFG_UPF=data/upf.txt    <7>
 <1> Set the estimated duration of the workflow.
 <2> Set the queue on which to run the workflow.
 <3> Set the project with which to run the workflow.
-<4> Set the number of HPC nodes to run the workflow with.
-<5> Set the number of process per node (PPN) to use.
+<4> Set the number of HPC nodes with which to run the workflow.
+<5> Set the number of processes per node (PPN) to use.
 <6> Compute the total number of processes to allocate to the job
 by multiplying the number of nodes by the PPN.
 <7> Set the path to the UPF file. For convenience, this is relative to the 
@@ -914,13 +917,13 @@ Typically, this should not be edited by the user.
 
 These files (excluding those in `ext/EQ-SQL`) contain lines or sections marked with *TODO* where that line or section needs
 to be edited to customize the file for your model and workflow. See <<uc4>> for a fully fleshed out
-eqsql workflow created using emews creator. We will look more closely at relevant parts of these files
+eqsql workflow created using EMEWS Creator. We will look more closely at relevant parts of these files
 below.
 
 [[eqsql_launch_script]]
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/run_eqsql_worker_pool.sh#L1[`*run_eqsql_worker_pool.sh*`,window=eqsql_worker_pool.sh,pts="noopener,nofollow"]
 
-NOTE: The launch scripts produced by the emews creator _source_ other files. Doing this in a bash script
+NOTE: The launch scripts produced by the EMEWS Creator _source_ other files. Doing this in a bash script
 makes any variables and functions defined in those files available to the current file, as if they had been
 defined in the current file.
 
