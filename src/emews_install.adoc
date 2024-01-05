@@ -1,0 +1,9 @@
+== Installing EMEWS
+
+
+
+Types of installs:
+
+* Binary (recommend for this tutorial and small scale testing)
+* Source
+

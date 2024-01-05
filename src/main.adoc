@@ -11,8 +11,14 @@ Version 1.0 Jan 12 2022
 
 
 // Sections need line break between includes
+include::emews_introduction.adoc[]
+
 include::emews_creator.adoc[]
 
 include::uc1.adoc[]
 
 include::uc4.adoc[]
+
+// Appendix type sections
+[appendix]
+include::emews_install.adoc[]

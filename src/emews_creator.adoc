@@ -7,6 +7,8 @@ various files that can be customized by the user for their particular use case.
 
 === Installation
 
+NOTE: This part might be removed since it'll be installed as part of the stack.
+
 EMEWS Creator can be downloaded and installed from PyPI using pip.
 
 ----
