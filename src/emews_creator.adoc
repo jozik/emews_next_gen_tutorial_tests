@@ -343,7 +343,7 @@ fi
 ----
 
 The final section logs a copy of the submission script to the experiment directory and
-calls swift-t to submit the job and execute the workflow swift script.
+calls swift to submit the job and execute the workflow swift script.
 
 [source, bash]
 ----
@@ -368,8 +368,8 @@ swift-t -n $PROCS $MACHINE -p \    <3>
 in `USER_VARS` to the experiment directory.
 <2> Define a variable containing the name of the swift workflow script to
 execute.
-<3> Call swift-t passing it the relevant variables and the path of the swift script to be executed. At this point the script is either executed immediately or scheduled for execution depending on the value of the MACHINE variable.
-<4> The `-e` agument to swift-t adds the specified variable to the script execution environment. On some HPC machines,
+<3> Call swift passing it the relevant variables and the path of the swift script to be executed. At this point the script is either executed immediately or scheduled for execution depending on the value of the MACHINE variable.
+<4> The `-e` argument to swift adds the specified variable to the script execution environment. On some HPC machines,
 the login environment is separate from the compute environment. Consequently, variables defined in the login environment
 that are referenced in the swift script when it executes in the compute environment need to be made available for the
 script to work correctly. The `-e` argument does this, adding the specified variables to the compute environment.
@@ -844,14 +844,14 @@ More details to come.
 [[eqsql_top]]
 ==== EQSQL
 
-#TODO#: text that distinguishes between local run (db on same machine, swift-t non-scheduled
-submission), and swift-t scheduled worker pool submission, and how that applies to the code
+#TODO#: text that distinguishes between local run (db on same machine, swift non-scheduled
+submission), and swift scheduled worker pool submission, and how that applies to the code
 created by the template.
 
 The eqsql command creates a workflow that submits tasks (such as
 application runs) to a database queue. Worker pools pop tasks 
 off this queue for evaluation, and push the results back to a database input queue. 
-The tasks can be provided by a Python or R language model exploration (ME) algorithm. 
+The tasks can be provided by a Python or R language ME algorithm. 
 
 Usage:
 
@@ -885,9 +885,9 @@ Options:
 A sample eqsql configuration file can be found https://github.com/emews/emews-project-creator/blob/master/example_cfgs/eqsql.yaml[here,window=eqsql.yaml,pts="noopener,nofollow"]. 
 
 In addition to the common configuration arguments described [above](#workflow_templates),
-the eqsql template also has the following:
+the eqsql template also has the following arguments:
 
-* `--pool-id` - a unique identifier for the swift-t worker pool created by the template.
+* `--pool-id` - a unique identifier for the swift worker pool created by the template.
 * `--task-type` - an integer identifying the type of task the worker pool will consume. 
 * `--trials` - the number of trials or replicates to perform for each task evaluation. Defaults to 1.
 * `--model-output-file-name` - each task evaluation is passed a file path for writing its output.
@@ -919,8 +919,8 @@ Typically, this should not be edited by the user.
 
 These files (excluding those in `ext/EQ-SQL`) contain lines or sections marked with *TODO* where that line or section needs
 to be edited to customize the file for your model and workflow. See <<uc4>> for a fully fleshed out
-eqsql workflow created using EMEWS Creator. We will look more closely at relevant parts of these files
-below.
+eqsql workflow created using EMEWS Creator. We look more closely at relevant parts of these files
+next.
 
 [[eqsql_launch_script]]
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/run_eqsql_worker_pool.sh#L1[`*run_eqsql_worker_pool.sh*`,window=eqsql_worker_pool.sh,pts="noopener,nofollow"]
@@ -930,7 +930,7 @@ makes any variables and functions defined in those files available to the curren
 defined in the current file.
 
 The initial section of the file processes the input arguments to the file,
-and initalizes some variables that are used in the following parts of the file.
+and initializes variables that are used in the following parts of the file.
 
 [[submit_init]]
 [source,bash]
@@ -964,7 +964,7 @@ into the current environment.
 <2> Define an `EMEWS_PROJECT_ROOT` environment variable that specifies the root directory of the project.
 This corresponds to the root project directory specified in `--output-dir` when running
 emewscreator.
-<3> Source some utiliity functions that are used later in the script. These are: `check_directory_exists` 
+<3> Source utility functions that are used later in the script. These are: `check_directory_exists` 
 which checks if the `TURBINE_OUTPUT` directory exists and prompts the user to continue; and `log_script` 
 which logs the relevant environment variables and a copy of script to the `TURBINE_OUTPUT` directory.
 <4> Define and export an `EXPID` (an experiment id) environment variable from the experiment id passed 
@@ -976,7 +976,7 @@ output location for all the files that it produces.
 In this way the configuration variables which may change from workflow run to workflow run are included
 into this submission script.
 
-The second part of the file exports some variables that are used by swift
+The second part of the file exports variables that are used by swift
 when submitting the workflow on an HPC resource. Typically such machines use
 a job scheduler that requires the user to provide the number of processes
 to use, the name of the compute queue, the project to charge the compute time
@@ -1006,7 +1006,7 @@ if the model is multi-threaded.
 The launch script copies all the relevant
 files into the experiment directory (i.e., the  `TURBINE_OUTPUT` value) so that the original
 files can be changed without corrupting the workflow. We see that in the next
-section together with some variable declarations and some potential TODOs.
+section together with some variable declarations and potential TODOs.
 
 [source, bash]
 ----
@@ -1047,7 +1047,7 @@ can be appended to the PYTHONPATH environment variable.
 
 The launch script also exports some database related variables:
 the database host, user, port and name. These are used by the
-swift-t script to communicate with the database. The values
+swift script to communicate with the database. The values
 are sourced from the configuration file and they should be
 edited there if necessary. These variables will be further explained
 in the configuration file <<pool_cfg, section>>.
@@ -1097,7 +1097,7 @@ CMD_LINE_ARGS+="--batch_threshold=$CFG_BATCH_THRESHOLD --worker_pool_id=$CFG_POO
 ----
 
 The final section logs a copy of the submission script to the experiment directory and
-calls swift-t to submit the job and execute the workflow swift script.
+calls swift to submit the job and execute the workflow swift script.
 
 [source, bash]
 ----
@@ -1129,9 +1129,9 @@ swift-t -n $PROCS $MACHINE -p -I $EQSQL -r $EQSQL \   <3>
 in `USER_VARS` to the experiment directory.
 <2> Define a variable containing the name of the swift workflow script to
 execute.
-<3> Call swift-t passing it the relevant variables and the path of the swift script to be executed. At this point 
+<3> Call swift passing it the relevant variables and the path of the swift script to be executed. At this point 
 the script is compiled and then either executed immediately or scheduled for execution depending on the value of the `MACHINE` variable.
-<4> The `-e` agument to swift-t adds the specified variable to the script execution environment. On some HPC machines,
+<4> The `-e` argument to swift adds the specified variable to the script execution environment. On some HPC machines,
 the login environment is separate from the compute environment. Consequently, variables defined in the login environment
 that are referenced in the swift script when it executes in the compute environment need to be made available for the
 script to work correctly. The `-e` argument does this, adding the specified variables to the compute environment.
@@ -1140,12 +1140,12 @@ script to work correctly. The `-e` argument does this, adding the specified vari
 [[swift_worker_pool]]
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/eqsql_worker_pool.swift#L1[`*eqsql_worker_pool.swift*`,window=eqsql_worker_pool.swift,pts="noopener,nofollow"]
 
-This file is the swift script that implements the worker pool. The worker poll pops tasks off of the database
+This file is the swift script that implements the worker pool. The worker pool pops tasks off of the database
 output queue and executes those tasks. When a task has completed, the worker pool pushes the result 
 into the database input queue where it can be retrieved by the ME. The following will describe the general
 structure of the script, highlighting those areas most relevant to the user.
 
-The script begins with by defining some variables. The ones defined using the `getenv` function are
+The script begins by defining some variables. The ones defined using the `getenv` function are
 set from environment variables, while those those defined using `argv` are set from command
 line arguments passed to the swift script from <<pass_cmd_args,`run_eqsql_worker_pool.sh`>>.
 
@@ -1163,9 +1163,9 @@ string WORKER_POOL_ID = argv("worker_pool_id", "default");
 file model_sh = input(emews_root+"/scripts/run_my_model_eqsql_worker_pool.sh");    <3>
 int n_trials = string2int(argv("trials", "1"));    <4>
 ----
-<1> Set emews_root and turbine_output from the EMEWS_PROJECT_ROOT and TURBINE_OUTPUT environment variables. These were exported in the https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/run_eqsql_worker_pool.sh#L13[`*run_eqsql_worker_pool.sh*`,window=run_eqsql_worker_pool.sh,pts="noopener,nofollow"] script.
+<1> Set `emews_root` and `turbine_output` from the EMEWS_PROJECT_ROOT and TURBINE_OUTPUT environment variables. These were exported in the https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/swift/run_eqsql_worker_pool.sh#L13[`*run_eqsql_worker_pool.sh*`,window=run_eqsql_worker_pool.sh,pts="noopener,nofollow"] script.
 <2> Set the TASK_TYPE, BATCH_SIZE, BATCH_THRESHOLD, and WORKER_POOL_ID variables. These are used
-by the swift script when fetchting tasks and reporting task results.
+by the swift script when fetching tasks and reporting task results.
 <3> Get the bash script that will be used to launch the model. Swift calls this <<run_my_model, script>> (`scripts/run_my_model.sh`) to perform a model run.
 <4> Get the number of trials (replicates) to perform for each model run.
 
@@ -1219,11 +1219,11 @@ if (msgs[0].msg_type == "status") {    <2>
   c = true;
 }
 ----
-<1> Query for tasks to execute, retreiving them in swift array. The tasks are formatted as `message`-s. Each message
+<1> Query for tasks to execute, retrieving them in swift array. The tasks are formatted as `message`-s. Each message
 has an integer `task_id`, a string `msg_type`, and string `payload`. The `task_id` is a unique
 identifier for the task, the `msg_type` specifies the type of message: `status` or `work`.
 The `payload` consists of either a status update, or input to the task to be performed in JSON format.
-<2> If the first of the messsage types is `status` then exit the loop with the appropriately.
+<2> If the first of the message types is `status` then exit the loop with the appropriately.
 <3> If the first of the message types is not `status`, then execute the task messages in the array.
 
 The run function executes the tasks in parallel in a swift `foreach` loop, and reports the results back
@@ -1240,7 +1240,7 @@ run(message msgs[]) {
 }
 ----
 
-`run_task` executes the specifed number of trials for an individual task (e.g., a model run), running the task with the same parameters and varying a random seed parameter. All the trials will run in an `instance_N` directory
+`run_task` executes the specified number of trials for an individual task (e.g., a model run), running the task with the same parameters and varying a random seed parameter. All the trials will run in an `instance_N` directory
 where `N` is the task's task_id. 
 
 [source, swift]
@@ -1267,7 +1267,7 @@ where `N` is the task's task_id.
 <1> Create the instance directory
 <2> Iterate concurrently over the number of trials.
 <3> For each trial, call `run_obj`, passing the task payload (input parameters), 
-trial number, instance direcdtory, and instance_id. The result from each trial
+trial number, instance directory, and instance_id. The result from each trial
 is added to the `results` array.
 <4> Call `get_aggregate_result` passing it the results from each trial to compute the
 aggregate result over all the trials.
@@ -1295,7 +1295,7 @@ output file.
 `run_task_app` calls <<run_my_model, `scripts/run_my_model.sh`>> passing it the task payload,
 the output file path, the trial number, the emews_root location, and the instance directory. The
 `@stdout` and `@stderr` commands are used by swift to redirect the standard out and standard
-error streams to files specfied in `run_obj`.
+error streams to files specified in `run_obj`.
 
 [source, swift]
 ----
@@ -1435,7 +1435,7 @@ then that argument (defaulting to the 6th argument) will be used as
 the number of seconds after which to timeout. 
 
 The next section of the script assigns the scripts command line arguments to
-some variables and changes the directory to the instance directory passed to
+variables and changes the directory to the instance directory passed to
 the script.
 
 [source, bash]
@@ -1507,7 +1507,7 @@ will be an ignored empty string.
 
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo.py#L1[`*algo.py*`,window=algo,pts="noopener,nofollow"]
 
-If the `me_language` argument to the `esql` template command is `python`, then an example Python ME and ME configuration file will be produced. The ME can be run from the command line as follows:
+If the `me_language` argument to the `eqsql` template command is `python`, then an example Python ME and ME configuration file will be produced. The ME can be run from the command line as follows:
 
 #TODO: text about local vs. remote run#
 
@@ -1663,9 +1663,9 @@ the `pool_launch_script`.
 
 ### INIT DB ###
 
-Emews Creator also includes an `init_db` command that 
+EMEWS Creator also includes an `init_db` command that 
 creates the EQSQL database in a user specified directory for use by an EQ/SQL workflow. It assumes that the postgresql
-binaries are availble in the user PATH, and that the eqsql package has been installed. The database name will
+binaries are available in the user PATH, and that the eqsql package has been installed. The database name will
 default to `EQ_SQL`, and the database user to `eqsql_user`. Database log messages will be written to
 a `db.log` file in the database directory.
 
