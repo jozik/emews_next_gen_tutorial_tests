@@ -575,7 +575,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_running_the_workflow">4.2. Running the Workflow</a></li>
 <li><a href="#_workflow_project_structure_2">4.3. Workflow Project Structure</a></li>
 <li><a href="#_the_ackley_function">4.4. The Ackley Function</a></li>
-<li><a href="#_calling_the_ackley_function_from_swiftt">4.5. Calling the Ackley Function from Swift/T</a></li>
+<li><a href="#_calling_the_ackley_function_from_swift">4.5. Calling the Ackley Function from Swift</a></li>
 <li><a href="#_the_ackley_me">4.6. The Ackley ME</a></li>
 </ul>
 </li>
@@ -3983,7 +3983,7 @@ emews creator <a href="#eqsql_top">eqsql</a> template, and that should be read b
 <p>install conda</p>
 </li>
 <li>
-<p>Create swift-t env</p>
+<p>create swift-t env</p>
 </li>
 <li>
 <p>install swift-t conda package</p>
@@ -4026,14 +4026,14 @@ $ python3 me.py test_ackley me_cfg.yaml</code></pre>
 </div>
 <div class="paragraph">
 <p>Running the workflow will create an experiment directory whose name
-consists of th eexperiment id followed by a timestamp. The workflow runs
+consists of th experiment id followed by a timestamp. The workflow runs
 within this directory.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_workflow_project_structure_2">4.3. Workflow Project Structure</h3>
 <div class="paragraph">
-<p>The full source code for this tutorial use case can be accessed <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc4" target="uc4">here</a>.
+<p>The full source code for this use case can be accessed <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc4" target="uc4">here</a>.
 The completed workflow project has the following directory structure and files:</p>
 </div>
 <div class="listingblock">
@@ -4066,7 +4066,7 @@ The completed workflow project has the following directory structure and files:<
 </div>
 </div>
 <div class="paragraph">
-<p>The initial version of this project was created using the EMEWS creator with the following command:</p>
+<p>The initial version of this project was created using EMEWS Creator with the following command:</p>
 </div>
 <div id="uc4-creator" class="listingblock">
 <div class="content">
@@ -4077,24 +4077,24 @@ The completed workflow project has the following directory structure and files:<
 <p>See the eqsql <a href="#eqsql_top">section</a> in the emews creator documentation for additional information on the general project structure.</p>
 </div>
 <div class="paragraph">
-<p>As an eqsql project, the ME algorithm in the UC4 example submits tasks to a database. Those tasks are retrieived
+<p>As an eqsql project, the ME algorithm in the UC4 example submits tasks to a database. Those tasks are retrieved
 and executed by a worker pool, which then submits the results back where they can be used by the ME. Here, the ME produces inputs to the Ackley function submitting those as tasks to the database. The
-worker pool evalutes those inputs in parallel by executing the Ackley function on them, and pushes the results back to the database. Periodically, the ME uses a Gaussian process regression model (GPR) to re-prioritize the unevaluated
-remaining inputs, assigning a higher priority to those it deems more likey produce a minimum. The following files implement this workflow.</p>
+worker pool evaluates those inputs in parallel by executing the Ackley function on them, and pushes the results back to the database. Periodically, the ME uses a GPR model to re-prioritize the unevaluated
+remaining inputs, assigning a higher priority to those it deems more likely to produce a minimum. The following files implement this workflow.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>python/me.py</code> - the Python language ME that submits the Ackley inputs and re-prioritizes them</p>
+<p><code>python/me.py</code> - the Python ME that submits the Ackley inputs and re-prioritizes them</p>
 </li>
 <li>
 <p><code>python/me_cfg.yaml</code> - the configuration file for the ME</p>
 </li>
 <li>
-<p><code>swift/ackley_worker_pool.swft</code> - the worker pool that retrieves the inputs for evaluation by the Ackley function</p>
+<p><code>swift/ackley_worker_pool.swift</code> - the worker pool that retrieves the inputs for evaluation by the Ackley function</p>
 </li>
 <li>
-<p><code>swift/run_ackley_worker_pool.sh</code> - a bash script used to lauch the worker pool</p>
+<p><code>swift/run_ackley_worker_pool.sh</code> - a bash script used to launch the worker pool</p>
 </li>
 <li>
 <p><code>swift/cfgs/ackley_worker_pool.cfg</code> - the configuration file for the worker pool</p>
@@ -4130,13 +4130,13 @@ In our example project, it is implemented in <a href="https://github.com/jozik/e
 </div>
 </div>
 <div class="sect2">
-<h3 id="_calling_the_ackley_function_from_swiftt">4.5. Calling the Ackley Function from Swift/T</h3>
+<h3 id="_calling_the_ackley_function_from_swift">4.5. Calling the Ackley Function from Swift</h3>
 <div class="paragraph">
-<p>The Ackley function is implemented in Python and is called by the Swift/T worker pool
+<p>The Ackley function is implemented in Python and is called by the swift worker pool
 using a bash script <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/scripts/run_ackley.sh#L1" target="run_ackley"><code>uc4/scripts/run_ackley.sh</code></a></p>
 </div>
 <div class="paragraph">
-<p>The <code>run_ackley.sh</code> script takes 5 inputs which are passed from the worker pool swift code when
+<p>The <code>run_ackley.sh</code> script takes 5 inputs, which are passed from the worker pool swift code when
 the script is called.</p>
 </div>
 <div class="listingblock">
@@ -4176,7 +4176,7 @@ the script is called.</p>
 </table>
 </div>
 <div class="paragraph">
-<p>After cd-ing to the <code>INSTANCE_DIRECTORY</code>, the script then runs the Ackley function Python code using these inputs.</p>
+<p>After cd-ing to the <code>INSTANCE_DIRECTORY</code>, the script runs the Ackley function Python code using these inputs.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4237,7 +4237,7 @@ By default it is an empty string and has no effect.</p>
 <div class="paragraph">
 <p>We typically use JSON formatted strings to describe model input parameters. The
 ME will push JSON formatted dictionaries to the database, and those strings
-are retreived by the worker pool, passed to the bash script, and from there
+are retrieved by the worker pool, passed to the bash script, and from there
 to the model execution itself.</p>
 </div>
 </td>
@@ -4247,7 +4247,7 @@ to the model execution itself.</p>
 <div class="paragraph">
 <p>When the <code>run_ackley.sh</code> scripts calls <code>python/ackley.py</code> to execute the
 Ackley function on the provided input, the <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L50" target="ackley_main"><code><em>main</em></code></a> section of <code>ackley.py</code> is executed. The <code><em>main</em></code> section receives the Ackley function input (the <code>$PARAM_LINE</code> variable in
-<code>run_ackley.sh</code>), and the path to the output file as comand line arguments. It unpacks
+<code>run_ackley.sh</code>), and the path to the output file as command line arguments. It unpacks
 these arguments, calls the <code>run</code> function, and writes the result to the output file.</p>
 </div>
 <div class="listingblock">
@@ -4317,8 +4317,8 @@ parameter string and needs to be converted to an array for the Ackley function.<
 </table>
 </div>
 <div class="paragraph">
-<p>The Swift/T worker pool script is largely unchanged from what is created by the
-esql emews creator template which is described <a href="#swift_worker_pool">here</a>. We have,
+<p>The swift worker pool script is largely unchanged from what is created by the
+eqsql emews creator template which is described <a href="#swift_worker_pool">here</a>. We have,
 however, edited the <code>get_result</code> function to return the result of an
 Ackley evaluation.</p>
 </div>
@@ -4352,6 +4352,9 @@ string to a float.</td>
 are unchanged from those produced by eqsql template. A discussion of them can be found <a href="#pool_cfg">here</a>
 and <a href="#eqsql_launch_script">here</a></p>
 </div>
+<div class="paragraph">
+<p><mark>TODO: Suggested for the above section: Explain that Python functions can be called via swift interpreter to streamline. Indicate the pros and cons for doing that versus command line invocation.</mark></p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_the_ackley_me">4.6. The Ackley ME</h3>
@@ -4359,9 +4362,9 @@ and <a href="#eqsql_launch_script">here</a></p>
 <p>The Ackley workflow can be run by executing the Python script <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L1" target="me_py"><code>python/me.py</code></a>
 The code begins by
 starting the EQ/SQL database, the worker pool, and initializing a task queue through which tasks can be sent to the worker pool via the database. The code then submits a user specified amount of initial tasks to the database, and waits
-for some number of tasks to complete. When that number has completed, the remaining unexecuted tasks are reprioritized
+for a prespecified number of tasks to complete. When that number has completed, the remaining unexecuted tasks are reprioritized
 using a GPR model. This continues until some total number have been completed. The intention is to illustrate a typical
-ME workflow where tasks are submitted to a task queue, and the ME then waits for some number to complete, at which point, it can submit new tasks based on the existing results, and reprioritize unexecuted tasks, if necessary.</p>
+ME workflow where tasks are submitted to a task queue, and the ME waits for some to complete, at which point it can submit new tasks based on the existing results and reprioritize unexecuted tasks if necessary.</p>
 </div>
 <div class="paragraph">
 <p>The code consists of a Python <code>dataclass</code> for encapsulating a task, 5 functions, and a <code><em>main</em></code> block. The <code>create_parser</code>, and
@@ -4370,8 +4373,8 @@ Similarily, creating the task queue, and starting the database, and worker pool 
 in the  emews creator eqsql <a href="#me_init">section</a> and will not be covered here.</p>
 </div>
 <div class="paragraph">
-<p>After initialization, the <code>run</code> function calls <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L23" target="submit_initial_tasks"><code>submit_initial_tasks</code></a>, passing it the created task_queue
-user provided experiment id, and the ME input parameters as a dictionary. There the random samples
+<p>After initialization, the <code>run</code> function calls <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L23" target="submit_initial_tasks"><code>submit_initial_tasks</code></a>, passing it the created task_queue,
+the user provided experiment id, and the ME input parameters as a dictionary. The random samples
 used as Ackley function input data are created and submitted as tasks for evaluation.</p>
 </div>
 <div class="listingblock">
@@ -4453,12 +4456,12 @@ we need to convert them into Python structures that are, such as lists.</p>
 </table>
 </div>
 <div class="paragraph">
-<p>Having submitted the initial tasks, <code>run</code> now begins the optimization <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L117" target="opt_loop">loop</a>. The loop repeatedly queries for
+<p>Having submitted the initial tasks, <code>run</code> begins the optimization <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L117" target="opt_loop">loop</a>. The loop repeatedly queries for
 some number of completed tasks using eqsql&#8217;s <code>as_completed</code> function which returns
-an iterator over that number of completed tasks, waiting for tasks to complete, if necessary.
+an iterator over that number of completed tasks, waiting for tasks to complete if necessary.
 When <code>as_completed</code> finishes returning completed tasks, we reprioritize the remaining
 uncompleted tasks using the results provided by the completed tasks. The loop continues
-calling <code>as_completed</code> and reprioritizing until some total number of tasks have completed.</p>
+calling <code>as_completed</code> and reprioritizing until the total number of tasks have completed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4483,7 +4486,7 @@ calling <code>as_completed</code> and reprioritizing until some total number of 
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Get the total number of tasks to complete (i.e., the total number of Ackley function evaluatations
+<td>Get the total number of tasks to complete (i.e., the total number of Ackley function evaluations
 to perform) before stopping.</td>
 </tr>
 <tr>
@@ -4499,7 +4502,7 @@ as an argument, so we create that here.</td>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>While the number of completed tasks is less than the total number to complete,
-wait for another <code>reprioritze_after</code> number of tasks to complete, and then reprioritize.</td>
+wait for another <code>reprioritize_after</code> number of tasks to complete, and then reprioritize.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -4566,7 +4569,7 @@ of uncompleted futures.</td>
 </div>
 <div class="paragraph">
 <p>With the training and prediction data created, <code>reprioritize</code> fits the GPR
-using the training data and ranks the uncompeleted tasks by likelihood
+using the training data and ranks the uncompleted tasks by likelihood
 of minimizing the Ackley function. Using that ranking, it then reprioritizes the remaining
 uncompleted tasks.</p>
 </div>
@@ -4595,7 +4598,7 @@ uncompleted tasks.</p>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>Call the GPR to get the Task ranking. The returned ranking
-is a ranked list of indicies into the prediction data.</td>
+is a ranked list of indices into the prediction data.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
