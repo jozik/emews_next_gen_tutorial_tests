@@ -55,7 +55,8 @@ emewscreator -o uc1 sweep -c tutorial_cfgs/UC1.yaml
 
 [NOTE]
 ====
-For running this use case, an R enabled Swift/T installation is required.
+#For running this use case, an R enabled Swift/T installation is required.#
+// Should this be edited to account for the easy installation provided?
 See the http://swift-lang.github.io/swift-t/guide.html#build_r[Swift/T R Installation Guide, window=_blank,pts="noopener,nofollow"] for installation details.
 ====
 
