@@ -603,26 +603,26 @@ for `CFG_WALLTIME`, `CFG_QUEUE`, and `CFG_PROJECT`.
 
 The EQPy workflow template creates a workflow that uses EMEWS Queues for Python (EQ/Py)
 to execute an application using input parameters provided by a
-Python model exploration (ME) algorithm.  EQ/Py is a Swift-t extension that adds two blocking queues through which a Swift script and a Python code algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/Py,
+Python model exploration (ME) algorithm.  EQ/Py is a swift extension that adds two blocking queues through which a swift script and a Python algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/Py,
 
 image::EMEWS_figure_EQPy_black.png[EQPy, 640, 480]
 
-and this is a zoomed in picture showing the Python-based ME and Swift script queue coordination.
+and this is a zoomed in picture showing the Python-based ME and swift script queue coordination.
 
 image::EMEWS_figure_zoomed_EQPy_black.png[EQPy Zoomed, 640, 480]
 
-The eqpy template installs this extension and adds user customizable code that allows model runs and exploration to be controlled from a python code algorithm using the two queues. By default the coordinated execution of the two follows this pattern:
+The eqpy template installs this extension and adds user customizable code that allows model runs and exploration to be controlled from a Python algorithm using the two queues. By default the coordinated execution of the two follows this pattern:
 
-1. The swift script initializes the EQ/Py extension, including the the python code, and then waits for the python code to produce parameters for a parallelized collection of model runs.
-2. The python code produces an initial set of parameters.
-3. The python code passes these parameters to the swift script.
-4. The python code then waits for the swift code.
+1. The swift script initializes the EQ/Py extension, including the the Python code, and then waits for the Python code to produce parameters for a parallelized collection of model runs.
+2. The Python code produces an initial set of parameters.
+3. The Python code passes these parameters to the swift script.
+4. The Python code then waits for the swift code.
 5. Having received the parameters for the model runs, the swift script launches those runs in parallel.
-6. When the model runs are finished, the swift script passes a result derived from the output of those runs back to the python code.
+6. When the model runs are finished, the swift script passes a result derived from the output of those runs back to the Python code.
 7. The swift script then waits for the next set of parameters or a flag indicating that no more runs need to be performed.
-8. Having received the results from the swift script, the python code algorithm produces a new set of parameters based on the swift result, and passes those back to the waiting swift script.
+8. Having received the results from the swift script, the Python code algorithm produces a new set of parameters based on the swift result, and passes those back to the waiting swift script.
 
-Steps 5 - 8 are repeated until some stopping condition (e.g. algorithm convergence or some maximum number of iterations) is reached.
+Steps 5 - 8 are repeated until a stopping condition (e.g., algorithm convergence or some maximum number of iterations) is reached.
 
 Usage:
 
@@ -658,7 +658,7 @@ Options:
 ```
 
 In addition to the common configuration arguments described in <<wflow_templates>>
-the eqpy template also has the following:
+the eqpy template also has the following arguments:
 
 * `--module-name` - the Python module implementing the ME algorithm
 * `--me-cfg-file` - the path to a configuration file for the Python ME algorithm. This
@@ -669,7 +669,7 @@ directory specified in `--output-dir`.
 This is the name of that file.
 
 In addition to the default set of files described in the <<emews_proj_struc>> section, the
-eqpy workflow template will also install the EQPy EMEWS Swift-t extension. By default, the extension will be installed in in `ext/EQ-Py`. An alternative location can be specified with the `--eqpy-dir`
+eqpy workflow template will also install the EQPy EMEWS swift extension. By default, the extension will be installed in in `ext/EQ-Py`. An alternative location can be specified with the `--eqpy-dir`
 configuration parameter.
 
 * `--eqpy-dir` - specifies the location of the eqpy extension (defaults to `ext/EQ-Py`)
@@ -688,7 +688,7 @@ A sample `eqpy` configuration file can be found https://github.com/emews/emews-p
 
 
 Generating an EQPy workflow creates the following files. The exact file names are dependent on 
-the workflow_name and model_name configuration parameters. Here the workflow name is `eqpy workflow`
+the `workflow_name` and `model_name` configuration parameters. Here the workflow name is `eqpy workflow`
 and the model name is `my model`.
 
 * `swift/run_eqpy_workflow.sh` - a bash script used to launch the workflow
@@ -725,15 +725,15 @@ More details to come.
 [[eqr_top]]
 ==== EQR
 
-The eqr template works much the same as the eqpy template, but for model exploration algorithms written in R. It generates files and code for model exploration using the EQ/R EMEWS extension. The EQ/R extension adds two blocking queues through which a Swift/T script and a R code algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/R,
+The eqr template works much the same as the eqpy template, but for ME algorithms written in R. It generates files and code for ME using the EQ/R EMEWS extension. The EQ/R extension adds two blocking queues through which a swift script and a R algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/R,
 
 image::EMEWS_figure_EQR_black.png[EQR, 640, 480]
 
-and this is a zoomed in picture showing the R-based ME and Swift script queue coordination.
+and this is a zoomed in picture showing the R-based ME and swift script queue coordination.
 
 image::EMEWS_figure_zoomed_EQR_black.png[EQR Zoomed, 640, 480]
 
-The eqr template installs this extension and adds user customizable code that allows model runs and exploration to be controlled from a R code algorithm using the two queues. By default the coordinated execution of the two uses the following pattern (identical to that of the eqpy template).
+The eqr template installs this extension and adds user customizable code that allows model runs and exploration to be controlled from a R algorithm using the two queues. By default the coordinated execution of the two uses the following pattern (identical to that of the eqpy template).
 
 1. The swift script initializes the EQ/R extension, including the the R code, and then waits for the R code to produce parameters for a parallelized collection of model runs.
 2. The R code produces an initial set of parameters.
@@ -744,7 +744,7 @@ The eqr template installs this extension and adds user customizable code that al
 7. The swift script then waits for the next set of parameters or a flag indicating that no more runs need to be performed.
 8. Having received the results from the swift script, the R code algorithm produces a new set of parameters based on the swift result, and passes those back to the waiting swift script.
 
-Steps 5 - 8 are repeated until some stopping condition (e.g. algorithm convergence or some maximum number of iterations) is reached.
+Steps 5 - 8 are repeated until a stopping condition (e.g., algorithm convergence or some maximum number of iterations) is reached.
 
 
 Usage:
@@ -779,7 +779,7 @@ Options:
 ```
 
 In addition to the common configuration parameters described in <<wflow_templates>>
-the `eqr` template also has the following:
+the `eqr` template also has the following arguments:
 
 * `--script-file` - the path to the R script implementing the ME algorithm
 * `--me-cfg-file` - the path to a configuration file for the R ME algorithm. This
@@ -791,13 +791,15 @@ This is the name of that file.
 
 In addition to the default set of files described in the <<emews_proj_struc>> 
 section, the eqr workflow template will also
-install the source for the EQ/R EMEWS Swift-t extension. By default, the extension will be installed 
+install the source for the EQ/R EMEWS swift extension. By default, the extension will be installed 
 in `ext/EQ-R`. An alternative location can be specified with the `--eqr-dir` configuration argument.
 
 * `--eqr-dir` - specifies the location of the eqr extension (defaults to `ext/EQ-R`)
 
 You can set this to use an existing EQ-R extension, or if the specified location
-doesn't exist, the extension will be installed there. 
+doesn't exist, the extension #will be installed there.#
+// TODO NC: Re: the installation, we should align this with the easy software stack installation. If necessary, for the same EQPy section above too.
+ 
 
 IMPORTANT: The extension needs to be compiled before it can be used. See `{eqr_dir}/src/README.md` for compilation instructions.
 
@@ -805,7 +807,7 @@ A sample EQR configuration file can be found https://github.com/emews/emews-proj
 
 
 Generating an EQR workflow creates the following files. The exact file names are dependent on 
-the workflow_name and model_name configuration parameters. Here the workflow name is `eqr workflow`
+the `workflow_name` and `model_name` configuration parameters. Here the workflow name is `eqr workflow`
 and the model name is `my model`.
 
 * `swift/run_eqr_workflow.sh` - a bash script used to launch the workflow
