@@ -562,5 +562,5 @@ calling `swift-t` with Swift specific, e.g., "-n" specifies the total number of 
 and script specific arguments, here the CMD_LINE_ARGS defined above.
 Additional help for the arguments to `swift-t` can be seen by running
 `swift-t -h`. More information on the shell script used to
-launch the Swift/T workflow can be seen in the #EMEWS Creator tutorial#.
-// TODO: Include link to project creator section.
+launch the Swift/T workflow can be seen in the <<sweep>> section.
+

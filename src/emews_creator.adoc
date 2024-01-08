@@ -155,6 +155,7 @@ supplied on the command line will override those supplied in a configuration fil
 If any required arguments are missing from the command line, then the
 configuration file is required to supply the missing arguments.
 
+[[sweep, Sweep Template]]
 ==== Sweep
 The sweep command creates a sweep workflow in which EMEWS reads an input file,
 and runs an application using each line of the input file as input to an application run.
