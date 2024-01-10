@@ -10,6 +10,7 @@ This tutorial uses the project structure and files created from the
 EMEWS #<<_sweep_template,sweep template>>#, 
 and that should be read before this.
 
+//TODO: Include a picture of the sweep, akin to eqpy, eqr, eqsql.
 
 === Tutorial goals
 
