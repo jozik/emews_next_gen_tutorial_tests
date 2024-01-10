@@ -20,6 +20,15 @@ and that should be read before this.
 
 === Workflow Project Structure
 The full source code for this tutorial use case can be accessed https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc1[here,window=UC1,pts="noopener,nofollow"].
+
+An initial version of the project was created using the EMEWS creator with the following command issued #here#:
+// TODO: link to code directory in the repo? https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code[here,window=UC1_code_directory,pts="noopener,nofollow"] or just say that it was issued in the code directory in this repo?
+[source#uc1-creator,bash]
+----
+emewscreator -o uc1 sweep -c tutorial_cfgs/UC1.yaml
+----
+//TODO: Include UC1.yaml and briefly explain the config (check what can be borrowed from EMEWS Creator section). And refer the reader to the EMEWS Creator Appendix for further information.
+
 // TODO: modify the structure and files to reflect the final uc1 version. Just run tree on completed version.
 The completed workflow project has the following directory #structure and files#:
 // NB: Generated using tree.
@@ -46,12 +55,7 @@ uc1
     └── sweep_workflow.swift
 ----
 
-An initial version of the project was created using the EMEWS creator with the following command issued #here#:
-// TODO: link to code directory in the repo? https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code[here,window=UC1_code_directory,pts="noopener,nofollow"] or just say that it was issued in the code directory in this repo?
-[source#uc1-creator,bash]
-----
-emewscreator -o uc1 sweep -c tutorial_cfgs/UC1.yaml
-----
+
 
 
 [NOTE]
