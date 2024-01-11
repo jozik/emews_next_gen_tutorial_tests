@@ -8,7 +8,9 @@ Version 1.0 Jan 12 2022
 :xrefstyle: full
 :imagesdir: images
 :source-highlighter: pygments
-
+:bibtex-file: src/bib/EMEWS_Tutorial.bib
+:bibtex-order: alphabetical
+:bibtex-style: chicago-author-date
 
 // Sections need line break between includes
 include::emews_introduction.adoc[]
@@ -24,3 +26,7 @@ include::uc4.adoc[]
 include::emews_install.adoc[]
 [appendix]
 include::emews_creator.adoc[]
+
+:sectnums!:
+== References
+bibliography::[]

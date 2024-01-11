@@ -520,7 +520,9 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <ul class="sectlevel1">
 <li><a href="#_emews_introduction_and_quickstart">1. EMEWS Introduction and Quickstart</a>
 <ul class="sectlevel2">
-<li><a href="#_quickstart">1.1. Quickstart</a></li>
+<li><a href="#_extreme_scale_model_exploration_with_swift_emews">1.1. Extreme-scale Model Exploration with Swift (EMEWS)</a></li>
+<li><a href="#_emews_workflow_structure">1.2. EMEWS workflow structure</a></li>
+<li><a href="#_quickstart">1.3. Quickstart</a></li>
 </ul>
 </li>
 <li><a href="#uc1">2. <mark>Simple</mark> Workflows with ABM</a>
@@ -580,6 +582,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_init_db">B.5. INIT DB</a></li>
 </ul>
 </li>
+<li><a href="#_references">References</a></li>
 </ul>
 </div>
 </div>
@@ -587,11 +590,125 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <div class="sect1">
 <h2 id="_emews_introduction_and_quickstart">1. EMEWS Introduction and Quickstart</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_extreme_scale_model_exploration_with_swift_emews">1.1. Extreme-scale Model Exploration with Swift (EMEWS)</h3>
 <div class="paragraph">
-<p>EMEWS is</p>
+<p>Modern computational studies, involving simulation, AI/ML, or other black-box models, are campaigns consisting of large numbers of these models with many possible variations. The models may be run with different parameters, possibly as part of an automated model parameter optimization, classification, or, more generally, <strong>model exploration (ME)</strong>. Constructing the software to run
+such studies at the requisite computational scales is often unnecessarily time-consuming and the resulting
+software artifacts are typically difficult to generalize and
+package for other users.</p>
+</div>
+<div class="paragraph">
+<p>In this tutorial, we present a solution for many of the challenges in
+running large-scale ME studies.  Our framework, Extreme-scale Model
+Exploration with Swift (<strong>EMEWS</strong>) (<a href="#ozik_desktop_2016">Ozik et al. 2016</a>), uses the general-purpose parallel
+scripting language Swift/T (<a href="#wozniak_swiftt_2013">Wozniak et al. 2013</a>)
+to generate highly
+concurrent ME workflows.  These workflows enable the flexible integration of multi-language
+ME algorithms and libraries to coordinate the running and evaluation of large numbers of models.  The general-purpose nature of
+the programming model also allows the user to supplement the workflows with additional
+analyses and post-processing.</p>
+</div>
+<div class="paragraph">
+<p>Our focus is on computational models that require the use of approximate, heuristic ME methods involving large ensembles. To improve the current state of the art it has been noted elsewhere that: “&#8230;&#8203;
+there is a clear need to provide software frameworks for
+metaheuristics that promote software reuse and reduce developmental
+effort” (<a href="#boussaid_survey_2013">Boussaïd&#44; Lepagnot&#44; and Siarry 2013</a>). Our design goals are to ease
+software integration while providing scalability to the largest scale
+(exascale plus) supercomputers, running millions of models, thousands
+at a time. EMEWS has shown robust scalability (<a href="#ozik_population_2021">Ozik et al. 2021</a>; <a href="#wozniak_candle/supervisor:_2018">Wozniak et al. 2018</a>). The tools are also easy to install and run on an ordinary
+laptop, requiring only an MPI (Message Passing Interface) implementation, which can be easily
+obtained from common OS package repositories.</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_quickstart">1.1. Quickstart</h3>
+<h3 id="_emews_workflow_structure">1.2. EMEWS workflow structure</h3>
+<div class="paragraph">
+<p>&lt;p&gt;
+&lt;img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure.png" alt="EMEWS Figure" height="300"&gt;
+&lt;/p&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;p&gt;
+This figure illustrates the main components of the &lt;b id="myb"&gt;EMEWS&lt;/b&gt;
+framework.  The main user interface is the Swift script, a high-level
+program.  The core novel contributions of
+&lt;b id="myb"&gt;EMEWS&lt;/b&gt; are shown in green, these allow the Swift script to access a
+running ME algorithm.
+&lt;p&gt;
+&lt;img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_EQX.png" alt="EMEWS Figure EQX" height="150"&gt;
+&lt;/p&gt;
+The ME algorithm can be expressed in Python, R, C, C++,
+Fortran, Julia, Tcl, or any language supported by Swift/T.  We provide
+a high-level queue-like interface with (currently) two
+implementations: EQ/Py and EQ/R (EMEWS Queues for
+Python and R). The interface defines the two functions &lt;tt id="mycode"&gt;OUT_put&lt;/tt&gt; and &lt;tt id="mycode"&gt;IN_get&lt;/tt&gt; for sending candidate model parameters from the ME algorithm to the Swift script and getting model outputs back, respectively. The interface also allows the Swift script to obtain
+candidate model parameter inputs (&lt;tt id="mycode"&gt;EQX_get&lt;/tt&gt;) and return model outputs to the ME (&lt;tt id="mycode"&gt;EQX_put&lt;/tt&gt;).  The simulation models are distributed by the Swift/T runtime over a
+potentially large computer system, but smaller systems that run one
+model at a time are also supported.  The simulations can be
+implemented as external applications called through the shell, or
+in-memory libraries accessed directly by Swift (for faster
+invocation).
+&lt;/p&gt;
+&lt;p&gt;
+&lt;b id="myb"&gt;EMEWS&lt;/b&gt; thus offers the following contributions to the science and
+practice of simulation ME studies: &lt;!--
+&lt;b id="myb"&gt;1)&lt;/b&gt; it offers the capability to run very large, highly concurrent
+  ensembles of simulations of varying types; &lt;b id="myb"&gt;2)&lt;/b&gt; it supports a wide class of model exploration algorithms,
+  including those increasingly available to the community via Python and R libraries; and &lt;b id="myb"&gt;3)&lt;/b&gt; it offers a software sustainability solution, in that simulation
+  studies based around &lt;b id="myb"&gt;EMEWS&lt;/b&gt; can easily be compared and
+  distributed.
+ -&#8594;</p>
+</div>
+<div class="paragraph">
+<p>&lt;ol id="myol"&gt;
+&lt;li&gt; It offers the capability to run very large, highly concurrent
+  ensembles of simulations of varying types;&lt;/li&gt;
+&lt;li&gt; It supports a wide class of model exploration algorithms,
+  including those increasingly available to the community via Python and R libraries;&lt;/li&gt;
+&lt;li&gt; It offers a software sustainability solution, in that simulation
+  studies based around &lt;b id="myb"&gt;EMEWS&lt;/b&gt; can easily be compared and
+  distributed.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/p&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;h2&gt; Tutorial Goals&lt;/h2&gt;
+&lt;p&gt;
+&lt;/p&gt;
+This tutorial aims to describe through examples the following main elements of the EMEWS framework:
+&lt;ol id="myol"&gt;
+&lt;li&gt; How external code can be incorporated with minimal modifications&lt;/li&gt;
+&lt;li&gt; How the EMEWS Queues (EQ/Xs) are used to communicate between model exploration code and Swift&lt;/li&gt;
+&lt;li&gt; How EMEWS enables the scaling of simulation and black box model exploration to large computing resources&lt;/li&gt;
+&lt;li&gt; How modularized, multi-language code can be effectively tested and integrated within the EMEWS framework&lt;/li&gt;
+&lt;/ol&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;h2&gt; Tutorial Code &lt;/h2&gt;
+The examples use cases presented in this tutorial can be downloaded here:
+&lt;a href="http://www.mcs.anl.gov/~emews/files/UC1.zip"&gt;UC1.zip&lt;/a&gt;,
+&lt;a href="http://www.mcs.anl.gov/~emews/files/UC2.zip"&gt;UC2.zip&lt;/a&gt;, and
+&lt;a href="http://www.mcs.anl.gov/~emews/files/UC3.zip"&gt;UC3.zip&lt;/a&gt;,</p>
+</div>
+<div class="paragraph">
+<p>&lt;h2&gt; EMEWS Mailing List &lt;/h2&gt;
+For questions about EMEWS or to access archived questions, please subscribe to the EMEWS mailing list:
+&lt;a target="_blank" href="https://lists.mcs.anl.gov/mailman/listinfo/emews"&gt;&lt;b id="myb"&gt;<a href="https://lists.mcs.anl.gov/mailman/listinfo/emews&lt;/b&gt;&lt;/a&gt" class="bare">https://lists.mcs.anl.gov/mailman/listinfo/emews&lt;/b&gt;&lt;/a&gt</a>;</p>
+</div>
+<div class="paragraph">
+<p>&lt;h2&gt;Citing EMEWS&lt;/h2&gt;</p>
+</div>
+<div class="paragraph">
+<p>To cite EMEWS, please use: &lt;br&gt; Ozik, J., N. Collier, J. M. Wozniak and C. Spagnuolo. 2016. "From Desktop to Large-Scale Model Exploration with Swift/T." In Proceedings of the 2016 Winter Simulation Conference.</p>
+</div>
+<div class="paragraph">
+<p>&lt;h2&gt; Acknowledgments &lt;/h2&gt;
+Research reported in this website was supported by the National Institute of General Medical Sciences (R01GM115839), National Institute on Drug Abuse (R01DA039934), and National Institute on Aging (R01AG047869) of the National Institutes of Health. This material is based upon work supported by the National Science Foundation under Grant DEB1516428. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health or the National Science Foundation.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quickstart">1.3. Quickstart</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -4683,10 +4800,30 @@ required for a local database.</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_references">References</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a id="boussaid_survey_2013"></a>Boussaïd, Ilhem, Julien Lepagnot, and Patrick Siarry. 2013. “A Survey on Optimization Metaheuristics.” <em>Information Sciences</em>, Prediction, Control and Diagnosis using Advanced Neural Computations, 237 (July): 82–117. <a href="https://doi.org/10.1016/j.ins.2013.02.041" class="bare">https://doi.org/10.1016/j.ins.2013.02.041</a>.</p>
+</div>
+<div class="paragraph">
+<p><a id="ozik_desktop_2016"></a>Ozik, Jonathan, Nicholson T. Collier, Justin M. Wozniak, and Carmine Spagnuolo. 2016. “From Desktop to Large-Scale Model Exploration with Swift/T.” In <em>2016 Winter Simulation Conference (WSC)</em>, 206–20. <a href="https://doi.org/10.1109/WSC.2016.7822090" class="bare">https://doi.org/10.1109/WSC.2016.7822090</a>.</p>
+</div>
+<div class="paragraph">
+<p><a id="ozik_population_2021"></a>Ozik, Jonathan, Justin M Wozniak, Nicholson Collier, Charles M Macal, and Mickaël Binois. 2021. “A Population Data-Driven Workflow for COVID-19 Modeling and Learning.” <em>The International Journal of High Performance Computing Applications</em> 35 (5): 483–99. <a href="https://doi.org/10.1177/10943420211035164" class="bare">https://doi.org/10.1177/10943420211035164</a>.</p>
+</div>
+<div class="paragraph">
+<p><a id="wozniak_swiftt_2013"></a>Wozniak, J. M., T. G. Armstrong, M. Wilde, D. S. Katz, E. Lusk, and I. T. Foster. 2013. “Swift/T: Large-Scale Application Composition via Distributed-Memory Dataflow Processing.” In <em>2013 13th IEEE/ACM International Symposium on Cluster, Cloud, and Grid Computing</em>, 95–102. IEEE. <a href="https://doi.org/10.1109/CCGrid.2013.99" class="bare">https://doi.org/10.1109/CCGrid.2013.99</a>.</p>
+</div>
+<div class="paragraph">
+<p>[[wozniak_candle/supervisor:_2018]]Wozniak, Justin M., Rajeev Jain, Prasanna Balaprakash, Jonathan Ozik, Nicholson T. Collier, John Bauer, Fangfang Xia, et al. 2018. “CANDLE/Supervisor: a Workflow Framework for Machine Learning Applied to Cancer Research.” <em>BMC Bioinformatics</em> 19 (18): 491. <a href="https://doi.org/10.1186/s12859-018-2508-4" class="bare">https://doi.org/10.1186/s12859-018-2508-4</a>.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-01-10 16:05:11 -0600
+Last updated 2024-01-11 10:54:54 -0600
 </div>
 </div>
 </body>
