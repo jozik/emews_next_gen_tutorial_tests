@@ -23,7 +23,7 @@ metaheuristics that promote software reuse and reduce developmental
 effort” cite:[boussaid_survey_2013]. Our design goals are to ease
 software integration while providing scalability to the largest scale
 (exascale plus) supercomputers, running millions of models, thousands
-at a time. EMEWS has shown robust scalability cite:[ozik_population_2021,wozniak_candle/supervisor:_2018]. The tools are also easy to install and run on an ordinary
+at a time. EMEWS has shown robust scalability cite:[ozik_population_2021,wozniak_candle_supervisor_2018]. The tools are also easy to install and run on an ordinary
 laptop, requiring only an MPI (Message Passing Interface) implementation, which can be easily
 obtained from common OS package repositories.
 
