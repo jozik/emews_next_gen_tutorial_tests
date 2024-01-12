@@ -520,14 +520,22 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <ul class="sectlevel1">
 <li><a href="#_emews_introduction_and_quickstart">1. EMEWS Introduction and Quickstart</a>
 <ul class="sectlevel2">
-<li><a href="#_extreme_scale_model_exploration_with_swift_emews">1.1. Extreme-scale Model Exploration with Swift (EMEWS)</a></li>
-<li><a href="#_emews_workflow_structure">1.2. EMEWS workflow structure</a></li>
-<li><a href="#_quickstart">1.3. Quickstart</a></li>
+<li><a href="#_extreme_scale_model_exploration_with_swift_emews">1.1. Extreme-scale Model Exploration with Swift (EMEWS)</a>
+<ul class="sectlevel3">
+<li><a href="#_emews_workflow_structure">1.1.1. EMEWS workflow structure</a></li>
+<li><a href="#_tutorial_goals">1.1.2. Tutorial Goals</a></li>
+<li><a href="#_tutorial_code">1.1.3. Tutorial Code</a></li>
+<li><a href="#_emews_mailing_list">1.1.4. EMEWS Mailing List</a></li>
+<li><a href="#_citing_emews">1.1.5. Citing EMEWS</a></li>
+<li><a href="#_acknowledgments">1.1.6. Acknowledgments</a></li>
+</ul>
+</li>
+<li><a href="#_quickstart">1.2. Quickstart</a></li>
 </ul>
 </li>
 <li><a href="#uc1">2. <mark>Simple</mark> Workflows with ABM</a>
 <ul class="sectlevel2">
-<li><a href="#_tutorial_goals">2.1. Tutorial goals</a></li>
+<li><a href="#_tutorial_goals_2">2.1. Tutorial goals</a></li>
 <li><a href="#_workflow_project_structure">2.2. Workflow Project Structure</a></li>
 <li><a href="#_jzombie_repast_simulation">2.3. JZombie: Repast simulation</a>
 <ul class="sectlevel3">
@@ -552,7 +560,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </li>
 <li><a href="#uc4">3. Minimizing the Ackley function with an EQSQL Workflow</a>
 <ul class="sectlevel2">
-<li><a href="#_tutorial_goals_2">3.1. Tutorial Goals</a></li>
+<li><a href="#_tutorial_goals_3">3.1. Tutorial Goals</a></li>
 <li><a href="#_running_the_workflow">3.2. Running the Workflow</a></li>
 <li><a href="#_workflow_project_structure_2">3.3. Workflow Project Structure</a></li>
 <li><a href="#_the_ackley_function">3.4. The Ackley Function</a></li>
@@ -620,9 +628,8 @@ at a time. EMEWS has shown robust scalability (<a href="#ozik_population_2021">O
 laptop, requiring only an MPI (Message Passing Interface) implementation, which can be easily
 obtained from common OS package repositories.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_emews_workflow_structure">1.2. EMEWS workflow structure</h3>
+<div class="sect3">
+<h4 id="_emews_workflow_structure">1.1.1. EMEWS workflow structure</h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/EMEWS_figure.png" alt="EMEWS" width="640" height="480">
@@ -645,8 +652,7 @@ Fortran, Julia, Tcl, or any language supported by Swift/T.  We provide
 a high-level queue-like interface with (currently) three
 implementations: EQ/Py, EQ/R, and EQSQL (EMEWS Queues for
 Python, R, and SQL). The interface defines the two functions <code>OUT_put</code> and <code>IN_get</code> for sending candidate model parameters from the ME algorithm to the Swift script and getting model outputs back, respectively. The interface also allows the Swift script to obtain
-candidate model parameter inputs (<code>EQX_get</code>) and return model outputs to the ME (<code>EQX_put</code>).  The models are distributed by the Swift/T runtime over a
-potentially large computer system, but smaller systems that run one
+candidate model parameter inputs (<code>EQX_get</code>) and return model outputs to the ME (<code>EQX_put</code>).  The models are distributed over large and distributed computer system, but smaller systems that run one
 model at a time are also supported.  The models can be
 implemented as external applications called through the shell, built-in interpreters, or
 in-memory libraries accessed directly by Swift (for faster
@@ -656,55 +662,86 @@ invocation).</p>
 <p>EMEWS thus offers the following contributions to the science and
 practice of computational ME studies:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>It offers the capability to run very large, complex, and highly concurrent
+ensembles of models of varying types on a broad range of individual or distributed computing resources;</p>
+</li>
+<li>
+<p>It supports a wide class of model exploration algorithms,
+including those increasingly available to the community via Python and R libraries;</p>
+</li>
+<li>
+<p>It offers a software sustainability solution, in that computational workflows
+based around EMEWS can easily be compared and distributed.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tutorial_goals">1.1.2. Tutorial Goals</h4>
 <div class="paragraph">
-<p>&lt;ol id="myol"&gt;
-&lt;li&gt; It offers the capability to run very large, highly concurrent
-  ensembles of simulations of varying types;&lt;/li&gt;
-&lt;li&gt; It supports a wide class of model exploration algorithms,
-  including those increasingly available to the community via Python and R libraries;&lt;/li&gt;
-&lt;li&gt; It offers a software sustainability solution, in that simulation
-  studies based around &lt;b id="myb"&gt;EMEWS&lt;/b&gt; can easily be compared and
-  distributed.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/p&gt;</p>
+<p>This tutorial aims to describe through examples the following main elements of the EMEWS framework:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>How external ME code can be incorporated with minimal modifications</p>
+</li>
+<li>
+<p>How the EMEWS Queues (EQ/Xs) are used to communicate between model exploration code and Swift workers</p>
+</li>
+<li>
+<p>How EMEWS enables the scaling of simulation and black box model exploration to large and distributed computing resources</p>
+</li>
+<li>
+<p>How modularized, multi-language code can be effectively tested and integrated within the EMEWS framework</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tutorial_code">1.1.3. Tutorial Code</h4>
+<div class="paragraph">
+<p>The example use cases presented in this tutorial can be found <mark>here</mark>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc1" target="UC1">UC1</a></p>
+</li>
+<li>
+<p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc4" target="UC4">UC4</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_emews_mailing_list">1.1.4. EMEWS Mailing List</h4>
+<div class="paragraph">
+<p>For questions about EMEWS or to access archived questions, please subscribe to the EMEWS mailing list:
+<a href="https://lists.mcs.anl.gov/mailman/listinfo/emews" class="bare" target="mailinglist">https://lists.mcs.anl.gov/mailman/listinfo/emews</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_citing_emews">1.1.5. Citing EMEWS</h4>
+<div class="paragraph">
+<p>To cite EMEWS, please use:</p>
 </div>
 <div class="paragraph">
-<p>&lt;h2&gt; Tutorial Goals&lt;/h2&gt;
-&lt;p&gt;
-&lt;/p&gt;
-This tutorial aims to describe through examples the following main elements of the EMEWS framework:
-&lt;ol id="myol"&gt;
-&lt;li&gt; How external code can be incorporated with minimal modifications&lt;/li&gt;
-&lt;li&gt; How the EMEWS Queues (EQ/Xs) are used to communicate between model exploration code and Swift&lt;/li&gt;
-&lt;li&gt; How EMEWS enables the scaling of simulation and black box model exploration to large computing resources&lt;/li&gt;
-&lt;li&gt; How modularized, multi-language code can be effectively tested and integrated within the EMEWS framework&lt;/li&gt;
-&lt;/ol&gt;</p>
+<p>Ozik, Jonathan, Nicholson T. Collier, Justin M. Wozniak, and Carmine Spagnuolo. 2016. “From Desktop to Large-Scale Model Exploration with Swift/T.” In <em>2016 Winter Simulation Conference (WSC)</em>, 206–20. <a href="https://doi.org/10.1109/WSC.2016.7822090" class="bare">https://doi.org/10.1109/WSC.2016.7822090</a>.</p>
 </div>
-<div class="paragraph">
-<p>&lt;h2&gt; Tutorial Code &lt;/h2&gt;
-The examples use cases presented in this tutorial can be downloaded here:
-&lt;a href="http://www.mcs.anl.gov/~emews/files/UC1.zip"&gt;UC1.zip&lt;/a&gt;,
-&lt;a href="http://www.mcs.anl.gov/~emews/files/UC2.zip"&gt;UC2.zip&lt;/a&gt;, and
-&lt;a href="http://www.mcs.anl.gov/~emews/files/UC3.zip"&gt;UC3.zip&lt;/a&gt;,</p>
 </div>
+<div class="sect3">
+<h4 id="_acknowledgments">1.1.6. Acknowledgments</h4>
 <div class="paragraph">
-<p>&lt;h2&gt; EMEWS Mailing List &lt;/h2&gt;
-For questions about EMEWS or to access archived questions, please subscribe to the EMEWS mailing list:
-&lt;a target="_blank" href="https://lists.mcs.anl.gov/mailman/listinfo/emews"&gt;&lt;b id="myb"&gt;<a href="https://lists.mcs.anl.gov/mailman/listinfo/emews&lt;/b&gt;&lt;/a&gt" class="bare">https://lists.mcs.anl.gov/mailman/listinfo/emews&lt;/b&gt;&lt;/a&gt</a>;</p>
+<p>Research reported in this website was supported by the National Science Foundation (2200234), the National Institutes of Health (R01GM115839, R01DA039934, R01DA055502), the U.S. Department of Energy, Office of Science, under contract number DE-AC02-06CH11357, and the DOE Office of Science through the Bio-preparedness Research Virtual Environment (BRaVE) initiative. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Science Foundation or the National Institutes of Health.</p>
 </div>
-<div class="paragraph">
-<p>&lt;h2&gt;Citing EMEWS&lt;/h2&gt;</p>
-</div>
-<div class="paragraph">
-<p>To cite EMEWS, please use: &lt;br&gt; Ozik, J., N. Collier, J. M. Wozniak and C. Spagnuolo. 2016. "From Desktop to Large-Scale Model Exploration with Swift/T." In Proceedings of the 2016 Winter Simulation Conference.</p>
-</div>
-<div class="paragraph">
-<p>&lt;h2&gt; Acknowledgments &lt;/h2&gt;
-Research reported in this website was supported by the National Institute of General Medical Sciences (R01GM115839), National Institute on Drug Abuse (R01DA039934), and National Institute on Aging (R01AG047869) of the National Institutes of Health. This material is based upon work supported by the National Science Foundation under Grant DEB1516428. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health or the National Science Foundation.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_quickstart">1.3. Quickstart</h3>
+<h3 id="_quickstart">1.2. Quickstart</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -744,7 +781,7 @@ EMEWS <mark><a href="#_sweep_template">sweep template</a></mark>,
 and that should be read before this.</p>
 </div>
 <div class="sect2">
-<h3 id="_tutorial_goals">2.1. Tutorial goals</h3>
+<h3 id="_tutorial_goals_2">2.1. Tutorial goals</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1527,7 +1564,7 @@ likely to find an optimal result according to the GPR. This repeats until all th
 emews creator <a href="#eqsql_top">eqsql</a> template, and that should be read before this.</p>
 </div>
 <div class="sect2">
-<h3 id="_tutorial_goals_2">3.1. Tutorial Goals</h3>
+<h3 id="_tutorial_goals_3">3.1. Tutorial Goals</h3>
 <div class="paragraph">
 <p><mark>TODO: GOALS</mark></p>
 </div>
@@ -2237,10 +2274,20 @@ Dealing with worker pool error&#8201;&#8212;&#8201;short timeout in as completed
 <li>
 <p>Binary (recommend for this tutorial and small scale testing)</p>
 </li>
+</ul>
+</div>
+<div class="paragraph">
+<p>link to Anaconda.org</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Source</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>link to Swift/T Guide</p>
 </div>
 </div>
 </div>

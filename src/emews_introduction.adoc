@@ -27,7 +27,7 @@ at a time. EMEWS has shown robust scalability cite:[ozik_population_2021,wozniak
 laptop, requiring only an MPI (Message Passing Interface) implementation, which can be easily
 obtained from common OS package repositories.
 
-=== EMEWS workflow structure
+==== EMEWS workflow structure
 
 image::EMEWS_figure.png[EMEWS, 640, 480]
 
@@ -43,8 +43,7 @@ Fortran, Julia, Tcl, or any language supported by Swift/T.  We provide
 a high-level queue-like interface with (currently) three
 implementations: EQ/Py, EQ/R, and EQSQL (EMEWS Queues for
 Python, R, and SQL). The interface defines the two functions `OUT_put` and `IN_get` for sending candidate model parameters from the ME algorithm to the Swift script and getting model outputs back, respectively. The interface also allows the Swift script to obtain
-candidate model parameter inputs (`EQX_get`) and return model outputs to the ME (`EQX_put`).  The models are distributed by the Swift/T runtime over a
-potentially large computer system, but smaller systems that run one
+candidate model parameter inputs (`EQX_get`) and return model outputs to the ME (`EQX_put`).  The models are distributed over large and distributed computer system, but smaller systems that run one
 model at a time are also supported.  The models can be
 implemented as external applications called through the shell, built-in interpreters, or
 in-memory libraries accessed directly by Swift (for faster
@@ -53,45 +52,47 @@ invocation).
 EMEWS thus offers the following contributions to the science and
 practice of computational ME studies: 
 
-<ol id="myol">
-<li> It offers the capability to run very large, highly concurrent
-  ensembles of simulations of varying types;</li>
-<li> It supports a wide class of model exploration algorithms,
-  including those increasingly available to the community via Python and R libraries;</li>
-<li> It offers a software sustainability solution, in that simulation
-  studies based around <b id="myb">EMEWS</b> can easily be compared and
-  distributed.</li>
-</ol>
-</p>
+* It offers the capability to run very large, complex, and highly concurrent
+  ensembles of models of varying types on a broad range of individual or distributed computing resources;
+* It supports a wide class of model exploration algorithms,
+  including those increasingly available to the community via Python and R libraries;
+* It offers a software sustainability solution, in that computational workflows
+ based around EMEWS can easily be compared and distributed.
 
-<h2> Tutorial Goals</h2>
-<p>
-</p>
+==== Tutorial Goals
+
 This tutorial aims to describe through examples the following main elements of the EMEWS framework:
-<ol id="myol">
-<li> How external code can be incorporated with minimal modifications</li>
-<li> How the EMEWS Queues (EQ/Xs) are used to communicate between model exploration code and Swift</li>
-<li> How EMEWS enables the scaling of simulation and black box model exploration to large computing resources</li>
-<li> How modularized, multi-language code can be effectively tested and integrated within the EMEWS framework</li>
-</ol>
 
-<h2> Tutorial Code </h2>
-The examples use cases presented in this tutorial can be downloaded here:
-<a href="http://www.mcs.anl.gov/~emews/files/UC1.zip">UC1.zip</a>,
-<a href="http://www.mcs.anl.gov/~emews/files/UC2.zip">UC2.zip</a>, and
-<a href="http://www.mcs.anl.gov/~emews/files/UC3.zip">UC3.zip</a>,
+* How external ME code can be incorporated with minimal modifications
+* How the EMEWS Queues (EQ/Xs) are used to communicate between model exploration code and Swift workers
+* How EMEWS enables the scaling of simulation and black box model exploration to large and distributed computing resources
+* How modularized, multi-language code can be effectively tested and integrated within the EMEWS framework
 
-<h2> EMEWS Mailing List </h2>
+
+==== Tutorial Code
+The example use cases presented in this tutorial can be found #here#:
+//TODO: uncomment uc2 and uc3 when complete
+
+* https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc1[UC1,window=UC1,pts="noopener,nofollow"]
+//* https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc2[UC2,window=UC2,pts="noopener,nofollow"]
+//* https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc3[UC3,window=UC3,pts="noopener,nofollow"]
+* https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc4[UC4,window=UC4,pts="noopener,nofollow"]
+
+==== EMEWS Mailing List
 For questions about EMEWS or to access archived questions, please subscribe to the EMEWS mailing list:
-<a target="_blank" href="https://lists.mcs.anl.gov/mailman/listinfo/emews"><b id="myb">https://lists.mcs.anl.gov/mailman/listinfo/emews</b></a>
+https://lists.mcs.anl.gov/mailman/listinfo/emews[,window=mailinglist,pts="noopener,nofollow"]
 
-<h2>Citing EMEWS</h2>
+==== Citing EMEWS
 
-To cite EMEWS, please use: <br> Ozik, J., N. Collier, J. M. Wozniak and C. Spagnuolo. 2016. "From Desktop to Large-Scale Model Exploration with Swift/T." In Proceedings of the 2016 Winter Simulation Conference.
+To cite EMEWS, please use:
+
+bibitem:[ozik_desktop_2016]
 
 
-<h2> Acknowledgments </h2>
-Research reported in this website was supported by the National Institute of General Medical Sciences (R01GM115839), National Institute on Drug Abuse (R01DA039934), and National Institute on Aging (R01AG047869) of the National Institutes of Health. This material is based upon work supported by the National Science Foundation under Grant DEB1516428. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health or the National Science Foundation.
+==== Acknowledgments
+Research reported in this website was supported by the National Science Foundation (2200234), the National Institutes of Health (R01GM115839, R01DA039934, R01DA055502), the U.S. Department of Energy, Office of Science, under contract number DE-AC02-06CH11357, and the DOE Office of Science through the Bio-preparedness Research Virtual Environment (BRaVE) initiative. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Science Foundation or the National Institutes of Health.
+
+
 
 
 
