@@ -623,42 +623,38 @@ obtained from common OS package repositories.</p>
 </div>
 <div class="sect2">
 <h3 id="_emews_workflow_structure">1.2. EMEWS workflow structure</h3>
-<div class="paragraph">
-<p>&lt;p&gt;
-&lt;img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure.png" alt="EMEWS Figure" height="300"&gt;
-&lt;/p&gt;</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/EMEWS_figure.png" alt="EMEWS" width="640" height="480">
+</div>
 </div>
 <div class="paragraph">
-<p>&lt;p&gt;
-This figure illustrates the main components of the &lt;b id="myb"&gt;EMEWS&lt;/b&gt;
-framework.  The main user interface is the Swift script, a high-level
+<p>This figure illustrates the main components of the EMEWS framework.  The main user interface is the Swift script, a high-level
 program.  The core novel contributions of
-&lt;b id="myb"&gt;EMEWS&lt;/b&gt; are shown in green, these allow the Swift script to access a
-running ME algorithm.
-&lt;p&gt;
-&lt;img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_EQX.png" alt="EMEWS Figure EQX" height="150"&gt;
-&lt;/p&gt;
-The ME algorithm can be expressed in Python, R, C, C++,
+EMEWS are shown in green, these allow the Swift script to access a
+running ME algorithm.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EMEWS_figure_EQX.png" alt="EQX Zoomed" width="640" height="480">
+</div>
+</div>
+<div class="paragraph">
+<p>The ME algorithm can be expressed in Python, R, C, C++,
 Fortran, Julia, Tcl, or any language supported by Swift/T.  We provide
-a high-level queue-like interface with (currently) two
-implementations: EQ/Py and EQ/R (EMEWS Queues for
-Python and R). The interface defines the two functions &lt;tt id="mycode"&gt;OUT_put&lt;/tt&gt; and &lt;tt id="mycode"&gt;IN_get&lt;/tt&gt; for sending candidate model parameters from the ME algorithm to the Swift script and getting model outputs back, respectively. The interface also allows the Swift script to obtain
-candidate model parameter inputs (&lt;tt id="mycode"&gt;EQX_get&lt;/tt&gt;) and return model outputs to the ME (&lt;tt id="mycode"&gt;EQX_put&lt;/tt&gt;).  The simulation models are distributed by the Swift/T runtime over a
+a high-level queue-like interface with (currently) three
+implementations: EQ/Py, EQ/R, and EQSQL (EMEWS Queues for
+Python, R, and SQL). The interface defines the two functions <code>OUT_put</code> and <code>IN_get</code> for sending candidate model parameters from the ME algorithm to the Swift script and getting model outputs back, respectively. The interface also allows the Swift script to obtain
+candidate model parameter inputs (<code>EQX_get</code>) and return model outputs to the ME (<code>EQX_put</code>).  The models are distributed by the Swift/T runtime over a
 potentially large computer system, but smaller systems that run one
-model at a time are also supported.  The simulations can be
-implemented as external applications called through the shell, or
+model at a time are also supported.  The models can be
+implemented as external applications called through the shell, built-in interpreters, or
 in-memory libraries accessed directly by Swift (for faster
-invocation).
-&lt;/p&gt;
-&lt;p&gt;
-&lt;b id="myb"&gt;EMEWS&lt;/b&gt; thus offers the following contributions to the science and
-practice of simulation ME studies: &lt;!--
-&lt;b id="myb"&gt;1)&lt;/b&gt; it offers the capability to run very large, highly concurrent
-  ensembles of simulations of varying types; &lt;b id="myb"&gt;2)&lt;/b&gt; it supports a wide class of model exploration algorithms,
-  including those increasingly available to the community via Python and R libraries; and &lt;b id="myb"&gt;3)&lt;/b&gt; it offers a software sustainability solution, in that simulation
-  studies based around &lt;b id="myb"&gt;EMEWS&lt;/b&gt; can easily be compared and
-  distributed.
- -&#8594;</p>
+invocation).</p>
+</div>
+<div class="paragraph">
+<p>EMEWS thus offers the following contributions to the science and
+practice of computational ME studies:</p>
 </div>
 <div class="paragraph">
 <p>&lt;ol id="myol"&gt;
