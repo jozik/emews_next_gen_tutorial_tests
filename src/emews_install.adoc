@@ -1,9 +1,11 @@
 == Installing EMEWS
 
-
-
 Types of installs:
 
 * Binary (recommend for this tutorial and small scale testing)
+
+link to Anaconda.org
+
 * Source
 
+link to Swift/T Guide
