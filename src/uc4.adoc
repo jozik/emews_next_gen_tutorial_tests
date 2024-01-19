@@ -324,7 +324,7 @@ we need to convert them into Python structures that are, such as lists.
 
 Having submitted the initial tasks, `run` begins the optimization https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L117[loop,
 window=opt_loop,pts="noopener,nofollow"]. The loop repeatedly queries for
-some number of completed tasks using eqsql's `as_completed` function which returns
+some number of completed tasks using a task queues' `as_completed` method which returns
 an iterator over that number of completed tasks, waiting for tasks to complete if necessary.
 When `as_completed` finishes returning completed tasks, we reprioritize the remaining
 uncompleted tasks using the results provided by the completed tasks. The loop continues
@@ -341,7 +341,7 @@ fts = [t.future for t in tasks.values()]    <3>
 
 while tasks_completed < total_completed:    <4>
     # add the result to the completed Tasks.
-    for ft in eq.as_completed(fts, pop=True, n=reprioritize_after):    <5>
+    for ft in task_queue.as_completed(fts, pop=True, n=reprioritize_after):    <5>
         _, result = ft.result()    <6>
         tasks[ft.eq_task_id].result = json.loads(result)    <7>
         tasks_completed += 1    <8>
