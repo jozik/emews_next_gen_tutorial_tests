@@ -10,12 +10,14 @@ from sklearn.gaussian_process import GaussianProcessRegressor, kernels
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.pipeline import Pipeline
 
-from eqsql import eq, worker_pool, db_tools
+from eqsql import worker_pool, db_tools
+from eqsql.task_queues import local_queue
+from eqsql.task_queues import core
 
 
 @dataclass
 class Task:
-    future: eq.Future
+    future: core.Future
     sample: np.array
     result: float
 
@@ -62,7 +64,7 @@ def fit_gpr(training_data, pred_data):
     return np.argsort(-1 * ei)
 
 
-def reprioritize(tasks: Dict[int, Task]):
+def reprioritize(task_queue, tasks: Dict[int, Task]):
     # separate tasks into training and prediction data
     training = []
     uncompleted_fts = []
@@ -86,7 +88,7 @@ def reprioritize(tasks: Dict[int, Task]):
             priorities.append(priority)
 
         print("Reprioritizing ...", flush=True)
-        eq.update_priority(fts, priorities)
+        task_queue.update_priorities(fts, priorities)
 
 
 def run(exp_id: str, params: Dict):
@@ -99,13 +101,12 @@ def run(exp_id: str, params: Dict):
         db_started = True
 
         # start task queue
-        task_queue = eq.init_task_queue(params['db_host'], params['db_user'],
-                                        port=None, db_name=params['db_name'])
+        task_queue = local_queue.init_task_queue(params['db_host'], params['db_user'],
+                                                 port=None, db_name=params['db_name'])
 
         # check if the input and output queues are empty,
         # if not, then exit with a warning.
         if not task_queue.are_queues_empty():
-            task_queue.clear_queues()
             print("WARNING: db input / output queues are not empty. Aborting run", flush=True)
             return
 
@@ -123,12 +124,12 @@ def run(exp_id: str, params: Dict):
 
         while tasks_completed < total_completed:
             # add the result to the completed Tasks.
-            for ft in eq.as_completed(fts, pop=True, n=reprioritize_after):
+            for ft in task_queue.as_completed(fts, pop=True, n=reprioritize_after):
                 _, result = ft.result()
                 tasks[ft.eq_task_id].result = json.loads(result)
                 tasks_completed += 1
 
-            reprioritize(tasks)
+            reprioritize(task_queue, tasks)
 
     finally:
         if task_queue is not None:
