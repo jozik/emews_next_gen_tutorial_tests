@@ -54,7 +54,6 @@ within this directory.
 
 === Workflow Project Structure
 The full source code for this use case can be accessed https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc4[here,window=uc4,pts="noopener,nofollow"].
-// TODO: modify the structure and files to reflect the final version. Just run tree on completed version.
 The completed workflow project has the following directory structure and files:
 // NB: Generated using tree.
 [source,text]
@@ -258,7 +257,49 @@ The worker pool configuration file (https://github.com/jozik/emews_next_gen_tuto
 are unchanged from those produced by eqsql template. A discussion of them can be found <<pool_cfg,here>>
 and <<eqsql_launch_script,here>>
 
-#TODO: Suggested for the above section: Explain that Python functions can be called via swift interpreter to streamline. Indicate the pros and cons for doing that versus command line invocation.#
+==== Alternatives to a Bash Script
+
+Python and R code can also be executed directly using Swift-T's embedded Python and R interpreters. When calling Python or R
+code directly from Swift, the convention is to provide the code to call in a text string with template arguments for the
+variables that will be passed to the Python and R code. For example, calling the Ackley function Python code from within
+Swift might look like:
+
+[source, swift]
+----
+string ackley_code_template =    <1>
+"""
+import ackley
+
+param_str = '%s'    <2>
+result = ackley.run(param_str)    <3>
+"""
+----
+<1> Embed the Python code to be called in a string
+<2> Use a formatting token for the parameters to pass to the Ackley function
+<3> Call the Ackley function code, putting the result in the `result`` variable
+
+To run the code in this string, it is first formatted then executed by the
+embedded interpreter.
+
+[source, swift]
+----
+string code = ackley_code_template % (task_payload);    <1>
+string result = python_persist(code, "result");    <2>
+----
+<1> Replace the `%s`` in the `ackley_code_template` string with the task payload
+<2> Execute resulting string (i.e., `code`) in the Python interpreter, returning the value of the
+named `result` variable.
+
+See http://swift-lang.github.io/swift-t/guide.html#external_scripting[Swift-T External Scripting,window=swift_e_s,pts="noopener,nofollow"] for more details on using the embedded Python and R interpreters.
+
+The primary advantage of using the embedded interpreters are being able retrieve the results without
+writing to a file and then reading that file, and so streamlining the code and avoiding file I/O. The
+disadvantage is that only the interpreters that are compiled into SWift can be used. HPC resources
+often provide a variety of Pythons for different tasks and hardware. When running from a bash script,
+the script can select the most appropriate Python (or R) for the task, rather than being constrained to a single
+one. 
+
+NOTE: In addition to running a model, the embeded Python interpreter can be very useful for manipulating parameter strings removing, adding or transforming parameters.
 
 === The Ackley ME
 

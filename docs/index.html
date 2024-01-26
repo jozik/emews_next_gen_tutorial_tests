@@ -570,7 +570,11 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_running_the_workflow">3.2. Running the Workflow</a></li>
 <li><a href="#_workflow_project_structure_2">3.3. Workflow Project Structure</a></li>
 <li><a href="#_the_ackley_function">3.4. The Ackley Function</a></li>
-<li><a href="#_calling_the_ackley_function_from_swift">3.5. Calling the Ackley Function from Swift</a></li>
+<li><a href="#_calling_the_ackley_function_from_swift">3.5. Calling the Ackley Function from Swift</a>
+<ul class="sectlevel3">
+<li><a href="#_alternatives_to_a_bash_script">3.5.1. Alternatives to a Bash Script</a></li>
+</ul>
+</li>
 <li><a href="#_the_ackley_me">3.6. The Ackley ME</a></li>
 </ul>
 </li>
@@ -1958,8 +1962,87 @@ string to a float.</td>
 are unchanged from those produced by eqsql template. A discussion of them can be found <a href="#pool_cfg">here</a>
 and <a href="#eqsql_launch_script">here</a></p>
 </div>
+<div class="sect3">
+<h4 id="_alternatives_to_a_bash_script">3.5.1. Alternatives to a Bash Script</h4>
 <div class="paragraph">
-<p><mark>TODO: Suggested for the above section: Explain that Python functions can be called via swift interpreter to streamline. Indicate the pros and cons for doing that versus command line invocation.</mark></p>
+<p>Python and R code can also be executed directly using Swift-T&#8217;s embedded Python and R interpreters. When calling Python or R
+code directly from Swift, the convention is to provide the code to call in a text string with template arguments for the
+variables that will be passed to the Python and R code. For example, calling the Ackley function Python code from within
+Swift might look like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="swift"><span></span><span class="tok-n">string</span> <span class="tok-n">ackley_code_template</span> <span class="tok-p">=</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-s">&quot;&quot;&quot;</span>
+<span class="tok-s">import ackley</span>
+
+<span class="tok-s">param_str = &#39;%s&#39;    </span><i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-s">result = ackley.run(param_str)    </span><i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-s">&quot;&quot;&quot;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Embed the Python code to be called in a string</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Use a formatting token for the parameters to pass to the Ackley function</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Call the Ackley function code, putting the result in the <code>result`</code> variable</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To run the code in this string, it is first formatted then executed by the
+embedded interpreter.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="swift"><span></span><span class="tok-n">string</span> <span class="tok-n">code</span> <span class="tok-p">=</span> <span class="tok-n">ackley_code_template</span> <span class="tok-o">%</span> <span class="tok-p">(</span><span class="tok-n">task_payload</span><span class="tok-p">);</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">string</span> <span class="tok-n">result</span> <span class="tok-p">=</span> <span class="tok-n">python_persist</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span> <span class="tok-s">&quot;result&quot;</span><span class="tok-p">);</span>    <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Replace the <code>%s`</code> in the <code>ackley_code_template</code> string with the task payload</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Execute resulting string (i.e., <code>code</code>) in the Python interpreter, returning the value of the
+named <code>result</code> variable.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>See <a href="http://swift-lang.github.io/swift-t/guide.html#external_scripting" target="swift_e_s">Swift-T External Scripting</a> for more details on using the embedded Python and R interpreters.</p>
+</div>
+<div class="paragraph">
+<p>The primary advantage of using the embedded interpreters are being able retrieve the results without
+writing to a file and then reading that file, and so streamlining the code and avoiding file I/O. The
+disadvantage is that only the interpreters that are compiled into SWift can be used. HPC resources
+often provide a variety of Pythons for different tasks and hardware. When running from a bash script,
+the script can select the most appropriate Python (or R) for the task, rather than being constrained to a single
+one.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In addition to running a model, the embeded Python interpreter can be very useful for manipulating parameter strings removing, adding or transforming parameters.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect2">
