@@ -17,8 +17,10 @@ This tutorial uses the project structure and files created from the
 emews creator <<eqsql_top,eqsql>> template, and that should be read before this.
 
 === Tutorial Goals
-// TODO: goals
-#TODO: GOALS#
+
+* Run an EQSQL Workflow in Swift/T
+* Implement a Python ME that produces tasks (parameters) for parallel evaluation
+* Implement the parallel evalution of those tasks in a SWift/T worker pool
 
 === Running the Workflow
 
