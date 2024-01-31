@@ -44,13 +44,13 @@ $ ./dev/build/init-settings.sh
 $ run your editor on ./dev/build/swift-t-settings.sh
 ----
 +
-In +swift-t-settings.sh+, ensure that your +mpicc+, Tcl, Python, and R settings are correct.  The defaults usually work if the tools are in +PATH+.
+In +swift-t-settings.sh+, ensure that your `mpicc`, Tcl, Python, and R settings are correct.  The defaults usually work if the tools are in `PATH`.
 . Run the installer with:
 +
 ----
 $ dev/build/build-swift-t.sh
 ----
-. Add to +PATH+:
+. Add to `PATH`:
 +
 ----
 PATH=$PATH:/path/to/swift-t-install/stc/bin
