@@ -584,25 +584,25 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_source">A.2. Source</a></li>
 </ul>
 </li>
-<li><a href="#_creating_emews_projects">Appendix B: Creating EMEWS Projects</a>
+<li><a href="#_creating_emews_projects">4. Creating EMEWS Projects</a>
 <ul class="sectlevel2">
-<li><a href="#_installation">B.1. Installation</a></li>
-<li><a href="#_using_emews_creator">B.2. Using EMEWS Creator</a></li>
-<li><a href="#emews_proj_struc">B.3. EMEWS Project Structure</a>
+<li><a href="#_installation">4.1. Installation</a></li>
+<li><a href="#_using_emews_creator">4.2. Using EMEWS Creator</a></li>
+<li><a href="#emews_proj_struc">4.3. EMEWS Project Structure</a>
 <ul class="sectlevel3">
-<li><a href="#_directories">B.3.1. Directories</a></li>
-<li><a href="#_files">B.3.2. Files</a></li>
+<li><a href="#_directories">4.3.1. Directories</a></li>
+<li><a href="#_files">4.3.2. Files</a></li>
 </ul>
 </li>
-<li><a href="#wflow_templates">B.4. Workflow Templates</a>
+<li><a href="#wflow_templates">4.4. Workflow Templates</a>
 <ul class="sectlevel3">
-<li><a href="#sweep">B.4.1. Sweep</a></li>
-<li><a href="#eqpy_top">B.4.2. EQPy</a></li>
-<li><a href="#eqr_top">B.4.3. EQR</a></li>
-<li><a href="#eqsql_top">B.4.4. EQSQL</a></li>
+<li><a href="#sweep">4.4.1. Sweep</a></li>
+<li><a href="#eqpy_top">4.4.2. EQPy</a></li>
+<li><a href="#eqr_top">4.4.3. EQR</a></li>
+<li><a href="#eqsql_top">4.4.4. EQSQL</a></li>
 </ul>
 </li>
-<li><a href="#_init_db">B.5. INIT DB</a></li>
+<li><a href="#_init_db">4.5. INIT DB</a></li>
 </ul>
 </li>
 <li><a href="#_references">References</a></li>
@@ -2445,7 +2445,7 @@ $ run your editor on ./dev/build/swift-t-settings.sh</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In swift-t-settings.sh, ensure that your mpicc, Tcl, Python, and R settings are correct.  The defaults usually work if the tools are in PATH.</p>
+<p>In swift-t-settings.sh, ensure that your <code>mpicc</code>, Tcl, Python, and R settings are correct.  The defaults usually work if the tools are in <code>PATH</code>.</p>
 </div>
 </li>
 <li>
@@ -2457,7 +2457,7 @@ $ run your editor on ./dev/build/swift-t-settings.sh</pre>
 </div>
 </li>
 <li>
-<p>Add to PATH:</p>
+<p>Add to <code>PATH</code>:</p>
 <div class="listingblock">
 <div class="content">
 <pre>PATH=$PATH:/path/to/swift-t-install/stc/bin</pre>
@@ -2466,20 +2466,20 @@ $ run your editor on ./dev/build/swift-t-settings.sh</pre>
 </li>
 <li>
 <p>Test with:</p>
-</li>
-</ol>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>$ swift-t -v
 $ swift-t -E 'trace(42);'</pre>
 </div>
 </div>
+</li>
+</ol>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_creating_emews_projects">Appendix B: Creating EMEWS Projects</h2>
+<h2 id="_creating_emews_projects">4. Creating EMEWS Projects</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>EMEWS Creator is a Python application for creating workflow projects for EMEWS from
@@ -2487,7 +2487,7 @@ the command line. The project consists of the canonical EMEWS directory layout a
 various files that can be customized by the user for their particular use case.</p>
 </div>
 <div class="sect2">
-<h3 id="_installation">B.1. Installation</h3>
+<h3 id="_installation">4.1. Installation</h3>
 <div class="paragraph">
 <p><mark>NOTE: This part might be removed since it&#8217;ll be installed as part of the stack.</mark></p>
 </div>
@@ -2501,7 +2501,7 @@ various files that can be customized by the user for their particular use case.<
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_emews_creator">B.2. Using EMEWS Creator</h3>
+<h3 id="_using_emews_creator">4.2. Using EMEWS Creator</h3>
 <div class="paragraph">
 <p>Once installed EMEWS Creator is run from the command line. It has the following
 options.</p>
@@ -2560,7 +2560,7 @@ in the <code>example_cfgs</code> directory in the EMEWS Creator github repositor
 </div>
 </div>
 <div class="sect2">
-<h3 id="emews_proj_struc">B.3. EMEWS Project Structure</h3>
+<h3 id="emews_proj_struc">4.3. EMEWS Project Structure</h3>
 <div class="paragraph">
 <p>Each of the workflow types will create the default EMEWS project structure
 in the directory specified by the <code>-o, --output-dir</code> argument.
@@ -2573,7 +2573,7 @@ the <a href="#wflow_templates">Workflow Templates</a> section for more informati
 argument.</p>
 </div>
 <div class="sect3">
-<h4 id="_directories">B.3.1. Directories</h4>
+<h4 id="_directories">4.3.1. Directories</h4>
 <div class="paragraph">
 <p>Given an <code>--output-dir</code> argument of <code>my_emews_project</code>, the default directory structure
 produced by all the workflow types is:</p>
@@ -2638,7 +2638,7 @@ the EQ/R and EQ/Py extensions when creating eqr or eqpy workflows</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_files">B.3.2. Files</h4>
+<h4 id="_files">4.3.2. Files</h4>
 <div class="paragraph">
 <p>Each of the workflow types will generate the following files. The file names
 are derived from parameters specified in the workflow template configuration
@@ -2680,7 +2680,7 @@ relevant sections are marked with <code>TODO</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="wflow_templates">B.4. Workflow Templates</h3>
+<h3 id="wflow_templates">4.4. Workflow Templates</h3>
 <div class="paragraph">
 <p>Each workflow template has its own set of command line arguments, but all have the following
 in common:</p>
@@ -2709,7 +2709,7 @@ If any required arguments are missing from the command line, then the
 configuration file is required to supply the missing arguments.</p>
 </div>
 <div class="sect3">
-<h4 id="sweep">B.4.1. Sweep</h4>
+<h4 id="sweep">4.4.1. Sweep</h4>
 <div class="paragraph">
 <p>The sweep command creates a sweep workflow in which EMEWS reads an input file,
 and runs an application using each line of the input file as input to an application run.
@@ -3367,7 +3367,7 @@ for <code>CFG_WALLTIME</code>, <code>CFG_QUEUE</code>, and <code>CFG_PROJECT</co
 </div>
 </div>
 <div class="sect3">
-<h4 id="eqpy_top">B.4.2. EQPy</h4>
+<h4 id="eqpy_top">4.4.2. EQPy</h4>
 <div class="paragraph">
 <p>The EQPy workflow template creates a workflow that uses EMEWS Queues for Python (EQ/Py)
 to execute an application using input parameters provided by a
@@ -3566,7 +3566,7 @@ to be edited to customize the file for your model and workflow.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="eqr_top">B.4.3. EQR</h4>
+<h4 id="eqr_top">4.4.3. EQR</h4>
 <div class="paragraph">
 <p>The eqr template works much the same as the eqpy template, but for ME algorithms written in R. It generates files and code for ME using the EQ/R EMEWS extension. The EQ/R extension adds two blocking queues through which a swift script and a R algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/R,</p>
 </div>
@@ -3757,7 +3757,7 @@ to be edited to customize the file for your model and workflow.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="eqsql_top">B.4.4. EQSQL</h4>
+<h4 id="eqsql_top">4.4.4. EQSQL</h4>
 <div class="paragraph">
 <p><mark>TODO</mark>: text that distinguishes between local run (db on same machine, swift non-scheduled
 submission), and swift scheduled worker pool submission, and how that applies to the code
@@ -4988,7 +4988,7 @@ the <code>pool_launch_script</code>.</td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_init_db">B.5. INIT DB</h3>
+<h3 id="_init_db">4.5. INIT DB</h3>
 <div class="paragraph">
 <p>EMEWS Creator also includes an <code>init_db</code> command that
 creates the EQSQL database in a user specified directory for use by an EQ/SQL workflow. It assumes that the postgresql
