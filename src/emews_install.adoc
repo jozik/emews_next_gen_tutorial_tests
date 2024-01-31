@@ -56,6 +56,7 @@ $ dev/build/build-swift-t.sh
 PATH=$PATH:/path/to/swift-t-install/stc/bin
 ----
 . Test with:
++
 ----
 $ swift-t -v
 $ swift-t -E 'trace(42);'
