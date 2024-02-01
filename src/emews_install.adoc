@@ -1,11 +1,63 @@
 == Installing EMEWS
 
+EMEWS supports the following systems:
+
 Types of installs:
 
-* Binary (recommend for this tutorial and small scale testing)
+=== Binary
 
-link to Anaconda.org
+Binary installations are recommended for this tutorial and small scale testing on supported systems.
 
-* Source
+For Linux or macOS on x86:
+----
+$ conda install -c conda-forge -c swift-t swift-t-r
+----
 
-link to Swift/T Guide
+See https://anaconda.org/swift-t/swift-t-r[the Anaconda.org site] for the full list of versions.
+
+=== Source
+
+Source installations are supported for:
+
+* Linux on x86
+* Linux on ARM64
+* macOS on x86
+* macOS on ARM64
+
+To install from source, you need to install R and then Swift/T.
+You may install R using your system package manager or a from-source build.
+
+A complete description of the Swift/T installation may be found at the https://swift-lang.github.io/swift-t/guide.html#_installation[Swift/T Guide]; an abbreviated version is given here.
+
+. Install prerequisites: You need MPI, Tcl, SWIG, ZSH, Ant, JDK, and the typical C/C++ compiler tools.  These may be installed using your system package manager, but be sure to install the development versions so that the compile-time headers, etc., are available.
+. Download and unpack the Swift/T source:
++
+----
+$ wget http://swift-lang.github.io/swift-t-downloads/1.6/swift-t-1.6.3.tar.gz
+$ tar xfz swift-t-1.6.3.tar.gz
+$ cd swift-t-1.6.3
+----
+. Configure Swift/T by editing its settings file:
++
+----
+$ ./dev/build/init-settings.sh
+$ run your editor on ./dev/build/swift-t-settings.sh
+----
++
+In +swift-t-settings.sh+, ensure that your `mpicc`, Tcl, Python, and R settings are correct.  The defaults usually work if the tools are in `PATH`.
+. Run the installer with:
++
+----
+$ dev/build/build-swift-t.sh
+----
+. Add to `PATH`:
++
+----
+PATH=$PATH:/path/to/swift-t-install/stc/bin
+----
+. Test with:
++
+----
+$ swift-t -v
+$ swift-t -E 'trace(42);'
+----
