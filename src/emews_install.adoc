@@ -22,7 +22,7 @@ Source installations are supported for:
 * Linux on x86 (`linux-64`)
 * Linux on ARM64
 * macOS on x86 (`osx-64`)
-* macOS on ARM64 (`osx-arm64`
+* macOS on ARM64 (`osx-arm64`)
 
 To install from source, you need to install R and then Swift/T.
 You may install R using your system package manager or a from-source build.
