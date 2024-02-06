@@ -8,7 +8,7 @@ Types of installs:
 
 Binary installations are recommended for this tutorial and small scale testing on supported systems.
 
-For Linux or macOS on x86:
+For Linux or macOS on x86, simply install Anaconda package `swift-t-r`:
 ----
 $ conda install -c conda-forge -c swift-t swift-t-r
 ----
@@ -29,7 +29,19 @@ You may install R using your system package manager or a from-source build.
 
 A complete description of the Swift/T installation may be found at the https://swift-lang.github.io/swift-t/guide.html#_installation[Swift/T Guide]; an abbreviated version is given here.
 
-. Install prerequisites: You need MPI, Tcl, SWIG, ZSH, Ant, JDK, and the typical C/C++ compiler tools.  These may be installed using your system package manager, but be sure to install the development versions so that the compile-time headers, etc., are available.
+. Install prerequisites: You need MPI, Tcl, SWIG, ZSH, Ant, JDK, R, and the typical C/C++ compiler tools.  These may be installed using your system package manager, but be sure to install the development versions so that the compile-time headers, etc., are available.
+. Install RInside using R's `install.packages()` (except on `osx-arm64`, see below):
++
+----
+$ R
+> install.packages("RInside")
+# Pick any CRAN mirror
+* installing *source* package 'RInside' ...
+using C++ compiler: ...
+miscellaneous g++ commands...
+...
+* DONE (RInside)
+----
 . Download and unpack the Swift/T source:
 +
 ----
@@ -61,3 +73,34 @@ PATH=$PATH:/path/to/swift-t-install/stc/bin
 $ swift-t -v
 $ swift-t -E 'trace(42);'
 ----
+
+==== R on `osx-arm64`
+
+This new OS combination with Anaconda does not seem to support R with the RInside library for C++ integration.  You must install R from source.
+
+. Install bzip2, XZ, and PCRE2 and set the `-I` and `-L` flags via `CPPFLAGS` and `LDFLAGS`
+. Download and unpack R:
++
+----
+$ wget https://cran.r-project.org/src/base/R-4/R-4.3.2.tar.gz
+$ tar xfz R-4.3.2.tar.gz
+$ cd R-4.3.2
+----
+. Configure and build R:
++
+----
+$ ./configure --config-cache           \
+              --prefix=/home/path/to/R \
+              --enable-R-shlib         \
+              --disable-java           \
+              --without-tcltk          \
+              --without-cairo          \
+              --without-jpeglib        \
+              --without-libtiff        \
+              --without-ICU            \
+              --without-x
+$ make
+$ make install
+----
+. Install RInside via `install.packages()`
+. Proceed with the installation using this R in `swift-t-settings.sh`
