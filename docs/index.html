@@ -581,7 +581,11 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_installing_emews">Appendix A: Installing EMEWS</a>
 <ul class="sectlevel2">
 <li><a href="#_binary">A.1. Binary</a></li>
-<li><a href="#_source">A.2. Source</a></li>
+<li><a href="#_source">A.2. Source</a>
+<ul class="sectlevel3">
+<li><a href="#_r_on_osx_arm64">A.2.1. R on <code>osx-arm64</code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_creating_emews_projects">4. Creating EMEWS Projects</a>
@@ -2382,7 +2386,7 @@ Dealing with worker pool error&#8201;&#8212;&#8201;short timeout in as completed
 <p>Binary installations are recommended for this tutorial and small scale testing on supported systems.</p>
 </div>
 <div class="paragraph">
-<p>For Linux or macOS on x86:</p>
+<p>For Linux or macOS on x86, simply install Anaconda package <code>swift-t-r</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2424,7 +2428,22 @@ You may install R using your system package manager or a from-source build.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Install prerequisites: You need MPI, Tcl, SWIG, ZSH, Ant, JDK, and the typical C/C++ compiler tools.  These may be installed using your system package manager, but be sure to install the development versions so that the compile-time headers, etc., are available.</p>
+<p>Install prerequisites: You need MPI, Tcl, SWIG, ZSH, Ant, JDK, R, and the typical C/C++ compiler tools.  These may be installed using your system package manager, but be sure to install the development versions so that the compile-time headers, etc., are available.</p>
+</li>
+<li>
+<p>Install RInside using R&#8217;s <code>install.packages()</code> (except on <code>osx-arm64</code>, see below):</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ R
+&gt; install.packages("RInside")
+# Pick any CRAN mirror
+* installing *source* package 'RInside' ...
+using C++ compiler: ...
+miscellaneous g++ commands...
+...
+* DONE (RInside)</pre>
+</div>
+</div>
 </li>
 <li>
 <p>Download and unpack the Swift/T source:</p>
@@ -2474,6 +2493,54 @@ $ swift-t -E 'trace(42);'</pre>
 </div>
 </li>
 </ol>
+</div>
+<div class="sect3">
+<h4 id="_r_on_osx_arm64">A.2.1. R on <code>osx-arm64</code></h4>
+<div class="paragraph">
+<p>This new OS combination with Anaconda does not seem to support R with the RInside library for C++ integration.  You must install R from source.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Install bzip2, XZ, and PCRE2 and set the <code>-I</code> and <code>-L</code> flags via <code>CPPFLAGS</code> and <code>LDFLAGS</code></p>
+</li>
+<li>
+<p>Download and unpack R:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ wget https://cran.r-project.org/src/base/R-4/R-4.3.2.tar.gz
+$ tar xfz R-4.3.2.tar.gz
+$ cd R-4.3.2</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configure and build R:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ ./configure --config-cache           \
+              --prefix=/home/path/to/R \
+              --enable-R-shlib         \
+              --disable-java           \
+              --without-tcltk          \
+              --without-cairo          \
+              --without-jpeglib        \
+              --without-libtiff        \
+              --without-ICU            \
+              --without-x
+$ make
+$ make install</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Install RInside via <code>install.packages()</code></p>
+</li>
+<li>
+<p>Proceed with the installation using this R in <code>swift-t-settings.sh</code></p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 </div>
