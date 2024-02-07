@@ -12,9 +12,9 @@ Gem does not seem to work in Anaconda, Python 3.11, 2024-02-06 .
 
 So do all these steps:
 
-----
+```
 $ sudo apt install ruby-dev
 $ sudo apt install asciidoctor
 $ sudo gem install asciidoctor-bibtex
 $ sudo gem install pygments.rb
-----
+```
