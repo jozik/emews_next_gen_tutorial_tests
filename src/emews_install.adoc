@@ -119,6 +119,12 @@ For Anaconda, simply:
 $ conda install bzip2 pcre2 xz
 ----
 
+Make sure `xcrun` is installed via:
+
+----
+$ xcode-select --install
+----
+
 Then set the compiler paths for R `configure` to look in Anaconda and the SDK locations:
 ----
 export CC=clang
