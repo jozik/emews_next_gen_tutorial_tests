@@ -113,6 +113,8 @@ Your options here are:
 * Source builds
 * Possibly Homebrew, etc.
 
+NOTE: When performing builds from source, make sure that your compilers are compatible among the Anaconda/Python, R, and MPI components.  Use `mpicc -show` to check the MPI compiler.
+
 For Anaconda, simply:
 
 ----
