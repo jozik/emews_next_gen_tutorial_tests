@@ -56,7 +56,7 @@ $ ./dev/build/init-settings.sh
 $ run your editor on ./dev/build/swift-t-settings.sh
 ----
 +
-In +swift-t-settings.sh+, ensure that your `mpicc`, Tcl, Python, and R settings are correct.  The defaults usually work if the tools are in `PATH`.
+In +swift-t-settings.sh+, ensure that your `mpicc`, Tcl, Python, and R settings are correct.  The defaults usually work if the tools are in `PATH`.  Tcl should be the one in Anaconda.
 . Run the installer with:
 +
 ----
@@ -113,12 +113,19 @@ Your options here are:
 * Source builds
 * Possibly Homebrew, etc.
 
-NOTE: When performing builds from source, make sure that your compilers are compatible among the Anaconda/Python, R, and MPI components.  Use `mpicc -show` to check the MPI compiler.
+NOTE: When performing builds from source, make sure that your compilers are compatible among the Anaconda/Python, R, Fortran, and MPI components.  Use `mpicc -show` to check the MPI compiler.
+
+You may need to tell `mpicc` and `mpicxx` to set the compiler locations via:
+
+----
+$ export MPICH_CC=clang
+$ export MPICH_CXX=clang++
+----
 
 For Anaconda, simply:
 
 ----
-$ conda install bzip2 pcre2 xz
+$ conda install bzip2 pcre2 xz gfortran
 ----
 
 Make sure `xcrun` is installed via:
@@ -133,6 +140,7 @@ export CC=clang
 export CXX=clang++
 
 PY=/path/to/Anaconda
+PATH=$PY/bin:$PATH
 
 SDK=$( xcrun --show-sdk-path )
 
