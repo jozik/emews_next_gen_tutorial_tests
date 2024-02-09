@@ -1,5 +1,4 @@
 import argparse
-import yaml
 from typing import Dict
 import numpy as np
 import json
@@ -10,7 +9,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor, kernels
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.pipeline import Pipeline
 
-from eqsql import worker_pool, db_tools
+from eqsql import worker_pool, db_tools, cfg
 from eqsql.task_queues import local_queue
 from eqsql.task_queues import core
 
@@ -150,7 +149,6 @@ def create_parser():
 if __name__ == '__main__':
     parser = create_parser()
     args = parser.parse_args()
-    with open(args.config_file) as fin:
-        params = yaml.safe_load(fin)
+    params = cfg.parse_yaml_cfg(args.config_file)
 
     run(args.exp_id, params)

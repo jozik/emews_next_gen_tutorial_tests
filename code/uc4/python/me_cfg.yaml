@@ -9,8 +9,8 @@ db_port:
 worker_pool_id: default
 task_type: 0
 
-pool_launch_script: /home/nick/Documents/repos/emews_next_gen_tutorial_tests/code/uc4/swift/run_ackley_worker_pool.sh
-pool_cfg_file: /home/nick/Documents/repos/emews_next_gen_tutorial_tests/code/uc4/swift/cfgs/ackley_worker_pool.cfg
+pool_launch_script: ../swift/run_ackley_worker_pool.sh
+pool_cfg_file: ../uc4/swift/cfgs/ackley_worker_pool.cfg
 
 # Ackely Example ME configuration
 search_space_size: 50
