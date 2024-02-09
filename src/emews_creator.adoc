@@ -1545,8 +1545,7 @@ def create_parser():
 if __name__ == '__main__':
     parser = create_parser()
     args = parser.parse_args()
-    with open(args.config_file) as fin:
-        params = yaml.safe_load(fin)
+    params = cfg.parse_yaml_cfg(args.config_file)
 
     run(args.exp_id, params)
 ----
@@ -1652,15 +1651,21 @@ The remaining parameters are used by the ME when working with the worker pool.
 worker_pool_id: default    <1>
 task_type: 0    <2>
 
-pool_launch_script: /home/nick/Documents/repos/emews_next_gen_tutorial_tests/code/eqsql_project/swift/run_eqsql_worker_pool.sh    <3>
-pool_cfg_file: /home/nick/Documents/repos/emews_next_gen_tutorial_tests/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg    <4>
+pool_launch_script: ../swift/run_eqsql_worker_pool.sh    <3>
+pool_cfg_file: ../swift/cfgs/eqsql_worker_pool.cfg    <4>
 ----
 <1> Set a worker pool id. The example ME assigns this id to the worker pool when it starts it using
 the `pool_launch_script`.
 <2> Set the type of task for the worker pool to consume.
 <3> Set the worker pool launch script. The example ME will use this script to start the worker pool.
-<4> Set the configuration file for the worker pool.
+This location is relative to the configuration file's location.
+<4> Set the configuration file for the worker pool. This location is relative to the configuration file's
+location.
 
+NOTE: The `eqsql` package contains a utility function for parsing EQ/SQL yaml format configuration files. 
+The `eqsql.cfg.parse_yaml_cfg` function will attempt to resolve `~` into the user's home directory,
+and relative paths for any entries ending in `file`, `script`, or `path`. The relative paths will 
+be resolved using the configuration file location, when those paths begin with `.` or `..`.
 
 ### INIT DB ###
 
