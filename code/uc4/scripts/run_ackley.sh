@@ -47,7 +47,9 @@ cd $INSTANCE_DIRECTORY
 
 # TODO: Define the command to run the model. For example,
 # MODEL_CMD="python" 
-MODEL_CMD="$HOME/anaconda3/envs/swift-t-r-py3.9/bin/python3"
+echo "Using Python: $( which python3 )" 
+
+MODEL_CMD="python3"
 # TODO: Define the arguments to the MODEL_CMD. Each argument should be
 # surrounded by quotes and separated by spaces. For example,
 # arg_array=("$EMEWS_ROOT/python/my_model.py" "$PARAM_LINE" "$OUTPUT_FILE" "$TRIAL_ID")
