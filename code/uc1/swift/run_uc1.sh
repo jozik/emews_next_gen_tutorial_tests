@@ -84,7 +84,9 @@ USER_VARS=()
 log_script
 # echo's anything following this to standard out
 set -x
-SWIFT_FILE=uc1_R.swift
+
+SWIFT_FILE=uc1.swift
+# SWIFT_FILE=uc1_R.swift
 swift-t -n $PROCS $MACHINE -p \
     -I $EMEWS_EXT -r $EMEWS_EXT \
     -e TURBINE_MPI_THREAD \

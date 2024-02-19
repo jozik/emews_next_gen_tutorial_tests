@@ -21,7 +21,7 @@ and that should be read before this.
 === Workflow Project Structure
 The full source code for this tutorial use case can be accessed https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc1[here,window=UC1,pts="noopener,nofollow"].
 
-An initial version of the project was created using the EMEWS creator with the following command issued #here#:
+An initial version of the project was created using the EMEWS creator with the following command, issued from the tutorial https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code[code,window=UC1,pts="noopener,nofollow"] directory:
 // TODO: link to code directory in the repo? https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code[here,window=UC1_code_directory,pts="noopener,nofollow"] or just say that it was issued in the code directory in this repo?
 [source#uc1-creator,bash]
 ----
@@ -29,8 +29,8 @@ emewscreator -o uc1 sweep -c tutorial_cfgs/UC1.yaml
 ----
 //TODO: Include UC1.yaml and briefly explain the config (check what can be borrowed from EMEWS Creator section). And refer the reader to the EMEWS Creator Appendix for further information.
 
-// TODO: modify the structure and files to reflect the final uc1 version. Just run tree on completed version.
-The completed workflow project has the following directory #structure and files#:
+
+The completed workflow project has the following directory structure and files:
 // NB: Generated using tree.
 [source,text]
 ----
@@ -44,15 +44,17 @@ uc1
 ├── ext
 │   └── emews
 │       └── emews.swift
+├── output
 ├── python
 │   └── test
 ├── scripts
 │   └── run_repast_uc1.sh
 └── swift
     ├── cfgs
-    │   └── sweep_workflow.cfg
-    ├── run_sweep_workflow.sh
-    └── sweep_workflow.swift
+    │   └── uc1.cfg
+    ├── run_uc1.sh
+    ├── uc1.swift
+    └── uc1_R.swift
 ----
 
 
@@ -178,36 +180,33 @@ via an InstanceRunner class, for passing a set of parameters to a model and perf
 run of the model using those parameters. Using the InstanceRunner main class, Repast Simphony models can be launched by other
 control applications such as a bash, slurm, or Swift scripts.  We have wrapped the command line invocation of
 Repast Simphony's InstanceRunner in a bash script https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/run_repast_uc1.sh#L1[run_repast_uc1.sh,window=run_repast_uc1.sh,pts="noopener,nofollow"]
- to ease command line usage.
-
-Other non-Repast Simphony models or scientific applications with command line interfaces can be wrapped
-and run similarly.
+to ease command line usage. Other non-Repast Simphony models or scientific applications with command line interfaces can be wrapped and run similarly.
 
 
-An annotated version of the Swift app function that calls Repast Simphony is shown <<repast-app,below>>.
-Prior to the actual function definition, the environment variable
-EMEWS_PROJECT_ROOT is accessed. This variable is used to define the project's top level
-directory, relative to which other directories (e.g., the directory
-that contains the Zombies model) are defined. The value of the TURBINE_OUTPUT
-environment variable is also retrieved. This specifies the path to
+The following is an annotated version of the Swift app function that calls the Repast Simphony model:
+
+[source#repast-app-annot,java]
+.Repast Simphony App Function
+----
+string emews_root = getenv("EMEWS_PROJECT_ROOT");  <1>
+string turbine_output = getenv("TURBINE_OUTPUT");  <2>
+
+app (file out, file err) run_model(file shfile, string param_line, string instance)  <3>
+{
+    "bash" shfile param_line emews_root instance @stdout=out @stderr=err;  <4>
+}
+----
+<1> Prior to the actual function definition, the environment variable `EMEWS_PROJECT_ROOT` is accessed. This variable is used to define the project's top level directory, relative to which other directories (e.g., the directory that contains the Zombies model) are defined.
+<2> The value of the `TURBINE_OUTPUT` environment variable is also retrieved. This specifies the path to
 a directory where Swift/T stores its log files and which we will use
 as a parent directory for the working directories of our individual runs.
 For more on these variables see the
 // TODO: Include link to project creator section.
 #<<swift_run_sweep_sh,discussion>># in the template tutorial.
-
-[source#repast-app-annot,java]
-.Repast Simphony App Function
-----
-app (file out, file err) run_model(file shfile, string param_line, string instance)  <1>
-{
-    "bash" shfile param_line emews_root instance @stdout=out @stderr=err;  <2>
-}
-----
-<1> The app function definition begins. The function returns two files, one for standard output and one for standard error.
+<3> The app function definition begins. The function returns two files, one for standard output and one for standard error.
 The function arguments are those required to run https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/run_repast_uc1.sh#L1[run_repast_uc1.sh,window=run_repast_uc1.sh,pts="noopener,nofollow"], that is,
 the full path of the script, the parameters to run and the directory where the model run output should be written.
-<2> The body of the function calls the bash interpreter passing it the name of the script file to execute and the other function
+<4> The body of the function calls the bash interpreter passing it the name of the script file to execute and the other function
 arguments as well as the project root, that is, `emews_root` directory.
 `@stdout=out` and `@stderr=err` redirect stdout and stderr to the files out and err.
 It should be easy to see how any model or application that can be run from the command line
@@ -534,7 +533,7 @@ CMD_LINE_ARGS="$* -f=$UPF_FILE "  <7>
 ...
 
 SWIFT_FILE=uc1.swift  <8>
-swift-t -n $PROCS $MACHINE -p \
+swift-t -n $PROCS $MACHINE -p \  <9>
     -I $EMEWS_EXT -r $EMEWS_EXT \
     -e TURBINE_MPI_THREAD \
     -e TURBINE_OUTPUT \
@@ -562,7 +561,8 @@ and optionally also provided through the configuration file mechanism.
 <6> The utilized unrolled parameter file is copied to the TURBINE_OUTPUT directory to document
 the details of the workflow and also to prevent any inadvertent overwriting between script submission and the job run.
 <7> The command line arguments provided to the Swift script are constructed. Here the "-f=" argument points to the unrolled parameter file.
-<8> The final lines run the swift script by
+<8> We specify that we want to run `uc1.swift` for the simpler workflow, or we could indicate `uc1_R.swift` for the version that includes the post-run analysis to find the optimal parameters.
+<9> The final lines run the swift script by
 calling `swift-t` with Swift specific, e.g., "-n" specifies the total number of processes on which to run,
 and script specific arguments, here the CMD_LINE_ARGS defined above.
 Additional help for the arguments to `swift-t` can be seen by running
