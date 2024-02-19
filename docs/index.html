@@ -446,22 +446,22 @@ td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5
 span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
 pre.pygments .hll { background-color: #ffffcc }
 pre.pygments { background: #f8f8f8; }
-pre.pygments .tok-c { color: #3D7B7B; font-style: italic } /* Comment */
+pre.pygments .tok-c { color: #408080; font-style: italic } /* Comment */
 pre.pygments .tok-err { border: 1px solid #FF0000 } /* Error */
 pre.pygments .tok-k { color: #008000; font-weight: bold } /* Keyword */
 pre.pygments .tok-o { color: #666666 } /* Operator */
-pre.pygments .tok-ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
-pre.pygments .tok-cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
-pre.pygments .tok-cp { color: #9C6500 } /* Comment.Preproc */
-pre.pygments .tok-cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
-pre.pygments .tok-c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
-pre.pygments .tok-cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+pre.pygments .tok-ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+pre.pygments .tok-cm { color: #408080; font-style: italic } /* Comment.Multiline */
+pre.pygments .tok-cp { color: #BC7A00 } /* Comment.Preproc */
+pre.pygments .tok-cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+pre.pygments .tok-c1 { color: #408080; font-style: italic } /* Comment.Single */
+pre.pygments .tok-cs { color: #408080; font-style: italic } /* Comment.Special */
 pre.pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
 pre.pygments .tok-ge { font-style: italic } /* Generic.Emph */
-pre.pygments .tok-gr { color: #E40000 } /* Generic.Error */
+pre.pygments .tok-gr { color: #FF0000 } /* Generic.Error */
 pre.pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
-pre.pygments .tok-gi { color: #008400 } /* Generic.Inserted */
-pre.pygments .tok-go { color: #717171 } /* Generic.Output */
+pre.pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
+pre.pygments .tok-go { color: #888888 } /* Generic.Output */
 pre.pygments .tok-gp { color: #000080; font-weight: bold } /* Generic.Prompt */
 pre.pygments .tok-gs { font-weight: bold } /* Generic.Strong */
 pre.pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
@@ -474,15 +474,15 @@ pre.pygments .tok-kr { color: #008000; font-weight: bold } /* Keyword.Reserved *
 pre.pygments .tok-kt { color: #B00040 } /* Keyword.Type */
 pre.pygments .tok-m { color: #666666 } /* Literal.Number */
 pre.pygments .tok-s { color: #BA2121 } /* Literal.String */
-pre.pygments .tok-na { color: #687822 } /* Name.Attribute */
+pre.pygments .tok-na { color: #7D9029 } /* Name.Attribute */
 pre.pygments .tok-nb { color: #008000 } /* Name.Builtin */
 pre.pygments .tok-nc { color: #0000FF; font-weight: bold } /* Name.Class */
 pre.pygments .tok-no { color: #880000 } /* Name.Constant */
 pre.pygments .tok-nd { color: #AA22FF } /* Name.Decorator */
-pre.pygments .tok-ni { color: #717171; font-weight: bold } /* Name.Entity */
-pre.pygments .tok-ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+pre.pygments .tok-ni { color: #999999; font-weight: bold } /* Name.Entity */
+pre.pygments .tok-ne { color: #D2413A; font-weight: bold } /* Name.Exception */
 pre.pygments .tok-nf { color: #0000FF } /* Name.Function */
-pre.pygments .tok-nl { color: #767600 } /* Name.Label */
+pre.pygments .tok-nl { color: #A0A000 } /* Name.Label */
 pre.pygments .tok-nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
 pre.pygments .tok-nt { color: #008000; font-weight: bold } /* Name.Tag */
 pre.pygments .tok-nv { color: #19177C } /* Name.Variable */
@@ -499,11 +499,11 @@ pre.pygments .tok-sc { color: #BA2121 } /* Literal.String.Char */
 pre.pygments .tok-dl { color: #BA2121 } /* Literal.String.Delimiter */
 pre.pygments .tok-sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
 pre.pygments .tok-s2 { color: #BA2121 } /* Literal.String.Double */
-pre.pygments .tok-se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+pre.pygments .tok-se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
 pre.pygments .tok-sh { color: #BA2121 } /* Literal.String.Heredoc */
-pre.pygments .tok-si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+pre.pygments .tok-si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
 pre.pygments .tok-sx { color: #008000 } /* Literal.String.Other */
-pre.pygments .tok-sr { color: #A45A77 } /* Literal.String.Regex */
+pre.pygments .tok-sr { color: #BB6688 } /* Literal.String.Regex */
 pre.pygments .tok-s1 { color: #BA2121 } /* Literal.String.Single */
 pre.pygments .tok-ss { color: #19177C } /* Literal.String.Symbol */
 pre.pygments .tok-bp { color: #008000 } /* Name.Builtin.Pseudo */
@@ -611,6 +611,9 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </ul>
 </li>
 <li><a href="#_init_db">B.5. INIT DB</a></li>
+<li><a href="#_create_db_cluster">B.6. CREATE DB CLUSTER</a></li>
+<li><a href="#_create_db">B.7. CREATE DB</a></li>
+<li><a href="#_create_db_tables">B.8. CREATE DB TABLES</a></li>
 </ul>
 </li>
 <li><a href="#_references">References</a></li>
@@ -829,7 +832,7 @@ and that should be read before this.</p>
 </div>
 <div id="uc1-creator" class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>emewscreator<span class="tok-w"> </span>-o<span class="tok-w"> </span>uc1<span class="tok-w"> </span>sweep<span class="tok-w"> </span>-c<span class="tok-w"> </span>tutorial_cfgs/UC1.yaml</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>emewscreator -o uc1 sweep -c tutorial_cfgs/UC1.yaml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -911,11 +914,11 @@ The script consists of defining variables from environment variables and user in
 </div>
 <div id="variables" class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">emews_root</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">getenv</span><span class="tok-p">(</span><span class="tok-s">&quot;EMEWS_PROJECT_ROOT&quot;</span><span class="tok-p">);</span>
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">turbine_output</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">getenv</span><span class="tok-p">(</span><span class="tok-s">&quot;TURBINE_OUTPUT&quot;</span><span class="tok-p">);</span>
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">string</span> <span class="tok-n">emews_root</span> <span class="tok-o">=</span> <span class="tok-n">getenv</span><span class="tok-p">(</span><span class="tok-s">&quot;EMEWS_PROJECT_ROOT&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">string</span> <span class="tok-n">turbine_output</span> <span class="tok-o">=</span> <span class="tok-n">getenv</span><span class="tok-p">(</span><span class="tok-s">&quot;TURBINE_OUTPUT&quot;</span><span class="tok-p">);</span>
 
-<span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">model_sh</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">emews_root</span><span class="tok-o">+</span><span class="tok-s">&quot;/scripts/run_repast_uc1.sh&quot;</span><span class="tok-p">);</span>
-<span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">upf</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">(</span><span class="tok-s">&quot;f&quot;</span><span class="tok-p">));</span></code></pre>
+<span class="tok-n">file</span> <span class="tok-n">model_sh</span> <span class="tok-o">=</span> <span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">emews_root</span><span class="tok-o">+</span><span class="tok-s">&quot;/scripts/run_repast_uc1.sh&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">file</span> <span class="tok-n">upf</span> <span class="tok-o">=</span> <span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">(</span><span class="tok-s">&quot;f&quot;</span><span class="tok-p">));</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -923,9 +926,9 @@ The script consists of defining variables from environment variables and user in
 </div>
 <div id="repast-app" class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">app</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">err</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">shfile</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">param_line</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-p">)</span>
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">app</span> <span class="tok-p">(</span><span class="tok-n">file</span> <span class="tok-n">out</span><span class="tok-p">,</span> <span class="tok-n">file</span> <span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">file</span> <span class="tok-n">shfile</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">param_line</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">instance</span><span class="tok-p">)</span>
 <span class="tok-p">{</span>
-<span class="tok-w">    </span><span class="tok-s">&quot;bash&quot;</span><span class="tok-w"> </span><span class="tok-n">shfile</span><span class="tok-w"> </span><span class="tok-n">param_line</span><span class="tok-w"> </span><span class="tok-n">emews_root</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-w"> </span><span class="tok-nd">@stdout</span><span class="tok-o">=</span><span class="tok-n">out</span><span class="tok-w"> </span><span class="tok-nd">@stderr</span><span class="tok-o">=</span><span class="tok-n">err</span><span class="tok-p">;</span>
+    <span class="tok-s">&quot;bash&quot;</span> <span class="tok-n">shfile</span> <span class="tok-n">param_line</span> <span class="tok-n">emews_root</span> <span class="tok-n">instance</span> <span class="tok-nd">@stdout</span><span class="tok-o">=</span><span class="tok-n">out</span> <span class="tok-nd">@stderr</span><span class="tok-o">=</span><span class="tok-n">err</span><span class="tok-p">;</span>
 <span class="tok-p">}</span></code></pre>
 </div>
 </div>
@@ -934,12 +937,12 @@ The script consists of defining variables from environment variables and user in
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">app</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-n">o</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">dirname</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">  </span><span class="tok-s">&quot;mkdir&quot;</span><span class="tok-w"> </span><span class="tok-s">&quot;-p&quot;</span><span class="tok-w"> </span><span class="tok-n">dirname</span><span class="tok-p">;</span>
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">app</span> <span class="tok-p">(</span><span class="tok-kt">void</span> <span class="tok-n">o</span><span class="tok-p">)</span> <span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">string</span> <span class="tok-n">dirname</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+  <span class="tok-s">&quot;mkdir&quot;</span> <span class="tok-s">&quot;-p&quot;</span> <span class="tok-n">dirname</span><span class="tok-p">;</span>
 <span class="tok-p">}</span>
 
-<span class="tok-n">app</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-n">o</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">run_prerequisites</span><span class="tok-p">()</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">  </span><span class="tok-s">&quot;cp&quot;</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">emews_root</span><span class="tok-o">+</span><span class="tok-s">&quot;/complete_model/MessageCenter.log4j.properties&quot;</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">turbine_output</span><span class="tok-p">;</span>
+<span class="tok-n">app</span> <span class="tok-p">(</span><span class="tok-kt">void</span> <span class="tok-n">o</span><span class="tok-p">)</span> <span class="tok-n">run_prerequisites</span><span class="tok-p">()</span> <span class="tok-p">{</span>
+  <span class="tok-s">&quot;cp&quot;</span> <span class="tok-p">(</span><span class="tok-n">emews_root</span><span class="tok-o">+</span><span class="tok-s">&quot;/complete_model/MessageCenter.log4j.properties&quot;</span><span class="tok-p">)</span> <span class="tok-n">turbine_output</span><span class="tok-p">;</span>
 <span class="tok-p">}</span></code></pre>
 </div>
 </div>
@@ -948,18 +951,18 @@ The script consists of defining variables from environment variables and user in
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">main</span><span class="tok-p">()</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">  </span><span class="tok-n">run_prerequisites</span><span class="tok-p">()</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">    </span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">upf_lines</span><span class="tok-o">[]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">file_lines</span><span class="tok-p">(</span><span class="tok-n">upf</span><span class="tok-p">);</span>
-<span class="tok-w">    </span><span class="tok-n">foreach</span><span class="tok-w"> </span><span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-n">in</span><span class="tok-w"> </span><span class="tok-n">upf_lines</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">      </span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-s">&quot;%s/instance_%i/&quot;</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">turbine_output</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">);</span>
-<span class="tok-w">      </span><span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">instance</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">        </span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">out</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;out.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
-<span class="tok-w">        </span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">err</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;err.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
-<span class="tok-w">        </span><span class="tok-p">(</span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-n">err</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">model_sh</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-p">);</span>
-<span class="tok-w">      </span><span class="tok-p">}</span>
-<span class="tok-w">    </span><span class="tok-p">}</span>
-<span class="tok-w">  </span><span class="tok-p">}</span>
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">main</span><span class="tok-p">()</span> <span class="tok-p">{</span>
+  <span class="tok-n">run_prerequisites</span><span class="tok-p">()</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+    <span class="tok-n">string</span> <span class="tok-n">upf_lines</span><span class="tok-o">[]</span> <span class="tok-o">=</span> <span class="tok-n">file_lines</span><span class="tok-p">(</span><span class="tok-n">upf</span><span class="tok-p">);</span>
+    <span class="tok-n">foreach</span> <span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-n">i</span> <span class="tok-n">in</span> <span class="tok-n">upf_lines</span> <span class="tok-p">{</span>
+      <span class="tok-n">string</span> <span class="tok-n">instance</span> <span class="tok-o">=</span> <span class="tok-s">&quot;%s/instance_%i/&quot;</span> <span class="tok-o">%</span> <span class="tok-p">(</span><span class="tok-n">turbine_output</span><span class="tok-p">,</span> <span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">);</span>
+      <span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">instance</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+        <span class="tok-n">file</span> <span class="tok-n">out</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;out.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+        <span class="tok-n">file</span> <span class="tok-n">err</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;err.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+        <span class="tok-p">(</span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">model_sh</span><span class="tok-p">,</span> <span class="tok-n">s</span><span class="tok-p">,</span> <span class="tok-n">instance</span><span class="tok-p">);</span>
+      <span class="tok-p">}</span>
+    <span class="tok-p">}</span>
+  <span class="tok-p">}</span>
 <span class="tok-p">}</span></code></pre>
 </div>
 </div>
@@ -999,9 +1002,9 @@ For more on these variables see the
 <div id="repast-app-annot" class="listingblock">
 <div class="title">Repast Simphony App Function</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">app</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">err</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">shfile</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">param_line</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-p">)</span><span class="tok-w">  </span><i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">app</span> <span class="tok-p">(</span><span class="tok-n">file</span> <span class="tok-n">out</span><span class="tok-p">,</span> <span class="tok-n">file</span> <span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">file</span> <span class="tok-n">shfile</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">param_line</span><span class="tok-p">,</span> <span class="tok-n">string</span> <span class="tok-n">instance</span><span class="tok-p">)</span>  <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-p">{</span>
-<span class="tok-w">    </span><span class="tok-s">&quot;bash&quot;</span><span class="tok-w"> </span><span class="tok-n">shfile</span><span class="tok-w"> </span><span class="tok-n">param_line</span><span class="tok-w"> </span><span class="tok-n">emews_root</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-w"> </span><span class="tok-nd">@stdout</span><span class="tok-o">=</span><span class="tok-n">out</span><span class="tok-w"> </span><span class="tok-nd">@stderr</span><span class="tok-o">=</span><span class="tok-n">err</span><span class="tok-p">;</span><span class="tok-w">  </span><i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-s">&quot;bash&quot;</span> <span class="tok-n">shfile</span> <span class="tok-n">param_line</span> <span class="tok-n">emews_root</span> <span class="tok-n">instance</span> <span class="tok-nd">@stdout</span><span class="tok-o">=</span><span class="tok-n">out</span> <span class="tok-nd">@stderr</span><span class="tok-o">=</span><span class="tok-n">err</span><span class="tok-p">;</span>  <i class="conum" data-value="2"></i><b>(2)</b>
 <span class="tok-p">}</span></code></pre>
 </div>
 </div>
@@ -1032,12 +1035,12 @@ and wrapped in a bash script can be called from Swift in this way.</td>
 <div id="util-app-annot" class="listingblock">
 <div class="title">Utility Functions</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">app</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-n">o</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">dirname</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"> </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-w">  </span><span class="tok-s">&quot;mkdir&quot;</span><span class="tok-w"> </span><span class="tok-s">&quot;-p&quot;</span><span class="tok-w"> </span><span class="tok-n">dirname</span><span class="tok-p">;</span>
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">app</span> <span class="tok-p">(</span><span class="tok-kt">void</span> <span class="tok-n">o</span><span class="tok-p">)</span> <span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">string</span> <span class="tok-n">dirname</span><span class="tok-p">)</span> <span class="tok-p">{</span> <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="tok-s">&quot;mkdir&quot;</span> <span class="tok-s">&quot;-p&quot;</span> <span class="tok-n">dirname</span><span class="tok-p">;</span>
 <span class="tok-p">}</span>
 
-<span class="tok-n">app</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-n">o</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">run_prerequisites</span><span class="tok-p">()</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w">  </span><i class="conum" data-value="2"></i><b>(2)</b>
-<span class="tok-w">  </span><span class="tok-s">&quot;cp&quot;</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">emews_root</span><span class="tok-o">+</span><span class="tok-s">&quot;/complete_model/MessageCenter.log4j.properties&quot;</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">turbine_output</span><span class="tok-p">;</span>
+<span class="tok-n">app</span> <span class="tok-p">(</span><span class="tok-kt">void</span> <span class="tok-n">o</span><span class="tok-p">)</span> <span class="tok-n">run_prerequisites</span><span class="tok-p">()</span> <span class="tok-p">{</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+  <span class="tok-s">&quot;cp&quot;</span> <span class="tok-p">(</span><span class="tok-n">emews_root</span><span class="tok-o">+</span><span class="tok-s">&quot;/complete_model/MessageCenter.log4j.properties&quot;</span><span class="tok-p">)</span> <span class="tok-n">turbine_output</span><span class="tok-p">;</span>
 <span class="tok-p">}</span></code></pre>
 </div>
 </div>
@@ -1086,24 +1089,24 @@ the <code>run_model</code> app function.</p>
 <div id="sweep-annot" class="listingblock">
 <div class="title">Parameters Sweep</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">emews_root</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">getenv</span><span class="tok-p">(</span><span class="tok-s">&quot;EMEWS_PROJECT_ROOT&quot;</span><span class="tok-p">);</span>
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">turbine_output</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">getenv</span><span class="tok-p">(</span><span class="tok-s">&quot;TURBINE_OUTPUT&quot;</span><span class="tok-p">);</span>
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">string</span> <span class="tok-n">emews_root</span> <span class="tok-o">=</span> <span class="tok-n">getenv</span><span class="tok-p">(</span><span class="tok-s">&quot;EMEWS_PROJECT_ROOT&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">string</span> <span class="tok-n">turbine_output</span> <span class="tok-o">=</span> <span class="tok-n">getenv</span><span class="tok-p">(</span><span class="tok-s">&quot;TURBINE_OUTPUT&quot;</span><span class="tok-p">);</span>
 
-<span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">model_sh</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">emews_root</span><span class="tok-o">+</span><span class="tok-s">&quot;/scripts/run_repast_uc1.sh&quot;</span><span class="tok-p">);</span><span class="tok-w">  </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">upf</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">(</span><span class="tok-s">&quot;f&quot;</span><span class="tok-p">));</span><span class="tok-w">  </span><i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-n">file</span> <span class="tok-n">model_sh</span> <span class="tok-o">=</span> <span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">emews_root</span><span class="tok-o">+</span><span class="tok-s">&quot;/scripts/run_repast_uc1.sh&quot;</span><span class="tok-p">);</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">file</span> <span class="tok-n">upf</span> <span class="tok-o">=</span> <span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">(</span><span class="tok-s">&quot;f&quot;</span><span class="tok-p">));</span>  <i class="conum" data-value="2"></i><b>(2)</b>
 
-<span class="tok-n">main</span><span class="tok-p">()</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">  </span><span class="tok-n">run_prerequisites</span><span class="tok-p">()</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w">  </span><i class="conum" data-value="3"></i><b>(3)</b>
-<span class="tok-w">    </span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">upf_lines</span><span class="tok-o">[]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">file_lines</span><span class="tok-p">(</span><span class="tok-n">upf</span><span class="tok-p">);</span><span class="tok-w">  </span><i class="conum" data-value="4"></i><b>(4)</b>
-<span class="tok-w">    </span><span class="tok-n">foreach</span><span class="tok-w"> </span><span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-n">in</span><span class="tok-w"> </span><span class="tok-n">upf_lines</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w">  </span><i class="conum" data-value="5"></i><b>(5)</b>
-<span class="tok-w">      </span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-s">&quot;%s/instance_%i/&quot;</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">turbine_output</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">);</span>
-<span class="tok-w">      </span><span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">instance</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w">  </span><i class="conum" data-value="6"></i><b>(6)</b>
-<span class="tok-w">        </span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">out</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;out.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
-<span class="tok-w">        </span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">err</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;err.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span><span class="tok-w">  </span><i class="conum" data-value="7"></i><b>(7)</b>
-<span class="tok-w">        </span><span class="tok-p">(</span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-n">err</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">model_sh</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-p">);</span><span class="tok-w">  </span><i class="conum" data-value="8"></i><b>(8)</b>
-<span class="tok-w">      </span><span class="tok-p">}</span>
-<span class="tok-w">    </span><span class="tok-p">}</span>
-<span class="tok-w">  </span><span class="tok-p">}</span>
+<span class="tok-n">main</span><span class="tok-p">()</span> <span class="tok-p">{</span>
+  <span class="tok-n">run_prerequisites</span><span class="tok-p">()</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>  <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tok-n">string</span> <span class="tok-n">upf_lines</span><span class="tok-o">[]</span> <span class="tok-o">=</span> <span class="tok-n">file_lines</span><span class="tok-p">(</span><span class="tok-n">upf</span><span class="tok-p">);</span>  <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="tok-n">foreach</span> <span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-n">i</span> <span class="tok-n">in</span> <span class="tok-n">upf_lines</span> <span class="tok-p">{</span>  <i class="conum" data-value="5"></i><b>(5)</b>
+      <span class="tok-n">string</span> <span class="tok-n">instance</span> <span class="tok-o">=</span> <span class="tok-s">&quot;%s/instance_%i/&quot;</span> <span class="tok-o">%</span> <span class="tok-p">(</span><span class="tok-n">turbine_output</span><span class="tok-p">,</span> <span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">);</span>
+      <span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">instance</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>  <i class="conum" data-value="6"></i><b>(6)</b>
+        <span class="tok-n">file</span> <span class="tok-n">out</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;out.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+        <span class="tok-n">file</span> <span class="tok-n">err</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;err.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>  <i class="conum" data-value="7"></i><b>(7)</b>
+        <span class="tok-p">(</span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">model_sh</span><span class="tok-p">,</span> <span class="tok-n">s</span><span class="tok-p">,</span> <span class="tok-n">instance</span><span class="tok-p">);</span>  <i class="conum" data-value="8"></i><b>(8)</b>
+      <span class="tok-p">}</span>
+    <span class="tok-p">}</span>
+  <span class="tok-p">}</span>
 <span class="tok-p">}</span></code></pre>
 </div>
 </div>
@@ -1224,16 +1227,16 @@ final time step has been added.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-kn">import</span><span class="tok-w"> </span><span class="tok-nn">R</span><span class="tok-p">;</span>
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-kn">import</span> <span class="tok-nn">R</span><span class="tok-p">;</span>
 
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">count_humans</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-o">----</span>
-<span class="tok-n">last</span><span class="tok-p">.</span><span class="tok-na">row</span><span class="tok-w"> </span><span class="tok-o">&lt;-</span><span class="tok-w"> </span><span class="tok-n">tail</span><span class="tok-p">(</span><span class="tok-n">read</span><span class="tok-p">.</span><span class="tok-na">csv</span><span class="tok-p">(</span><span class="tok-s">&quot;%s/counts.csv&quot;</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-mi">1</span><span class="tok-p">)</span>
-<span class="tok-n">res</span><span class="tok-w"> </span><span class="tok-o">&lt;-</span><span class="tok-w"> </span><span class="tok-n">last</span><span class="tok-p">.</span><span class="tok-na">row</span><span class="tok-o">[</span><span class="tok-s">&quot;human_count&quot;</span><span class="tok-o">]</span>
+<span class="tok-n">string</span> <span class="tok-n">count_humans</span> <span class="tok-o">=</span> <span class="tok-o">----</span>
+<span class="tok-n">last</span><span class="tok-p">.</span><span class="tok-na">row</span> <span class="tok-o">&lt;-</span> <span class="tok-n">tail</span><span class="tok-p">(</span><span class="tok-n">read</span><span class="tok-p">.</span><span class="tok-na">csv</span><span class="tok-p">(</span><span class="tok-s">&quot;%s/counts.csv&quot;</span><span class="tok-p">),</span> <span class="tok-mi">1</span><span class="tok-p">)</span>
+<span class="tok-n">res</span> <span class="tok-o">&lt;-</span> <span class="tok-n">last</span><span class="tok-p">.</span><span class="tok-na">row</span><span class="tok-o">[</span><span class="tok-s">&quot;human_count&quot;</span><span class="tok-o">]</span>
 <span class="tok-o">----</span><span class="tok-p">;</span>
 
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">find_max</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w">  </span><span class="tok-o">----</span>
-<span class="tok-n">v</span><span class="tok-w"> </span><span class="tok-o">&lt;-</span><span class="tok-w"> </span><span class="tok-n">c</span><span class="tok-p">(</span><span class="tok-o">%</span><span class="tok-n">s</span><span class="tok-p">)</span>
-<span class="tok-n">res</span><span class="tok-w"> </span><span class="tok-o">&lt;-</span><span class="tok-w"> </span><span class="tok-n">which</span><span class="tok-p">(</span><span class="tok-n">v</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-n">max</span><span class="tok-p">(</span><span class="tok-n">v</span><span class="tok-p">))</span>
+<span class="tok-n">string</span> <span class="tok-n">find_max</span> <span class="tok-o">=</span>  <span class="tok-o">----</span>
+<span class="tok-n">v</span> <span class="tok-o">&lt;-</span> <span class="tok-n">c</span><span class="tok-p">(</span><span class="tok-o">%</span><span class="tok-n">s</span><span class="tok-p">)</span>
+<span class="tok-n">res</span> <span class="tok-o">&lt;-</span> <span class="tok-n">which</span><span class="tok-p">(</span><span class="tok-n">v</span> <span class="tok-o">==</span> <span class="tok-n">max</span><span class="tok-p">(</span><span class="tok-n">v</span><span class="tok-p">))</span>
 <span class="tok-o">----</span><span class="tok-p">;</span></code></pre>
 </div>
 </div>
@@ -1242,18 +1245,18 @@ final time step has been added.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">upf_lines</span><span class="tok-o">[]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">file_lines</span><span class="tok-p">(</span><span class="tok-n">upf</span><span class="tok-p">);</span>
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">results</span><span class="tok-o">[]</span><span class="tok-p">;</span>
-<span class="tok-n">foreach</span><span class="tok-w"> </span><span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-n">in</span><span class="tok-w"> </span><span class="tok-n">upf_lines</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">  </span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-s">&quot;%s/instance_%i/&quot;</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">turbine_output</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">);</span>
-<span class="tok-w">  </span><span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">instance</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">    </span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">out</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;out.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
-<span class="tok-w">    </span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">err</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;err.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
-<span class="tok-w">    </span><span class="tok-p">(</span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-n">err</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">model_sh</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">      </span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">code</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">count_humans</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-p">;</span>
-<span class="tok-w">      </span><span class="tok-n">results</span><span class="tok-o">[</span><span class="tok-n">i</span><span class="tok-o">]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">R</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;toString(res)&quot;</span><span class="tok-p">);</span>
-<span class="tok-w">    </span><span class="tok-p">}</span>
-<span class="tok-w">  </span><span class="tok-p">}</span>
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">string</span> <span class="tok-n">upf_lines</span><span class="tok-o">[]</span> <span class="tok-o">=</span> <span class="tok-n">file_lines</span><span class="tok-p">(</span><span class="tok-n">upf</span><span class="tok-p">);</span>
+<span class="tok-n">string</span> <span class="tok-n">results</span><span class="tok-o">[]</span><span class="tok-p">;</span>
+<span class="tok-n">foreach</span> <span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-n">i</span> <span class="tok-n">in</span> <span class="tok-n">upf_lines</span> <span class="tok-p">{</span>
+  <span class="tok-n">string</span> <span class="tok-n">instance</span> <span class="tok-o">=</span> <span class="tok-s">&quot;%s/instance_%i/&quot;</span> <span class="tok-o">%</span> <span class="tok-p">(</span><span class="tok-n">turbine_output</span><span class="tok-p">,</span> <span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">);</span>
+  <span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">instance</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+    <span class="tok-n">file</span> <span class="tok-n">out</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;out.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+    <span class="tok-n">file</span> <span class="tok-n">err</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;err.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+    <span class="tok-p">(</span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">model_sh</span><span class="tok-p">,</span> <span class="tok-n">s</span><span class="tok-p">,</span> <span class="tok-n">instance</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+      <span class="tok-n">string</span> <span class="tok-n">code</span> <span class="tok-o">=</span> <span class="tok-n">count_humans</span> <span class="tok-o">%</span> <span class="tok-n">instance</span><span class="tok-p">;</span>
+      <span class="tok-n">results</span><span class="tok-o">[</span><span class="tok-n">i</span><span class="tok-o">]</span> <span class="tok-o">=</span> <span class="tok-n">R</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span> <span class="tok-s">&quot;toString(res)&quot;</span><span class="tok-p">);</span>
+    <span class="tok-p">}</span>
+  <span class="tok-p">}</span>
 <span class="tok-p">}</span></code></pre>
 </div>
 </div>
@@ -1262,17 +1265,17 @@ final time step has been added.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">results_str</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">string_join</span><span class="tok-p">(</span><span class="tok-n">results</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;,&quot;</span><span class="tok-p">);</span>
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">code</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">find_max</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-n">results_str</span><span class="tok-p">;</span>
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">maxs</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">R</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;toString(res)&quot;</span><span class="tok-p">);</span>
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">max_idxs</span><span class="tok-o">[]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">split</span><span class="tok-p">(</span><span class="tok-n">maxs</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;,&quot;</span><span class="tok-p">);</span>
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">best_params</span><span class="tok-o">[]</span><span class="tok-p">;</span>
-<span class="tok-n">foreach</span><span class="tok-w"> </span><span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-n">in</span><span class="tok-w"> </span><span class="tok-n">max_idxs</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">  </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">idx</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">toint</span><span class="tok-p">(</span><span class="tok-n">trim</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">));</span>
-<span class="tok-w">  </span><span class="tok-n">best_params</span><span class="tok-o">[</span><span class="tok-n">i</span><span class="tok-o">]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">upf_lines</span><span class="tok-o">[</span><span class="tok-n">idx</span><span class="tok-w"> </span><span class="tok-o">-</span><span class="tok-w"> </span><span class="tok-mi">1</span><span class="tok-o">]</span><span class="tok-p">;</span>
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">string</span> <span class="tok-n">results_str</span> <span class="tok-o">=</span> <span class="tok-n">string_join</span><span class="tok-p">(</span><span class="tok-n">results</span><span class="tok-p">,</span> <span class="tok-s">&quot;,&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">string</span> <span class="tok-n">code</span> <span class="tok-o">=</span> <span class="tok-n">find_max</span> <span class="tok-o">%</span> <span class="tok-n">results_str</span><span class="tok-p">;</span>
+<span class="tok-n">string</span> <span class="tok-n">maxs</span> <span class="tok-o">=</span> <span class="tok-n">R</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span> <span class="tok-s">&quot;toString(res)&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">string</span> <span class="tok-n">max_idxs</span><span class="tok-o">[]</span> <span class="tok-o">=</span> <span class="tok-n">split</span><span class="tok-p">(</span><span class="tok-n">maxs</span><span class="tok-p">,</span> <span class="tok-s">&quot;,&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">string</span> <span class="tok-n">best_params</span><span class="tok-o">[]</span><span class="tok-p">;</span>
+<span class="tok-n">foreach</span> <span class="tok-n">s</span><span class="tok-p">,</span> <span class="tok-n">i</span> <span class="tok-n">in</span> <span class="tok-n">max_idxs</span> <span class="tok-p">{</span>
+  <span class="tok-kt">int</span> <span class="tok-n">idx</span> <span class="tok-o">=</span> <span class="tok-n">toint</span><span class="tok-p">(</span><span class="tok-n">trim</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">));</span>
+  <span class="tok-n">best_params</span><span class="tok-o">[</span><span class="tok-n">i</span><span class="tok-o">]</span> <span class="tok-o">=</span> <span class="tok-n">upf_lines</span><span class="tok-o">[</span><span class="tok-n">idx</span> <span class="tok-o">-</span> <span class="tok-mi">1</span><span class="tok-o">]</span><span class="tok-p">;</span>
 <span class="tok-p">}</span>
-<span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">best_out</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-n">emews_root</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-s">&quot;/output/best_parameters.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-o">=</span>
-<span class="tok-w">  </span><span class="tok-n">write</span><span class="tok-p">(</span><span class="tok-n">string_join</span><span class="tok-p">(</span><span class="tok-n">best_params</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;\n&quot;</span><span class="tok-p">));</span></code></pre>
+<span class="tok-n">file</span> <span class="tok-n">best_out</span> <span class="tok-o">&lt;</span><span class="tok-n">emews_root</span> <span class="tok-o">+</span> <span class="tok-s">&quot;/output/best_parameters.txt&quot;</span><span class="tok-o">&gt;</span> <span class="tok-o">=</span>
+  <span class="tok-n">write</span><span class="tok-p">(</span><span class="tok-n">string_join</span><span class="tok-p">(</span><span class="tok-n">best_params</span><span class="tok-p">,</span> <span class="tok-s">&quot;\n&quot;</span><span class="tok-p">));</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1284,27 +1287,27 @@ second describes how that output is analyzed to determine the "best" parameter c
 <div id="enhanced-foreach-annot" class="listingblock">
 <div class="title">Enhanced foreach loop</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-kn">import</span><span class="tok-w"> </span><span class="tok-nn">R</span><span class="tok-p">;</span><span class="tok-w">  </span><i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-kn">import</span> <span class="tok-nn">R</span><span class="tok-p">;</span>  <i class="conum" data-value="1"></i><b>(1)</b>
 
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">count_humans</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-o">----</span><span class="tok-w">  </span><i class="conum" data-value="2"></i><b>(2)</b>
-<span class="tok-n">last</span><span class="tok-p">.</span><span class="tok-na">row</span><span class="tok-w"> </span><span class="tok-o">&lt;-</span><span class="tok-w"> </span><span class="tok-n">tail</span><span class="tok-p">(</span><span class="tok-n">read</span><span class="tok-p">.</span><span class="tok-na">csv</span><span class="tok-p">(</span><span class="tok-s">&quot;%s/counts.csv&quot;</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-mi">1</span><span class="tok-p">)</span><span class="tok-w">  </span><i class="conum" data-value="3"></i><b>(3)</b>
-<span class="tok-n">res</span><span class="tok-w"> </span><span class="tok-o">&lt;-</span><span class="tok-w"> </span><span class="tok-n">last</span><span class="tok-p">.</span><span class="tok-na">row</span><span class="tok-o">[</span><span class="tok-s">&quot;human_count&quot;</span><span class="tok-o">]</span><span class="tok-w">  </span><i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-n">string</span> <span class="tok-n">count_humans</span> <span class="tok-o">=</span> <span class="tok-o">----</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-n">last</span><span class="tok-p">.</span><span class="tok-na">row</span> <span class="tok-o">&lt;-</span> <span class="tok-n">tail</span><span class="tok-p">(</span><span class="tok-n">read</span><span class="tok-p">.</span><span class="tok-na">csv</span><span class="tok-p">(</span><span class="tok-s">&quot;%s/counts.csv&quot;</span><span class="tok-p">),</span> <span class="tok-mi">1</span><span class="tok-p">)</span>  <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-n">res</span> <span class="tok-o">&lt;-</span> <span class="tok-n">last</span><span class="tok-p">.</span><span class="tok-na">row</span><span class="tok-o">[</span><span class="tok-s">&quot;human_count&quot;</span><span class="tok-o">]</span>  <i class="conum" data-value="4"></i><b>(4)</b>
 <span class="tok-o">----</span><span class="tok-p">;</span>
 
 <span class="tok-p">...</span>
 
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">upf_lines</span><span class="tok-o">[]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">file_lines</span><span class="tok-p">(</span><span class="tok-n">upf</span><span class="tok-p">);</span>
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">results</span><span class="tok-o">[]</span><span class="tok-p">;</span><span class="tok-w">  </span><i class="conum" data-value="5"></i><b>(5)</b>
-<span class="tok-n">foreach</span><span class="tok-w"> </span><span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-n">in</span><span class="tok-w"> </span><span class="tok-n">upf_lines</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">  </span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-s">&quot;%s/instance_%i/&quot;</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">turbine_output</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">);</span>
-<span class="tok-w">  </span><span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">instance</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">    </span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">out</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;out.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
-<span class="tok-w">    </span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">err</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;err.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
-<span class="tok-w">    </span><span class="tok-p">(</span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-n">err</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">model_sh</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=&gt;</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">      </span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">code</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">count_humans</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-n">instance</span><span class="tok-p">;</span><span class="tok-w">  </span><i class="conum" data-value="6"></i><b>(6)</b>
-<span class="tok-w">      </span><span class="tok-n">results</span><span class="tok-o">[</span><span class="tok-n">i</span><span class="tok-o">]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">R</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;toString(res)&quot;</span><span class="tok-p">);</span><span class="tok-w">  </span><i class="conum" data-value="7"></i><b>(7)</b>
-<span class="tok-w">    </span><span class="tok-p">}</span>
-<span class="tok-w">  </span><span class="tok-p">}</span>
+<span class="tok-n">string</span> <span class="tok-n">upf_lines</span><span class="tok-o">[]</span> <span class="tok-o">=</span> <span class="tok-n">file_lines</span><span class="tok-p">(</span><span class="tok-n">upf</span><span class="tok-p">);</span>
+<span class="tok-n">string</span> <span class="tok-n">results</span><span class="tok-o">[]</span><span class="tok-p">;</span>  <i class="conum" data-value="5"></i><b>(5)</b>
+<span class="tok-n">foreach</span> <span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-n">i</span> <span class="tok-n">in</span> <span class="tok-n">upf_lines</span> <span class="tok-p">{</span>
+  <span class="tok-n">string</span> <span class="tok-n">instance</span> <span class="tok-o">=</span> <span class="tok-s">&quot;%s/instance_%i/&quot;</span> <span class="tok-o">%</span> <span class="tok-p">(</span><span class="tok-n">turbine_output</span><span class="tok-p">,</span> <span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">);</span>
+  <span class="tok-n">make_dir</span><span class="tok-p">(</span><span class="tok-n">instance</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+    <span class="tok-n">file</span> <span class="tok-n">out</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;out.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+    <span class="tok-n">file</span> <span class="tok-n">err</span> <span class="tok-o">&lt;</span><span class="tok-n">instance</span><span class="tok-o">+</span><span class="tok-s">&quot;err.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-p">;</span>
+    <span class="tok-p">(</span><span class="tok-n">out</span><span class="tok-p">,</span><span class="tok-n">err</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">run_model</span><span class="tok-p">(</span><span class="tok-n">model_sh</span><span class="tok-p">,</span> <span class="tok-n">s</span><span class="tok-p">,</span> <span class="tok-n">instance</span><span class="tok-p">)</span> <span class="tok-o">=&gt;</span> <span class="tok-p">{</span>
+      <span class="tok-n">string</span> <span class="tok-n">code</span> <span class="tok-o">=</span> <span class="tok-n">count_humans</span> <span class="tok-o">%</span> <span class="tok-n">instance</span><span class="tok-p">;</span>  <i class="conum" data-value="6"></i><b>(6)</b>
+      <span class="tok-n">results</span><span class="tok-o">[</span><span class="tok-n">i</span><span class="tok-o">]</span> <span class="tok-o">=</span> <span class="tok-n">R</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span> <span class="tok-s">&quot;toString(res)&quot;</span><span class="tok-p">);</span>  <i class="conum" data-value="7"></i><b>(7)</b>
+    <span class="tok-p">}</span>
+  <span class="tok-p">}</span>
 <span class="tok-p">}</span></code></pre>
 </div>
 </div>
@@ -1360,24 +1363,24 @@ to retrieve the parameters from the parameters array.</p>
 <div id="find-best-param-annot" class="listingblock">
 <div class="title">Finding the best parameter</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">find_max</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w">  </span><span class="tok-o">----</span>
-<span class="tok-n">v</span><span class="tok-w"> </span><span class="tok-o">&lt;-</span><span class="tok-w"> </span><span class="tok-n">c</span><span class="tok-p">(</span><span class="tok-o">%</span><span class="tok-n">s</span><span class="tok-p">)</span><span class="tok-w">  </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-n">res</span><span class="tok-w"> </span><span class="tok-o">&lt;-</span><span class="tok-w"> </span><span class="tok-n">which</span><span class="tok-p">(</span><span class="tok-n">v</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-n">max</span><span class="tok-p">(</span><span class="tok-n">v</span><span class="tok-p">))</span><span class="tok-w">  </span><i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="pygments highlight"><code data-lang="java"><span></span><span class="tok-n">string</span> <span class="tok-n">find_max</span> <span class="tok-o">=</span>  <span class="tok-o">----</span>
+<span class="tok-n">v</span> <span class="tok-o">&lt;-</span> <span class="tok-n">c</span><span class="tok-p">(</span><span class="tok-o">%</span><span class="tok-n">s</span><span class="tok-p">)</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">res</span> <span class="tok-o">&lt;-</span> <span class="tok-n">which</span><span class="tok-p">(</span><span class="tok-n">v</span> <span class="tok-o">==</span> <span class="tok-n">max</span><span class="tok-p">(</span><span class="tok-n">v</span><span class="tok-p">))</span>  <i class="conum" data-value="2"></i><b>(2)</b>
 <span class="tok-o">----</span><span class="tok-p">;</span>
 
 <span class="tok-p">...</span>
 
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">results_str</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">string_join</span><span class="tok-p">(</span><span class="tok-n">results</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;,&quot;</span><span class="tok-p">);</span><span class="tok-w">  </span><i class="conum" data-value="3"></i><b>(3)</b>
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">code</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">find_max</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-n">results_str</span><span class="tok-p">;</span><span class="tok-w">  </span><i class="conum" data-value="4"></i><b>(4)</b>
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">maxs</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">R</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;toString(res)&quot;</span><span class="tok-p">);</span><span class="tok-w">  </span><i class="conum" data-value="5"></i><b>(5)</b>
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">max_idxs</span><span class="tok-o">[]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">split</span><span class="tok-p">(</span><span class="tok-n">maxs</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;,&quot;</span><span class="tok-p">);</span><span class="tok-w">  </span><i class="conum" data-value="6"></i><b>(6)</b>
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">best_params</span><span class="tok-o">[]</span><span class="tok-p">;</span>
-<span class="tok-n">foreach</span><span class="tok-w"> </span><span class="tok-n">s</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-n">in</span><span class="tok-w"> </span><span class="tok-n">max_idxs</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w">  </span><i class="conum" data-value="7"></i><b>(7)</b>
-<span class="tok-w">  </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">idx</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">toint</span><span class="tok-p">(</span><span class="tok-n">trim</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">));</span><span class="tok-w">  </span><i class="conum" data-value="8"></i><b>(8)</b>
-<span class="tok-w">  </span><span class="tok-n">best_params</span><span class="tok-o">[</span><span class="tok-n">i</span><span class="tok-o">]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">upf_lines</span><span class="tok-o">[</span><span class="tok-n">idx</span><span class="tok-w"> </span><span class="tok-o">-</span><span class="tok-w"> </span><span class="tok-mi">1</span><span class="tok-o">]</span><span class="tok-p">;</span><span class="tok-w">  </span><i class="conum" data-value="9"></i><b>(9)</b>
+<span class="tok-n">string</span> <span class="tok-n">results_str</span> <span class="tok-o">=</span> <span class="tok-n">string_join</span><span class="tok-p">(</span><span class="tok-n">results</span><span class="tok-p">,</span> <span class="tok-s">&quot;,&quot;</span><span class="tok-p">);</span>  <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-n">string</span> <span class="tok-n">code</span> <span class="tok-o">=</span> <span class="tok-n">find_max</span> <span class="tok-o">%</span> <span class="tok-n">results_str</span><span class="tok-p">;</span>  <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-n">string</span> <span class="tok-n">maxs</span> <span class="tok-o">=</span> <span class="tok-n">R</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span> <span class="tok-s">&quot;toString(res)&quot;</span><span class="tok-p">);</span>  <i class="conum" data-value="5"></i><b>(5)</b>
+<span class="tok-n">string</span> <span class="tok-n">max_idxs</span><span class="tok-o">[]</span> <span class="tok-o">=</span> <span class="tok-n">split</span><span class="tok-p">(</span><span class="tok-n">maxs</span><span class="tok-p">,</span> <span class="tok-s">&quot;,&quot;</span><span class="tok-p">);</span>  <i class="conum" data-value="6"></i><b>(6)</b>
+<span class="tok-n">string</span> <span class="tok-n">best_params</span><span class="tok-o">[]</span><span class="tok-p">;</span>
+<span class="tok-n">foreach</span> <span class="tok-n">s</span><span class="tok-p">,</span> <span class="tok-n">i</span> <span class="tok-n">in</span> <span class="tok-n">max_idxs</span> <span class="tok-p">{</span>  <i class="conum" data-value="7"></i><b>(7)</b>
+  <span class="tok-kt">int</span> <span class="tok-n">idx</span> <span class="tok-o">=</span> <span class="tok-n">toint</span><span class="tok-p">(</span><span class="tok-n">trim</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">));</span>  <i class="conum" data-value="8"></i><b>(8)</b>
+  <span class="tok-n">best_params</span><span class="tok-o">[</span><span class="tok-n">i</span><span class="tok-o">]</span> <span class="tok-o">=</span> <span class="tok-n">upf_lines</span><span class="tok-o">[</span><span class="tok-n">idx</span> <span class="tok-o">-</span> <span class="tok-mi">1</span><span class="tok-o">]</span><span class="tok-p">;</span>  <i class="conum" data-value="9"></i><b>(9)</b>
 <span class="tok-p">}</span>
-<span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">best_out</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-n">emews_root</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-s">&quot;/output/best_parameters.txt&quot;</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-o">=</span>
-<span class="tok-w">  </span><span class="tok-n">write</span><span class="tok-p">(</span><span class="tok-n">string_join</span><span class="tok-p">(</span><span class="tok-n">best_params</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;\n&quot;</span><span class="tok-p">));</span><span class="tok-w">  </span><i class="conum" data-value="10"></i><b>(10)</b></code></pre>
+<span class="tok-n">file</span> <span class="tok-n">best_out</span> <span class="tok-o">&lt;</span><span class="tok-n">emews_root</span> <span class="tok-o">+</span> <span class="tok-s">&quot;/output/best_parameters.txt&quot;</span><span class="tok-o">&gt;</span> <span class="tok-o">=</span>
+  <span class="tok-n">write</span><span class="tok-p">(</span><span class="tok-n">string_join</span><span class="tok-p">(</span><span class="tok-n">best_params</span><span class="tok-p">,</span> <span class="tok-s">&quot;\n&quot;</span><span class="tok-p">));</span>  <i class="conum" data-value="10"></i><b>(10)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1445,57 +1448,57 @@ our simple workflow can be see in <a href="https://github.com/jozik/emews_next_g
 <div id="run-uc1-front-annot" class="listingblock">
 <div class="title">run_uc1.sh selected parts</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-o">[</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$#</span><span class="tok-s2">&quot;</span><span class="tok-w"> </span>-ne<span class="tok-w"> </span><span class="tok-m">2</span><span class="tok-w"> </span><span class="tok-o">]</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-k">then</span><span class="tok-w">  </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-w">  </span><span class="tok-nv">script_name</span><span class="tok-o">=</span><span class="tok-k">$(</span>basename<span class="tok-w"> </span><span class="tok-nv">$0</span><span class="tok-k">)</span>
-<span class="tok-w">  </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;Usage: </span><span class="tok-si">${</span><span class="tok-nv">script_name</span><span class="tok-si">}</span><span class="tok-s2"> exp_id cfg_file&quot;</span>
-<span class="tok-w">  </span><span class="tok-nb">exit</span><span class="tok-w"> </span><span class="tok-m">1</span>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$#</span><span class="tok-s2">&quot;</span> -ne <span class="tok-m">2</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="tok-nv">script_name</span><span class="tok-o">=</span><span class="tok-k">$(</span>basename <span class="tok-nv">$0</span><span class="tok-k">)</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Usage: </span><span class="tok-si">${</span><span class="tok-nv">script_name</span><span class="tok-si">}</span><span class="tok-s2"> exp_id cfg_file&quot;</span>
+  <span class="tok-nb">exit</span> <span class="tok-m">1</span>
 <span class="tok-k">fi</span>
 
 <span class="tok-c1"># Uncomment to turn on swift/t logging. Can also set TURBINE_LOG,</span>
 <span class="tok-c1"># TURBINE_DEBUG, and ADLB_DEBUG to 0 to turn off logging</span>
 <span class="tok-c1"># export TURBINE_LOG=1 TURBINE_DEBUG=1 ADLB_DEBUG=1  </span><i class="conum" data-value="2"></i><b>(2)</b>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">EMEWS_PROJECT_ROOT</span><span class="tok-o">=</span><span class="tok-k">$(</span><span class="tok-w"> </span><span class="tok-nb">cd</span><span class="tok-w"> </span><span class="tok-k">$(</span><span class="tok-w"> </span>dirname<span class="tok-w"> </span><span class="tok-nv">$0</span><span class="tok-w"> </span><span class="tok-k">)</span>/..<span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"> </span>/bin/pwd<span class="tok-w"> </span><span class="tok-k">)</span><span class="tok-w">  </span><i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">EMEWS_PROJECT_ROOT</span><span class="tok-o">=</span><span class="tok-k">$(</span> <span class="tok-nb">cd</span> <span class="tok-k">$(</span> dirname <span class="tok-nv">$0</span> <span class="tok-k">)</span>/.. <span class="tok-p">;</span> /bin/pwd <span class="tok-k">)</span>  <i class="conum" data-value="3"></i><b>(3)</b>
 
 ...
 
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">EXPID</span><span class="tok-o">=</span><span class="tok-nv">$1</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">TURBINE_OUTPUT</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/experiments/<span class="tok-nv">$EXPID</span><span class="tok-w">  </span><i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">EXPID</span><span class="tok-o">=</span><span class="tok-nv">$1</span>
+<span class="tok-nb">export</span> <span class="tok-nv">TURBINE_OUTPUT</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/experiments/<span class="tok-nv">$EXPID</span>  <i class="conum" data-value="4"></i><b>(4)</b>
 check_directory_exists
 
 <span class="tok-nv">CFG_FILE</span><span class="tok-o">=</span><span class="tok-nv">$2</span>
-<span class="tok-nb">source</span><span class="tok-w"> </span><span class="tok-nv">$CFG_FILE</span><span class="tok-w">  </span><i class="conum" data-value="5"></i><b>(5)</b>
+<span class="tok-nb">source</span> <span class="tok-nv">$CFG_FILE</span>  <i class="conum" data-value="5"></i><b>(5)</b>
 
-<span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;--------------------------&quot;</span>
-<span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;WALLTIME:              </span><span class="tok-nv">$CFG_WALLTIME</span><span class="tok-s2">&quot;</span>
-<span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;PROCS:                 </span><span class="tok-nv">$CFG_PROCS</span><span class="tok-s2">&quot;</span>
-<span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;PPN:                   </span><span class="tok-nv">$CFG_PPN</span><span class="tok-s2">&quot;</span>
-<span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;QUEUE:                 </span><span class="tok-nv">$CFG_QUEUE</span><span class="tok-s2">&quot;</span>
-<span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;PROJECT:               </span><span class="tok-nv">$CFG_PROJECT</span><span class="tok-s2">&quot;</span>
-<span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;UPF FILE:              </span><span class="tok-nv">$CFG_UPF</span><span class="tok-s2">&quot;</span>
-<span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;--------------------------&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;--------------------------&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;WALLTIME:              </span><span class="tok-nv">$CFG_WALLTIME</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;PROCS:                 </span><span class="tok-nv">$CFG_PROCS</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;PPN:                   </span><span class="tok-nv">$CFG_PPN</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;QUEUE:                 </span><span class="tok-nv">$CFG_QUEUE</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;PROJECT:               </span><span class="tok-nv">$CFG_PROJECT</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;UPF FILE:              </span><span class="tok-nv">$CFG_UPF</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;--------------------------&quot;</span>
 
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">PROCS</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROCS</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">QUEUE</span><span class="tok-o">=</span><span class="tok-nv">$CFG_QUEUE</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">PROJECT</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROJECT</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">WALLTIME</span><span class="tok-o">=</span><span class="tok-nv">$CFG_WALLTIME</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">PPN</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PPN</span>
+<span class="tok-nb">export</span> <span class="tok-nv">PROCS</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROCS</span>
+<span class="tok-nb">export</span> <span class="tok-nv">QUEUE</span><span class="tok-o">=</span><span class="tok-nv">$CFG_QUEUE</span>
+<span class="tok-nb">export</span> <span class="tok-nv">PROJECT</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROJECT</span>
+<span class="tok-nb">export</span> <span class="tok-nv">WALLTIME</span><span class="tok-o">=</span><span class="tok-nv">$CFG_WALLTIME</span>
+<span class="tok-nb">export</span> <span class="tok-nv">PPN</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PPN</span>
 ...
 <span class="tok-c1"># Copies UPF file to experiment directory</span>
 <span class="tok-nv">U_UPF_FILE</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/<span class="tok-nv">$CFG_UPF</span>
 <span class="tok-nv">UPF_FILE</span><span class="tok-o">=</span><span class="tok-nv">$TURBINE_OUTPUT</span>/upf.txt
-cp<span class="tok-w"> </span><span class="tok-nv">$U_UPF_FILE</span><span class="tok-w"> </span><span class="tok-nv">$UPF_FILE</span><span class="tok-w">  </span><i class="conum" data-value="6"></i><b>(6)</b>
+cp <span class="tok-nv">$U_UPF_FILE</span> <span class="tok-nv">$UPF_FILE</span>  <i class="conum" data-value="6"></i><b>(6)</b>
 
-<span class="tok-nv">CMD_LINE_ARGS</span><span class="tok-o">=</span><span class="tok-s2">&quot;</span><span class="tok-nv">$*</span><span class="tok-s2"> -f=</span><span class="tok-nv">$UPF_FILE</span><span class="tok-s2"> &quot;</span><span class="tok-w">  </span><i class="conum" data-value="7"></i><b>(7)</b>
+<span class="tok-nv">CMD_LINE_ARGS</span><span class="tok-o">=</span><span class="tok-s2">&quot;</span><span class="tok-nv">$*</span><span class="tok-s2"> -f=</span><span class="tok-nv">$UPF_FILE</span><span class="tok-s2"> &quot;</span>  <i class="conum" data-value="7"></i><b>(7)</b>
 ...
 
-<span class="tok-nv">SWIFT_FILE</span><span class="tok-o">=</span>uc1.swift<span class="tok-w">  </span><i class="conum" data-value="8"></i><b>(8)</b>
-swift-t<span class="tok-w"> </span>-n<span class="tok-w"> </span><span class="tok-nv">$PROCS</span><span class="tok-w"> </span><span class="tok-nv">$MACHINE</span><span class="tok-w"> </span>-p<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-I<span class="tok-w"> </span><span class="tok-nv">$EMEWS_EXT</span><span class="tok-w"> </span>-r<span class="tok-w"> </span><span class="tok-nv">$EMEWS_EXT</span><span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>TURBINE_MPI_THREAD<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>TURBINE_OUTPUT<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>EMEWS_PROJECT_ROOT<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/swift/<span class="tok-nv">$SWIFT_FILE</span><span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span><span class="tok-nv">$CMD_LINE_ARGS</span></code></pre>
+<span class="tok-nv">SWIFT_FILE</span><span class="tok-o">=</span>uc1.swift  <i class="conum" data-value="8"></i><b>(8)</b>
+swift-t -n <span class="tok-nv">$PROCS</span> <span class="tok-nv">$MACHINE</span> -p <span class="tok-se">\</span>
+    -I <span class="tok-nv">$EMEWS_EXT</span> -r <span class="tok-nv">$EMEWS_EXT</span> <span class="tok-se">\</span>
+    -e TURBINE_MPI_THREAD <span class="tok-se">\</span>
+    -e TURBINE_OUTPUT <span class="tok-se">\</span>
+    -e EMEWS_PROJECT_ROOT <span class="tok-se">\</span>
+    <span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/swift/<span class="tok-nv">$SWIFT_FILE</span> <span class="tok-se">\</span>
+    <span class="tok-nv">$CMD_LINE_ARGS</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1653,8 +1656,8 @@ emews creator <a href="#eqsql_top">eqsql</a> template, and that should be read b
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>$<span class="tok-w"> </span><span class="tok-nb">cd</span><span class="tok-w"> </span>uc4/python
-$<span class="tok-w"> </span>python3<span class="tok-w"> </span>me.py<span class="tok-w"> </span>test_ackley<span class="tok-w"> </span>me_cfg.yaml</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>$ <span class="tok-nb">cd</span> uc4/python
+$ python3 me.py test_ackley me_cfg.yaml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1703,7 +1706,7 @@ The completed workflow project has the following directory structure and files:<
 </div>
 <div id="uc4-creator" class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>emewscreator<span class="tok-w"> </span>-o<span class="tok-w"> </span>uc4<span class="tok-w"> </span>eqsql<span class="tok-w"> </span>-c<span class="tok-w"> </span>tutorial_cfgs/UC4.yaml</code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>emewscreator -o uc4 eqsql -c tutorial_cfgs/UC4.yaml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1774,7 +1777,7 @@ the script is called.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-w"> </span>Set<span class="tok-w"> </span>PARAM_LINE<span class="tok-w"> </span>from<span class="tok-w"> </span>the<span class="tok-w"> </span>first<span class="tok-w"> </span>argument<span class="tok-w"> </span>to<span class="tok-w"> </span>this<span class="tok-w"> </span>script
+<pre class="pygments highlight"><code data-lang="bash"><span></span> Set PARAM_LINE from the first argument to this script
 <span class="tok-c1"># PARAM_LINE is the string containing the model parameters for a run.</span>
 <span class="tok-nv">PARAM_LINE</span><span class="tok-o">=</span><span class="tok-nv">$1</span>
 
@@ -1813,17 +1816,17 @@ the script is called.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span><span class="tok-w"> </span><span class="tok-nv">$INSTANCE_DIRECTORY</span>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">cd</span> <span class="tok-nv">$INSTANCE_DIRECTORY</span>
 
 <span class="tok-c1"># TODO: Define the command to run the model.</span>
-<span class="tok-nv">MODEL_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;</span><span class="tok-nv">$HOME</span><span class="tok-s2">/anaconda3/envs/swift-t-r-py3.9/bin/python3&quot;</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nv">MODEL_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;</span><span class="tok-nv">$HOME</span><span class="tok-s2">/anaconda3/envs/swift-t-r-py3.9/bin/python3&quot;</span>    <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-c1"># TODO: Define the arguments to the MODEL_CMD. Each argument should be</span>
 <span class="tok-c1"># surrounded by quotes and separated by spaces.</span>
-<span class="tok-nv">arg_array</span><span class="tok-o">=(</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$EMEWS_ROOT</span><span class="tok-s2">/python/ackley.py&quot;</span><span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
-<span class="tok-w">            </span><span class="tok-s2">&quot;</span><span class="tok-nv">$PARAM_LINE</span><span class="tok-s2">&quot;</span>
-<span class="tok-w">            </span><span class="tok-s2">&quot;</span><span class="tok-nv">$OUTPUT_FILE</span><span class="tok-s2">&quot;</span><span class="tok-o">)</span>
+<span class="tok-nv">arg_array</span><span class="tok-o">=(</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$EMEWS_ROOT</span><span class="tok-s2">/python/ackley.py&quot;</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="tok-s2">&quot;</span><span class="tok-nv">$PARAM_LINE</span><span class="tok-s2">&quot;</span>
+            <span class="tok-s2">&quot;</span><span class="tok-nv">$OUTPUT_FILE</span><span class="tok-s2">&quot;</span><span class="tok-o">)</span>
 
-<span class="tok-nv">$TIMEOUT_CMD</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$MODEL_CMD</span><span class="tok-s2">&quot;</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">arg_array</span><span class="tok-p">[@]</span><span class="tok-si">}</span><span class="tok-s2">&quot;</span><span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+<span class="tok-nv">$TIMEOUT_CMD</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$MODEL_CMD</span><span class="tok-s2">&quot;</span> <span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">arg_array</span><span class="tok-p">[@]</span><span class="tok-si">}</span><span class="tok-s2">&quot;</span>    <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1917,7 +1920,7 @@ these arguments, calls the <code>run</code> function, and writes the result to t
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">run</span><span class="tok-p">(</span><span class="tok-n">param_str</span><span class="tok-p">:</span> <span class="tok-nb">str</span><span class="tok-p">)</span> <span class="tok-o">-&gt;</span> <span class="tok-nb">str</span><span class="tok-p">:</span>
-<span class="tok-w">    </span><span class="tok-sd">&quot;&quot;&quot;Run the Ackley function on the specified JSON</span>
+    <span class="tok-sd">&quot;&quot;&quot;Run the Ackley function on the specified JSON</span>
 <span class="tok-sd">    payload.</span>
 <span class="tok-sd">    &quot;&quot;&quot;</span>
     <span class="tok-n">args</span> <span class="tok-o">=</span> <span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">loads</span><span class="tok-p">(</span><span class="tok-n">param_str</span><span class="tok-p">)</span>    <i class="conum" data-value="1"></i><b>(1)</b>
@@ -2339,10 +2342,10 @@ the following entries:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-nt">search_space_size</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">50</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-nt">sample_dimensions</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">4</span><span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
-<span class="tok-nt">total_completed</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">40</span><span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b>
-<span class="tok-nt">reprioritize_after</span><span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">10</span><span class="tok-w">    </span><i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-nt">search_space_size</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">50</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nt">sample_dimensions</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">4</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nt">total_completed</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">40</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nt">reprioritize_after</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">10</span>    <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2468,7 +2471,7 @@ $ run your editor on ./dev/build/swift-t-settings.sh</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In swift-t-settings.sh, ensure that your <code>mpicc</code>, Tcl, Python, and R settings are correct.  The defaults usually work if the tools are in <code>PATH</code>.</p>
+<p>In swift-t-settings.sh, ensure that your <code>mpicc</code>, Tcl, Python, and R settings are correct.  The defaults usually work if the tools are in <code>PATH</code>.  Tcl should be the one in Anaconda.</p>
 </div>
 </li>
 <li>
@@ -2570,17 +2573,26 @@ $ make install</pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-When performing builds from source, make sure that your compilers are compatible among the Anaconda/Python, R, and MPI components.  Use <code>mpicc -show</code> to check the MPI compiler.
+When performing builds from source, make sure that your compilers are compatible among the Anaconda/Python, R, Fortran, and MPI components.  Use <code>mpicc -show</code> to check the MPI compiler.
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>You may need to tell <code>mpicc</code> and <code>mpicxx</code> to set the compiler locations via:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ export MPICH_CC=clang
+$ export MPICH_CXX=clang++</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>For Anaconda, simply:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ conda install bzip2 pcre2 xz</pre>
+<pre>$ conda install bzip2 pcre2 xz gfortran</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2600,6 +2612,7 @@ When performing builds from source, make sure that your compilers are compatible
 export CXX=clang++
 
 PY=/path/to/Anaconda
+PATH=$PY/bin:$PATH
 
 SDK=$( xcrun --show-sdk-path )
 
@@ -2931,27 +2944,27 @@ initalizing some variables that are used in the following parts of the file.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#! /usr/bin/env bash</span>
-<span class="tok-nb">set</span><span class="tok-w"> </span>-eu
+<span class="tok-nb">set</span> -eu
 
-<span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-o">[</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$#</span><span class="tok-s2">&quot;</span><span class="tok-w"> </span>-ne<span class="tok-w"> </span><span class="tok-m">2</span><span class="tok-w"> </span><span class="tok-o">]</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-k">then</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-w">  </span><span class="tok-nv">script_name</span><span class="tok-o">=</span><span class="tok-k">$(</span>basename<span class="tok-w"> </span><span class="tok-nv">$0</span><span class="tok-k">)</span>
-<span class="tok-w">  </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;Usage: </span><span class="tok-si">${</span><span class="tok-nv">script_name</span><span class="tok-si">}</span><span class="tok-s2"> exp_id cfg_file&quot;</span>
-<span class="tok-w">  </span><span class="tok-nb">exit</span><span class="tok-w"> </span><span class="tok-m">1</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$#</span><span class="tok-s2">&quot;</span> -ne <span class="tok-m">2</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="tok-nv">script_name</span><span class="tok-o">=</span><span class="tok-k">$(</span>basename <span class="tok-nv">$0</span><span class="tok-k">)</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Usage: </span><span class="tok-si">${</span><span class="tok-nv">script_name</span><span class="tok-si">}</span><span class="tok-s2"> exp_id cfg_file&quot;</span>
+  <span class="tok-nb">exit</span> <span class="tok-m">1</span>
 <span class="tok-k">fi</span>
 
 <span class="tok-c1"># Uncomment to turn on swift/t logging. Can also set TURBINE_LOG,</span>
 <span class="tok-c1"># TURBINE_DEBUG, and ADLB_DEBUG to 0 to turn off logging</span>
 <span class="tok-c1"># export TURBINE_LOG=1 TURBINE_DEBUG=1 ADLB_DEBUG=1</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">EMEWS_PROJECT_ROOT</span><span class="tok-o">=</span><span class="tok-k">$(</span><span class="tok-w"> </span><span class="tok-nb">cd</span><span class="tok-w"> </span><span class="tok-k">$(</span><span class="tok-w"> </span>dirname<span class="tok-w"> </span><span class="tok-nv">$0</span><span class="tok-w"> </span><span class="tok-k">)</span>/..<span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"> </span>/bin/pwd<span class="tok-w"> </span><span class="tok-k">)</span><span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">EMEWS_PROJECT_ROOT</span><span class="tok-o">=</span><span class="tok-k">$(</span> <span class="tok-nb">cd</span> <span class="tok-k">$(</span> dirname <span class="tok-nv">$0</span> <span class="tok-k">)</span>/.. <span class="tok-p">;</span> /bin/pwd <span class="tok-k">)</span>    <i class="conum" data-value="2"></i><b>(2)</b>
 <span class="tok-c1"># source some utility functions used by EMEWS in this script</span>
-<span class="tok-nb">source</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">EMEWS_PROJECT_ROOT</span><span class="tok-si">}</span><span class="tok-s2">/etc/emews_utils.sh&quot;</span><span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">EMEWS_PROJECT_ROOT</span><span class="tok-si">}</span><span class="tok-s2">/etc/emews_utils.sh&quot;</span>    <i class="conum" data-value="3"></i><b>(3)</b>
 
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">EXPID</span><span class="tok-o">=</span><span class="tok-nv">$1</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">TURBINE_OUTPUT</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/experiments/<span class="tok-nv">$EXPID</span><span class="tok-w">    </span><i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">EXPID</span><span class="tok-o">=</span><span class="tok-nv">$1</span>
+<span class="tok-nb">export</span> <span class="tok-nv">TURBINE_OUTPUT</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/experiments/<span class="tok-nv">$EXPID</span>    <i class="conum" data-value="4"></i><b>(4)</b>
 check_directory_exists
 
 <span class="tok-nv">CFG_FILE</span><span class="tok-o">=</span><span class="tok-nv">$2</span>
-<span class="tok-nb">source</span><span class="tok-w"> </span><span class="tok-nv">$CFG_FILE</span><span class="tok-w">     </span><i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+<span class="tok-nb">source</span> <span class="tok-nv">$CFG_FILE</span>     <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2999,13 +3012,13 @@ script. These are set from values defined in the workflow configuration file
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">PROCS</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROCS</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">QUEUE</span><span class="tok-o">=</span><span class="tok-nv">$CFG_QUEUE</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">PROJECT</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROJECT</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">WALLTIME</span><span class="tok-o">=</span><span class="tok-nv">$CFG_WALLTIME</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">PPN</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PPN</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">TURBINE_JOBNAME</span><span class="tok-o">=</span><span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">EXPID</span><span class="tok-si">}</span><span class="tok-s2">_job&quot;</span><span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">TURBINE_MPI_THREAD</span><span class="tok-o">=</span><span class="tok-m">1</span><span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">export</span> <span class="tok-nv">PROCS</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROCS</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">QUEUE</span><span class="tok-o">=</span><span class="tok-nv">$CFG_QUEUE</span>
+<span class="tok-nb">export</span> <span class="tok-nv">PROJECT</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROJECT</span>
+<span class="tok-nb">export</span> <span class="tok-nv">WALLTIME</span><span class="tok-o">=</span><span class="tok-nv">$CFG_WALLTIME</span>
+<span class="tok-nb">export</span> <span class="tok-nv">PPN</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PPN</span>
+<span class="tok-nb">export</span> <span class="tok-nv">TURBINE_JOBNAME</span><span class="tok-o">=</span><span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">EXPID</span><span class="tok-si">}</span><span class="tok-s2">_job&quot;</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">TURBINE_MPI_THREAD</span><span class="tok-o">=</span><span class="tok-m">1</span>    <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -3036,8 +3049,8 @@ section together with some variable declarations and some potential TODOs.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir<span class="tok-w"> </span>-p<span class="tok-w"> </span><span class="tok-nv">$TURBINE_OUTPUT</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-cp<span class="tok-w"> </span><span class="tok-nv">$CFG_FILE</span><span class="tok-w"> </span><span class="tok-nv">$TURBINE_OUTPUT</span>/cfg.cfg<span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p <span class="tok-nv">$TURBINE_OUTPUT</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+cp <span class="tok-nv">$CFG_FILE</span> <span class="tok-nv">$TURBINE_OUTPUT</span>/cfg.cfg    <i class="conum" data-value="2"></i><b>(2)</b>
 
 <span class="tok-c1"># TODO: If R cannot be found, then these will need to be   </span><i class="conum" data-value="3"></i><b>(3)</b>
 <span class="tok-c1"># uncommented and set correctly.</span>
@@ -3050,12 +3063,12 @@ cp<span class="tok-w"> </span><span class="tok-nv">$CFG_FILE</span><span class="
 <span class="tok-c1"># export PYTHONHOME=/path/to/python</span>
 <span class="tok-c1"># export PYTHONPATH=$EMEWS_PROJECT_ROOT/python</span>
 
-<span class="tok-nv">EMEWS_EXT</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/ext/emews<span class="tok-w">    </span><i class="conum" data-value="5"></i><b>(5)</b>
+<span class="tok-nv">EMEWS_EXT</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/ext/emews    <i class="conum" data-value="5"></i><b>(5)</b>
 
 <span class="tok-c1"># Copies UPF file to experiment directory</span>
 <span class="tok-nv">U_UPF_FILE</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/<span class="tok-nv">$CFG_UPF</span>
 <span class="tok-nv">UPF_FILE</span><span class="tok-o">=</span><span class="tok-nv">$TURBINE_OUTPUT</span>/upf.txt
-cp<span class="tok-w"> </span><span class="tok-nv">$U_UPF_FILE</span><span class="tok-w"> </span><span class="tok-nv">$UPF_FILE</span><span class="tok-w">    </span><i class="conum" data-value="6"></i><b>(6)</b></code></pre>
+cp <span class="tok-nv">$U_UPF_FILE</span> <span class="tok-nv">$UPF_FILE</span>    <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -3112,8 +3125,8 @@ swift to correctly submit the job. This is done in the next section.</p>
 <span class="tok-c1"># or empty for an immediate non-queued unscheduled run</span>
 <span class="tok-nv">MACHINE</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span>
 
-<span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-o">[</span><span class="tok-w"> </span>-n<span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$MACHINE</span><span class="tok-s2">&quot;</span><span class="tok-w"> </span><span class="tok-o">]</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-k">then</span>
-<span class="tok-w">  </span><span class="tok-nv">MACHINE</span><span class="tok-o">=</span><span class="tok-s2">&quot;-m </span><span class="tok-nv">$MACHINE</span><span class="tok-s2">&quot;</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> -n <span class="tok-s2">&quot;</span><span class="tok-nv">$MACHINE</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+  <span class="tok-nv">MACHINE</span><span class="tok-o">=</span><span class="tok-s2">&quot;-m </span><span class="tok-nv">$MACHINE</span><span class="tok-s2">&quot;</span>
 <span class="tok-k">fi</span>
 
 <span class="tok-c1"># TODO: Some slurm machines may expect jobs to be run</span>
@@ -3133,17 +3146,17 @@ calls swift to submit the job and execute the workflow swift script.</p>
 <span class="tok-c1"># for example, USER_VARS=(&quot;VAR_1&quot; &quot;VAR_2&quot;)</span>
 <span class="tok-nv">USER_VARS</span><span class="tok-o">=()</span>
 <span class="tok-c1"># log variables and script to to TURBINE_OUTPUT directory</span>
-log_script<span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
+log_script    <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-c1"># echo&#39;s anything following this to standard out</span>
-<span class="tok-nb">set</span><span class="tok-w"> </span>-x
-<span class="tok-nv">SWIFT_FILE</span><span class="tok-o">=</span>sweep_workflow.swift<span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
-swift-t<span class="tok-w"> </span>-n<span class="tok-w"> </span><span class="tok-nv">$PROCS</span><span class="tok-w"> </span><span class="tok-nv">$MACHINE</span><span class="tok-w"> </span>-p<span class="tok-w"> </span><span class="tok-se">\ </span><span class="tok-w">   </span><i class="conum" data-value="3"></i><b>(3)</b>
-<span class="tok-w">    </span>-I<span class="tok-w"> </span><span class="tok-nv">$EMEWS_EXT</span><span class="tok-w"> </span>-r<span class="tok-w"> </span><span class="tok-nv">$EMEWS_EXT</span><span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>TURBINE_MPI_THREAD<span class="tok-w"> </span><span class="tok-se">\ </span><span class="tok-w">   </span><i class="conum" data-value="4"></i><b>(4)</b>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>TURBINE_OUTPUT<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>EMEWS_PROJECT_ROOT<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/swift/<span class="tok-nv">$SWIFT_FILE</span><span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span><span class="tok-nv">$CMD_LINE_ARGS</span><span class="tok-w">    </span><i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+<span class="tok-nb">set</span> -x
+<span class="tok-nv">SWIFT_FILE</span><span class="tok-o">=</span>sweep_workflow.swift    <i class="conum" data-value="2"></i><b>(2)</b>
+swift-t -n <span class="tok-nv">$PROCS</span> <span class="tok-nv">$MACHINE</span> -p <span class="tok-se">\ </span>   <i class="conum" data-value="3"></i><b>(3)</b>
+    -I <span class="tok-nv">$EMEWS_EXT</span> -r <span class="tok-nv">$EMEWS_EXT</span> <span class="tok-se">\</span>
+    -e TURBINE_MPI_THREAD <span class="tok-se">\ </span>   <i class="conum" data-value="4"></i><b>(4)</b>
+    -e TURBINE_OUTPUT <span class="tok-se">\</span>
+    -e EMEWS_PROJECT_ROOT <span class="tok-se">\</span>
+    <span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/swift/<span class="tok-nv">$SWIFT_FILE</span> <span class="tok-se">\</span>
+    <span class="tok-nv">$CMD_LINE_ARGS</span>    <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -3332,15 +3345,15 @@ the model if its run duration exceeds that value.</p>
 <span class="tok-c1"># !!! IF YOU CHANGE THE NUMBER OF ARGUMENTS PASSED TO THIS SCRIPT, YOU MUST</span>
 <span class="tok-c1"># CHANGE THE TIMEOUT_ARG_INDEX !!!</span>
 <span class="tok-nv">TIMEOUT</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span>
-<span class="tok-nv">TIMEOUT_ARG_INDEX</span><span class="tok-o">=</span><span class="tok-m">4</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-o">[[</span><span class="tok-w"> </span><span class="tok-nv">$#</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w">  </span><span class="tok-nv">$TIMEOUT_ARG_INDEX</span><span class="tok-w"> </span><span class="tok-o">]]</span>
+<span class="tok-nv">TIMEOUT_ARG_INDEX</span><span class="tok-o">=</span><span class="tok-m">4</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-k">if</span> <span class="tok-o">[[</span> <span class="tok-nv">$#</span> <span class="tok-o">==</span>  <span class="tok-nv">$TIMEOUT_ARG_INDEX</span> <span class="tok-o">]]</span>
 <span class="tok-k">then</span>
-<span class="tok-w">	</span><span class="tok-nv">TIMEOUT</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-p">!TIMEOUT_ARG_INDEX</span><span class="tok-si">}</span>
+	<span class="tok-nv">TIMEOUT</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-p">!TIMEOUT_ARG_INDEX</span><span class="tok-si">}</span>
 <span class="tok-k">fi</span>
 
 <span class="tok-nv">TIMEOUT_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span>
-<span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-o">[</span><span class="tok-w"> </span>-n<span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$TIMEOUT</span><span class="tok-s2">&quot;</span><span class="tok-w"> </span><span class="tok-o">]</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-k">then</span>
-<span class="tok-w">  </span><span class="tok-nv">TIMEOUT_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;timeout </span><span class="tok-nv">$TIMEOUT</span><span class="tok-s2">&quot;</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> -n <span class="tok-s2">&quot;</span><span class="tok-nv">$TIMEOUT</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+  <span class="tok-nv">TIMEOUT_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;timeout </span><span class="tok-nv">$TIMEOUT</span><span class="tok-s2">&quot;</span>
 <span class="tok-k">fi</span></code></pre>
 </div>
 </div>
@@ -3372,7 +3385,7 @@ the script.</p>
 <span class="tok-c1"># Each model run, runs in its own &quot;instance&quot; directory</span>
 <span class="tok-c1"># Set INSTANCE_DIRECTORY to that and cd into it.</span>
 <span class="tok-nv">INSTANCE_DIRECTORY</span><span class="tok-o">=</span><span class="tok-nv">$3</span>
-<span class="tok-nb">cd</span><span class="tok-w"> </span><span class="tok-nv">$INSTANCE_DIRECTORY</span></code></pre>
+<span class="tok-nb">cd</span> <span class="tok-nv">$INSTANCE_DIRECTORY</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3383,29 +3396,29 @@ the model with the optional timeout.</p>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># TODO: Define the command to run the model. For example,</span>
 <span class="tok-c1"># MODEL_CMD=&quot;python&quot;</span>
-<span class="tok-nv">MODEL_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nv">MODEL_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span>    <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-c1"># TODO: Define the arguments to the MODEL_CMD. Each argument should be</span>
 <span class="tok-c1"># surrounded by quotes and separated by spaces. For example,</span>
 <span class="tok-c1"># arg_array=(&quot;$EMEWS_ROOT/python/my_model.py&quot; &quot;$PARAM_LINE&quot;)</span>
-<span class="tok-nv">arg_array</span><span class="tok-o">=(</span><span class="tok-s2">&quot;arg1&quot;</span><span class="tok-w"> </span><span class="tok-s2">&quot;arg2&quot;</span><span class="tok-w"> </span><span class="tok-s2">&quot;arg3&quot;</span><span class="tok-o">)</span><span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nv">arg_array</span><span class="tok-o">=(</span><span class="tok-s2">&quot;arg1&quot;</span> <span class="tok-s2">&quot;arg2&quot;</span> <span class="tok-s2">&quot;arg3&quot;</span><span class="tok-o">)</span>    <i class="conum" data-value="2"></i><b>(2)</b>
 <span class="tok-nv">COMMAND</span><span class="tok-o">=</span><span class="tok-s2">&quot;</span><span class="tok-nv">$MODEL_CMD</span><span class="tok-s2"> </span><span class="tok-si">${</span><span class="tok-nv">arg_array</span><span class="tok-p">[@]</span><span class="tok-si">}</span><span class="tok-s2">&quot;</span>
 
 <span class="tok-c1"># Turn bash error checking off. This is</span>
 <span class="tok-c1"># required to properly handle the model execution</span>
 <span class="tok-c1"># return values and the optional timeout.</span>
-<span class="tok-nb">set</span><span class="tok-w"> </span>+e
-<span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;Running </span><span class="tok-nv">$COMMAND</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">set</span> +e
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Running </span><span class="tok-nv">$COMMAND</span><span class="tok-s2">&quot;</span>
 
-<span class="tok-nv">$TIMEOUT_CMD</span><span class="tok-w"> </span><span class="tok-nv">$COMMAND</span><span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nv">$TIMEOUT_CMD</span> <span class="tok-nv">$COMMAND</span>    <i class="conum" data-value="3"></i><b>(3)</b>
 <span class="tok-c1"># $? is the exit status of the most recently executed command (i.e the</span>
 <span class="tok-c1"># line above)</span>
 <span class="tok-nv">RES</span><span class="tok-o">=</span><span class="tok-nv">$?</span>
-<span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-o">[</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$RES</span><span class="tok-s2">&quot;</span><span class="tok-w"> </span>-ne<span class="tok-w"> </span><span class="tok-m">0</span><span class="tok-w"> </span><span class="tok-o">]</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-k">then</span>
-<span class="tok-w">	</span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-o">[</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$RES</span><span class="tok-s2">&quot;</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-m">124</span><span class="tok-w"> </span><span class="tok-o">]</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-k">then</span>
-<span class="tok-w">    </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;---&gt; Timeout error in </span><span class="tok-nv">$COMMAND</span><span class="tok-s2">&quot;</span>
-<span class="tok-w">  </span><span class="tok-k">else</span>
-<span class="tok-w">	   </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;---&gt; Error in </span><span class="tok-nv">$COMMAND</span><span class="tok-s2">&quot;</span>
-<span class="tok-w">  </span><span class="tok-k">fi</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$RES</span><span class="tok-s2">&quot;</span> -ne <span class="tok-m">0</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+	<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$RES</span><span class="tok-s2">&quot;</span> <span class="tok-o">==</span> <span class="tok-m">124</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+    <span class="tok-nb">echo</span> <span class="tok-s2">&quot;---&gt; Timeout error in </span><span class="tok-nv">$COMMAND</span><span class="tok-s2">&quot;</span>
+  <span class="tok-k">else</span>
+	   <span class="tok-nb">echo</span> <span class="tok-s2">&quot;---&gt; Error in </span><span class="tok-nv">$COMMAND</span><span class="tok-s2">&quot;</span>
+  <span class="tok-k">fi</span>
 <span class="tok-k">fi</span></code></pre>
 </div>
 </div>
@@ -3445,15 +3458,15 @@ a configuration file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">CFG_WALLTIME</span><span class="tok-o">=</span><span class="tok-m">24</span>:00:00<span class="tok-w">   </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-nv">CFG_QUEUE</span><span class="tok-o">=</span>queue<span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
-<span class="tok-nv">CFG_PROJECT</span><span class="tok-o">=</span>project<span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b>
-<span class="tok-nv">NODES</span><span class="tok-o">=</span><span class="tok-m">4</span><span class="tok-w">    </span><i class="conum" data-value="4"></i><b>(4)</b>
-<span class="tok-nv">CFG_PPN</span><span class="tok-o">=</span><span class="tok-m">4</span><span class="tok-w">    </span><i class="conum" data-value="5"></i><b>(5)</b>
-<span class="tok-nv">CFG_PROCS</span><span class="tok-o">=</span><span class="tok-k">$((</span><span class="tok-w"> </span><span class="tok-nv">NODES</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-nv">CFG_PPN</span><span class="tok-w"> </span><span class="tok-k">))</span><span class="tok-w">    </span><i class="conum" data-value="6"></i><b>(6)</b>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">CFG_WALLTIME</span><span class="tok-o">=</span><span class="tok-m">24</span>:00:00   <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nv">CFG_QUEUE</span><span class="tok-o">=</span>queue    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nv">CFG_PROJECT</span><span class="tok-o">=</span>project    <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nv">NODES</span><span class="tok-o">=</span><span class="tok-m">4</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-nv">CFG_PPN</span><span class="tok-o">=</span><span class="tok-m">4</span>    <i class="conum" data-value="5"></i><b>(5)</b>
+<span class="tok-nv">CFG_PROCS</span><span class="tok-o">=</span><span class="tok-k">$((</span> NODES <span class="tok-o">*</span> CFG_PPN <span class="tok-k">))</span>    <i class="conum" data-value="6"></i><b>(6)</b>
 <span class="tok-c1"># TODO: Update with path to upf file, relative</span>
 <span class="tok-c1"># to emews project root directory.</span>
-<span class="tok-nv">CFG_UPF</span><span class="tok-o">=</span>data/upf.txt<span class="tok-w">    </span><i class="conum" data-value="7"></i><b>(7)</b></code></pre>
+<span class="tok-nv">CFG_UPF</span><span class="tok-o">=</span>data/upf.txt    <i class="conum" data-value="7"></i><b>(7)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4039,27 +4052,27 @@ and initializes variables that are used in the following parts of the file.</p>
 <div id="submit_init" class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#! /usr/bin/env bash</span>
-<span class="tok-nb">set</span><span class="tok-w"> </span>-eu
+<span class="tok-nb">set</span> -eu
 
-<span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-o">[</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$#</span><span class="tok-s2">&quot;</span><span class="tok-w"> </span>-ne<span class="tok-w"> </span><span class="tok-m">2</span><span class="tok-w"> </span><span class="tok-o">]</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-k">then</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-w">  </span><span class="tok-nv">script_name</span><span class="tok-o">=</span><span class="tok-k">$(</span>basename<span class="tok-w"> </span><span class="tok-nv">$0</span><span class="tok-k">)</span>
-<span class="tok-w">  </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;Usage: </span><span class="tok-si">${</span><span class="tok-nv">script_name</span><span class="tok-si">}</span><span class="tok-s2"> exp_id cfg_file&quot;</span>
-<span class="tok-w">  </span><span class="tok-nb">exit</span><span class="tok-w"> </span><span class="tok-m">1</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$#</span><span class="tok-s2">&quot;</span> -ne <span class="tok-m">2</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="tok-nv">script_name</span><span class="tok-o">=</span><span class="tok-k">$(</span>basename <span class="tok-nv">$0</span><span class="tok-k">)</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Usage: </span><span class="tok-si">${</span><span class="tok-nv">script_name</span><span class="tok-si">}</span><span class="tok-s2"> exp_id cfg_file&quot;</span>
+  <span class="tok-nb">exit</span> <span class="tok-m">1</span>
 <span class="tok-k">fi</span>
 
 <span class="tok-c1"># Uncomment to turn on swift/t logging. Can also set TURBINE_LOG,</span>
 <span class="tok-c1"># TURBINE_DEBUG, and ADLB_DEBUG to 0 to turn off logging</span>
 <span class="tok-c1"># export TURBINE_LOG=1 TURBINE_DEBUG=1 ADLB_DEBUG=1</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">EMEWS_PROJECT_ROOT</span><span class="tok-o">=</span><span class="tok-k">$(</span><span class="tok-w"> </span><span class="tok-nb">cd</span><span class="tok-w"> </span><span class="tok-k">$(</span><span class="tok-w"> </span>dirname<span class="tok-w"> </span><span class="tok-nv">$0</span><span class="tok-w"> </span><span class="tok-k">)</span>/..<span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"> </span>/bin/pwd<span class="tok-w"> </span><span class="tok-k">)</span><span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">EMEWS_PROJECT_ROOT</span><span class="tok-o">=</span><span class="tok-k">$(</span> <span class="tok-nb">cd</span> <span class="tok-k">$(</span> dirname <span class="tok-nv">$0</span> <span class="tok-k">)</span>/.. <span class="tok-p">;</span> /bin/pwd <span class="tok-k">)</span>    <i class="conum" data-value="2"></i><b>(2)</b>
 <span class="tok-c1"># source some utility functions used by EMEWS in this script</span>
-<span class="tok-nb">source</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">EMEWS_PROJECT_ROOT</span><span class="tok-si">}</span><span class="tok-s2">/etc/emews_utils.sh&quot;</span><span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">EMEWS_PROJECT_ROOT</span><span class="tok-si">}</span><span class="tok-s2">/etc/emews_utils.sh&quot;</span>    <i class="conum" data-value="3"></i><b>(3)</b>
 
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">EXPID</span><span class="tok-o">=</span><span class="tok-nv">$1</span><span class="tok-w">    </span><i class="conum" data-value="4"></i><b>(4)</b>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">TURBINE_OUTPUT</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/experiments/<span class="tok-nv">$EXPID</span><span class="tok-w">    </span><i class="conum" data-value="5"></i><b>(5)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">EXPID</span><span class="tok-o">=</span><span class="tok-nv">$1</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">TURBINE_OUTPUT</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/experiments/<span class="tok-nv">$EXPID</span>    <i class="conum" data-value="5"></i><b>(5)</b>
 check_directory_exists
 
-<span class="tok-nv">CFG_FILE</span><span class="tok-o">=</span><span class="tok-nv">$2</span><span class="tok-w">    </span><i class="conum" data-value="6"></i><b>(6)</b>
-<span class="tok-nb">source</span><span class="tok-w"> </span><span class="tok-nv">$CFG_FILE</span></code></pre>
+<span class="tok-nv">CFG_FILE</span><span class="tok-o">=</span><span class="tok-nv">$2</span>    <i class="conum" data-value="6"></i><b>(6)</b>
+<span class="tok-nb">source</span> <span class="tok-nv">$CFG_FILE</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4113,13 +4126,13 @@ script. These are set from values defined in the workflow configuration file
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">PROCS</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROCS</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">QUEUE</span><span class="tok-o">=</span><span class="tok-nv">$CFG_QUEUE</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">PROJECT</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROJECT</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">WALLTIME</span><span class="tok-o">=</span><span class="tok-nv">$CFG_WALLTIME</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">PPN</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PPN</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">TURBINE_JOBNAME</span><span class="tok-o">=</span><span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">EXPID</span><span class="tok-si">}</span><span class="tok-s2">_job&quot;</span><span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">TURBINE_MPI_THREAD</span><span class="tok-o">=</span><span class="tok-m">1</span><span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">export</span> <span class="tok-nv">PROCS</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROCS</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">QUEUE</span><span class="tok-o">=</span><span class="tok-nv">$CFG_QUEUE</span>
+<span class="tok-nb">export</span> <span class="tok-nv">PROJECT</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROJECT</span>
+<span class="tok-nb">export</span> <span class="tok-nv">WALLTIME</span><span class="tok-o">=</span><span class="tok-nv">$CFG_WALLTIME</span>
+<span class="tok-nb">export</span> <span class="tok-nv">PPN</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PPN</span>
+<span class="tok-nb">export</span> <span class="tok-nv">TURBINE_JOBNAME</span><span class="tok-o">=</span><span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">EXPID</span><span class="tok-si">}</span><span class="tok-s2">_job&quot;</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">TURBINE_MPI_THREAD</span><span class="tok-o">=</span><span class="tok-m">1</span>    <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4150,8 +4163,8 @@ section together with some variable declarations and potential TODOs.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir<span class="tok-w"> </span>-p<span class="tok-w"> </span><span class="tok-nv">$TURBINE_OUTPUT</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-cp<span class="tok-w"> </span><span class="tok-nv">$CFG_FILE</span><span class="tok-w"> </span><span class="tok-nv">$TURBINE_OUTPUT</span>/cfg.cfg<span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>mkdir -p <span class="tok-nv">$TURBINE_OUTPUT</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+cp <span class="tok-nv">$CFG_FILE</span> <span class="tok-nv">$TURBINE_OUTPUT</span>/cfg.cfg    <i class="conum" data-value="2"></i><b>(2)</b>
 
 <span class="tok-c1"># TODO: If R cannot be found, then these will need to be   </span><i class="conum" data-value="3"></i><b>(3)</b>
 <span class="tok-c1"># uncommented and set correctly.</span>
@@ -4159,8 +4172,8 @@ cp<span class="tok-w"> </span><span class="tok-nv">$CFG_FILE</span><span class="
 <span class="tok-c1"># export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$R_HOME/lib</span>
 
 <span class="tok-c1"># EQSQL swift extension location</span>
-<span class="tok-nv">EQSQL</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/ext/EQ-SQL<span class="tok-w">    </span><i class="conum" data-value="4"></i><b>(4)</b>
-<span class="tok-nv">EMEWS_EXT</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/ext/emews<span class="tok-w">    </span><i class="conum" data-value="5"></i><b>(5)</b>
+<span class="tok-nv">EQSQL</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/ext/EQ-SQL    <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-nv">EMEWS_EXT</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/ext/emews    <i class="conum" data-value="5"></i><b>(5)</b>
 
 <span class="tok-c1"># TODO: if Python cannot be found then uncomment    </span><i class="conum" data-value="6"></i><b>(6)</b>
 <span class="tok-c1"># and edit this line.</span>
@@ -4170,7 +4183,7 @@ cp<span class="tok-w"> </span><span class="tok-nv">$CFG_FILE</span><span class="
 <span class="tok-c1"># X package&quot; type Python errors then append</span>
 <span class="tok-c1"># the missing package&#39;s path to the PYTHONPATH</span>
 <span class="tok-c1"># variable below, separating the entries with &quot;:&quot;</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">PYTHONPATH</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/python:<span class="tok-nv">$EQSQL</span><span class="tok-w">    </span><i class="conum" data-value="7"></i><b>(7)</b></code></pre>
+<span class="tok-nb">export</span> <span class="tok-nv">PYTHONPATH</span><span class="tok-o">=</span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/python:<span class="tok-nv">$EQSQL</span>    <i class="conum" data-value="7"></i><b>(7)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4222,11 +4235,11 @@ in the configuration file <a href="#pool_cfg">section</a>.</p>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># EQSQL DB variables, set from the CFG file.</span>
 <span class="tok-c1"># To change these, edit the CFG file.</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">DB_HOST</span><span class="tok-o">=</span><span class="tok-nv">$CFG_DB_HOST</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">DB_USER</span><span class="tok-o">=</span><span class="tok-nv">$CFG_DB_USER</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">DB_PORT</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">CFG_DB_PORT</span><span class="tok-k">:-</span><span class="tok-si">}</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">DB_NAME</span><span class="tok-o">=</span><span class="tok-nv">$CFG_DB_NAME</span>
-<span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">EQ_DB_RETRY_THRESHOLD</span><span class="tok-o">=</span><span class="tok-nv">$CFG_DB_RETRY_THRESHOLD</span></code></pre>
+<span class="tok-nb">export</span> <span class="tok-nv">DB_HOST</span><span class="tok-o">=</span><span class="tok-nv">$CFG_DB_HOST</span>
+<span class="tok-nb">export</span> <span class="tok-nv">DB_USER</span><span class="tok-o">=</span><span class="tok-nv">$CFG_DB_USER</span>
+<span class="tok-nb">export</span> <span class="tok-nv">DB_PORT</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">CFG_DB_PORT</span><span class="tok-k">:-</span><span class="tok-si">}</span>
+<span class="tok-nb">export</span> <span class="tok-nv">DB_NAME</span><span class="tok-o">=</span><span class="tok-nv">$CFG_DB_NAME</span>
+<span class="tok-nb">export</span> <span class="tok-nv">EQ_DB_RETRY_THRESHOLD</span><span class="tok-o">=</span><span class="tok-nv">$CFG_DB_RETRY_THRESHOLD</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4240,13 +4253,13 @@ the worker pools stdout and stderr to a file when running on a non-queued unsche
 <span class="tok-c1"># or empty for an immediate non-queued unscheduled run</span>
 <span class="tok-nv">MACHINE</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span>
 
-<span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-o">[</span><span class="tok-w"> </span>-n<span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$MACHINE</span><span class="tok-s2">&quot;</span><span class="tok-w"> </span><span class="tok-o">]</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-k">then</span>
-<span class="tok-w">  </span><span class="tok-nv">MACHINE</span><span class="tok-o">=</span><span class="tok-s2">&quot;-m </span><span class="tok-nv">$MACHINE</span><span class="tok-s2">&quot;</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> -n <span class="tok-s2">&quot;</span><span class="tok-nv">$MACHINE</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+  <span class="tok-nv">MACHINE</span><span class="tok-o">=</span><span class="tok-s2">&quot;-m </span><span class="tok-nv">$MACHINE</span><span class="tok-s2">&quot;</span>
 <span class="tok-k">else</span>
-<span class="tok-w">  </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;Logging output to </span><span class="tok-nv">$TURBINE_OUTPUT</span><span class="tok-s2">/output.txt&quot;</span>
-<span class="tok-w">  </span><span class="tok-c1"># Redirect stdout and stderr to output.txt</span>
-<span class="tok-w">  </span><span class="tok-c1"># if running without a scheduler.</span>
-<span class="tok-w">  </span><span class="tok-nb">exec</span><span class="tok-w"> </span><span class="tok-p">&amp;</span>&gt;<span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$TURBINE_OUTPUT</span><span class="tok-s2">/output.txt&quot;</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Logging output to </span><span class="tok-nv">$TURBINE_OUTPUT</span><span class="tok-s2">/output.txt&quot;</span>
+  <span class="tok-c1"># Redirect stdout and stderr to output.txt</span>
+  <span class="tok-c1"># if running without a scheduler.</span>
+  <span class="tok-nb">exec</span> <span class="tok-p">&amp;</span>&gt; <span class="tok-s2">&quot;</span><span class="tok-nv">$TURBINE_OUTPUT</span><span class="tok-s2">/output.txt&quot;</span>
 <span class="tok-k">fi</span></code></pre>
 </div>
 </div>
@@ -4274,24 +4287,24 @@ calls swift to submit the job and execute the workflow swift script.</p>
 <span class="tok-c1"># for example, USER_VARS=(&quot;VAR_1&quot; &quot;VAR_2&quot;)</span>
 <span class="tok-nv">USER_VARS</span><span class="tok-o">=()</span>
 <span class="tok-c1"># log variables and script to to TURBINE_OUTPUT directory</span>
-log_script<span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
+log_script    <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-c1"># echo&#39;s anything following this to standard out</span>
-<span class="tok-nb">set</span><span class="tok-w"> </span>-x
-<span class="tok-nv">SWIFT_FILE</span><span class="tok-o">=</span>eqsql_worker_pool.swift<span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
-swift-t<span class="tok-w"> </span>-n<span class="tok-w"> </span><span class="tok-nv">$PROCS</span><span class="tok-w"> </span><span class="tok-nv">$MACHINE</span><span class="tok-w"> </span>-p<span class="tok-w"> </span>-I<span class="tok-w"> </span><span class="tok-nv">$EQSQL</span><span class="tok-w"> </span>-r<span class="tok-w"> </span><span class="tok-nv">$EQSQL</span><span class="tok-w"> </span><span class="tok-se">\ </span><span class="tok-w">  </span><i class="conum" data-value="3"></i><b>(3)</b>
-<span class="tok-w">    </span>-I<span class="tok-w"> </span><span class="tok-nv">$EMEWS_EXT</span><span class="tok-w"> </span>-r<span class="tok-w"> </span><span class="tok-nv">$EMEWS_EXT</span><span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>TURBINE_MPI_THREAD<span class="tok-w"> </span><span class="tok-se">\ </span><span class="tok-w">   </span><i class="conum" data-value="4"></i><b>(4)</b>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>TURBINE_OUTPUT<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>EMEWS_PROJECT_ROOT<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>DB_HOST<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>DB_USER<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>DB_PORT<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>DB_NAME<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>EQ_DB_RETRY_THRESHOLD<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>PYTHONPATH<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span>-e<span class="tok-w"> </span>RESIDENT_WORK_RANK<span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span><span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/swift/<span class="tok-nv">$SWIFT_FILE</span><span class="tok-w"> </span><span class="tok-se">\</span>
-<span class="tok-w">    </span><span class="tok-nv">$CMD_LINE_ARGS</span><span class="tok-w">     </span><i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+<span class="tok-nb">set</span> -x
+<span class="tok-nv">SWIFT_FILE</span><span class="tok-o">=</span>eqsql_worker_pool.swift    <i class="conum" data-value="2"></i><b>(2)</b>
+swift-t -n <span class="tok-nv">$PROCS</span> <span class="tok-nv">$MACHINE</span> -p -I <span class="tok-nv">$EQSQL</span> -r <span class="tok-nv">$EQSQL</span> <span class="tok-se">\ </span>  <i class="conum" data-value="3"></i><b>(3)</b>
+    -I <span class="tok-nv">$EMEWS_EXT</span> -r <span class="tok-nv">$EMEWS_EXT</span> <span class="tok-se">\</span>
+    -e TURBINE_MPI_THREAD <span class="tok-se">\ </span>   <i class="conum" data-value="4"></i><b>(4)</b>
+    -e TURBINE_OUTPUT <span class="tok-se">\</span>
+    -e EMEWS_PROJECT_ROOT <span class="tok-se">\</span>
+    -e DB_HOST <span class="tok-se">\</span>
+    -e DB_USER <span class="tok-se">\</span>
+    -e DB_PORT <span class="tok-se">\</span>
+    -e DB_NAME <span class="tok-se">\</span>
+    -e EQ_DB_RETRY_THRESHOLD <span class="tok-se">\</span>
+    -e PYTHONPATH <span class="tok-se">\</span>
+    -e RESIDENT_WORK_RANK <span class="tok-se">\</span>
+    <span class="tok-nv">$EMEWS_PROJECT_ROOT</span>/swift/<span class="tok-nv">$SWIFT_FILE</span> <span class="tok-se">\</span>
+    <span class="tok-nv">$CMD_LINE_ARGS</span>     <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4617,12 +4630,12 @@ a short configuration file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">CFG_WALLTIME</span><span class="tok-o">=</span><span class="tok-m">01</span>:00:00<span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-nv">CFG_QUEUE</span><span class="tok-o">=</span>queue<span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
-<span class="tok-nv">CFG_PROJECT</span><span class="tok-o">=</span>project<span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b>
-<span class="tok-nv">NODES</span><span class="tok-o">=</span><span class="tok-m">4</span><span class="tok-w">    </span><i class="conum" data-value="4"></i><b>(4)</b>
-<span class="tok-nv">CFG_PPN</span><span class="tok-o">=</span><span class="tok-m">4</span><span class="tok-w">    </span><i class="conum" data-value="5"></i><b>(5)</b>
-<span class="tok-nv">CFG_PROCS</span><span class="tok-o">=</span><span class="tok-k">$((</span><span class="tok-w"> </span><span class="tok-nv">NODES</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-nv">CFG_PPN</span><span class="tok-w"> </span><span class="tok-k">))</span><span class="tok-w">    </span><i class="conum" data-value="6"></i><b>(6)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">CFG_WALLTIME</span><span class="tok-o">=</span><span class="tok-m">01</span>:00:00    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nv">CFG_QUEUE</span><span class="tok-o">=</span>queue    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nv">CFG_PROJECT</span><span class="tok-o">=</span>project    <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nv">NODES</span><span class="tok-o">=</span><span class="tok-m">4</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-nv">CFG_PPN</span><span class="tok-o">=</span><span class="tok-m">4</span>    <i class="conum" data-value="5"></i><b>(5)</b>
+<span class="tok-nv">CFG_PROCS</span><span class="tok-o">=</span><span class="tok-k">$((</span> NODES <span class="tok-o">*</span> CFG_PPN <span class="tok-k">))</span>    <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4663,10 +4676,10 @@ Those are specified here.</p>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># Database port - this can be left empty</span>
 <span class="tok-c1"># for local conda postgresql install</span>
-<span class="tok-nv">CFG_DB_PORT</span><span class="tok-o">=</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-nv">CFG_DB_USER</span><span class="tok-o">=</span>eqsql_user<span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
-<span class="tok-nv">CFG_DB_NAME</span><span class="tok-o">=</span>EQ_SQL<span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b>
-<span class="tok-nv">CFG_DB_HOST</span><span class="tok-o">=</span>localhost<span class="tok-w">     </span><i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+<span class="tok-nv">CFG_DB_PORT</span><span class="tok-o">=</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nv">CFG_DB_USER</span><span class="tok-o">=</span>eqsql_user    <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nv">CFG_DB_NAME</span><span class="tok-o">=</span>EQ_SQL    <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nv">CFG_DB_HOST</span><span class="tok-o">=</span>localhost     <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4698,13 +4711,13 @@ the worker pool will retrieve, and the task query parameters.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">CFG_TRIALS</span><span class="tok-o">=</span><span class="tok-m">10</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-nv">CFG_POOL_ID</span><span class="tok-o">=</span>default<span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">CFG_TRIALS</span><span class="tok-o">=</span><span class="tok-m">10</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nv">CFG_POOL_ID</span><span class="tok-o">=</span>default    <i class="conum" data-value="2"></i><b>(2)</b>
 <span class="tok-c1"># Update this to match the task / work type</span>
-<span class="tok-nv">CFG_TASK_TYPE</span><span class="tok-o">=</span><span class="tok-m">0</span><span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b>
-<span class="tok-nv">CFG_BATCH_SIZE</span><span class="tok-o">=</span><span class="tok-k">$((</span><span class="tok-w"> </span><span class="tok-nv">CFG_PROCS</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-m">2</span><span class="tok-w"> </span><span class="tok-k">))</span><span class="tok-w">    </span><i class="conum" data-value="4"></i><b>(4)</b>
-<span class="tok-nv">CFG_BATCH_THRESHOLD</span><span class="tok-o">=</span><span class="tok-m">1</span><span class="tok-w">    </span><i class="conum" data-value="5"></i><b>(5)</b>
-<span class="tok-nv">CFG_DB_RETRY_THRESHOLD</span><span class="tok-o">=</span><span class="tok-m">10</span><span class="tok-w">      </span><i class="conum" data-value="6"></i><b>(6)</b></code></pre>
+<span class="tok-nv">CFG_TASK_TYPE</span><span class="tok-o">=</span><span class="tok-m">0</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nv">CFG_BATCH_SIZE</span><span class="tok-o">=</span><span class="tok-k">$((</span> CFG_PROCS <span class="tok-o">+</span> <span class="tok-m">2</span> <span class="tok-k">))</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-nv">CFG_BATCH_THRESHOLD</span><span class="tok-o">=</span><span class="tok-m">1</span>    <i class="conum" data-value="5"></i><b>(5)</b>
+<span class="tok-nv">CFG_DB_RETRY_THRESHOLD</span><span class="tok-o">=</span><span class="tok-m">10</span>      <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -4772,15 +4785,15 @@ run duration exceeds that value.</p>
 <span class="tok-c1"># !!! IF YOU CHANGE THE NUMBER OF ARGUMENTS PASSED TO THIS SCRIPT, YOU MUST</span>
 <span class="tok-c1"># CHANGE THE TIMEOUT_ARG_INDEX !!!</span>
 <span class="tok-nv">TIMEOUT</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span>
-<span class="tok-nv">TIMEOUT_ARG_INDEX</span><span class="tok-o">=</span><span class="tok-m">6</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-o">[[</span><span class="tok-w"> </span><span class="tok-nv">$#</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w">  </span><span class="tok-nv">$TIMEOUT_ARG_INDEX</span><span class="tok-w"> </span><span class="tok-o">]]</span>
+<span class="tok-nv">TIMEOUT_ARG_INDEX</span><span class="tok-o">=</span><span class="tok-m">6</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-k">if</span> <span class="tok-o">[[</span> <span class="tok-nv">$#</span> <span class="tok-o">==</span>  <span class="tok-nv">$TIMEOUT_ARG_INDEX</span> <span class="tok-o">]]</span>
 <span class="tok-k">then</span>
-<span class="tok-w">	</span><span class="tok-nv">TIMEOUT</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-p">!TIMEOUT_ARG_INDEX</span><span class="tok-si">}</span>
+	<span class="tok-nv">TIMEOUT</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-p">!TIMEOUT_ARG_INDEX</span><span class="tok-si">}</span>
 <span class="tok-k">fi</span>
 
 <span class="tok-nv">TIMEOUT_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span>
-<span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-o">[</span><span class="tok-w"> </span>-n<span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$TIMEOUT</span><span class="tok-s2">&quot;</span><span class="tok-w"> </span><span class="tok-o">]</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-k">then</span>
-<span class="tok-w">  </span><span class="tok-nv">TIMEOUT_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;timeout </span><span class="tok-nv">$TIMEOUT</span><span class="tok-s2">&quot;</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> -n <span class="tok-s2">&quot;</span><span class="tok-nv">$TIMEOUT</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+  <span class="tok-nv">TIMEOUT_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;timeout </span><span class="tok-nv">$TIMEOUT</span><span class="tok-s2">&quot;</span>
 <span class="tok-k">fi</span></code></pre>
 </div>
 </div>
@@ -4819,7 +4832,7 @@ the script.</p>
 <span class="tok-c1"># Each model run, runs in its own &quot;instance&quot; directory</span>
 <span class="tok-c1"># Set INSTANCE_DIRECTORY to that and cd into it.</span>
 <span class="tok-nv">INSTANCE_DIRECTORY</span><span class="tok-o">=</span><span class="tok-nv">$5</span>
-<span class="tok-nb">cd</span><span class="tok-w"> </span><span class="tok-nv">$INSTANCE_DIRECTORY</span></code></pre>
+<span class="tok-nb">cd</span> <span class="tok-nv">$INSTANCE_DIRECTORY</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4830,29 +4843,29 @@ that executable in <code>arg_array</code> and runs the model with the optional t
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># TODO: Define the command to run the model. For example,</span>
 <span class="tok-c1"># MODEL_CMD=&quot;python&quot;</span>
-<span class="tok-nv">MODEL_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span><span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-nv">MODEL_CMD</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span>    <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-c1"># TODO: Define the arguments to the MODEL_CMD. Each argument should be</span>
 <span class="tok-c1"># surrounded by quotes and separated by spaces. For example,</span>
 <span class="tok-c1"># arg_array=(&quot;$EMEWS_ROOT/python/my_model.py&quot; &quot;$PARAM_LINE&quot; &quot;$OUTPUT_FILE&quot; &quot;$TRIAL_ID&quot;)</span>
-<span class="tok-nv">arg_array</span><span class="tok-o">=(</span><span class="tok-s2">&quot;arg1&quot;</span><span class="tok-w"> </span><span class="tok-s2">&quot;arg2&quot;</span><span class="tok-w"> </span><span class="tok-s2">&quot;arg3&quot;</span><span class="tok-o">)</span><span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nv">arg_array</span><span class="tok-o">=(</span><span class="tok-s2">&quot;arg1&quot;</span> <span class="tok-s2">&quot;arg2&quot;</span> <span class="tok-s2">&quot;arg3&quot;</span><span class="tok-o">)</span>    <i class="conum" data-value="2"></i><b>(2)</b>
 
 <span class="tok-c1"># Turn bash error checking off. This is</span>
 <span class="tok-c1"># required to properly handle the model execution</span>
 <span class="tok-c1"># return values and the optional timeout.</span>
-<span class="tok-nb">set</span><span class="tok-w"> </span>+e
-<span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;Running </span><span class="tok-nv">$MODEL_CMD</span><span class="tok-s2"> </span><span class="tok-si">${</span><span class="tok-nv">arg_array</span><span class="tok-p">[@]</span><span class="tok-si">}</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">set</span> +e
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Running </span><span class="tok-nv">$MODEL_CMD</span><span class="tok-s2"> </span><span class="tok-si">${</span><span class="tok-nv">arg_array</span><span class="tok-p">[@]</span><span class="tok-si">}</span><span class="tok-s2">&quot;</span>
 
-<span class="tok-nv">$TIMEOUT_CMD</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$MODEL_CMD</span><span class="tok-s2">&quot;</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">arg_array</span><span class="tok-p">[@]</span><span class="tok-si">}</span><span class="tok-s2">&quot;</span><span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nv">$TIMEOUT_CMD</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$MODEL_CMD</span><span class="tok-s2">&quot;</span> <span class="tok-s2">&quot;</span><span class="tok-si">${</span><span class="tok-nv">arg_array</span><span class="tok-p">[@]</span><span class="tok-si">}</span><span class="tok-s2">&quot;</span>    <i class="conum" data-value="3"></i><b>(3)</b>
 
 <span class="tok-c1"># $? is the exit status of the most recently executed command (i.e the</span>
 <span class="tok-c1"># line above)</span>
 <span class="tok-nv">RES</span><span class="tok-o">=</span><span class="tok-nv">$?</span>
-<span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-o">[</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$RES</span><span class="tok-s2">&quot;</span><span class="tok-w"> </span>-ne<span class="tok-w"> </span><span class="tok-m">0</span><span class="tok-w"> </span><span class="tok-o">]</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-k">then</span>
-<span class="tok-w">	</span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-o">[</span><span class="tok-w"> </span><span class="tok-s2">&quot;</span><span class="tok-nv">$RES</span><span class="tok-s2">&quot;</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-m">124</span><span class="tok-w"> </span><span class="tok-o">]</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-k">then</span>
-<span class="tok-w">    </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;---&gt; Timeout error in </span><span class="tok-nv">$COMMAND</span><span class="tok-s2">&quot;</span>
-<span class="tok-w">  </span><span class="tok-k">else</span>
-<span class="tok-w">	   </span><span class="tok-nb">echo</span><span class="tok-w"> </span><span class="tok-s2">&quot;---&gt; Error in </span><span class="tok-nv">$COMMAND</span><span class="tok-s2">&quot;</span>
-<span class="tok-w">  </span><span class="tok-k">fi</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$RES</span><span class="tok-s2">&quot;</span> -ne <span class="tok-m">0</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+	<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$RES</span><span class="tok-s2">&quot;</span> <span class="tok-o">==</span> <span class="tok-m">124</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+    <span class="tok-nb">echo</span> <span class="tok-s2">&quot;---&gt; Timeout error in </span><span class="tok-nv">$COMMAND</span><span class="tok-s2">&quot;</span>
+  <span class="tok-k">else</span>
+	   <span class="tok-nb">echo</span> <span class="tok-s2">&quot;---&gt; Error in </span><span class="tok-nv">$COMMAND</span><span class="tok-s2">&quot;</span>
+  <span class="tok-k">fi</span>
 <span class="tok-k">fi</span></code></pre>
 </div>
 </div>
@@ -4929,8 +4942,7 @@ optional arguments:
 <span class="tok-k">if</span> <span class="tok-vm">__name__</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;__main__&#39;</span><span class="tok-p">:</span>
     <span class="tok-n">parser</span> <span class="tok-o">=</span> <span class="tok-n">create_parser</span><span class="tok-p">()</span>
     <span class="tok-n">args</span> <span class="tok-o">=</span> <span class="tok-n">parser</span><span class="tok-o">.</span><span class="tok-n">parse_args</span><span class="tok-p">()</span>
-    <span class="tok-k">with</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-n">args</span><span class="tok-o">.</span><span class="tok-n">config_file</span><span class="tok-p">)</span> <span class="tok-k">as</span> <span class="tok-n">fin</span><span class="tok-p">:</span>
-        <span class="tok-n">params</span> <span class="tok-o">=</span> <span class="tok-n">yaml</span><span class="tok-o">.</span><span class="tok-n">safe_load</span><span class="tok-p">(</span><span class="tok-n">fin</span><span class="tok-p">)</span>
+    <span class="tok-n">params</span> <span class="tok-o">=</span> <span class="tok-n">cfg</span><span class="tok-o">.</span><span class="tok-n">parse_yaml_cfg</span><span class="tok-p">(</span><span class="tok-n">args</span><span class="tok-o">.</span><span class="tok-n">config_file</span><span class="tok-p">)</span>
 
     <span class="tok-n">run</span><span class="tok-p">(</span><span class="tok-n">args</span><span class="tok-o">.</span><span class="tok-n">exp_id</span><span class="tok-p">,</span> <span class="tok-n">params</span><span class="tok-p">)</span></code></pre>
 </div>
@@ -5057,12 +5069,12 @@ start and connect to the database.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># TODO: Edit DB properties if necessary</span>
-db_path:<span class="tok-w"> </span>/home/nick/tmp/db<span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-db_host:<span class="tok-w"> </span>localhost<span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
-db_user:<span class="tok-w"> </span>eqsql_user<span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b>
-db_name:<span class="tok-w"> </span>EQ_SQL<span class="tok-w">    </span><i class="conum" data-value="4"></i><b>(4)</b>
+db_path: /home/nick/tmp/db    <i class="conum" data-value="1"></i><b>(1)</b>
+db_host: localhost    <i class="conum" data-value="2"></i><b>(2)</b>
+db_user: eqsql_user    <i class="conum" data-value="3"></i><b>(3)</b>
+db_name: EQ_SQL    <i class="conum" data-value="4"></i><b>(4)</b>
 <span class="tok-c1"># db_port can be empty for local run</span>
-db_port:<span class="tok-w">    </span><i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+db_port:    <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -5095,11 +5107,11 @@ to be specified.</td>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>worker_pool_id:<span class="tok-w"> </span>default<span class="tok-w">    </span><i class="conum" data-value="1"></i><b>(1)</b>
-task_type:<span class="tok-w"> </span><span class="tok-m">0</span><span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>worker_pool_id: default    <i class="conum" data-value="1"></i><b>(1)</b>
+task_type: <span class="tok-m">0</span>    <i class="conum" data-value="2"></i><b>(2)</b>
 
-pool_launch_script:<span class="tok-w"> </span>/home/nick/Documents/repos/emews_next_gen_tutorial_tests/code/eqsql_project/swift/run_eqsql_worker_pool.sh<span class="tok-w">    </span><i class="conum" data-value="3"></i><b>(3)</b>
-pool_cfg_file:<span class="tok-w"> </span>/home/nick/Documents/repos/emews_next_gen_tutorial_tests/code/eqsql_project/swift/cfgs/eqsql_worker_pool.cfg<span class="tok-w">    </span><i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+pool_launch_script: ../swift/run_eqsql_worker_pool.sh    <i class="conum" data-value="3"></i><b>(3)</b>
+pool_cfg_file: ../swift/cfgs/eqsql_worker_pool.cfg    <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -5115,11 +5127,28 @@ the <code>pool_launch_script</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Set the worker pool launch script. The example ME will use this script to start the worker pool.</td>
+<td>Set the worker pool launch script. The example ME will use this script to start the worker pool.
+This location is relative to the configuration file&#8217;s location.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Set the configuration file for the worker pool.</td>
+<td>Set the configuration file for the worker pool. This location is relative to the configuration file&#8217;s
+location.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>eqsql</code> package contains a utility function for parsing EQ/SQL yaml format configuration files.
+The <code>eqsql.cfg.parse_yaml_cfg</code> function will attempt to resolve <code>~</code> into the user&#8217;s home directory,
+and relative paths for any entries ending in <code>file</code>, <code>script</code>, or <code>path</code>. The relative paths will
+be resolved using the configuration file location, when those paths begin with <code>.</code> or <code>..</code>.
+</td>
 </tr>
 </table>
 </div>
@@ -5128,25 +5157,29 @@ the <code>pool_launch_script</code>.</td>
 <div class="sect2">
 <h3 id="_init_db">B.5. INIT DB</h3>
 <div class="paragraph">
-<p>EMEWS Creator also includes an <code>init_db</code> command that
-creates the EQSQL database in a user specified directory for use by an EQ/SQL workflow. It assumes that the postgresql
-binaries are available in the user PATH, and that the eqsql package has been installed. The database name will
-default to <code>EQ_SQL</code>, and the database user to <code>eqsql_user</code>. Database log messages will be written to
-a <code>db.log</code> file in the database directory.</p>
+<p>EMEWS Creator also includes an <code>init_db</code> command that creates a fuly initialized EQSQL database
+in a user specified directory. <code>init_db</code> creates a postgresql database cluster in a specified path,
+then creates a user and databasein that cluster, and finally populates that datbase with the required
+eqsql tables. <code>init_db</code> requires that the postgresql binaries, <code>initdb</code>, <code>pg_ctl</code>, <code>'createuser</code>, and
+<code>createdb</code> are in the user&#8217;s PATH, or that the directory path is specified via the <code>--pg-bin-path</code> argument.</p>
 </div>
 <div class="paragraph">
 <p>Usage:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code><span></span>emewscreator init_db -h
-Usage: emewscreator init_db [OPTIONS]
+<pre class="pygments highlight"><code><span></span>$ emewscreator init_db [OPTIONS]
 
 Options:
-  -d, --db-path PATH  Database directory path. The database will be created in
-                      this directory.  [required]
-  -p, --port INTEGER  The database port, if any.
-  -h, --help          Show this message and exit.</code></pre>
+  -d, --db-path PATH      Database directory path. The database will be
+                          created in this directory.  [required]
+  -u, --db-user TEXT      The database user name
+  -n, --db-name TEXT      The database name
+  -p, --db-port INTEGER   The database port, if any.
+  -b, --pg-bin-path PATH  The path to postgresql&#39;s bin directory (i.e., the
+                          directory that contains the pg_ctl, createuser and
+                          createdb executables)
+  -h, --help              Show this message and exit.</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5155,12 +5188,168 @@ Options:
 <div class="ulist">
 <ul>
 <li>
-<p><code>--db-path</code> - the directory in which to create the database. This must not already exist,
-and will be created by the running template.</p>
+<p><code>--db-path</code> - the directory in which to create the database cluster. This must not already exist,
+and will be created by the command.</p>
 </li>
 <li>
-<p><code>--port</code> - an optional port number for the database to listen for connections on. This is not
-required for a local database.</p>
+<p><code>--db-user</code> - the database user&#8217;s name, defaults to <code>eqsql_user</code></p>
+</li>
+<li>
+<p><code>--db-name</code> - the name of the database to create, defaults to <code>EQ_SQL</code></p>
+</li>
+<li>
+<p><code>--db-port</code> - an optional port number for the database to listen for connections on, if any</p>
+</li>
+<li>
+<p><code>--pg-bin-path</code> - the path to a directory containing postgresql&#8217;s <code>initdb</code>, <code>pg_ctl</code>, <code>createuser</code>, and <code>createdb</code> executables, defaults to an empty string in which case the executables are assumed to be in the user&#8217;s
+PATH.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <strong>create cluster</strong>, <strong>create database</strong>, and <strong>create tables</strong> steps that <code>init_db</code> executes,
+can be performed individually if necessary using the <code>create_db_cluster</code>, <code>create_db</code>, and
+<code>create_db_tables</code> commands described below. This can be useful when an HPC resource provides
+it&#8217;s own database service, for example, and the user only needs to create the required EQ/SQL tables.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_db_cluster">B.6. CREATE DB CLUSTER</h3>
+<div class="paragraph">
+<p>The <code>create_db_cluster</code> command creates a postgresql database cluster in a specified directory. <code>create_db_cluster</code> requires that the postgresql executable <code>initdb</code> is in the user&#8217;s PATH, or that the directory path is specified via the <code>--pg-bin-path</code> argument.</p>
+</div>
+<div class="paragraph">
+<p>Usage:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>$ emewscreator create_db_cluster [OPTIONS]
+
+Options:
+  -d, --db-path PATH      Database directory path. The cluster will be created
+                          in this directory.  [required]
+  -b, --pg-bin-path PATH  The path to postgresql&#39;s bin directory (i.e., the
+                          directory that contains the initdb exectuable)
+  -h, --help              Show this message and exit.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>create_db_cluster</code> takes the following arguments:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>--db-path</code> - the directory in which to create the database cluster. This must not already exist,
+and will be created by the command.</p>
+</li>
+<li>
+<p><code>--pg-bin-path</code> - the path to a directory containing postgresql&#8217;s <code>initdb</code> executable, defaults to an empty string in which case the executable is assumed to be in the user&#8217;s PATH.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_db">B.7. CREATE DB</h3>
+<div class="paragraph">
+<p>The <code>create_db</code> command creates an eqsql database and and eqsql user in a specified postgresql database cluster. <code>create_db</code> requires that the postgresql executables, <code>pg_ctl</code>, <code>createuser</code>, and <code>createdb</code> are in the user&#8217;s PATH, or that the directory path is specified in the <code>--pg-bin-path</code> argument.</p>
+</div>
+<div class="paragraph">
+<p>Usage:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>$ emewscreator create_db [OPTIONS]
+
+Options:
+  -d, --db-path PATH      Database directory path. The database will be
+                          created in this directory.  [required]
+  -u, --db-user TEXT      The database user name
+  -n, --db-name TEXT      The database name
+  -p, --db-port INTEGER   The database port, if any.
+  -b, --pg-bin-path PATH  The path to postgresql&#39;s bin directory (i.e., the
+                          directory that contains the pg_ctl, createuser and
+                          createdb executables)
+  -h, --help              Show this message and exit.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>create_db</code> takes the following arguments:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>--db-path</code> - the database cluster directory</p>
+</li>
+<li>
+<p><code>--db-user</code> - the database user&#8217;s name, defaults to <code>eqsql_user</code></p>
+</li>
+<li>
+<p><code>--db-name</code> - the name of the database to create, defaults to <code>EQ_SQL</code></p>
+</li>
+<li>
+<p><code>--db-port</code> - an optional port number for the database to listen for connections on, if any</p>
+</li>
+<li>
+<p><code>--pg-bin-path</code> - the path to a directory containing postgresql&#8217;s <code>pg_ctl</code>, <code>createuser</code>, and <code>createdb</code> executables, defaults to an empty string in which case the executables are assumed to be in the user&#8217;s
+PATH.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_db_tables">B.8. CREATE DB TABLES</h3>
+<div class="paragraph">
+<p>The <code>create_db_tables</code> command creates the required database tables in the specified database.
+<code>create_db_tables</code> requires that the postgresql&#8217;s <code>pg_ctl</code> executable is in the user&#8217;s PATH, or
+that the directory path is specified in the <code>--pg-bin-path</code> argument.</p>
+</div>
+<div class="paragraph">
+<p>Usage:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code><span></span>emewscreator create_db_tables [OPTIONS]
+
+Options:
+  -d, --db-path PATH      Database directory path. The tables will be created
+                          in the database in this directory.  [required]
+  -u, --db-user TEXT      The database user name
+  -n, --db-name TEXT      The database name
+  -p, --db-port INTEGER   The database port, if any.
+  -b, --pg-bin-path PATH  The path to postgresql&#39;s bin directory (i.e., the
+                          directory that contains the pg_ctl, createuser and
+                          createdb executables)
+  -h, --help              Show this message and exit.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>create_db_tables</code> takes the following arguments:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>--db-path</code> - the database cluster directory</p>
+</li>
+<li>
+<p><code>--db-user</code> - the database user&#8217;s name, defaults to <code>eqsql_user</code></p>
+</li>
+<li>
+<p><code>--db-name</code> - the name of the database in which to create the tabes, defaults to <code>EQ_SQL</code></p>
+</li>
+<li>
+<p><code>--db-port</code> - an optional port number for the database to listen for connections on, if any</p>
+</li>
+<li>
+<p><code>--pg-bin-path</code> - the path to a directory containing postgresql&#8217;s <code>pg_ctl</code> executable, defaults to an empty string in which case the executable is assumed to be in the user&#8217;s PATH.</p>
 </li>
 </ul>
 </div>
@@ -5190,7 +5379,7 @@ required for a local database.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-01-13 11:18:09 -0600
+Last updated 2024-01-19 09:32:00 -0500
 </div>
 </div>
 </body>
