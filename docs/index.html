@@ -586,7 +586,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </li>
 </ul>
 </li>
-<li><a href="#_creating_emews_projects">Appendix B: Creating EMEWS Projects</a>
+<li><a href="#creating_emews_projects">Appendix B: Creating EMEWS Projects</a>
 <ul class="sectlevel2">
 <li><a href="#_installation">B.1. Installation</a></li>
 <li><a href="#_using_emews_creator">B.2. Using EMEWS Creator</a></li>
@@ -793,9 +793,17 @@ based around EMEWS can easily be compared and distributed.</p>
 <div class="paragraph">
 <p>For a first demonstration ABM use case, we begin with an example of a Swift/T
 parallel parameter sweep to explore the parameter space of a model.
-This tutorial uses the project structure and files created from the
-EMEWS <mark><a href="#_sweep_template">sweep template</a></mark>,
-and that should be read before this.</p>
+This tutorial uses the project structure and files created by the EMEWS project creator <a href="#sweep">sweep template</a>. The sweep workflow reads an input file,
+and runs an application using each line of the input file as input to an application run.
+We call this input file an <em>unrolled parameter file</em> or <em>UPF</em> file. The following is the EMEWS sweep workflow structure:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EMEWS_figure_sweep.png" alt="Sweep" width="640" height="480">
+</div>
+</div>
+<div class="paragraph">
+<p>Further information about the EMEWS Creator tool and the various available templates can be found in the <a href="#creating_emews_projects">EMEWS Creator Appendix</a>.</p>
 </div>
 <div class="sect2">
 <h3 id="_tutorial_goals_2">2.1. Tutorial goals</h3>
@@ -819,7 +827,7 @@ and that should be read before this.</p>
 <p>The full source code for this tutorial use case can be accessed <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc1" target="UC1">here</a>.</p>
 </div>
 <div class="paragraph">
-<p>An initial version of the project was created using the EMEWS creator with the following command, issued from the tutorial <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code" target="UC1">code</a> directory:</p>
+<p>An initial version of the project was created using the EMEWS creator with the following command, <mark>issued from the tutorial</mark> <a href="https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code" target="UC1">code</a> directory:</p>
 </div>
 <div id="uc1-creator" class="listingblock">
 <div class="content">
@@ -833,22 +841,23 @@ and that should be read before this.</p>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="text"><span></span>uc1
 ├── R
-│   └── test
+│   └── test
 ├── README.md
 ├── data
+│   └── upf.txt
 ├── etc
-│   └── emews_utils.sh
+│   └── emews_utils.sh
 ├── ext
-│   └── emews
-│       └── emews.swift
+│   └── emews
+│       └── emews.swift
 ├── output
 ├── python
-│   └── test
+│   └── test
 ├── scripts
-│   └── run_repast_uc1.sh
+│   └── run_repast_uc1.sh
 └── swift
     ├── cfgs
-    │   └── uc1.cfg
+    │   └── uc1.cfg
     ├── run_uc1.sh
     ├── uc1.swift
     └── uc1_R.swift</code></pre>
@@ -2629,7 +2638,7 @@ export LDFLAGS="-L$PY/lib -Wl,-rpath -Wl,$PY/lib "
 </div>
 </div>
 <div class="sect1">
-<h2 id="_creating_emews_projects">Appendix B: Creating EMEWS Projects</h2>
+<h2 id="creating_emews_projects">Appendix B: Creating EMEWS Projects</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>EMEWS Creator is a Python application for creating workflow projects for EMEWS from
@@ -2865,7 +2874,12 @@ configuration file is required to supply the missing arguments.</p>
 and runs an application using each line of the input file as input to an application run.
 We call this input file an <em>unrolled parameter file</em> or <em>UPF</em> file, as it contains a
 full explicit listing of all the parameter combinations to run, rather than some
-more terse sweep description.</p>
+more terse sweep description. The following is the EMEWS sweep workflow structure:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EMEWS_figure_sweep.png" alt="Sweep" width="640" height="480">
+</div>
 </div>
 <div class="paragraph">
 <p>Usage:</p>
@@ -3521,7 +3535,7 @@ for <code>CFG_WALLTIME</code>, <code>CFG_QUEUE</code>, and <code>CFG_PROJECT</co
 <div class="paragraph">
 <p>The EQPy workflow template creates a workflow that uses EMEWS Queues for Python (EQ/Py)
 to execute an application using input parameters provided by a
-Python model exploration (ME) algorithm.  EQ/Py is a swift extension that adds two blocking queues through which a swift script and a Python algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/Py,</p>
+Python model exploration (ME) algorithm.  EQ/Py is a swift extension that adds two blocking queues through which a swift script and a Python algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/Py:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -3718,7 +3732,7 @@ to be edited to customize the file for your model and workflow.</p>
 <div class="sect3">
 <h4 id="eqr_top">B.4.3. EQR</h4>
 <div class="paragraph">
-<p>The eqr template works much the same as the eqpy template, but for ME algorithms written in R. It generates files and code for ME using the EQ/R EMEWS extension. The EQ/R extension adds two blocking queues through which a swift script and a R algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/R,</p>
+<p>The eqr template works much the same as the eqpy template, but for ME algorithms written in R. It generates files and code for ME using the EQ/R EMEWS extension. The EQ/R extension adds two blocking queues through which a swift script and a R algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/R:</p>
 </div>
 <div class="imageblock">
 <div class="content">

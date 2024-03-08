@@ -1,4 +1,4 @@
-
+[[creating_emews_projects, Creating EMEWS Projects]]
 == Creating EMEWS Projects
 
 EMEWS Creator is a Python application for creating workflow projects for EMEWS from
@@ -162,7 +162,9 @@ The sweep command creates a sweep workflow in which EMEWS reads an input file,
 and runs an application using each line of the input file as input to an application run.
 We call this input file an _unrolled parameter file_ or _UPF_ file, as it contains a
 full explicit listing of all the parameter combinations to run, rather than some
-more terse sweep description.
+more terse sweep description. The following is the EMEWS sweep workflow structure:
+
+image::EMEWS_figure_sweep.png[Sweep, 640, 480]
 
 Usage:
 
@@ -605,7 +607,7 @@ for `CFG_WALLTIME`, `CFG_QUEUE`, and `CFG_PROJECT`.
 
 The EQPy workflow template creates a workflow that uses EMEWS Queues for Python (EQ/Py)
 to execute an application using input parameters provided by a
-Python model exploration (ME) algorithm.  EQ/Py is a swift extension that adds two blocking queues through which a swift script and a Python algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/Py,
+Python model exploration (ME) algorithm.  EQ/Py is a swift extension that adds two blocking queues through which a swift script and a Python algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/Py:
 
 image::EMEWS_figure_EQPy_black.png[EQPy, 640, 480]
 
@@ -727,7 +729,7 @@ More details to come.
 [[eqr_top]]
 ==== EQR
 
-The eqr template works much the same as the eqpy template, but for ME algorithms written in R. It generates files and code for ME using the EQ/R EMEWS extension. The EQ/R extension adds two blocking queues through which a swift script and a R algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/R,
+The eqr template works much the same as the eqpy template, but for ME algorithms written in R. It generates files and code for ME using the EQ/R EMEWS extension. The EQ/R extension adds two blocking queues through which a swift script and a R algorithm can coordinate execution. The following is the EMEWS workflow structure with EQ/R:
 
 image::EMEWS_figure_EQR_black.png[EQR, 640, 480]
 
