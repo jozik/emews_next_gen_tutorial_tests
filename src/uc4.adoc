@@ -37,7 +37,7 @@ The workflow is designed to be run with a local swift-t conda install:
 * emewscreator init_db
 
 
-The workflow can be run using the https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L1[`uc4/python/me.py`,window=me,pts="noopener,nofollow"] python script. It takes two arguments:
+The workflow can be run using the https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/me.py#L1[`uc4/python/me.py`,window=me,pts="noopener,nofollow"] python script. It takes two arguments:
 
 1. An experiment id, e.g. "test_ackley".
 2. The path to the ME configuration file, i.e., `uc4/python/me_cfg.yaml`
@@ -55,7 +55,7 @@ consists of th experiment id followed by a timestamp. The workflow runs
 within this directory.
 
 === Workflow Project Structure
-The full source code for this use case can be accessed https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc4[here,window=uc4,pts="noopener,nofollow"].
+The full source code for this use case can be accessed https://github.com/emews/emews-tutorial-code/tree/main/uc4[here,window=uc4,pts="noopener,nofollow"].
 The completed workflow project has the following directory structure and files:
 // NB: Generated using tree.
 [source,text]
@@ -111,7 +111,7 @@ remaining inputs, assigning a higher priority to those it deems more likely to p
 === The Ackley Function
 
 The http://www.sfu.ca/~ssurjano/ackley.html[Ackley,window=ackley_doc,pts="noopener,nofollow"] function is widely used for testing optimization algorithms.
-In our example project, it is implemented in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L1[`uc4/python/ackley.py`,window=ackley_py,pts="noopener,nofollow"] 
+In our example project, it is implemented in https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/ackley.py#L1[`uc4/python/ackley.py`,window=ackley_py,pts="noopener,nofollow"] 
 
 [NOTE]
 ====
@@ -121,7 +121,7 @@ We have added a lognormally distributed sleep delay to the Ackley function imple
 === Calling the Ackley Function from Swift
 
 The Ackley function is implemented in Python and is called by the swift worker pool 
-using a bash script https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/scripts/run_ackley.sh#L1[`uc4/scripts/run_ackley.sh`,window=run_ackley,pts="noopener,nofollow"] 
+using a bash script https://github.com/emews/emews-tutorial-code/blob/main/uc4/scripts/run_ackley.sh#L1[`uc4/scripts/run_ackley.sh`,window=run_ackley,pts="noopener,nofollow"] 
 
 
 The `run_ackley.sh` script takes 5 inputs, which are passed from the worker pool swift code when
@@ -193,7 +193,7 @@ to the model execution itself.
 ====
 
 When the `run_ackley.sh` scripts calls `python/ackley.py` to execute the
-Ackley function on the provided input, the https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L50[`__main__`,window=ackley_main,pts="noopener,nofollow"] section of `ackley.py` is executed. The `__main__` section receives the Ackley function input (the `$PARAM_LINE` variable in 
+Ackley function on the provided input, the https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/ackley.py#L50[`__main__`,window=ackley_main,pts="noopener,nofollow"] section of `ackley.py` is executed. The `__main__` section receives the Ackley function input (the `$PARAM_LINE` variable in 
 `run_ackley.sh`), and the path to the output file as command line arguments. It unpacks
 these arguments, calls the `run` function, and writes the result to the output file.
 
@@ -249,13 +249,13 @@ Ackley evaluation.
 ----
 <1> Initialize the output file as a swift-t file object. `output_file` is the path
 passed to `ackley.py` as a command line argument. The Ackley function result is
-written to this file in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/ackley.py#L56[`python/ackley.py`,
+written to this file in https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/ackley.py#L56[`python/ackley.py`,
 window=ackley_write_result,pts="noopener,nofollow"]
 <2> Read the first line of that file, which contains the result, and convert the
 string to a float.
 
-The worker pool configuration file (https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/swift/cfgs/ackley_worker_pool.cfg#L1[`swift/cfgs/ackley_worker_pool.cfg`,window=ackley_worker_pool_cfg,pts="noopener,nofollow"]) and the worker pool launch script
-(https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/swift/run_ackley_worker_pool.sh#L1[`swift/run_ackley_worker_pool.sh`,window=run_ackley_worker_pool_sh,pts="noopener,nofollow"]))
+The worker pool configuration file (https://github.com/emews/emews-tutorial-code/blob/main/uc4/swift/cfgs/ackley_worker_pool.cfg#L1[`swift/cfgs/ackley_worker_pool.cfg`,window=ackley_worker_pool_cfg,pts="noopener,nofollow"]) and the worker pool launch script
+(https://github.com/emews/emews-tutorial-code/blob/main/uc4/swift/run_ackley_worker_pool.sh#L1[`swift/run_ackley_worker_pool.sh`,window=run_ackley_worker_pool_sh,pts="noopener,nofollow"])
 are unchanged from those produced by eqsql template. A discussion of them can be found <<pool_cfg,here>>
 and <<eqsql_launch_script,here>>
 
@@ -305,7 +305,7 @@ NOTE: In addition to running a model, the embeded Python interpreter can be very
 
 === The Ackley ME
 
-The Ackley workflow can be run by executing the Python script https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L1[`python/me.py`,window=me_py,pts="noopener,nofollow"]
+The Ackley workflow can be run by executing the Python script https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/me.py#L1[`python/me.py`,window=me_py,pts="noopener,nofollow"]
 The code begins by
 starting the EQ/SQL database, the worker pool, and initializing a task queue through which tasks can be sent to the worker pool via the database. The code then submits a user specified amount of initial tasks to the database, and waits
 for a prespecified number of tasks to complete. When that number has completed, the remaining unexecuted tasks are reprioritized 
@@ -317,7 +317,7 @@ The code consists of a Python `dataclass` for encapsulating a task, 5 functions,
 Similarily, creating the task queue, and starting the database, and worker pool which are performed in the `run` function were also discussed
 in the  emews creator eqsql <<me_init,section>> and will not be covered here. 
 
-After initialization, the `run` function calls https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L23[`submit_initial_tasks`,window=submit_initial_tasks,pts="noopener,nofollow"], passing it the created task_queue,
+After initialization, the `run` function calls hhttps://github.com/emews/emews-tutorial-code/blob/main/uc4/python/me.py#L23[`submit_initial_tasks`,window=submit_initial_tasks,pts="noopener,nofollow"], passing it the created task_queue,
 the user provided experiment id, and the ME input parameters as a dictionary. The random samples 
 used as Ackley function input data are created and submitted as tasks for evaluation.
 
@@ -365,7 +365,7 @@ Numpy structures such as arrays are not directly JSON-ifiable, and so
 we need to convert them into Python structures that are, such as lists.
 ====
 
-Having submitted the initial tasks, `run` begins the optimization https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L117[loop,
+Having submitted the initial tasks, `run` begins the optimization https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/me.py#L124[loop,
 window=opt_loop,pts="noopener,nofollow"]. The loop repeatedly queries for
 some number of completed tasks using a task queues' `as_completed` method which returns
 an iterator over that number of completed tasks, waiting for tasks to complete if necessary.
@@ -408,7 +408,7 @@ Future.
 <9> After another `reprioritize_after` number of tasks have completed, and their results
 assigned to the corresponding Task object, reprioritize the uncompleted tasks.
 
-The https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me.py#L65[`reprioritize`,window=reprioritize,pts="noopener,nofollow"] function uses the completed task results
+The https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/me.py#L66[`reprioritize`,window=reprioritize,pts="noopener,nofollow"] function uses the completed task results
 captured in the `result` attribute of the Tasks objects to reprioritize the remaining tasks. It begins by separating
 the Task objects into training and prediction data sets.
 
@@ -464,7 +464,7 @@ from the max priority.
 in the specified list.
 
 The ME itself is configured using a yaml format configuration file,
-https://github.com/jozik/emews_next_gen_tutorial_tests/blob/4264709e4ee20153c8e164d72f9a1ccbd72c968b/code/uc4/python/me_cfg.yaml#L1[`python/me_cfg.yaml`, window=me_cfg,pts="noopener,nofollow"]. The ME
+https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/me_cfg.yaml#L1[`python/me_cfg.yaml`, window=me_cfg,pts="noopener,nofollow"]. The ME
 code reads in this file, and creates a `params` Python dictionary from it. In addition to 
 those entries described in the emews creator eqsql template <<algo_cfg,section>>, the file contains
 the following entries:
