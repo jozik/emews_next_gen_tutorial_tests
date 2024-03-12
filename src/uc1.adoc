@@ -21,9 +21,9 @@ Further information about the EMEWS Creator tool and the various available templ
 * Implement parallel evaluation of the simulation results using Swift/T and R
 
 === Workflow Project Structure
-The full source code for this tutorial use case can be accessed https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc1[here,window=UC1,pts="noopener,nofollow"].
+The full source code for this tutorial use case can be accessed https://github.com/emews/emews-tutorial-code/tree/main/uc1[here,window=UC1,pts="noopener,nofollow"].
 
-An initial version of the project was created using the EMEWS creator with the following command, #issued from the tutorial# https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code[code,window=UC1,pts="noopener,nofollow"] directory:
+An initial version of the project was created using the EMEWS creator with the following command, #issued from the tutorial# https://github.com/emews/emews-tutorial-code/tree/main[code,window=UC1,pts="noopener,nofollow"] directory:
 // TODO: when the uc1 code is moved to the other repository, may need to change the wording here.
 
 [source#uc1-creator,bash]
@@ -100,7 +100,7 @@ time step is specified by the parameters zombie step size and human step size.
 === Calling a Repast Simphony simulation from Swift/T
 
 
-The full Swift/T script can be seen in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1.swift#L1[uc1.swift,window=uc1.swift,pts="noopener,nofollow"].
+The full Swift/T script can be seen in https://github.com/emews/emews-tutorial-code/blob/main/uc1/swift/uc1.swift#L1[uc1.swift,window=uc1.swift,pts="noopener,nofollow"].
 The script consists of defining variables from environment variables and user input:
 // Note: Using "java" for *.swift files
 
@@ -183,7 +183,7 @@ choice for integrating the model into a Swift script. See the Swift/T Tutorial f
 via an InstanceRunner class, for passing a set of parameters to a model and performing a single headless
 run of the model using those parameters. Using the InstanceRunner main class, Repast Simphony models can be launched by other
 control applications such as a bash, slurm, or Swift scripts.  We have wrapped the command line invocation of
-Repast Simphony's InstanceRunner in a bash script https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/run_repast_uc1.sh#L1[run_repast_uc1.sh,window=run_repast_uc1.sh,pts="noopener,nofollow"]
+Repast Simphony's InstanceRunner in a bash script https://github.com/emews/emews-tutorial-code/blob/main/uc1/scripts/run_repast_uc1.sh#L1[run_repast_uc1.sh,window=run_repast_uc1.sh,pts="noopener,nofollow"]
 to ease command line usage. Other non-Repast Simphony models or scientific applications with command line interfaces can be wrapped and run similarly.
 
 
@@ -208,7 +208,7 @@ For more on these variables see the
 // TODO: Include link to project creator section.
 #<<swift_run_sweep_sh,discussion>># in the template tutorial.
 <3> The app function definition begins. The function returns two files, one for standard output and one for standard error.
-The function arguments are those required to run https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/scripts/run_repast_uc1.sh#L1[run_repast_uc1.sh,window=run_repast_uc1.sh,pts="noopener,nofollow"], that is,
+The function arguments are those required to run https://github.com/emews/emews-tutorial-code/blob/main/uc1/scripts/run_repast_uc1.sh#L1[run_repast_uc1.sh,window=run_repast_uc1.sh,pts="noopener,nofollow"], that is,
 the full path of the script, the parameters to run and the directory where the model run output should be written.
 <4> The body of the function calls the bash interpreter passing it the name of the script file to execute and the other function
 arguments as well as the project root, that is, `emews_root` directory.
@@ -290,7 +290,7 @@ However, in our case, the Repast Simphony logging configuration file must be in 
 The `=>` symbol enforces the required sequential execution:
 the code on its left-hand side must complete execution before the code on the right-hand side begins execution.
 <4> Read the `upf` file into an array of strings where each line of the file is an element in the array.
-The built-in Swift `file_lines` function (requires import of files module at the top of https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1.swift#L3[uc1.swift,window=uc1.swift,pts="noopener,nofollow"])
+The built-in Swift `file_lines` function (requires import of files module at the top of https://github.com/emews/emews-tutorial-code/blob/main/uc1/swift/uc1.swift#L3[uc1.swift,window=uc1.swift,pts="noopener,nofollow"])
 is used to read the upf file into this array of strings.
 <5> The `foreach` loop 
 executes its loop iterations in parallel. In the `foreach` loop, the variable `s` is set to an
@@ -334,7 +334,7 @@ file performing as many runs as possible in parallel. However, an additional ste
 determines the parameter combination or combinations that resulted in the most humans surviving at the
 final time step has been added.
 
-The full updated swift code is in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/uc1_R.swift#L1[uc1_R.swift,window=uc1_R.swift,pts="noopener,nofollow"].
+The full updated swift code is in https://github.com/emews/emews-tutorial-code/blob/main/uc1/swift/uc1_R.swift#L1[uc1_R.swift,window=uc1_R.swift,pts="noopener,nofollow"].
 
 The updated code includes embedded R code that can be invoked using Swift's `R` function:
 [source,java]
@@ -488,7 +488,7 @@ Swift scripts are typically launched using a shell script. This allows
 one to export useful values as environment variables and to properly
 configure the Swift workflow to be run on HPC resources.
 The EMEWS Creator will automatically create such a shell script. The shell script for running
-our simple workflow can be see in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/run_uc1.sh#L1[run_uc1.sh,window=run_uc1.sh,pts="noopener,nofollow"].
+our simple workflow can be see in https://github.com/emews/emews-tutorial-code/blob/main/uc1/swift/run_uc1.sh#L1[run_uc1.sh,window=run_uc1.sh,pts="noopener,nofollow"].
 
 [source#run-uc1-front-annot,bash]
 .run_uc1.sh selected parts
@@ -550,7 +550,7 @@ The first is an experiment id (e.g., "experiment_1"), which is used to define a 
 into which per workflow output can be written. Swift will also write its own
 log files into this directory as the workflow executes.
 The second required argument is the workflow configuration file. EMEWS Creator will have auto-generated
-a configuration file based on the information provided to it, and can be seen in https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/uc1/swift/cfgs/uc1.cfg#L1[uc1.cfg,window=uc1.cfg,pts="noopener,nofollow"].
+a configuration file based on the information provided to it, and can be seen in https://github.com/emews/emews-tutorial-code/blob/main/uc1/swift/cfgs/uc1.cfg#L1[uc1.cfg,window=uc1.cfg,pts="noopener,nofollow"].
 <2> Additional logging, including debugging logs, can be enabled by uncommenting.
 <3> EMEWS_PROJECT_ROOT is defined and exported here. The workflow launch script assumes the canonical EMEWS directory structure, where
 the so-called EMEWS project root directory contains other directories
