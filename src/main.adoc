@@ -13,9 +13,8 @@ Version 1.0 Jan 12 2024
 :bibtex-style: chicago-author-date
 
 // Sections need line break between includes
+
 include::emews_introduction.adoc[]
-
-
 
 include::uc1.adoc[]
 
