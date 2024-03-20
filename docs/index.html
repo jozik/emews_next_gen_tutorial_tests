@@ -620,6 +620,13 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <ul class="sectlevel2">
 <li><a href="#_overview">C.1. Overview</a></li>
 <li><a href="#_syntax">C.2. Syntax</a></li>
+<li><a href="#_external_execution">C.3. External execution</a></li>
+<li><a href="#_concurrency">C.4. Concurrency</a></li>
+<li><a href="#_support_for_interpreted_languages">C.5. Support for interpreted languages</a>
+<ul class="sectlevel3">
+<li><a href="#_python">C.5.1. Python</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_references">References</a></li>
@@ -5408,6 +5415,106 @@ Options:
 <div class="content">
 <pre class="pygments highlight"><code data-lang="sh"><span></span>$<span class="tok-w"> </span>swift-t<span class="tok-w"> </span>add.swift
 v1+v2<span class="tok-o">=</span><span class="tok-m">4</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_external_execution">C.3. External execution</h3>
+<div class="paragraph">
+<p>Swift is primarily designed to call into external user code, such as simulations or analysis routines implemented in various languages.  Like many other systems, Swift/T supports calls into the shell.  However, this is not efficient at large scale, and so Swift/T also supports calls into native code libraries directly.</p>
+</div>
+<div class="paragraph">
+<p>An example use of Swift for shell tasks is shown in the snippet below.
+This example demonstrates a fragment of a build system.  The user
+defines two <code>app</code> functions, which compile and link a C language
+file.  Swift <code>app</code> functions differ from other Swift functions in
+that they operate primarily on variables of type file.</p>
+</div>
+<div class="paragraph">
+<p>Other forms of external execution in Swift/T allow the user to call
+into native code (C/C++/Fortran) directly by constructing a package
+with SWIG.  Such libraries can be assembled with dynamic or static
+linking; in the static case, the Swift script and the native code
+libraries are bundled into a single executable with minimal
+system dependencies for the most efficient loading on a large-scale
+machine.</p>
+</div>
+<div class="listingblock">
+<div class="title"><strong>compile.swift</strong></div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span></span><span class="tok-n">app</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">o</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">gcc</span><span class="tok-p">(</span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">c</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">optz</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">  </span><span class="tok-s">&quot;gcc&quot;</span><span class="tok-w"> </span><span class="tok-s">&quot;-c&quot;</span><span class="tok-w"> </span><span class="tok-s">&quot;-o&quot;</span><span class="tok-w"> </span><span class="tok-n">o</span><span class="tok-w"> </span><span class="tok-n">optz</span><span class="tok-w"> </span><span class="tok-n">c</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
+<span class="tok-n">app</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">link</span><span class="tok-p">(</span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">o</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">  </span><span class="tok-s">&quot;gcc&quot;</span><span class="tok-w"> </span><span class="tok-s">&quot;-o&quot;</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-n">o</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
+<span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">c</span><span class="tok-w">        </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">input</span><span class="tok-p">(</span><span class="tok-s">&quot;f.c&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">o</span><span class="tok-o">&lt;</span><span class="tok-s">&quot;f.o&quot;</span><span class="tok-o">&gt;</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">gcc</span><span class="tok-p">(</span><span class="tok-n">c</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;-O3&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-o">&lt;</span><span class="tok-s">&quot;f&quot;</span><span class="tok-o">&gt;</span><span class="tok-w">   </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">link</span><span class="tok-p">(</span><span class="tok-n">o</span><span class="tok-p">);</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_concurrency">C.4. Concurrency</h3>
+<div class="paragraph">
+<p>The key purpose of Swift is to gain concurrency easily and correctly.  This is accomplished in Swift through the use of <em>dataflow</em> instead of <em>control flow</em>.  In Swift, there is no instruction pointer, execution is triggered as soon as possible limited only by data availability.  This results in an implicitly parallel programming model.  Two modes of concurrency are shown in the following snippet, both based on the ready availability of <code>i</code>.  Computing the ith Fibonacci number relies on two concurrent recursive calls, and iteration over an array of known values allows for parallel execution.  Ordering can be forced with the <code>statement1 &#8658; statement2</code> syntax, which creates an artificial dependency.</p>
+</div>
+<div class="listingblock">
+<div class="title"><strong>concurrency.swift</strong></div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span></span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">o</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">fib</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">  </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-p">...</span><span class="tok-w"> </span><span class="tok-c1">// base cases</span>
+<span class="tok-w">  </span><span class="tok-p">}</span>
+<span class="tok-w">  </span><span class="tok-k">else</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-n">o</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">fib</span><span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-mi">-1</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">fib</span><span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-mi">-2</span><span class="tok-p">);</span>
+<span class="tok-w">  </span><span class="tok-p">}</span>
+<span class="tok-p">}</span>
+
+<span class="tok-n">foreach</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-n">in</span><span class="tok-w"> </span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-o">:</span><span class="tok-n">N</span><span class="tok-mi">-1</span><span class="tok-p">]</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">  </span><span class="tok-n">simulate</span><span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-p">);</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_support_for_interpreted_languages">C.5. Support for interpreted languages</h3>
+<div class="paragraph">
+<p>Swift/T also provides high-level, easy to use interfaces for Python, R, Julia, Tcl, and JVM languages, allowing the developer to pass a string of code into the language interpreter for execution (via its C or C++ interface).  These interpreters are optionally linked to the Swift runtime when it is built.  This allows the user to tightly integrate Swift logic with calls to the interpreters, as the interpreter does not have to be launched as a separate program for each call.  This is a crucially significant performance benefit on very large scale supercomputers, enabling us to make millions of calls to the interpreter per second.</p>
+</div>
+<div class="sect3">
+<h4 id="_python">C.5.1. Python</h4>
+<div class="paragraph">
+<p>Many users desire to access Python from the top level of the
+scientific workflow; and optionally call down from the interpreted
+level into native code, to gain high-performance operations for
+numerical methods or event-based simulation.  A popular example of
+this model is Numpy, which provides a high-level interface for
+interaction, with high-performance, vendor-optimized BLAS, LAPACK,
+and/or ATLAS numerical libraries underneath.</p>
+</div>
+<div class="paragraph">
+<p>One use of Python from Swift/T is shown in the following snippet.  In this example, a short module is defined in <code>F.py</code> which provides an function named <code>f()</code> that simply performs addition.  A call to this function from Swift/T is shown in <code>python-f.swift</code>.  The string containing the Python code is populated with Swift&#8217;s Python-inspired <code>%</code> operator, which fills in values for <code>x</code> and <code>y</code> at the conversion specifiers <code>%i</code>.  The Python function <code>F.f()</code> receives these values, adds them, and returns the result as a <code>string</code>.  Swift receives the result in <code>z</code> and reports it with the Swift builtin <code>trace()</code> function.</p>
+</div>
+<div class="paragraph">
+<p>Using this technique, massively parallel ensembles of Python tasks can be orchestrated by Swift.  Data can easily be passed to and from Python with Pythonic conventions; only stringification is required.  At run time, the user simply sets <code>PYTHONPATH</code> so that the Python interpreter can find module <code>F</code>, and runs <code>swift-t</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title"><strong>F.py</strong></div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">f</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">):</span>
+    <span class="tok-k">return</span> <span class="tok-nb">str</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-o">+</span><span class="tok-n">y</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title"><strong>python-f</strong></div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><span></span><span class="tok-n">import</span><span class="tok-w"> </span><span class="tok-n">python</span><span class="tok-p">;</span>
+<span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">y</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">3</span><span class="tok-p">;</span>
+<span class="tok-n">z</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">python</span><span class="tok-p">(</span><span class="tok-s">&quot;import F&quot;</span><span class="tok-p">,</span>
+<span class="tok-w">           </span><span class="tok-s">&quot;F.f(%i,%i)&quot;</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">));</span>
+<span class="tok-n">trace</span><span class="tok-p">(</span><span class="tok-n">z</span><span class="tok-p">);</span></code></pre>
+</div>
 </div>
 </div>
 </div>
