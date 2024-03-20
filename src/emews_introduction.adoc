@@ -7,15 +7,7 @@ such studies at the requisite computational scales is often unnecessarily time-c
 software artifacts are typically difficult to generalize and
 package for other users.
 
-In this tutorial, we present a solution for many of the challenges in
-running large-scale ME studies.  Our framework, Extreme-scale Model
-Exploration with Swift (*EMEWS*) cite:[ozik_desktop_2016], uses the general-purpose parallel
-scripting language Swift/T cite:[wozniak_swiftt_2013] 
-to generate highly
-concurrent ME workflows.  These workflows enable the flexible integration of multi-language
-ME algorithms and libraries to coordinate the running and evaluation of large numbers of models.  The general-purpose nature of
-the programming model also allows the user to supplement the workflows with additional
-analyses and post-processing.
+In this tutorial, we present a solution for many of the challenges in running large-scale ME studies.  Our framework, Extreme-scale Model Exploration with Swift (*EMEWS*) cite:[ozik_desktop_2016], provides ready-to-use workflows developed in the general-purpose parallel scripting language Swift/T cite:[wozniak_swiftt_2013].  These workflows are designed so that most of the interesting control logic is performed in the mathematically-oriented ME.  The general-purpose nature of the programming model also allows the user to supplement the workflows with additional analyses and post-processing.  The <<swift_usage,Appendix: Using Swift/T>> is provided for cases in which customized use of Swift/T is required.
 
 Our focus is on computational models that require the use of approximate, heuristic ME methods involving large ensembles. To improve the current state of the art it has been noted elsewhere that: “...
 there is a clear need to provide software frameworks for

@@ -22,10 +22,15 @@ include::uc1.adoc[]
 include::uc4.adoc[]
 
 // Appendix type sections
+
 [appendix]
 include::emews_install.adoc[]
+
 [appendix]
 include::emews_creator.adoc[]
+
+[appendix]
+include::swift_usage.adoc[]
 
 :sectnums!:
 == References

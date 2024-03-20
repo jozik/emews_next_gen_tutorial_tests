@@ -1,0 +1,7 @@
+[[swift_usage, Using Swift/T]]
+== Using Swift/T
+
+=== Overview
+
+The Swift language allows the developer to rapidly implement workflows.  The Swift/T implementation of Swift focuses on high-performance workflows to utilize TOP500 machines.  Such systems are characterized by high concurrency (tens of thousands of processor cores or more) and low-latency networks.  Swift/T can utilize these systems well, producing over a billion tasks per second.  As a workflow language, Swift composes existing software components into an overall workflow. The following sections describe Swift/T features relevant to EMEWS. For more details, see the
+link:http://swift-lang.org/Swift-T[Swift/T website].
