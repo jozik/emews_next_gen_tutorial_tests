@@ -30,7 +30,7 @@ include::emews_install.adoc[]
 include::emews_creator.adoc[]
 
 [appendix]
-include::swift_usage.adoc[]
+include::using_swift_t.adoc[]
 
 :sectnums!:
 == References
