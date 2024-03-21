@@ -5507,13 +5507,21 @@ and/or ATLAS numerical libraries underneath.</p>
 </div>
 </div>
 <div class="listingblock">
-<div class="title"><strong>python-f</strong></div>
+<div class="title"><strong>python-f.swift</strong></div>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="c"><span></span><span class="tok-n">import</span><span class="tok-w"> </span><span class="tok-n">python</span><span class="tok-p">;</span>
 <span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">y</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">3</span><span class="tok-p">;</span>
 <span class="tok-n">z</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">python</span><span class="tok-p">(</span><span class="tok-s">&quot;import F&quot;</span><span class="tok-p">,</span>
 <span class="tok-w">           </span><span class="tok-s">&quot;F.f(%i,%i)&quot;</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">));</span>
 <span class="tok-n">trace</span><span class="tok-p">(</span><span class="tok-n">z</span><span class="tok-p">);</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title"><strong>usage:</strong></div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span></span>$<span class="tok-w"> </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">PYTHONPATH</span><span class="tok-o">=</span><span class="tok-nv">$PWD</span>
+$<span class="tok-w"> </span>swift-t<span class="tok-w"> </span>python-f.swift
+trace:<span class="tok-w"> </span><span class="tok-m">5</span></code></pre>
 </div>
 </div>
 </div>
