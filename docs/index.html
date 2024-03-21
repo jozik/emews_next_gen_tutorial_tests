@@ -236,8 +236,8 @@ pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
 table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
 table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
 table.linenotable td.code{padding-left:.75em}
-table.linenotable td.linenos{border-right:1px solid;opacity:.35;padding-right:.5em}
-pre.pygments .lineno{border-right:1px solid;opacity:.35;display:inline-block;margin-right:.75em}
+table.linenotable td.linenos{border-right:0px solid;opacity:.35;padding-right:.5em}
+pre.pygments .lineno{border-right:0px solid;opacity:1;display:inline-block;margin-right:.75em}
 pre.pygments .lineno::before{content:"";margin-right:-.125em}
 .quoteblock{margin:0 1em 1.25em 1.5em;display:table}
 .quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
@@ -625,6 +625,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_support_for_interpreted_languages">C.5. Support for interpreted languages</a>
 <ul class="sectlevel3">
 <li><a href="#_python">C.5.1. Python</a></li>
+<li><a href="#_r">C.5.2. R</a></li>
 </ul>
 </li>
 </ul>
@@ -5413,8 +5414,8 @@ Options:
 <div class="listingblock">
 <div class="title"><strong>usage:</strong></div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh"><span></span>$<span class="tok-w"> </span>swift-t<span class="tok-w"> </span>add.swift
-v1+v2<span class="tok-o">=</span><span class="tok-m">4</span></code></pre>
+<pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">$ </span>swift-t<span class="tok-w"> </span>add.swift
+<span class="tok-go">v1+v2=4</span></code></pre>
 </div>
 </div>
 </div>
@@ -5424,20 +5425,10 @@ v1+v2<span class="tok-o">=</span><span class="tok-m">4</span></code></pre>
 <p>Swift is primarily designed to call into external user code, such as simulations or analysis routines implemented in various languages.  Like many other systems, Swift/T supports calls into the shell.  However, this is not efficient at large scale, and so Swift/T also supports calls into native code libraries directly.</p>
 </div>
 <div class="paragraph">
-<p>An example use of Swift for shell tasks is shown in the snippet below.
-This example demonstrates a fragment of a build system.  The user
-defines two <code>app</code> functions, which compile and link a C language
-file.  Swift <code>app</code> functions differ from other Swift functions in
-that they operate primarily on variables of type file.</p>
+<p>An example use of Swift for shell tasks is shown in the snippet below.  This example demonstrates a fragment of a build system.  The user defines two <code>app</code> functions, which compile and link a C language file.  Swift <code>app</code> functions differ from other Swift functions in that they operate primarily on variables of type file.</p>
 </div>
 <div class="paragraph">
-<p>Other forms of external execution in Swift/T allow the user to call
-into native code (C/C++/Fortran) directly by constructing a package
-with SWIG.  Such libraries can be assembled with dynamic or static
-linking; in the static case, the Swift script and the native code
-libraries are bundled into a single executable with minimal
-system dependencies for the most efficient loading on a large-scale
-machine.</p>
+<p>Other forms of external execution in Swift/T allow the user to call into native code (C/C++/Fortran) directly by constructing a package with SWIG.  Such libraries can be assembled with dynamic or static linking; in the static case, the Swift script and the native code libraries are bundled into a single executable with minimal system dependencies for the most efficient loading on a large-scale machine.</p>
 </div>
 <div class="listingblock">
 <div class="title"><strong>compile.swift</strong></div>
@@ -5519,10 +5510,66 @@ and/or ATLAS numerical libraries underneath.</p>
 <div class="listingblock">
 <div class="title"><strong>usage:</strong></div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh"><span></span>$<span class="tok-w"> </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">PYTHONPATH</span><span class="tok-o">=</span><span class="tok-nv">$PWD</span>
-$<span class="tok-w"> </span>swift-t<span class="tok-w"> </span>python-f.swift
-trace:<span class="tok-w"> </span><span class="tok-m">5</span></code></pre>
+<pre class="pygments highlight"><code data-lang="console"><span></span><span class="tok-gp">$ </span><span class="tok-nb">export</span><span class="tok-w"> </span><span class="tok-nv">PYTHONPATH</span><span class="tok-o">=</span><span class="tok-nv">$PWD</span>
+<span class="tok-gp">$ </span>swift-t<span class="tok-w"> </span>python-f.swift
+<span class="tok-go">trace: 5</span></code></pre>
 </div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_r">C.5.2. R</h4>
+<div class="paragraph">
+<p>The R support in Swift/T is similar to the Python support.  An example use case is shown here:</p>
+</div>
+<div class="listingblock">
+<div class="title"><strong>stats.swift</strong></div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c"><div class="lineno"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-n">import</span><span class="tok-w"> </span><span class="tok-n">io</span><span class="tok-p">;</span>
+<span class="tok-n">import</span><span class="tok-w"> </span><span class="tok-n">string</span><span class="tok-p">;</span>
+<span class="tok-n">import</span><span class="tok-w"> </span><span class="tok-n">files</span><span class="tok-p">;</span>
+<span class="tok-n">import</span><span class="tok-w"> </span><span class="tok-n">R</span><span class="tok-p">;</span>
+
+<span class="tok-n">app</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">o</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">simulation</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">  </span><span class="tok-s">&quot;bash&quot;</span><span class="tok-w"> </span><span class="tok-s">&quot;-c&quot;</span>
+<span class="tok-w">    </span><span class="tok-p">(</span><span class="tok-s">&quot;RANDOM=%i; echo $RANDOM&quot;</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-p">)</span>
+<span class="tok-w">    </span><span class="tok-err">@</span><span class="tok-n">stdout</span><span class="tok-o">=</span><span class="tok-n">o</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
+
+<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">results</span><span class="tok-p">[];</span>
+<span class="tok-n">foreach</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-n">in</span><span class="tok-w"> </span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-o">:</span><span class="tok-mi">9</span><span class="tok-p">]</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">  </span><span class="tok-n">f</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">simulation</span><span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-p">);</span>
+<span class="tok-w">  </span><span class="tok-n">results</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">read</span><span class="tok-p">(</span><span class="tok-n">f</span><span class="tok-p">);</span>
+<span class="tok-p">}</span>
+
+<span class="tok-n">A</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">results</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;,&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">code</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-s">&quot;m = mean(c(%s))&quot;</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-n">A</span><span class="tok-p">;</span>
+<span class="tok-n">mean</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">R</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;toString(m)&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-n">mean</span><span class="tok-p">);</span>
+</pre></div></td></tr></table></div></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This script intends to run a collection of simulations in parallel, then send result values to R for statistical processing.  The first section (lines 1-4) simply imports requisite Swift packages.  The second section (lines 6-10) defines the external simulation program, which is implemented as a call to the Bash shell random number generator, seeded with the simulation number <code>i</code>.  The output goes to temporary file <code>o</code>.  The third section (lines 12-16) calls the simulation a number of times, reading the output number from disk and storing it in the array <code>results</code>.  The fourth section (lines 18-21) computes the mean of results via R.  It joins the results into an R vector, constructed with the R function <code>c()</code>, uses the R function <code>mean()</code>, and returns the mean as a string <code>mean</code> that is printed by Swift with <code>printf()</code>.</p>
 </div>
 </div>
 </div>
