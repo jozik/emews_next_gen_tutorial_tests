@@ -17,7 +17,7 @@ include::snippets/add.swift[]
 ----
 
 .*usage:*
-[source,sh]
+[source,console]
 ----
 include::snippets/add.sh[]
 ----
@@ -87,7 +87,7 @@ include::snippets/python-f.swift[]
 ----
 
 .*usage:*
-[source,sh]
+[source,console]
 ----
 include::snippets/python-f.sh[]
 ----
