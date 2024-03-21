@@ -80,8 +80,14 @@ Using this technique, massively parallel ensembles of Python tasks can be orches
 include::snippets/F.py[]
 ----
 
-.*python-f*
+.*python-f.swift*
 [source,c]
 ----
 include::snippets/python-f.swift[]
+----
+
+.*usage:*
+[source,sh]
+----
+include::snippets/python-f.sh[]
 ----
