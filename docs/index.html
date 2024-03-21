@@ -5547,24 +5547,24 @@ and/or ATLAS numerical libraries underneath.</p>
 <span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
-<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-n">import</span><span class="tok-w"> </span><span class="tok-n">io</span><span class="tok-p">;</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><span class="tok-n">import</span><span class="tok-w"> </span><span class="tok-n">io</span><span class="tok-p">;</span><span class="tok-w">                          </span><i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-n">import</span><span class="tok-w"> </span><span class="tok-n">string</span><span class="tok-p">;</span>
 <span class="tok-n">import</span><span class="tok-w"> </span><span class="tok-n">files</span><span class="tok-p">;</span>
 <span class="tok-n">import</span><span class="tok-w"> </span><span class="tok-n">R</span><span class="tok-p">;</span>
 
-<span class="tok-n">app</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">o</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">simulation</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-n">app</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">file</span><span class="tok-w"> </span><span class="tok-n">o</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">simulation</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w">    </span><i class="conum" data-value="2"></i><b>(2)</b>
 <span class="tok-w">  </span><span class="tok-s">&quot;bash&quot;</span><span class="tok-w"> </span><span class="tok-s">&quot;-c&quot;</span>
 <span class="tok-w">    </span><span class="tok-p">(</span><span class="tok-s">&quot;RANDOM=%i; echo $RANDOM&quot;</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-p">)</span>
 <span class="tok-w">    </span><span class="tok-err">@</span><span class="tok-n">stdout</span><span class="tok-o">=</span><span class="tok-n">o</span><span class="tok-p">;</span>
 <span class="tok-p">}</span>
 
-<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">results</span><span class="tok-p">[];</span>
+<span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">results</span><span class="tok-p">[];</span><span class="tok-w">                   </span><i class="conum" data-value="3"></i><b>(3)</b>
 <span class="tok-n">foreach</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-n">in</span><span class="tok-w"> </span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-o">:</span><span class="tok-mi">9</span><span class="tok-p">]</span><span class="tok-w"> </span><span class="tok-p">{</span>
 <span class="tok-w">  </span><span class="tok-n">f</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">simulation</span><span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-p">);</span>
 <span class="tok-w">  </span><span class="tok-n">results</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">read</span><span class="tok-p">(</span><span class="tok-n">f</span><span class="tok-p">);</span>
 <span class="tok-p">}</span>
 
-<span class="tok-n">A</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">results</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;,&quot;</span><span class="tok-p">);</span>
+<span class="tok-n">A</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">results</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;,&quot;</span><span class="tok-p">);</span><span class="tok-w">             </span><i class="conum" data-value="4"></i><b>(4)</b>
 <span class="tok-n">code</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-s">&quot;m = mean(c(%s))&quot;</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-n">A</span><span class="tok-p">;</span>
 <span class="tok-n">mean</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">R</span><span class="tok-p">(</span><span class="tok-n">code</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-s">&quot;toString(m)&quot;</span><span class="tok-p">);</span>
 <span class="tok-n">printf</span><span class="tok-p">(</span><span class="tok-n">mean</span><span class="tok-p">);</span>
@@ -5572,7 +5572,27 @@ and/or ATLAS numerical libraries underneath.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This script intends to run a collection of simulations in parallel, then send result values to R for statistical processing.  The first section (lines 1-4) simply imports requisite Swift packages.  The second section (lines 6-10) defines the external simulation program, which is implemented as a call to the Bash shell random number generator, seeded with the simulation number <code>i</code>.  The output goes to temporary file <code>o</code>.  The third section (lines 12-16) calls the simulation a number of times, reading the output number from disk and storing it in the array <code>results</code>.  The fourth section (lines 18-21) computes the mean of results via R.  It joins the results into an R vector, constructed with the R function <code>c()</code>, uses the R function <code>mean()</code>, and returns the mean as a string <code>mean</code> that is printed by Swift with <code>printf()</code>.</p>
+<p>This script intends to run a collection of simulations in parallel, then send result values to R for statistical processing.</p>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This simply imports requisite Swift packages.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This defines the external simulation program, which is implemented as a call to the Bash shell random number generator, seeded with the simulation number <code>i</code>.  The output goes to temporary file <code>o</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This calls the simulation a number of times, reading the output number from disk and storing it in the array <code>results</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>This computes the mean of results via R.  It joins the results into an R vector, constructed with the R function <code>c()</code>, uses the R function <code>mean()</code>, and returns the mean as a string <code>mean</code> that is printed by Swift with <code>printf()</code>.</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
