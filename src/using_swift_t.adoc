@@ -26,19 +26,9 @@ include::snippets/add.sh[]
 
 Swift is primarily designed to call into external user code, such as simulations or analysis routines implemented in various languages.  Like many other systems, Swift/T supports calls into the shell.  However, this is not efficient at large scale, and so Swift/T also supports calls into native code libraries directly.
 
-An example use of Swift for shell tasks is shown in the snippet below.
-This example demonstrates a fragment of a build system.  The user
-defines two `app` functions, which compile and link a C language
-file.  Swift `app` functions differ from other Swift functions in
-that they operate primarily on variables of type file.
+An example use of Swift for shell tasks is shown in the snippet below.  This example demonstrates a fragment of a build system.  The user defines two `app` functions, which compile and link a C language file.  Swift `app` functions differ from other Swift functions in that they operate primarily on variables of type file.
 
-Other forms of external execution in Swift/T allow the user to call
-into native code (C/C++/Fortran) directly by constructing a package
-with SWIG.  Such libraries can be assembled with dynamic or static
-linking; in the static case, the Swift script and the native code
-libraries are bundled into a single executable with minimal
-system dependencies for the most efficient loading on a large-scale
-machine.
+Other forms of external execution in Swift/T allow the user to call into native code (C/C++/Fortran) directly by constructing a package with SWIG.  Such libraries can be assembled with dynamic or static linking; in the static case, the Swift script and the native code libraries are bundled into a single executable with minimal system dependencies for the most efficient loading on a large-scale machine.
 
 .*compile.swift*
 [source,c]
