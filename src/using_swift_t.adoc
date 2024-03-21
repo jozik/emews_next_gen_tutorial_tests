@@ -92,4 +92,9 @@ The R support in Swift/T is similar to the Python support.  An example use case 
 include::snippets/stats.swift[]
 ----
 
-This script intends to run a collection of simulations in parallel, then send result values to R for statistical processing.  The first section (lines 1-4) simply imports requisite Swift packages.  The second section (lines 6-10) defines the external simulation program, which is implemented as a call to the Bash shell random number generator, seeded with the simulation number `i`.  The output goes to temporary file `o`.  The third section (lines 12-16) calls the simulation a number of times, reading the output number from disk and storing it in the array `results`.  The fourth section (lines 18-21) computes the mean of results via R.  It joins the results into an R vector, constructed with the R function `c()`, uses the R function `mean()`, and returns the mean as a string `mean` that is printed by Swift with `printf()`.
+This script intends to run a collection of simulations in parallel, then send result values to R for statistical processing.
+
+<1> This simply imports requisite Swift packages.
+<2> This defines the external simulation program, which is implemented as a call to the Bash shell random number generator, seeded with the simulation number `i`.  The output goes to temporary file `o`.
+<3> This calls the simulation a number of times, reading the output number from disk and storing it in the array `results`.
+<4> This computes the mean of results via R.  It joins the results into an R vector, constructed with the R function `c()`, uses the R function `mean()`, and returns the mean as a string `mean` that is printed by Swift with `printf()`.
