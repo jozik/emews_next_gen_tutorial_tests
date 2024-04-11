@@ -67,7 +67,12 @@ log "TARGET: $TARGET"
 if (( ${#UNINSTALL} )) uninstall
 downloads
 
-log "INSTALL ..."
-if [[ ! -d $WORKSPACE/sfw/Miniconda-$CONDA_LABEL ]] \
-         bash $MINICONDA -b -p $WORKSPACE/Miniconda-${PYTHON_VERSION}_${CONDA_LABEL}
-log "INSTALL OK: $TARGET"
+if [[ -d $WORKSPACE/sfw/Miniconda-${PYTHON_VERSION}_$CONDA_LABEL ]] {
+  log "Installation exists: $TARGET"
+} else {
+  log "INSTALL ..."
+  bash $MINICONDA -b -p $WORKSPACE/Miniconda-${PYTHON_VERSION}_${CONDA_LABEL}
+  log "INSTALL OK: $TARGET"
+}
+
+log "DONE."
