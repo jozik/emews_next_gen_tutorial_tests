@@ -21,8 +21,8 @@ uninstall()
 {
   log "UNINSTALL ..."
   rm -fv $WORKSPACE/$MINICONDA
-  log "DELETE: $WORKSPACE/sfw/Miniconda-$LABEL ..."
-  rm -fr $WORKSPACE/Miniconda-$LABEL
+  log "DELETE: $WORKSPACE/sfw/Miniconda-$CONDA_LABEL ..."
+  rm -fr $WORKSPACE/Miniconda-$CONDA_LABEL
   log "UNINSTALL OK."
 }
 
@@ -68,6 +68,6 @@ if (( ${#UNINSTALL} )) uninstall
 downloads
 
 log "INSTALL ..."
-    if [[ ! -d $WORKSPACE/sfw/Miniconda-$LABEL ]] \
+if [[ ! -d $WORKSPACE/sfw/Miniconda-$CONDA_LABEL ]] \
          bash $MINICONDA -b -p $WORKSPACE/Miniconda-${PYTHON_VERSION}_${CONDA_LABEL}
 log "INSTALL OK: $TARGET"
