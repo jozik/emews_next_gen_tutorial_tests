@@ -43,13 +43,14 @@ for V in "${VALID_VERSIONS[@]}"; do
 done
 
 if [ -z "$PY_VERSION" ]; then
-    
     echo "Error: python version must be one of $V_STRING."
     exit
 fi
 
 if [ -d $2 ]; then
-    echo "Error: database directory must not already exist."
+    echo "Error: Database directory already exists: $2"
+    echo "       This script will not overwrite an existing database."
+    echo "       Remove it or specify a different directory."
     exit 1
 fi
 
