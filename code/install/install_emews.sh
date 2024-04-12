@@ -50,14 +50,14 @@ fi
 
 if [ -d $2 ]; then
     echo "Error: database directory must not already exist."
-    exit
+    exit 1
 fi
 
 
 if [ ! $(command -v conda) ]; then
     echo "Error: conda executable not found. Conda must be activated."
     echo "Try \"source ~/anaconda3/bin/activate\""
-    exit
+    exit 1
 fi
 
 CONDA_BIN=$(which conda)
