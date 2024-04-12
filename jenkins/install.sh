@@ -27,7 +27,7 @@ zparseopts -D -E -F c:=CL p:=PV u=UNINSTALL
 if (( ${#PV} )) PYTHON_VERSION=${PV[2]}
 if (( ${#CL} )) CONDA_LABEL=${CL[2]}
 
-MINICONDA=$WORKSPACES/EMEWS-Install/Miniconda-${PYTHON_VERSION}_${CONDA_LABEL}
+MINICONDA=$WORKSPACES/EMEWS-Conda/Miniconda-${PYTHON_VERSION}_${CONDA_LABEL}
 log "MINICONDA: $MINICONDA"
 if [[ ! -d $MINICONDA ]] {
   log "Not found: MINICONDA=$MINICONDA"
@@ -39,5 +39,9 @@ PV_DOT=3.${PYTHON_VERSION[2,-1]}
 
 renice --priority 19 --pid ${$} >& /dev/null
 
+PATH=$MINICONDA/bin:$PATH
+
 set -x
+mkdir -pv $DB
+which python conda
 $EMEWS/code/install/install_emews.sh $PV_DOT $DB
