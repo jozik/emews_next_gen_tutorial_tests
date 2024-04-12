@@ -76,7 +76,10 @@ conda install -y postgresql
 pip install emewscreator
 emewscreator init_db -d $2
 
-Rscript -e "install.packages(c('reticulate', 'coro', 'jsonlite', 'purrr', 'logger', 'remotes'), repos='https://cloud.r-project.org/')"
+PKGS="c('reticulate', 'coro', 'jsonlite', 'purrr', 'logger', 'remotes')"
+Rscript -e "install.packages($PKGS, repos='https://cloud.r-project.org/')"
+# TODO: Test installations with library(package=pkg, character.only=TRUE)
+Rscript -e "for (pkg in $PKGS) { print(paste('TEST LOAD', pkg)) ; library(package=pkg, character.only=TRUE) }"
 Rscript -e "remotes::install_github('emews/EQ-SQL/R/EQ.SQL')"
 
 echo
