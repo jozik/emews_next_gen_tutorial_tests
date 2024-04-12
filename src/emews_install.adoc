@@ -1,8 +1,6 @@
 == Installing EMEWS
 
-EMEWS supports the following systems:
-
-Types of installs:
+EMEWS supports two installation modes, Binary and Source, described in the following subsections:
 
 === Binary
 
