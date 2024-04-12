@@ -41,7 +41,10 @@ renice --priority 19 --pid ${$} >& /dev/null
 
 PATH=$MINICONDA/bin:$PATH
 
+if [[ -d $DB ]] {
+  log "Removing existing DB=$DB"
+  rm -rf $DB
+}
 set -x
-rm -rf $DB
 which python conda
 $EMEWS/code/install/install_emews.sh $PV_DOT $DB
