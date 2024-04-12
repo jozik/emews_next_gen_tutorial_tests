@@ -72,14 +72,15 @@ conda install -y -c conda-forge -c swift-t swift-t-r
 conda deactivate
 source $CONDA_BIN_DIR/activate $ENV_NAME
 
-conda install -y postgresql
+conda upgrade -c conda-forge gcc
+conda install -c conda-forge -y postgresql
 pip install emewscreator
 emewscreator init_db -d $2
+conda upgrade -c conda-forge gcc
 
-PKGS="c('reticulate', 'coro', 'jsonlite', 'purrr', 'logger', 'remotes')"
-Rscript -e "install.packages($PKGS, repos='https://cloud.r-project.org/')"
-# TODO: Test installations with library(package=pkg, character.only=TRUE)
-Rscript -e "for (pkg in $PKGS) { print(paste('TEST LOAD', pkg)) ; library(package=pkg, character.only=TRUE) }"
+set -eu
+set -x
+Rscript $PWD/install_R_pkgs.sh
 Rscript -e "remotes::install_github('emews/EQ-SQL/R/EQ.SQL')"
 
 echo
