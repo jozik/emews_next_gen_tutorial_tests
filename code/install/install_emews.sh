@@ -86,7 +86,7 @@ conda upgrade -c conda-forge gcc
 set -eu
 echo
 set -x
-Rscript $PWD/install_R_pkgs.sh
+Rscript $PWD/code/install/install_R_pkgs.sh
 Rscript -e "remotes::install_github('emews/EQ-SQL/R/EQ.SQL')"
 
 echo
