@@ -42,6 +42,6 @@ renice --priority 19 --pid ${$} >& /dev/null
 PATH=$MINICONDA/bin:$PATH
 
 set -x
-mkdir -pv $DB
+rm -rf $DB
 which python conda
 $EMEWS/code/install/install_emews.sh $PV_DOT $DB
