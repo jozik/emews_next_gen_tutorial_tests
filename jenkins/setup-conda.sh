@@ -24,7 +24,7 @@ uninstall()
   log "UNINSTALL ..."
   rm -fv $WORKSPACE/$MINICONDA_SH
   log "DELETE: $WORKSPACE/sfw/Miniconda-$CONDA_LABEL ..."
-  rm -fr $WORKSPACE/Miniconda-$CONDA_LABEL
+  rm -fr $TARGET
   log "UNINSTALL OK."
 }
 
