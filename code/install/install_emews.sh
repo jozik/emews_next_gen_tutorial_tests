@@ -72,13 +72,19 @@ conda install -y -c conda-forge -c swift-t swift-t-r
 conda deactivate
 source $CONDA_BIN_DIR/activate $ENV_NAME
 
+echo CONDA UPGRADE 1
 conda upgrade -c conda-forge gcc
+echo CONDA POSTGRES
 conda install -c conda-forge -y postgresql
+echo PIP INSTALL
 pip install emewscreator
+echo EMEWSCREATOR
 emewscreator init_db -d $2
+echo CONDA UPGRADE 2
 conda upgrade -c conda-forge gcc
 
 set -eu
+echo
 set -x
 Rscript $PWD/install_R_pkgs.sh
 Rscript -e "remotes::install_github('emews/EQ-SQL/R/EQ.SQL')"
