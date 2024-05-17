@@ -61,21 +61,22 @@ for V in "${VALID_VERSIONS[@]}"; do
 done
 
 if [ -z "$PY_VERSION" ]; then
-    
     echo "Error: python version must be one of $V_STRING."
     exit
 fi
 
 if [ -d $2 ]; then
-    echo "Error: database directory must not already exist."
-    exit
+    echo "Error: Database directory already exists: $2"
+    echo "       This script will not overwrite an existing database."
+    echo "       Remove it or specify a different directory."
+    exit 1
 fi
 
 
 if [ ! $(command -v conda) ]; then
     echo "Error: conda executable not found. Conda must be activated."
     echo "Try \"source ~/anaconda3/bin/activate\""
-    exit
+    exit 1
 fi
 
 CONDA_BIN=$(which conda)
@@ -105,6 +106,10 @@ conda deactivate
 source $CONDA_BIN_DIR/activate $ENV_NAME
 end_step "$TEXT"
 
+TEXT="Upgrading conda 1"
+conda upgrade -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+end_step "$TEXT"
+
 TEXT="Installing PostgreSQL"
 start_step "$TEXT"
 conda install -y postgresql >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
@@ -119,9 +124,13 @@ TEXT="Initializing EMEWS Database"
 emewscreator init_db -d $2 >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
+TEXT="Upgrading conda 2"
+conda upgrade -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+end_step "$TEXT"
+
 TEXT="Initializing Required R Packages"
-Rscript -e "install.packages(c('reticulate', 'coro', 'jsonlite', 'purrr', 'logger', 'remotes'), #repos='https://cloud.r-project.org/')"  2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
-Rscript -e "remotes::install_github('emews/EQ-SQL/R/EQ.SQL')"  2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+Rscript $PWD/code/install/install_R_pkgs.sh  >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+Rscript -e "remotes::install_github('emews/EQ-SQL/R/EQ.SQL')"  >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
 echo

@@ -1643,7 +1643,7 @@ configuration.
 <3> Set the database user name. This defaults to `eqsql_user` under the default local database
 configuration.
 <4> Set the database name. This defaults to `EQ_SQL` under the default local database configuration.
-<5>Set the database port. If using the default local database configuration, no port needs
+<5> Set the database port. If using the default local database configuration, no port needs
 to be specified.
 
 The remaining parameters are used by the ME when working with the worker pool.

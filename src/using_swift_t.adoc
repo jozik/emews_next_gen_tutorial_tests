@@ -1,0 +1,100 @@
+[[swift_usage, Using Swift/T]]
+== Using Swift/T
+
+=== Overview
+
+The Swift language allows the developer to rapidly implement workflows.  The Swift/T implementation of Swift focuses on high-performance workflows to utilize TOP500 machines.  Such systems are characterized by high concurrency (tens of thousands of processor cores or more) and low-latency networks.  Swift/T can utilize these systems well, producing over a billion tasks per second.  As a workflow language, Swift composes existing software components into an overall workflow. The following sections describe Swift/T features relevant to EMEWS. For more details, see the
+link:http://swift-lang.org/Swift-T[Swift/T website].
+
+=== Syntax
+
+The Swift language uses C-like syntax and conventional data types such as `int`, `float`, and `string`.  It also has typical control constructs such as `if`, `for`, and `foreach`.  Swift code can be encapsulated into functions, which can be called recursively.  As shown in the snippet below, Swift can perform typical arithmetic and string processing tasks quite naturally.  Swift also has a file type, that allows dataflow processing on files.
+
+.*add.swift*
+[source,c]
+----
+include::snippets/add.swift[]
+----
+
+.*usage:*
+[source,console]
+----
+include::snippets/add.sh[]
+----
+
+=== External execution
+
+Swift is primarily designed to call into external user code, such as simulations or analysis routines implemented in various languages.  Like many other systems, Swift/T supports calls into the shell.  However, this is not efficient at large scale, and so Swift/T also supports calls into native code libraries directly.
+
+An example use of Swift for shell tasks is shown in the snippet below.  This example demonstrates a fragment of a build system.  The user defines two `app` functions, which compile and link a C language file.  Swift `app` functions differ from other Swift functions in that they operate primarily on variables of type file.
+
+Other forms of external execution in Swift/T allow the user to call into native code (C/C++/Fortran) directly by constructing a package with SWIG.  Such libraries can be assembled with dynamic or static linking; in the static case, the Swift script and the native code libraries are bundled into a single executable with minimal system dependencies for the most efficient loading on a large-scale machine.
+
+.*compile.swift*
+[source,c]
+----
+include::snippets/compile.swift[]
+----
+
+=== Concurrency
+
+The key purpose of Swift is to gain concurrency easily and correctly.  This is accomplished in Swift through the use of _dataflow_ instead of _control flow_.  In Swift, there is no instruction pointer, execution is triggered as soon as possible limited only by data availability.  This results in an implicitly parallel programming model.  Two modes of concurrency are shown in the following snippet, both based on the ready availability of `i`.  Computing the ith Fibonacci number relies on two concurrent recursive calls, and iteration over an array of known values allows for parallel execution.  Ordering can be forced with the `statement1 => statement2` syntax, which creates an artificial dependency.
+
+.*concurrency.swift*
+[source,c]
+----
+include::snippets/concurrency.swift[]
+----
+
+=== Support for interpreted languages
+
+Swift/T also provides high-level, easy to use interfaces for Python, R, Julia, Tcl, and JVM languages, allowing the developer to pass a string of code into the language interpreter for execution (via its C or C++ interface).  These interpreters are optionally linked to the Swift runtime when it is built.  This allows the user to tightly integrate Swift logic with calls to the interpreters, as the interpreter does not have to be launched as a separate program for each call.  This is a crucially significant performance benefit on very large scale supercomputers, enabling us to make millions of calls to the interpreter per second.
+
+==== Python
+
+Many users desire to access Python from the top level of the
+scientific workflow; and optionally call down from the interpreted
+level into native code, to gain high-performance operations for
+numerical methods or event-based simulation.  A popular example of
+this model is Numpy, which provides a high-level interface for
+interaction, with high-performance, vendor-optimized BLAS, LAPACK,
+and/or ATLAS numerical libraries underneath.
+
+One use of Python from Swift/T is shown in the following snippet.  In this example, a short module is defined in `F.py` which provides an function named `f()` that simply performs addition.  A call to this function from Swift/T is shown in `python-f.swift`.  The string containing the Python code is populated with Swift's Python-inspired `%` operator, which fills in values for `x` and `y` at the conversion specifiers `%i`.  The Python function `F.f()` receives these values, adds them, and returns the result as a `string`.  Swift receives the result in `z` and reports it with the Swift builtin `trace()` function.
+
+Using this technique, massively parallel ensembles of Python tasks can be orchestrated by Swift.  Data can easily be passed to and from Python with Pythonic conventions; only stringification is required.  At run time, the user simply sets `PYTHONPATH` so that the Python interpreter can find module `F`, and runs `swift-t`.
+
+.*F.py*
+[source,python]
+----
+include::snippets/F.py[]
+----
+
+.*python-f.swift*
+[source,c]
+----
+include::snippets/python-f.swift[]
+----
+
+.*usage:*
+[source,console]
+----
+include::snippets/python-f.sh[]
+----
+
+==== R
+
+The R support in Swift/T is similar to the Python support.  An example use case is shown here:
+
+.*stats.swift*
+[source,c,linenums]
+----
+include::snippets/stats.swift[]
+----
+
+This script intends to run a collection of simulations in parallel, then send result values to R for statistical processing.
+
+<1> This simply imports requisite Swift packages.
+<2> This defines the external simulation program, which is implemented as a call to the Bash shell random number generator, seeded with the simulation number `i`.  The output goes to temporary file `o`.
+<3> This calls the simulation a number of times, reading the output number from disk and storing it in the array `results`.
+<4> This computes the mean of results via R.  It joins the results into an R vector, constructed with the R function `c()`, uses the R function `mean()`, and returns the mean as a string `mean` that is printed by Swift with `printf()`.
