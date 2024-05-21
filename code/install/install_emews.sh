@@ -90,7 +90,7 @@ echo "See ${THIS}/emews_install.log for detailed output."
 echo
 
 ENV_NAME=emews-py${PY_VERSION}
-TEXT="Creating conda environment '${ENV_NAME}' using python ${PY_VERSION}"
+TEXT="Creating conda environment '${ENV_NAME}' using Python ${PY_VERSION}"
 start_step "$TEXT"
 # echo "Creating conda environment '${ENV_NAME}' using ${PY_VERSION}"
 conda create -y -n $ENV_NAME python=${PY_VERSION} > "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
@@ -106,13 +106,14 @@ conda deactivate
 source $CONDA_BIN_DIR/activate $ENV_NAME
 end_step "$TEXT"
 
-TEXT="Upgrading conda 1"
-conda upgrade -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
-end_step "$TEXT"
+# TEXT="Upgrading conda gcc"
+# start_step "$TEXT"
+# conda upgrade -y -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+# end_step "$TEXT"
 
 TEXT="Installing PostgreSQL"
 start_step "$TEXT"
-conda install -y postgresql >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+conda install -y -c conda-forge postgresql >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
 TEXT="Installing EMEWS Creator"
@@ -124,12 +125,16 @@ TEXT="Initializing EMEWS Database"
 emewscreator init_db -d $2 >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
-TEXT="Upgrading conda 2"
-conda upgrade -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
-end_step "$TEXT"
+# TEXT="Upgrading conda gcc"
+# start_step "$TEXT"
+# conda upgrade -y -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+# end_step "$TEXT"
+
+THIS=$( cd $( dirname $0 ) ; /bin/pwd )
+
 
 TEXT="Initializing Required R Packages"
-Rscript $PWD/code/install/install_R_pkgs.sh  >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+Rscript $THIS/install_R_pkgs.sh  >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 Rscript -e "remotes::install_github('emews/EQ-SQL/R/EQ.SQL')"  >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
