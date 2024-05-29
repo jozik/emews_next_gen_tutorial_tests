@@ -30,3 +30,7 @@ This script is tested weekly at:
 https://jenkins.cels.anl.gov/user/woz/my-views/view/EMEWS/job/EMEWS-Install
 
 == Known bugs
+
+== Developer details
+
+When running under Jenkins, we simplify the output for compatibility with the web browser interface, and do not use emojis or carriage returns.

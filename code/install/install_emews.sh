@@ -4,11 +4,25 @@
 # See README.adoc
 
 function start_step {
-    echo -en "[ ] $1 "
+    if [[ ${JENKINS_URL:-UNSET} == "UNSET" ]]
+    then
+        # Normal shell run
+        echo -en "[ ] $1 "
+    else
+        # Jenkins run
+        echo -e  "[ ] $1 "
+    fi
 }
 
 function end_step {
-    echo -e "\r[\xE2\x9C\x94] $1 "    
+    if [[ ${JENKINS_URL:-UNSET} == "UNSET" ]]
+    then
+      # Normal shell run - overwrite last line and show check mark
+      echo -e "\r[\xE2\x9C\x94] $1 "
+    else
+      # Jenkins run
+      echo -e "[X] $1 "
+    fi
 }
 
 function on_error {
