@@ -92,6 +92,8 @@ echo "Starting EMEWS stack installation"
 echo "See ${THIS}/emews_install.log for detailed output."
 echo
 
+echo "Using conda: $CONDA_BIN_DIR"
+
 ENV_NAME=emews-py${PY_VERSION}
 TEXT="Creating conda environment '${ENV_NAME}' using Python ${PY_VERSION}"
 start_step "$TEXT"
