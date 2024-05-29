@@ -149,6 +149,7 @@ end_step "$TEXT"
 # conda upgrade -y -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 # end_step "$TEXT"
 
+set -x
 THIS=$( cd $( dirname $0 ) ; /bin/pwd )
 
 
