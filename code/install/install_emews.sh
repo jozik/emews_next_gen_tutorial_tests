@@ -1,5 +1,8 @@
 #!/bin/bash 
 
+# INSTALL EMEWS SH
+# See README.adoc
+
 function start_step {
     echo -en "[ ] $1 "
 }

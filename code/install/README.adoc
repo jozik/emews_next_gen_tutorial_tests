@@ -1,0 +1,32 @@
+
+= EMEWS Installer
+
+== Overview
+
+This installer script installs EMEWS.  It does the following things:
+
+. Install the workflow tools via `conda` and `pip`, including `swift-t-r` and thus `R` as a dependency
+. Set up a database via `emewscreator`
+. Install R packages via `install_R_pkgs.sh`
+
+== Usage
+
+Run
+
+----
+$ install_emews.sh -h
+----
+
+for help.
+
+The packages will be installed in a Conda environment named `emews-py${PY_VERSION}` , where `PY_VERSION` is one of `"3.8" "3.9" "3.10" "3.11"`.
+
+Use `conda activate` to activate the installed environment.
+
+== Testing
+
+This script is tested weekly at:
+
+https://jenkins.cels.anl.gov/user/woz/my-views/view/EMEWS/job/EMEWS-Install
+
+== Known bugs
