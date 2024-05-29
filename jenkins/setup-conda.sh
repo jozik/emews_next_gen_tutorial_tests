@@ -18,6 +18,11 @@ log()
 
 log "SETUP CONDA"
 
+# Report uptime-
+# this is important to know when/if the machine was rebooted
+log "HOSTNAME: $(hostname)"
+log "UPTIME:   $(uptime)"
+
 # Clean up prior runs
 uninstall()
 {
