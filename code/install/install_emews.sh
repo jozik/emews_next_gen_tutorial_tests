@@ -156,7 +156,7 @@ echo
 echo "Using Rscript: $(which Rscript)"
 
 TEXT="Initializing Required R Packages"
-Rscript $THIS/install_R_pkgs.sh  >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+Rscript $THIS/install_pkgs.R  >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 Rscript -e "remotes::install_github('emews/EQ-SQL/R/EQ.SQL')"  >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
