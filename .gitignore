@@ -77,3 +77,8 @@ notes_nc.txt
 
 # Include R4Py paper experiment data
 !paper_data/*
+
+# GitHub Personal Access Token for R libs
+# This possibly should not exist:
+# https://gh.r-lib.org/articles/managing-personal-access-tokens.html
+GH-PATS.txt
