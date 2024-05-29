@@ -152,6 +152,8 @@ end_step "$TEXT"
 set -x
 THIS=$( cd $( dirname $0 ) ; /bin/pwd )
 
+echo
+echo "Using Rscript: $(which Rscript)"
 
 TEXT="Initializing Required R Packages"
 Rscript $THIS/install_R_pkgs.sh  >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
