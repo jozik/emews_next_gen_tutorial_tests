@@ -36,11 +36,11 @@ for (pkg in PKGS) {
 
 # As of 2024-05-29, need to install reticulate 1.4
 # Cf. https://github.com/satijalab/seurat/issues/5650
-pkg = "reticulate"
+pkg     = "reticulate"
+version = "1.4"
 cat("INSTALL: ", pkg, "\n")
-pkg_file = sprintf("%s/%s/%s/%s%s",
-                   r["CRAN"], "src/contrib/Archive",
-                   pkg, pkg, "_1.4.tar.gz")
+pkg_file = sprintf("%s/src/contrib/Archive/%s/%s_%s.tar.gz",
+                   r["CRAN"],             pkg, pkg, version)
 cat("FILE:    ", pkg_file, "\n")
 install.packages(pkg_file, repos=NULL, type="source")
 cat("LOAD:    ", pkg, "\n")
