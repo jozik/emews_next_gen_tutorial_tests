@@ -16,8 +16,15 @@ r["CRAN"] <- "https://cloud.r-project.org"
 options(repos = r)
 NCPUS = 1
 
+pkg = "reticulate"
+cat("INSTALL: ", pkg, "\n")
+install.packages("https://cran.r-project.org/src/contrib/Archive/reticulate/reticulate_1.4.tar.gz",
+                 repos=NULL, type="source")
+cat("LOAD:    ", pkg, "\n")
+library(package=pkg, character.only=TRUE)
+
 PKGS <- list(
-  "reticulate", "coro", "jsonlite", "purrr", "logger", "remotes"
+  "coro", "jsonlite", "purrr", "logger", "remotes"
 )
 
 for (pkg in PKGS) {
