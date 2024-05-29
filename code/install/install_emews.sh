@@ -113,7 +113,7 @@ TEXT="Creating conda environment '${ENV_NAME}' using Python ${PY_VERSION}"
 start_step "$TEXT"
 # echo "Creating conda environment '${ENV_NAME}' using ${PY_VERSION}"
 conda create -y -n $ENV_NAME python=${PY_VERSION} > "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
-end_step $TEXT
+end_step "$TEXT"
 
 
 # !! conda activate $ENV_NAME doesn't work within the script
