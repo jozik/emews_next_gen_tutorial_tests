@@ -165,3 +165,7 @@ echo "#"
 echo "# To deactivate an active environment, use"
 echo "#"
 echo "#     $ conda deactivate"
+
+# Local Variables:
+# sh-basic-offset: 4
+# End:
