@@ -5,13 +5,107 @@ EMEWS supports two installation modes, Binary and Source, described in the follo
 === Binary
 
 Binary installations are recommended for this tutorial and small scale testing on supported systems.
+The binary installation is implemented as a conda environment that contains all the necessary EMEWS
+components including Swift/T, R, Python, Postgresql, and the R and Python packages. 
 
-For Linux or macOS on x86, simply install Anaconda package `swift-t-r`:
+The install requires an https://www.anaconda.com/download[anaconda]
+or https://docs.anaconda.com/free/miniconda/miniconda-install[miniconda] installation as a prerequisite. Please install
+https://www.anaconda.com/download[anaconda] or https://docs.anaconda.com/free/miniconda/miniconda-install[miniconda] if
+necessary. More information on conda enviroments can found https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html[here].
+
+See <<_quickstart>> for how to download the install scripts and install the environment with the `install_emews.sh` script. The remainder
+of this section will walk through the relevant parts of the script in greater detail. 
+
+==== The Install Script
+
+After performing some initial error checking and variable definition, the install script performs the
+install steps, beginning with creating the conda environment.
+
+[source, bash]
 ----
-$ conda install -c conda-forge -c swift-t swift-t-r
+ENV_NAME=emews-py${PY_VERSION}    <1>
+TEXT="Creating conda environment '${ENV_NAME}' using Python ${PY_VERSION}"  <2>
+start_step "$TEXT"  <3>
+# echo "Creating conda environment '${ENV_NAME}' using ${PY_VERSION}"
+conda create -y -n $ENV_NAME python=${PY_VERSION} > "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"  <4>
+end_step "$TEXT"  <5>
+----
+<1> Format the name of the environment using the python version passed
+on the command line.
+<2> Format the text used in the script output for this step in the script execution
+<3> Display the formatted step text with an unchecked text box.
+<4> Create the named conda environment redirecting the output to the install log, and 
+terminating the script on error.
+<5> Display the formatted step text with a checked text box indicating that this step
+has completed.
+
+The next step in the script is to the `swift-t-r` conda package which installs Swift/T and
+all its dependencies including a custom R installation. The step text formatting
+and display works the same as above, and so is not explained further.
+
+[source, bash]
+----
+TEXT="Installing swift-t conda package"
+start_step "$TEXT"
+source $CONDA_BIN_DIR/activate $ENV_NAME  <1>
+conda install -y -c conda-forge -c swift-t swift-t-r >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"  <2>
+conda deactivate  <3>
+source $CONDA_BIN_DIR/activate $ENV_NAME  <4>
+end_step "$TEXT"
+----
+<1> Activate the conda environment created in the first step, in order to install
+the packages into it.
+<2> Install the `swift-t-r` conda package.
+<3> Deactivate the environment.
+<4> Activate the environment again to trigger any environment activation scripts installed
+by the `swift-t-r` package.
+
+The next step installs the PostgreSQL database software from a conda package.
+
+[source, bash]
+----
+TEXT="Installing PostgreSQL"
+start_step "$TEXT"
+conda install -y -c conda-forge postgresql >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+end_step "$TEXT"
 ----
 
-See https://anaconda.org/swift-t/swift-t-r[the Anaconda.org site] for the full list of versions.
+The EMEWS Creator Python package is then installed. This also installs the 
+eqsql Python package as a dependency.
+
+[source, bash]
+----
+TEXT="Installing EMEWS Creator"
+start_step "$TEXT"
+pip install emewscreator >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+end_step "$TEXT"
+----
+
+EMEWS Creator is then used to initialize the EMEWS DB database in the
+database directory location (i.e., `$2`) that was passed in the command line.
+See <<_init_db>> for more information for more details about the database installation,
+and <<creating_emews_projects>> for more on EMEWS Creator.
+
+[source, bash]
+----
+TEXT="Initializing EMEWS Database"
+emewscreator init_db -d $2 >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+end_step "$TEXT"
+----
+
+Lastly, the install script installs the R packages required when using EMEWS DB with R.
+
+[source, bash]
+----
+TEXT="Initializing Required R Packages"
+Rscript $THIS/install_pkgs.R >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"  <1>
+Rscript -e "remotes::install_github('emews/EQ-SQL/R/EQ.SQL')" >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"  <2>
+end_step "$TEXT"
+----
+<1> Use the R installed as part of the `swift-t-r` package to execute the `install_pkgs.R` script. This
+script installs the required R packages from the CRAN repository, and tests that they can be loaded successfully.
+<2> Install the EMEWS DB EQ.SQL R package from github.
+
 
 === Source
 
