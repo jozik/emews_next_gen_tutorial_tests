@@ -125,10 +125,10 @@ conda deactivate
 source $CONDA_BIN_DIR/activate $ENV_NAME
 end_step "$TEXT"
 
-# TEXT="Upgrading conda gcc"
-# start_step "$TEXT"
-# conda upgrade -y -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
-# end_step "$TEXT"
+TEXT="Upgrading conda gcc"
+start_step "$TEXT"
+conda upgrade -y -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+end_step "$TEXT"
 
 TEXT="Installing PostgreSQL"
 start_step "$TEXT"
