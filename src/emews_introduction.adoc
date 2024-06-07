@@ -86,10 +86,100 @@ Research reported in this website was supported by the National Science Foundati
 
 
 
-
-
-
 === Quickstart
+
+The EMEWS installer will create a binary EMEWS environment (Swift/T, Python, R, and the EMEWS Python and R packages). 
+The binary install is recommended for the tutorial and for small scale testing on non-HPC supported systems.
+
+
+. *Install Conda*
++
+The EMEWS binary install is a conda environment, and requires an https://www.anaconda.com/download[anaconda]
+or https://docs.anaconda.com/free/miniconda/miniconda-install[miniconda] installation as a prerequisite. Please install
+https://www.anaconda.com/download[anaconda] or https://docs.anaconda.com/free/miniconda/miniconda-install[miniconda] if
+you do not have an existing anaconda or miniconda installation.
++
+NOTE: For more information on conda enviroments see https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html[here]
+
+. *Download the installer files*
++
+[source, bash]
+----
+$ curl -L -O https://raw.githubusercontent.com/jozik/emews_next_gen_tutorial_tests/main/code/install/install_emews.sh
+$ curl -L -O https://raw.githubusercontent.com/jozik/emews_next_gen_tutorial_tests/main/code/install/install_pkgs.R
+----
+
+. *Activate the Conda Environment*
++
+Activate your conda environment.
++
+[source, bash]
+----
+$ source <your_conda_install>/bin/activate
+----
+For example,
++
+[source, bash]
+----
+$ source ~/miniconda3/bin/activate
+----
+
+. *Run the Installer*
++
+[source, bash]
+----
+$ bash install_emews.sh <python-version> <database-directory>
+----
+The install script (`install_emews.sh`) takes two
+arguments:
+
+  .. The Python version to use - one of 3.8, 3.9, 3.10, or 3.11
+  .. The EMEWS DB database install directory - this must *NOT* already exist
+
++
+For example, this will install the EMEWS environment with Python 3.11 and create the EMEWS DB database
+in the `~/Documents/db/emews_db` directory. 
+[source, bash]
+----
+$ bash install_emews.sh install_emews.sh 3.11 ~/Documents/db/emews_db
+----
+
+
+The install will take a few minutes to download and install the necessary components,
+reporting its progress as each step completes. A detailed log of the installation can be found
+in `emews_install.log` in the same directory where the install script is run. The 
+installer will create a conda environment named `emews-pyX.XX` where `X.XX` is the
+Python version provide on the command line, i.e., 
+`bash install_emews.sh install_emews.sh 3.11 ~/Documents/db/emews_db` creates a conda
+environment named `emews-py3.11`. The environment can found in the `envs` directory
+of your conda installation. 
+
+IMPORTANT: If any errors occur during the install, refer to `emews_install.log` for
+more details.
+
+When the install finishes sucessfully, the output should end with the following:
+
+[source,text]
+----
+# To activate this EMEWS environment, use
+#
+#     $ conda activate emews-pyX.XX
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+----
+
+In order to use the EMEWS environment, it must be activated.
+For example,
+
+[source, bash]
+----
+$ conda activate emews-py3.11
+----
+
+See <<_installing_emews>> for additional details about the install script,
+and other kinds of installs.
 
 * Binary installations
 * Available distributions
