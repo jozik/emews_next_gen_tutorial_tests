@@ -42,11 +42,11 @@ conda upgrade -y -c conda-forge gcc
 or we will get an error like this from reticulate and GCC 11:
 
 ----
-* installing *source* package â€˜reticulateâ€™ ...
-** package â€˜reticulateâ€™ successfully unpacked and MD5 sums checked
+* installing *source* package 'reticulateâ€™ ...
+** package 'reticulate' successfully unpacked and MD5 sums checked
 ** using staged installation
 ** libs
-using C++ compiler: â€˜x86_64-conda-linux-gnu-c++ (Anaconda gcc) 11.2.0â€™
+using C++ compiler: 'x86_64-conda-linux-gnu-c++ (Anaconda gcc) 11.2.0'
 x86_64-conda-linux-gnu-c++ -std=gnu++17 -I"/scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/lib/R/include" -DNDEBUG  -I'/scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/lib/R/library/Rcpp/include' -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -isystem /scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/include -I/scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/include -Wl,-rpath-link,/scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/lib    -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/include -fdebug-prefix-map=/workspace/croot/r-base_1695428141831/work=/usr/local/src/conda/r-base-4.3.1 -fdebug-prefix-map=/scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11=/usr/local/src/conda-prefix  -c RcppExports.cpp -o RcppExports.o
 In file included from /scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/x86_64-conda-linux-gnu/include/c++/11.2.0/bits/locale_facets_nonio.h:39,
                  from /scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/x86_64-conda-linux-gnu/include/c++/11.2.0/locale:41,
@@ -59,7 +59,7 @@ In file included from /scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311
    80 |   using ::timespec_get;
       |           ^~~~~~~~~~~~
 make: *** [/scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/lib/R/etc/Makeconf:200: RcppExports.o] Error 1
-ERROR: compilation failed for package â€˜reticulateâ€™
+ERROR: compilation failed for package 'reticulate'
 ----
 
 This is a known issue, cf. https://root-forum.cern.ch/t/error-timespec-get-has-not-been-declared-with-conda-root-package/45712
