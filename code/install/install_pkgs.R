@@ -5,6 +5,8 @@
 # Installs all R packages needed for EMEWS workflows
 # Loads them immediately after installation as a test,
 #       because R does not report errors when installations fail.
+# You may also run this interactively for testing with:
+# $ Rscript install_pkgs.R
 
 print("INSTALL_R_PKGS: START")
 
