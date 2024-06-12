@@ -29,6 +29,23 @@ This script is tested weekly at:
 
 https://jenkins.cels.anl.gov/user/woz/my-views/view/EMEWS/job/EMEWS-Install
 
+== Modules
+
+===  R packages
+
+R packages are installed and test-loaded by: https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/install/install_pkgs.R[install_pkgs.R]
+
+`install_pkgs.R` is run by https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/install/install_emews.sh[install_emews.sh]
+
+`install_emews.sh` is run by GCE Jenkins project EMEWS-Install.
+
+`install_pkgs.R` may be run interactively with:
+----
+$ Rscript install_pkgs.R
+----
+
+Cf. <<Reticulate>>
+
 == Known complexities
 
 === GCC version
@@ -65,6 +82,14 @@ ERROR: compilation failed for package 'reticulate'
 This is a known issue, cf. https://root-forum.cern.ch/t/error-timespec-get-has-not-been-declared-with-conda-root-package/45712
 
 As of 2024-06-12, the default GCC installed by Anaconda for GCE (Ubuntu 20) for Swift/T is 11.2.0 , a rollback from GCC 12.3.0 . It is not clear why this is happening and will take significant investigation to figure out what Swift/T package dependency is causing this.  Our current approach of simply upgrading GCC in a separate step via `conda upgrade` seems to work.
+
+=== Reticulate
+
+As of 2024-05-29, we need to install reticulate 1.4
+
+Cf. https://github.com/satijalab/seurat/issues/5650
+
+This is handled by `install_pkgs.R`, see <<R packages>>.
 
 == Developer details
 
