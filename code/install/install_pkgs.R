@@ -22,7 +22,7 @@ NCPUS = 1
 
 # As of 2024-05-29, need to install jsonlite before reticulate
 PKGS <- list(
-  "coro", "jsonlite", "purrr", "logger", "remotes"
+  "coro", "jsonlite", "purrr", "logger", "remotes", "Rcpp"
 )
 
 for (pkg in PKGS) {
