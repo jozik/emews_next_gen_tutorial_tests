@@ -64,7 +64,7 @@ ERROR: compilation failed for package 'reticulate'
 
 This is a known issue, cf. https://root-forum.cern.ch/t/error-timespec-get-has-not-been-declared-with-conda-root-package/45712
 
-As of 2024-06-11, the default GCC installed by Anaconda for GCE (Ubuntu 20) is 11.2.0 .  It is not clear why this is happening and will take significant investigation to figure out what Swift/T package dependency is causing this.
+As of 2024-06-12, the default GCC installed by Anaconda for GCE (Ubuntu 20) for Swift/T is 11.2.0 , a rollback from GCC 12.3.0 . It is not clear why this is happening and will take significant investigation to figure out what Swift/T package dependency is causing this.  Our current approach of simply upgrading GCC in a separate step via `conda upgrade` seems to work.
 
 == Developer details
 
