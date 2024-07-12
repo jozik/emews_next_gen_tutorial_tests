@@ -29,7 +29,67 @@ This script is tested weekly at:
 
 https://jenkins.cels.anl.gov/user/woz/my-views/view/EMEWS/job/EMEWS-Install
 
-== Known bugs
+== Modules
+
+===  R packages
+
+R packages are installed and test-loaded by: https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/install/install_pkgs.R[install_pkgs.R]
+
+`install_pkgs.R` is run by https://github.com/jozik/emews_next_gen_tutorial_tests/blob/main/code/install/install_emews.sh[install_emews.sh]
+
+`install_emews.sh` is run by GCE Jenkins project EMEWS-Install.
+
+`install_pkgs.R` may be run interactively with:
+----
+$ Rscript install_pkgs.R
+----
+
+Cf. <<Reticulate>>
+
+== Known complexities
+
+=== GCC version
+
+On GCE Jenkins, `install_emews.sh` must upgrade GCC with the command:
+
+----
+conda upgrade -y -c conda-forge gcc
+----
+
+or we will get an error like this from reticulate and GCC 11:
+
+----
+* installing *source* package 'reticulateâ€™ ...
+** package 'reticulate' successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C++ compiler: 'x86_64-conda-linux-gnu-c++ (Anaconda gcc) 11.2.0'
+x86_64-conda-linux-gnu-c++ -std=gnu++17 -I"/scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/lib/R/include" -DNDEBUG  -I'/scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/lib/R/library/Rcpp/include' -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -isystem /scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/include -I/scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/include -Wl,-rpath-link,/scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/lib    -fpic  -fvisibility-inlines-hidden  -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/include -fdebug-prefix-map=/workspace/croot/r-base_1695428141831/work=/usr/local/src/conda/r-base-4.3.1 -fdebug-prefix-map=/scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11=/usr/local/src/conda-prefix  -c RcppExports.cpp -o RcppExports.o
+In file included from /scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/x86_64-conda-linux-gnu/include/c++/11.2.0/bits/locale_facets_nonio.h:39,
+                 from /scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/x86_64-conda-linux-gnu/include/c++/11.2.0/locale:41,
+                 from /scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/x86_64-conda-linux-gnu/include/c++/11.2.0/iomanip:43,
+                 from /scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/lib/R/library/Rcpp/include/RcppCommon.h:53,
+                 from /scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/lib/R/library/Rcpp/include/Rcpp.h:27,
+                 from reticulate_types.h:7,
+                 from RcppExports.cpp:4:
+/scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/x86_64-conda-linux-gnu/include/c++/11.2.0/ctime:80:11: error: 'timespec_get' has not been declared in '::'
+   80 |   using ::timespec_get;
+      |           ^~~~~~~~~~~~
+make: *** [/scratch/jenkins-slave/workspace/EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/lib/R/etc/Makeconf:200: RcppExports.o] Error 1
+ERROR: compilation failed for package 'reticulate'
+----
+
+This is a known issue, cf. https://root-forum.cern.ch/t/error-timespec-get-has-not-been-declared-with-conda-root-package/45712
+
+As of 2024-06-12, the default GCC installed by Anaconda for GCE (Ubuntu 20) for Swift/T is 11.2.0 , a rollback from GCC 12.3.0 . It is not clear why this is happening and will take significant investigation to figure out what Swift/T package dependency is causing this.  Our current approach of simply upgrading GCC in a separate step via `conda upgrade` seems to work.
+
+=== Reticulate
+
+As of 2024-05-29, we need to install reticulate 1.4
+
+Cf. https://github.com/satijalab/seurat/issues/5650
+
+This is handled by `install_pkgs.R`, see <<R packages>>.
 
 == Developer details
 

@@ -125,10 +125,11 @@ conda deactivate
 source $CONDA_BIN_DIR/activate $ENV_NAME
 end_step "$TEXT"
 
-# TEXT="Upgrading conda gcc"
-# start_step "$TEXT"
-# conda upgrade -y -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
-# end_step "$TEXT"
+TEXT="Upgrading conda gcc"
+# Upgrades from 11.2.0 to 12.3.0 on GCE Jenkins (Ubuntu 20) (2024-06-11)
+start_step "$TEXT"
+conda upgrade -y -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+end_step "$TEXT"
 
 TEXT="Installing PostgreSQL"
 start_step "$TEXT"
@@ -143,11 +144,6 @@ end_step "$TEXT"
 TEXT="Initializing EMEWS Database"
 emewscreator init_db -d $2 >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
-
-# TEXT="Upgrading conda gcc"
-# start_step "$TEXT"
-# conda upgrade -y -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
-# end_step "$TEXT"
 
 THIS=$( cd $( dirname $0 ) ; /bin/pwd )
 
