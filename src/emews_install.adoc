@@ -127,10 +127,10 @@ Source installations are supported for:
 The source installation procedure is a more manual way to perform the same operations that are found in the `install_emews.sh` script.
 
 To build from source, you will need the following packages (with their APT names):
-SWIG (+swig+), ZSH (+zsh+), Apache Ant (+ant+),
-a Java Development Kit (+default-jdk+) >= 1.6, Make (+make+),
-GCC for C (+gcc+), Python (+python3-dev+), R (+r-base-dev+), Tcl (+tcl-dev+),
-and an MPI implementation (e.g., +mpich+).
+SWIG (`swig`), ZSH (`zsh`), Apache Ant (`ant`),
+a Java Development Kit (`default-jdk`) >= 1.6, Make (`make`),
+GCC for C (`gcc`), Python (`python3-dev`), R (`r-base-dev`), Tcl (`tcl-dev`),
+and an MPI implementation (e.g., `mpich`).
 
 EMEWS supports any compiler toolset and MPI implementation.  It is important to maintain consistency with the C compiler across all the tools linked together under Swift/T, which is automatically done under a package manager.  If you install some of these tools from the package manager, and manually compile some with the compiler under the same package manager, you will be fine.
 
