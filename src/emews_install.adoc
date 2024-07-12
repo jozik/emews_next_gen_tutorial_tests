@@ -108,14 +108,48 @@ script installs the required R packages from the CRAN repository, and tests that
 
 === Source
 
+==== Motivation
+
+It is generally easiest and most reliable to install packages from your system package manager such as Homebrew, APT, or RPM.  On some systems (such as compute clusters and supercomputers), however, you must build from source to access the site-specific MPI implementation used for communication inside the Swift/T workflow.  You may also desire to use specific versions of Python or R to support your applications.  Thus, it is possible to mix and match the EMEWS installation with binary and source installations of its dependencies.
+
+==== List of supported platforms
+
 Source installations are supported for:
 
 * Linux on x86 (`linux-64`)
-* Linux on ARM64
+* Linux on ARM64 (`linux-aarch64`)
 * macOS on x86 (`osx-64`)
 * macOS on ARM64 (`osx-arm64`)
+* Windows WSL
 
-To install from source, you need to install R and then Swift/T.
-You may install R using your system package manager or a from-source build.
+==== Source installation procedure
+
+The source installation procedure is a more manual way to perform the same operations that are found in the `install_emews.sh` script.
+
+To build from source, you will need the following packages (with their APT names):
+SWIG (+swig+), ZSH (+zsh+), Apache Ant (+ant+),
+a Java Development Kit (+default-jdk+) >= 1.6, Make (+make+),
+GCC for C (+gcc+), Python (+python3-dev+), R (+r-base-dev+), Tcl (+tcl-dev+),
+and an MPI implementation (e.g., +mpich+).
+
+EMEWS supports any compiler toolset and MPI implementation.  It is important to maintain consistency with the C compiler across all the tools linked together under Swift/T, which is automatically done under a package manager.  If you install some of these tools from the package manager, and manually compile some with the compiler under the same package manager, you will be fine.
 
 A complete description of the Swift/T installation may be found at the https://swift-lang.github.io/swift-t/guide.html#_installation[Swift/T Guide].
+
+You must also install Postgres, but this does not have to be linked to Swift/T.  The instructions for this are under the https://www.postgresql.org/docs/current/admin.html[Postgres Server Administration Docs].
+
+Then install EMEWS Creator with:
+
+----
+$ pip install emewscreator
+----
+
+Then, install necessary R libraries with:
+
+----
+$ Rscript code/install/install_pkgs.R
+----
+
+or build them manually.
+
+When you run EMEWS Creator, you will need to refer to the tools installed here (R and Tcl) during EQ/R build process.
