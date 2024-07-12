@@ -94,10 +94,9 @@ The binary install is recommended for the tutorial and for small scale testing o
 
 . *Install Conda*
 +
-The EMEWS binary install is a conda environment, and requires an https://www.anaconda.com/download[anaconda]
-or https://docs.anaconda.com/free/miniconda/miniconda-install[miniconda] installation as a prerequisite. Please install
-https://www.anaconda.com/download[anaconda] or https://docs.anaconda.com/free/miniconda/miniconda-install[miniconda] if
-you do not have an existing anaconda or miniconda installation.
+The EMEWS binary install is a conda environment, and requires a conda installation as a prerequisite. Please install https://conda-forge.org/miniforge/[miniforge],
+https://www.anaconda.com/download[anaconda], or https://docs.anaconda.com/free/miniconda/miniconda-install[miniconda] if
+you do not have an existing conda installation. For the differences between the three with respect to Anaconda's Terms of Service and remaining in compliance with those terms, see https://www.anaconda.com/blog/is-conda-free[is conda free].
 +
 NOTE: For more information on conda enviroments see https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html[here]
 
@@ -107,21 +106,6 @@ NOTE: For more information on conda enviroments see https://conda.io/projects/co
 ----
 $ curl -L -O https://raw.githubusercontent.com/jozik/emews_next_gen_tutorial_tests/main/code/install/install_emews.sh
 $ curl -L -O https://raw.githubusercontent.com/jozik/emews_next_gen_tutorial_tests/main/code/install/install_pkgs.R
-----
-
-. *Activate the Conda Environment*
-+
-Activate your conda environment.
-+
-[source, bash]
-----
-$ source <your_conda_install>/bin/activate
-----
-For example,
-+
-[source, bash]
-----
-$ source ~/miniconda3/bin/activate
 ----
 
 . *Run the Installer*

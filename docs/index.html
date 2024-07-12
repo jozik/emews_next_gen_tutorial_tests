@@ -779,10 +779,9 @@ The binary install is recommended for the tutorial and for small scale testing o
 <li>
 <p><strong>Install Conda</strong></p>
 <div class="paragraph">
-<p>The EMEWS binary install is a conda environment, and requires an <a href="https://www.anaconda.com/download">anaconda</a>
-or <a href="https://docs.anaconda.com/free/miniconda/miniconda-install">miniconda</a> installation as a prerequisite. Please install
-<a href="https://www.anaconda.com/download">anaconda</a> or <a href="https://docs.anaconda.com/free/miniconda/miniconda-install">miniconda</a> if
-you do not have an existing anaconda or miniconda installation.</p>
+<p>The EMEWS binary install is a conda environment, and requires a conda installation as a prerequisite. Please install <a href="https://conda-forge.org/miniforge/">miniforge</a>,
+<a href="https://www.anaconda.com/download">anaconda</a>, or <a href="https://docs.anaconda.com/free/miniconda/miniconda-install">miniconda</a> if
+you do not have an existing conda installation. For the differences between the three with respect to Anaconda&#8217;s Terms of Service and remaining in compliance with those terms, see <a href="https://www.anaconda.com/blog/is-conda-free">is conda free</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -803,25 +802,6 @@ For more information on conda enviroments see <a href="https://conda.io/projects
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>$ curl -L -O https://raw.githubusercontent.com/jozik/emews_next_gen_tutorial_tests/main/code/install/install_emews.sh
 $ curl -L -O https://raw.githubusercontent.com/jozik/emews_next_gen_tutorial_tests/main/code/install/install_pkgs.R</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p><strong>Activate the Conda Environment</strong></p>
-<div class="paragraph">
-<p>Activate your conda environment.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>$ <span class="tok-nb">source</span> &lt;your_conda_install&gt;/bin/activate</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>For example,</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>$ <span class="tok-nb">source</span> ~/miniconda3/bin/activate</code></pre>
 </div>
 </div>
 </li>
@@ -2549,10 +2529,9 @@ The binary installation is implemented as a conda environment that contains all 
 components including Swift/T, R, Python, Postgresql, and the R and Python packages.</p>
 </div>
 <div class="paragraph">
-<p>The install requires an <a href="https://www.anaconda.com/download">anaconda</a>
-or <a href="https://docs.anaconda.com/free/miniconda/miniconda-install">miniconda</a> installation as a prerequisite. Please install
-<a href="https://www.anaconda.com/download">anaconda</a> or <a href="https://docs.anaconda.com/free/miniconda/miniconda-install">miniconda</a> if
-necessary. More information on conda enviroments can found <a href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">here</a>.</p>
+<p>The binary install is a conda environment, and requires a conda installation as a prerequisite. Please install <a href="https://conda-forge.org/miniforge/">miniforge</a>,
+<a href="https://www.anaconda.com/download">anaconda</a>, or <a href="https://docs.anaconda.com/free/miniconda/miniconda-install">miniconda</a> if
+you do not have an existing conda installation. For the differences between the three with respect to Anaconda&#8217;s Terms of Service and remaining in compliance with those terms, see <a href="https://www.anaconda.com/blog/is-conda-free">is conda free</a>. More information on conda enviroments can found <a href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">here</a>.</p>
 </div>
 <div class="paragraph">
 <p>See <a href="#_quickstart">Section 1.2, &#8220;Quickstart&#8221;</a> for how to download the install scripts and install the environment with the <code>install_emews.sh</code> script. The remainder
