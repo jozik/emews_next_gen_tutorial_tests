@@ -1412,12 +1412,12 @@ run duration exceeds that value.
 [source, bash]
 ----
 # Check for an optional timeout threshold in seconds. If the duration of the
-# model run as executed below, takes longer that this threshhold
+# model run as executed below, takes longer that this threshold
 # then the run will be aborted. Note that the "timeout" command
 # must be supported by executing OS.
 
 # The timeout argument is optional. By default the "run_model" swift
-# app fuction sends 5 arguments, and no timeout value is set. If there
+# app function sends 5 arguments, and no timeout value is set. If there
 # is a 6th (the TIMEOUT_ARG_INDEX) argument, we use that as the timeout value.
 
 # !!! IF YOU CHANGE THE NUMBER OF ARGUMENTS PASSED TO THIS SCRIPT, YOU MUST
@@ -1671,9 +1671,9 @@ be resolved using the configuration file location, when those paths begin with `
 
 ### INIT DB ###
 
-EMEWS Creator also includes an `init_db` command that creates a fuly initialized EQSQL database
+EMEWS Creator also includes an `init_db` command that creates a fully initialized EQSQL database
 in a user specified directory. `init_db` creates a postgresql database cluster in a specified path,
-then creates a user and databasein that cluster, and finally populates that datbase with the required
+then creates a user and database in that cluster, and finally populates that database with the required
 eqsql tables. `init_db` requires that the postgresql binaries, `initdb`, `pg_ctl`, `'createuser`, and
 `createdb` are in the user's PATH, or that the directory path is specified via the `--pg-bin-path` argument. 
 
@@ -1722,7 +1722,7 @@ Options:
   -d, --db-path PATH      Database directory path. The cluster will be created
                           in this directory.  [required]
   -b, --pg-bin-path PATH  The path to postgresql's bin directory (i.e., the
-                          directory that contains the initdb exectuable)
+                          directory that contains the initdb executable)
   -h, --help              Show this message and exit.
 ```
 
@@ -1790,6 +1790,6 @@ Options:
 
 * `--db-path` - the database cluster directory
 * `--db-user` - the database user's name, defaults to `eqsql_user`
-* `--db-name` - the name of the database in which to create the tabes, defaults to `EQ_SQL`
+* `--db-name` - the name of the database in which to create the tables, defaults to `EQ_SQL`
 * `--db-port` - an optional port number for the database to listen for connections on, if any
 * `--pg-bin-path` - the path to a directory containing postgresql's `pg_ctl` executable, defaults to an empty string in which case the executable is assumed to be in the user's PATH.
