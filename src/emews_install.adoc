@@ -110,17 +110,17 @@ script installs the required R packages from the CRAN repository, and tests that
 
 ==== Motivation
 
-It is generally easiest and most reliable to install packages from your system package manager such as Homebrew, APT, or RPM.  On some systems (such as compute clusters and supercomputers), however, you must build from source to access the site-specific MPI implementation used for communication inside the Swift/T workflow.  You may also desire to use specific versions of Python or R to support your applications.  Thus, it is possible to mix and match the EMEWS installation with binary and source installations of its dependencies.
+If you cannot use the `install_emews.sh` script described above, is generally easiest and most reliable to install packages from your system package manager such as Homebrew, APT, or RPM.  On some systems (such as compute clusters and supercomputers), however, you must build from source to access the site-specific MPI implementation used for communication inside the Swift/T workflow.  You may also desire to use specific versions of Python or R to support your applications.  Thus, it is possible to mix and match the EMEWS installation with binary and source installations of its dependencies.
 
 ==== List of supported platforms
 
 Source installations are supported for:
 
-* Linux on x86 (`linux-64`)
+* Linux on x86   (`linux-64`)
 * Linux on ARM64 (`linux-aarch64`)
-* macOS on x86 (`osx-64`)
+* macOS on x86   (`osx-64`)
 * macOS on ARM64 (`osx-arm64`)
-* Windows WSL
+* Windows WSL    (any distribution)
 
 ==== Source installation procedure
 
@@ -132,7 +132,7 @@ a Java Development Kit (`default-jdk`) >= 1.6, Make (`make`),
 GCC for C (`gcc`), Python (`python3-dev`), R (`r-base-dev`), Tcl (`tcl-dev`),
 and an MPI implementation (e.g., `mpich`).
 
-EMEWS supports any compiler toolset and MPI implementation.  It is important to maintain consistency with the C compiler across all the tools linked together under Swift/T, which is automatically done under a package manager.  If you install some of these tools from the package manager, and manually compile some with the compiler under the same package manager, you will be fine.
+EMEWS supports any compiler toolset and MPI implementation.  The Swift/T runtime is used to link together many of the workflow components for EMEWS, but not the database.  It is important to maintain consistency with the C compiler across all the tools linked together under Swift/T, which is automatically done under a package manager.  A primary purpose of package managers is to maintain compiler/binary compatibility across packages.  If you install some of these tools from the package manager, and manually compile some with the compiler under the same package manager, you will be fine.
 
 A complete description of the Swift/T installation may be found at the https://swift-lang.github.io/swift-t/guide.html#_installation[Swift/T Guide].
 
