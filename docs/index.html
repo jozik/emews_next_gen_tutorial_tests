@@ -2532,12 +2532,12 @@ Dealing with worker pool error&#8201;&#8212;&#8201;short timeout in as completed
 <div class="paragraph">
 <p>Binary installations are recommended for this tutorial and small scale testing on supported systems.
 The binary installation is implemented as a conda environment that contains all the necessary EMEWS
-components including Swift/T, R, Python, Postgresql, and the R and Python packages.</p>
+components including Swift/T, R, Python, PostgreSQL, and the R and Python packages.</p>
 </div>
 <div class="paragraph">
 <p>The binary install is a conda environment, and requires a conda installation as a prerequisite. Please install <a href="https://conda-forge.org/miniforge/">miniforge</a>,
 <a href="https://www.anaconda.com/download">anaconda</a>, or <a href="https://docs.anaconda.com/free/miniconda/miniconda-install">miniconda</a> if
-you do not have an existing conda installation. For the differences between the three with respect to Anaconda&#8217;s Terms of Service and remaining in compliance with those terms, see <a href="https://www.anaconda.com/blog/is-conda-free">is conda free</a>. More information on conda enviroments can found <a href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">here</a>.</p>
+you do not have an existing conda installation. For the differences between the three with respect to Anaconda&#8217;s Terms of Service and remaining in compliance with those terms, see <a href="https://www.anaconda.com/blog/is-conda-free">is conda free</a>. More information on conda environments can found <a href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">here</a>.</p>
 </div>
 <div class="paragraph">
 <p>See <a href="#_quickstart">Section 1.2, &#8220;Quickstart&#8221;</a> for how to download the install scripts and install the environment with the <code>install_emews.sh</code> script. The remainder
@@ -4916,12 +4916,12 @@ run duration exceeds that value.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-c1"># Check for an optional timeout threshold in seconds. If the duration of the</span>
-<span class="tok-c1"># model run as executed below, takes longer that this threshhold</span>
+<span class="tok-c1"># model run as executed below, takes longer that this threshold</span>
 <span class="tok-c1"># then the run will be aborted. Note that the &quot;timeout&quot; command</span>
 <span class="tok-c1"># must be supported by executing OS.</span>
 
 <span class="tok-c1"># The timeout argument is optional. By default the &quot;run_model&quot; swift</span>
-<span class="tok-c1"># app fuction sends 5 arguments, and no timeout value is set. If there</span>
+<span class="tok-c1"># app function sends 5 arguments, and no timeout value is set. If there</span>
 <span class="tok-c1"># is a 6th (the TIMEOUT_ARG_INDEX) argument, we use that as the timeout value.</span>
 
 <span class="tok-c1"># !!! IF YOU CHANGE THE NUMBER OF ARGUMENTS PASSED TO THIS SCRIPT, YOU MUST</span>
@@ -5302,9 +5302,9 @@ be resolved using the configuration file location, when those paths begin with <
 <div class="sect2">
 <h3 id="_init_db">B.5. INIT DB</h3>
 <div class="paragraph">
-<p>EMEWS Creator also includes an <code>init_db</code> command that creates a fuly initialized EQSQL database
+<p>EMEWS Creator also includes an <code>init_db</code> command that creates a fully initialized EQSQL database
 in a user specified directory. <code>init_db</code> creates a postgresql database cluster in a specified path,
-then creates a user and databasein that cluster, and finally populates that datbase with the required
+then creates a user and database in that cluster, and finally populates that database with the required
 eqsql tables. <code>init_db</code> requires that the postgresql binaries, <code>initdb</code>, <code>pg_ctl</code>, <code>'createuser</code>, and
 <code>createdb</code> are in the user&#8217;s PATH, or that the directory path is specified via the <code>--pg-bin-path</code> argument.</p>
 </div>
@@ -5383,7 +5383,7 @@ Options:
   -d, --db-path PATH      Database directory path. The cluster will be created
                           in this directory.  [required]
   -b, --pg-bin-path PATH  The path to postgresql&#39;s bin directory (i.e., the
-                          directory that contains the initdb exectuable)
+                          directory that contains the initdb executable)
   -h, --help              Show this message and exit.</code></pre>
 </div>
 </div>
@@ -5488,7 +5488,7 @@ Options:
 <p><code>--db-user</code> - the database user&#8217;s name, defaults to <code>eqsql_user</code></p>
 </li>
 <li>
-<p><code>--db-name</code> - the name of the database in which to create the tabes, defaults to <code>EQ_SQL</code></p>
+<p><code>--db-name</code> - the name of the database in which to create the tables, defaults to <code>EQ_SQL</code></p>
 </li>
 <li>
 <p><code>--db-port</code> - an optional port number for the database to listen for connections on, if any</p>
