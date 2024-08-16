@@ -90,7 +90,8 @@ Research reported in this website was supported by the National Science Foundati
 
 The EMEWS installer will create a binary EMEWS environment (Swift/T, Python, R, and the EMEWS Python and R packages). 
 The binary install is recommended for the tutorial and for small scale testing on non-HPC supported systems.
-See <<_installing_emews>> for additional details about the install script,
+
+IMPORTANT: See <<_installing_emews>> for additional details about the install script,
 and other kinds of installs, e.g., targeting HPC systems.
 
 
