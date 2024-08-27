@@ -115,23 +115,22 @@ $ curl -L -O https://raw.githubusercontent.com/jozik/emews_next_gen_tutorial_tes
 +
 [source, bash]
 ----
-$ bash install_emews.sh <python-version> <database-directory>
-----
-The install script (`install_emews.sh`) takes two
-arguments:
-
-  .. The Python version to use - one of 3.8, 3.9, 3.10, or 3.11
-  .. The EMEWS DB database install directory - this must *NOT* already exist
-
-+
-For example, this will install the EMEWS environment with Python 3.11 and create the EMEWS DB database
-in the `~/Documents/db/emews_db` directory. 
-[source, bash]
-----
 $ bash install_emews.sh install_emews.sh 3.11 ~/Documents/db/emews_db
 ----
-
-
++
+This will install the EMEWS environment with Python 3.11 and create the EMEWS DB database in the 
+`~/Documents/db/emews_db` directory. 
++
+The install script, `install_emews.sh`, takes two arguments:
++
+[source, bash]
+----
+$ bash install_emews.sh <python-version> <database-directory>
+----
++
+  .. The Python version to use - one of 3.8, 3.9, 3.10, or 3.11
+  .. The EMEWS DB database install directory - this must *NOT* already exist
++
 The install will take a few minutes to download and install the necessary components,
 reporting its progress as each step completes. A detailed log of the installation can be found
 in `emews_install.log` in the same directory where the install script is run. The 
