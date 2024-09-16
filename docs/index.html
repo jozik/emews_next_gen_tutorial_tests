@@ -2620,6 +2620,19 @@ by the <code>swift-t-r</code> package.</td>
 </table>
 </div>
 <div class="paragraph">
+<p>The next step installs the EMEWS Queues for R (EQ/R) Swift-t extension. EQ/R
+allows a user to easily use R model exploration code to guide workflow
+execution.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">TEXT</span><span class="tok-o">=</span><span class="tok-s2">&quot;Installing EMEWS Queues for R&quot;</span>
+start_step <span class="tok-s2">&quot;</span><span class="tok-nv">$TEXT</span><span class="tok-s2">&quot;</span>
+conda install -y -c conda-forge -c swift-t eq-r &gt;&gt; <span class="tok-s2">&quot;</span><span class="tok-nv">$EMEWS_INSTALL_LOG</span><span class="tok-s2">&quot;</span> <span class="tok-m">2</span>&gt;<span class="tok-p">&amp;</span><span class="tok-m">1</span> <span class="tok-o">||</span> on_error <span class="tok-s2">&quot;</span><span class="tok-nv">$TEXT</span><span class="tok-s2">&quot;</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$EMEWS_INSTALL_LOG</span><span class="tok-s2">&quot;</span>
+end_step <span class="tok-s2">&quot;</span><span class="tok-nv">$TEXT</span><span class="tok-s2">&quot;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>The next step installs the PostgreSQL database software from a conda package.</p>
 </div>
 <div class="listingblock">
@@ -3963,19 +3976,20 @@ This is the name of that file.</p>
 <div class="paragraph">
 <p>In addition to the default set of files described in the <a href="#emews_proj_struc">EMEWS Project Structure</a>
 section, the eqr workflow template will also
-install the source for the EQ/R EMEWS swift extension. By default, the extension will be installed
-in <code>ext/EQ-R</code>. An alternative location can be specified with the <code>--eqr-dir</code> configuration argument.</p>
+install the source for the EQ/R EMEWS swift extension. By default, the extension will be typically be installed
+in <code>ext/EQ-R</code>. If EMEWS Creator has been installed as part of a binary install using
+the EMEWS installer, the default location will updated to reflect that. However, an alternative location can be specified with the <code>--eqr-dir</code> configuration argument, if necessary.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>--eqr-dir</code> - specifies the location of the eqr extension (defaults to <code>ext/EQ-R</code>)</p>
+<p><code>--eqr-dir</code> - specifies the location of the eqr extension</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>You can set this to use an existing EQ-R extension, or if the specified location
-doesn&#8217;t exist, the extension <mark>will be installed there.</mark></p>
+<p>If EMEWS Creator has been installed as part of a binary EMEWS stack install, the EQ-R extension binary will be included,
+and the <code>--eqr-dir</code> argument does not need to be specified. Otherwise, you can set this to use an existing EQ-R extension, or if the specified location doesn&#8217;t exist, the extension will be installed there.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -3984,7 +3998,7 @@ doesn&#8217;t exist, the extension <mark>will be installed there.</mark></p>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-The extension needs to be compiled before it can be used. See <code>{eqr_dir}/src/README.md</code> for compilation instructions.
+The extension needs to be compiled before it can be used. See <code>{eqr_dir}/src/README.md</code> for compilation instructions. If EMEWS Creator has been installed as part of a binary install using the EMEWS installer, compilation is <strong>NOT</strong> necessary.
 </td>
 </tr>
 </table>
