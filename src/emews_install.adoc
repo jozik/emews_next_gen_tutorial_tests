@@ -59,6 +59,18 @@ the packages into it.
 <4> Activate the environment again to trigger any environment activation scripts installed
 by the `swift-t-r` package.
 
+The next step installs the EMEWS Queues for R (EQ/R) Swift-t extension. EQ/R
+allows a user to easily use R model exploration code to guide workflow
+execution.
+
+[source, bash]
+----
+TEXT="Installing EMEWS Queues for R"
+start_step "$TEXT"
+conda install -y -c conda-forge -c swift-t eq-r >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+end_step "$TEXT"
+----
+
 The next step installs the PostgreSQL database software from a conda package.
 
 [source, bash]
