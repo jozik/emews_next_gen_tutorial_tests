@@ -48,6 +48,11 @@ Cf. <<Reticulate>>
 
 == Known complexities
 
+=== Postgres Version
+
+Postgres has been pinned to 14.12 as later versions on conda-forge crash
+on linux-aarch64
+
 === GCC version
 
 On GCE Jenkins, `install_emews.sh` must upgrade GCC with the command:
