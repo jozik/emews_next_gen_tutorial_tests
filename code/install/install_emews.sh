@@ -125,6 +125,11 @@ conda deactivate
 source $CONDA_BIN_DIR/activate $ENV_NAME
 end_step "$TEXT"
 
+TEXT="Installing EMEWS Queues for R"
+start_step "$TEXT"
+conda install -y -c conda-forge -c swift-t eq-r >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+end_step "$TEXT"
+
 TEXT="Upgrading conda gcc"
 # Upgrades from 11.2.0 to 12.3.0 on GCE Jenkins (Ubuntu 20) (2024-06-11)
 start_step "$TEXT"
@@ -133,7 +138,7 @@ end_step "$TEXT"
 
 TEXT="Installing PostgreSQL"
 start_step "$TEXT"
-conda install -y -c conda-forge postgresql >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+conda install -y -c conda-forge postgresql==14.12 >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
 TEXT="Installing EMEWS Creator"
@@ -151,6 +156,7 @@ echo
 echo "Using Rscript: $(which Rscript)"
 
 TEXT="Initializing Required R Packages"
+start_step "$TEXT"
 Rscript $THIS/install_pkgs.R >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 Rscript -e "remotes::install_github('emews/EQ-SQL/R/EQ.SQL')" >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
