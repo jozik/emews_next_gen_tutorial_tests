@@ -115,7 +115,7 @@ $ curl -L -O https://raw.githubusercontent.com/jozik/emews_next_gen_tutorial_tes
 +
 [source, bash]
 ----
-$ bash install_emews.sh install_emews.sh 3.11 ~/Documents/db/emews_db
+$ bash install_emews.sh 3.11 ~/Documents/db/emews_db
 ----
 +
 This will install the EMEWS environment with Python 3.11 and create the EMEWS DB database in the 
