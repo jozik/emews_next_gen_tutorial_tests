@@ -38,7 +38,7 @@ function on_error {
     else
         # GitHub Actions run - must show log
         echo
-        echo "log: $log"
+        echo "showing log: $log"
         echo
         cat $log
     fi
@@ -125,11 +125,18 @@ start_step "$TEXT"
 conda create -y -n $ENV_NAME python=${PY_VERSION} > "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
+TEXT="Activating conda environment"
+start_step "$TEXT"
+echo "activating: $CONDA_BIN_DIR/activate '$ENV_NAME'"
+source $CONDA_BIN_DIR/activate $ENV_NAME || on_error "$TEXT"
+echo "python:  " $(which python)
+echo "version: " $(python -V)
+echo "conda:   " $(which conda)
+end_step "$TEXT"
 
 # !! conda activate $ENV_NAME doesn't work within the script
 TEXT="Installing swift-t conda package"
 start_step "$TEXT"
-source $CONDA_BIN_DIR/activate $ENV_NAME
 conda install -y -c conda-forge -c swift-t swift-t-r >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 conda deactivate
 source $CONDA_BIN_DIR/activate $ENV_NAME
