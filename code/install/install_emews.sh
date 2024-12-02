@@ -204,9 +204,13 @@ THIS=$( cd $( dirname $0 ) ; /bin/pwd )
 echo
 echo "Using Rscript: $(which Rscript)"
 
-TEXT="Initializing Required R Packages"
+TEXT="Installing R package dependencies"
 start_step "$TEXT"
 Rscript $THIS/install_pkgs.R >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+end_step "$TEXT"
+
+TEXT="Installing R EQ.SQL"
+start_step "$TEXT"
 Rscript -e "remotes::install_github('emews/EQ-SQL/R/EQ.SQL')" >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
