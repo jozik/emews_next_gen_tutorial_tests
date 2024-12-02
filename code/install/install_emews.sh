@@ -195,6 +195,7 @@ pip install emewscreator >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEW
 end_step "$TEXT"
 
 TEXT="Initializing EMEWS Database"
+start_step "$TEXT"
 emewscreator init_db -d $2 >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
