@@ -26,4 +26,4 @@ jobs:
           echo
       - name: Install EMEWS
         run: |
-          code/install/install_emews.sh
+          code/install/install_emews.sh ${{ matrix.python-version }} $PWD/DB
