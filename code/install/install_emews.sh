@@ -6,11 +6,11 @@
 # Are we running under an automated testing environment?
 if (( ${#JENKINS_URL} > 0 ))
 then
-    echo "detected auto test Jenkins"
+    echo "install_emews.sh: detected auto test Jenkins"
     AUTO_TEST="Jenkins"
 elif (( ${#GITHUB_ACTION} > 0))
 then
-    echo "detected auto test GitHub"
+    echo "install_emews.sh: detected auto test GitHub"
     AUTO_TEST="GitHub"
 else
     # Other- possibly interactive user run.  Set to empty string.
@@ -56,8 +56,10 @@ function on_error {
             # GitHub run - must show log now
             echo "showing log: $log"
             cat $log
+            echo "end of log."
         fi
     fi
+    echo "install_emews.sh: exit 1"
     exit 1
 }
 
@@ -215,6 +217,10 @@ echo "#"
 echo "# To deactivate an active environment, use"
 echo "#"
 echo "#     $ conda deactivate"
+
+echo "..."
+echo "install_emews.sh: done."
+
 
 # Local Variables:
 # sh-basic-offset: 4
