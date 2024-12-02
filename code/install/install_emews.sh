@@ -123,7 +123,16 @@ if [ ! $(command -v conda) ]; then
 fi
 
 CONDA_BIN=$(which conda)
-CONDA_BIN_DIR=$(dirname $CONDA_BIN)
+if [[ ${AUTO_TEST} != "GitHub" ]]
+then
+    CONDA_BIN_DIR=$(dirname $CONDA_BIN)
+else
+    # The installation is a bit different on GitHub
+    # conda    is in $CONDA_HOME/condabin
+    # activate is in $CONDA_HOME/bin
+    CONDA_HOME=$(dirname $CONDA_BIN_DIR)
+    CONDA_BIN_DIR=$CONDA_HOME/bin
+fi
 
 THIS=$( cd $( dirname $0 ) ; /bin/pwd )
 EMEWS_INSTALL_LOG="$THIS/emews_install.log"
@@ -132,7 +141,7 @@ echo "Starting EMEWS stack installation"
 echo "See ${THIS}/emews_install.log for detailed output."
 echo
 
-echo "Using conda: $CONDA_BIN_DIR"
+echo "Using conda bin: $CONDA_BIN_DIR"
 
 ENV_NAME=emews-py${PY_VERSION}
 TEXT="Creating conda environment '${ENV_NAME}' using Python ${PY_VERSION}"
