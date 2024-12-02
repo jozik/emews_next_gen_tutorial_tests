@@ -30,8 +30,18 @@ function on_error {
     log="$2"
 
     echo -e "\n\nError: $msg"
-    echo "See $log for details"
 
+    if [[ ${GITHUB_ACTION:-} == "" ]]
+    then
+        # Normal shell run
+        echo "See $log for details"
+    else
+        # GitHub Actions run - must show log
+        echo
+        echo "log: $log"
+        echo
+        cat $log
+    fi
     exit 1
 }
 
