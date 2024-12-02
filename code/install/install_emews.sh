@@ -46,14 +46,14 @@ function on_error {
 
     echo -e "\n\nError: $msg"
 
-    if [[ ${AUTO_TEST} != "GitHub" ]]
+    if (( ${#log} ))
     then
-        # Non-GitHub run - user can retrieve log
-        echo "See $log for details"
-    else
-        # GitHub run - must show log now
-        if (( ${#log} > 0 ))
+        if [[ ${AUTO_TEST} != "GitHub" ]]
         then
+            # Non-GitHub run - user can retrieve log
+            echo "See $log for details"
+        else
+            # GitHub run - must show log now
             echo "showing log: $log"
             cat $log
         fi
