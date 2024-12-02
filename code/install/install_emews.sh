@@ -157,7 +157,7 @@ start_step "$TEXT"
 echo "activating: $CONDA_BIN_DIR/activate '$ENV_NAME'"
 if ! [[ -f $CONDA_BIN_DIR/activate ]]
 then
-    on_error "File not found: '$CONDA_BIN_DIR/activate'
+    on_error "File not found: '$CONDA_BIN_DIR/activate'"
 fi
 source $CONDA_BIN_DIR/activate $ENV_NAME || on_error "$TEXT"
 echo "python:  " $(which python)
