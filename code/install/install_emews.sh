@@ -122,15 +122,15 @@ if [ ! $(command -v conda) ]; then
     exit 1
 fi
 
-CONDA_BIN=$(which conda)
+CONDA_EXE=$(which conda)
 if [[ ${AUTO_TEST} != "GitHub" ]]
 then
-    CONDA_BIN_DIR=$(dirname $CONDA_BIN)
+    CONDA_BIN_DIR=$(dirname $CONDA_EXE)
 else
     # The installation is a bit different on GitHub
     # conda    is in $CONDA_HOME/condabin
     # activate is in $CONDA_HOME/bin
-    CONDA_HOME=$(dirname $CONDA_BIN_DIR)
+    CONDA_HOME=$(dirname $(dirname $CONDA_EXE))
     CONDA_BIN_DIR=$CONDA_HOME/bin
 fi
 
