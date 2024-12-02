@@ -3,44 +3,60 @@
 # INSTALL EMEWS SH
 # See README.adoc
 
+# Are we running under an automated testing environment?
+if (( ${#JENKINS_URL} > 0 ))
+then
+    echo "detected auto test Jenkins"
+    AUTO_TEST="Jenkins"
+elif (( ${#GITHUB_ACTION} > 0))
+then
+    echo "detected auto test GitHub"
+    AUTO_TEST="GitHub"
+else
+    # Other- possibly interactive user run.  Set to empty string.
+    AUTO_TEST=""
+fi
+
 function start_step {
-    if [[ ${JENKINS_URL:-UNSET} == "UNSET" ]]
+    if (( ${#AUTO_TEST} ))
     then
         # Normal shell run
         echo -en "[ ] $1 "
     else
-        # Jenkins run
+        # Auto test run
         echo -e  "[ ] $1 "
     fi
 }
 
 function end_step {
-    if [[ ${JENKINS_URL:-UNSET} == "UNSET" ]]
+    if (( ${#AUTO_TEST} ))
     then
       # Normal shell run - overwrite last line and show check mark
       echo -e "\r[\xE2\x9C\x94] $1 "
     else
-      # Jenkins run
+      # Auto test run
       echo -e "[X] $1 "
     fi
 }
 
 function on_error {
     msg="$1"
+    # Log may be blank if the step does not use a log
     log="$2"
 
     echo -e "\n\nError: $msg"
 
-    if [[ ${GITHUB_ACTION:-} == "" ]]
+    if [[ ${AUTO_TEST} == "GitHub" ]]
     then
         # Normal shell run
         echo "See $log for details"
     else
         # GitHub Actions run - must show log
-        echo
-        echo "showing log: $log"
-        echo
-        cat $log
+        if (( ${#log} > 0 ))
+        then
+            echo "showing log: $log"
+            cat $log
+        fi
     fi
     exit 1
 }
