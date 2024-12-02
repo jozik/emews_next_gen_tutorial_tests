@@ -1,0 +1,28 @@
+name: Tests
+on: [push, pull_request]
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+           # "3.8", "3.9", "3.10", "3.12"
+        os: [macOS-latest] # ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Sanity check
+        run: |
+          hostname
+          whoami
+          date
+          pwd
+          git log -n 1
+          ls -l code/install/install_emews.sh
+      - name: Install EMEWS
+        run: |
+          echo code/install/install_emews.sh
