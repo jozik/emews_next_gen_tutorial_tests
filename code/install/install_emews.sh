@@ -44,19 +44,19 @@ function on_error {
     # Log may be blank if the step does not use a log
     log="$2"
 
-    echo -e "\n\nError: $msg"
+    echo -e "\n\ninstall_emews.sh: Error: $msg"
 
     if (( ${#log} ))
     then
         if [[ ${AUTO_TEST} != "GitHub" ]]
         then
             # Non-GitHub run - user can retrieve log
-            echo "See $log for details"
+            echo "install_emews.sh: see log: $log"
         else
             # GitHub run - must show log now
-            echo "showing log: $log"
+            echo "install_emews.sh: showing log: $log"
             cat $log
-            echo "end of log."
+            echo "install_emews.sh: End of log."
         fi
     fi
     echo "install_emews.sh: exit 1"
