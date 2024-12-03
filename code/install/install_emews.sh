@@ -178,11 +178,11 @@ start_step "$TEXT"
 conda install -y -c conda-forge -c swift-t eq-r >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
-TEXT="Upgrading conda gcc"
-# Upgrades from 11.2.0 to 12.3.0 on GCE Jenkins (Ubuntu 20) (2024-06-11)
-start_step "$TEXT"
-conda upgrade -y -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
-end_step "$TEXT"
+# TEXT="Upgrading conda gcc"
+# # Upgrades from 11.2.0 to 12.3.0 on GCE Jenkins (Ubuntu 20) (2024-06-11)
+# start_step "$TEXT"
+# conda upgrade -y -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+# end_step "$TEXT"
 
 TEXT="Installing PostgreSQL"
 start_step "$TEXT"
