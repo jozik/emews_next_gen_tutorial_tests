@@ -202,7 +202,7 @@ end_step "$TEXT"
 THIS=$( cd $( dirname $0 ) ; /bin/pwd )
 
 echo
-echo "Using Rscript: $(which Rscript)"
+echo "Using Rscript: $(which Rscript)" 2>&1 | tee -a "$EMEWS_INSTALL_LOG"
 
 TEXT="Installing R package dependencies"
 start_step "$TEXT"
@@ -211,12 +211,6 @@ end_step "$TEXT"
 
 TEXT="Installing R EQ.SQL"
 start_step "$TEXT"
-echo PRINTENV1
-printenv GITHUB_PAT GITHUB_TOKEN
-echo PRINTENV2
-echo cat1
-cat ~/.Renviron
-echo cat2
 Rscript $THIS/install_eq_sql.R >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
