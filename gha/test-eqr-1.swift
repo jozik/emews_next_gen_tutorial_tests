@@ -9,4 +9,4 @@ import io;
 import location;
 import EQR;
 
-printf("state: %b", EQR_is_initialized(rank2location(2)));
+printf("EQ/R state: %b", EQR_is_initialized(rank2location(2)));
