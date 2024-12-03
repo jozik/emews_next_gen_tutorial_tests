@@ -231,6 +231,10 @@ echo "#     $ conda deactivate"
 echo "..."
 echo "install_emews.sh: done."
 
+echo cat1
+cat $EMEWS_INSTALL_LOG
+echo cat2
+
 # Local Variables:
 # sh-basic-offset: 4
 # End:
