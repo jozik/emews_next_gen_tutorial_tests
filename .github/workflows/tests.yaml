@@ -30,6 +30,7 @@ jobs:
           echo "whoami:  " $(whoami)
           echo "date:    " $(date "+%Y-%m-%d %H:%M")
           echo "pwd:     " $(pwd -P)
+          # Conda has not been activated- this will change in install_emews.sh
           echo "python:  " $(which python)
           echo
           git log -n 1 --date="format:%Y-%m-%d %H:%m" --format=tformat:"%h %cd %an : %s"
