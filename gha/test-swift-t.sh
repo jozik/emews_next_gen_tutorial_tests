@@ -14,16 +14,11 @@ PY_VERSION=$1
 ENV_NAME=emews-py${PY_VERSION}
 
 CONDA_EXE=$(which conda)
-if [[ ${AUTO_TEST} != "GitHub" ]]
-then
-    CONDA_BIN_DIR=$(dirname $CONDA_EXE)
-else
-    # The installation is a bit different on GitHub
-    # conda    is in $CONDA_HOME/condabin
-    # activate is in $CONDA_HOME/bin
-    CONDA_HOME=$(dirname $(dirname $CONDA_EXE))
-    CONDA_BIN_DIR=$CONDA_HOME/bin
-fi
+# The installation is a bit different on GitHub
+# conda    is in $CONDA_HOME/condabin
+# activate is in $CONDA_HOME/bin
+CONDA_HOME=$(dirname $(dirname $CONDA_EXE))
+CONDA_BIN_DIR=$CONDA_HOME/bin
 
 echo "activating: $CONDA_BIN_DIR/activate '$ENV_NAME'"
 if ! [[ -f $CONDA_BIN_DIR/activate ]]
