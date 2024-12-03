@@ -11,6 +11,8 @@ fi
 
 PY_VERSION=$1
 
+THIS=$( dirname $0 )
+
 ENV_NAME=emews-py${PY_VERSION}
 
 CONDA_EXE=$(which conda)
@@ -37,12 +39,16 @@ echo "conda:   " $(which conda)
 
 # Run tests!
 
+export TURBINE_RESIDENT_WORK_WORKERS=0
+FLAGS=( -n 4 -I $CONDA_HOME -r $CONDA_HOME )
+
 set -eux
 
 which swift-t
 swift-t -v
 swift-t -E 'trace(42);'
-
+swift-t ${FLAGS[@]} -E 'import EQR;'
+swift-t ${FLAGS[@]} $THIS/test-eqr-1.swift
 
 # Local Variables:
 # sh-basic-offset: 4
