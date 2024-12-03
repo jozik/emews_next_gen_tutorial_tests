@@ -42,3 +42,7 @@ jobs:
       - name: Install EMEWS
         run: |
           code/install/install_emews.sh ${{ matrix.python-version }} $PWD/DB
+      - name: Test Swift/T
+        run: |
+          swift-t -v
+          swift-t -E 'trace(42);'
