@@ -211,7 +211,7 @@ end_step "$TEXT"
 
 TEXT="Installing R EQ.SQL"
 start_step "$TEXT"
-Rscript -e $THIS/install_eq_sql.R >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+Rscript $THIS/install_eq_sql.R >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
 echo
