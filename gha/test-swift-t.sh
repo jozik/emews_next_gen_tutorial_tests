@@ -33,14 +33,17 @@ then
     echo "could not activate: $ENV_NAME"
     exit 1
 fi
-echo "python:  " $(which python)
+PYTHON_EXE=$(which python)
+ENV_HOME=$(dirname $(dirname $PYTHON_EXE))
+echo "python:  " $PYTHON_EXE
 echo "version: " $(python -V)
 echo "conda:   " $(which conda)
+echo "env:     " $ENV_HOME
 
 # Run tests!
 
 export TURBINE_RESIDENT_WORK_WORKERS=0
-FLAGS=( -n 4 -I $CONDA_HOME -r $CONDA_HOME )
+FLAGS=( -n 4 -I $ENV_HOME -r $ENV_HOME )
 
 set -eux
 
