@@ -42,7 +42,7 @@ echo "env:     " $ENV_HOME
 
 # Run tests!
 
-export TURBINE_RESIDENT_WORK_WORKERS=0
+export TURBINE_RESIDENT_WORK_WORKERS=1
 FLAGS=( -n 4 -I $ENV_HOME -r $ENV_HOME )
 
 set -eux
