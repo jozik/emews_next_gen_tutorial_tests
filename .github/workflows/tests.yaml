@@ -38,7 +38,7 @@ jobs:
       - name: Set up GitHub PAT
         # Set up PAT for R install_github()
         run: |
-          echo "GITHUB_PAT=${{secrets.GH_PAT_WOZ}}" >> ~/.Renviron
+          echo "GITHUB_PAT=${{ secrets.GH_PAT_WOZ }}" >> ~/.Renviron
       - name: Install EMEWS
         run: |
           code/install/install_emews.sh ${{ matrix.python-version }} $PWD/DB
