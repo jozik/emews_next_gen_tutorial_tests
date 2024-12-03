@@ -35,15 +35,25 @@ then
 fi
 PYTHON_EXE=$(which python)
 ENV_HOME=$(dirname $(dirname $PYTHON_EXE))
+
 echo "python:  " $PYTHON_EXE
 echo "version: " $(python -V)
 echo "conda:   " $(which conda)
 echo "env:     " $ENV_HOME
 
+# Get Operating System name
+OS=$( uname -o )
+if [[ $OS == "Darwin" ]]
+then
+    SWIFT_LIBS=$ENV_HOME/lib
+else
+    SWIFT_LIBS=$ENV_HOME
+fi
+
 # Run tests!
 
 export TURBINE_RESIDENT_WORK_WORKERS=1
-FLAGS=( -n 4 -I $ENV_HOME -r $ENV_HOME )
+FLAGS=( -n 4 -I $SWIFT_LIBS -r $SWIFT_LIBS )
 
 set -eux
 
