@@ -226,6 +226,9 @@ echo "#     $ conda deactivate"
 echo "..."
 echo "install_emews.sh: done."
 
+echo FIND...
+find $CONDA_HOME
+echo FIND DONE
 
 # Local Variables:
 # sh-basic-offset: 4
