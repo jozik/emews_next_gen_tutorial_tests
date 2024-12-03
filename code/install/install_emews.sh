@@ -228,10 +228,6 @@ echo "# To deactivate an active environment, use"
 echo "#"
 echo "#     $ conda deactivate"
 
-echo FIND...
-find $CONDA_HOME
-echo FIND DONE
-
 echo "..."
 echo "install_emews.sh: done."
 
