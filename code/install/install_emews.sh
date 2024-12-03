@@ -214,6 +214,9 @@ start_step "$TEXT"
 echo PRINTENV1
 printenv GITHUB_PAT GITHUB_TOKEN
 echo PRINTENV2
+echo cat1
+cat ~/.Renviron
+echo cat2
 Rscript $THIS/install_eq_sql.R >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
