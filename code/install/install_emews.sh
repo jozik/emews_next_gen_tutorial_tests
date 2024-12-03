@@ -138,6 +138,8 @@ fi
 
 THIS=$( cd $( dirname $0 ) ; /bin/pwd )
 EMEWS_INSTALL_LOG="$THIS/emews_install.log"
+# Get Operating System name
+OS=$( uname -o )
 
 echo "Starting EMEWS stack installation"
 echo "See ${THIS}/emews_install.log for detailed output."
@@ -178,11 +180,14 @@ start_step "$TEXT"
 conda install -y -c conda-forge -c swift-t eq-r >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
-# TEXT="Upgrading conda gcc"
-# # Upgrades from 11.2.0 to 12.3.0 on GCE Jenkins (Ubuntu 20) (2024-06-11)
-# start_step "$TEXT"
-# conda upgrade -y -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
-# end_step "$TEXT"
+if [[ $OS != "Darwin" ]]
+then
+    TEXT="Upgrading conda gcc"
+    # Upgrades from 11.2.0 to 12.3.0 on GCE Jenkins (Ubuntu 20) (2024-06-11)
+    start_step "$TEXT"
+    conda upgrade -y -c conda-forge gcc >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
+    end_step "$TEXT"
+fi
 
 TEXT="Installing PostgreSQL"
 start_step "$TEXT"
