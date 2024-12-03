@@ -27,6 +27,4 @@ if (Sys.getenv("GITHUB_PAT") != "") {
 }
 
 # Install EQ.SQL!
-# Attempt: Delete creds:
-gitcreds::gitcreds_delete()
 remotes::install_github('emews/EQ-SQL/R/EQ.SQL')

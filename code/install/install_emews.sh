@@ -211,6 +211,8 @@ end_step "$TEXT"
 
 TEXT="Installing R EQ.SQL"
 start_step "$TEXT"
+printenv GITHUB_PAT GITHUB_TOKEN
+unset GITHUB_PAT GITHUB_TOKEN
 Rscript $THIS/install_eq_sql.R >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
