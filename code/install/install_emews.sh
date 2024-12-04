@@ -75,7 +75,7 @@ help() {
    echo
    echo "Arguments:"
    echo "  python-version         python version to use ($V_STRING)"
-   echo "  database-directory     EQ/SQL Database installation directory" 
+   echo "  database-directory     EQ/SQL Database installation directory"
    echo "  h                      display this help and exit"
    echo
    echo "Example:"
