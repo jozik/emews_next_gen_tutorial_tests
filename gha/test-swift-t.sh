@@ -41,14 +41,8 @@ echo "version: " $(python -V)
 echo "conda:   " $(which conda)
 echo "env:     " $ENV_HOME
 
-# Get Operating System name
-OS=$( uname -o )
-if [[ $OS == "Darwin" ]]
-then
-    SWIFT_LIBS=$ENV_HOME/lib
-else
-    SWIFT_LIBS=$ENV_HOME
-fi
+# EQ/R files EQR.swift and pkgIndex.tcl should be under ENV/lib:
+SWIFT_LIBS=$ENV_HOME/lib
 
 # Run tests!
 
