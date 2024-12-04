@@ -162,10 +162,10 @@ then
     on_error "File not found: '$CONDA_BIN_DIR/activate'"
 fi
 source $CONDA_BIN_DIR/activate $ENV_NAME || on_error "$TEXT"
+end_step "$TEXT"
 echo "python:  " $(which python)
 echo "version: " $(python -V)
 echo "conda:   " $(which conda)
-end_step "$TEXT"
 
 # !! conda activate $ENV_NAME doesn't work within the script
 TEXT="Installing swift-t conda package"
