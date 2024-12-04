@@ -12,15 +12,6 @@ jobs:
         # install_emews.sh does not allow Python 3.12
     steps:
       - uses: actions/checkout@v4
-      # - name: Cache conda
-      #   uses: actions/cache@v3
-      #   env:
-      #     # Increase this value to reset cache
-      #     CACHE_NUMBER: 0
-      #   with:
-      #     path: ~/conda-cache
-      #     key:
-      #       conda-${{ runner.os }}-${{ env.CACHE_NUMBER }}
       - uses: conda-incubator/setup-miniconda@v3
         with:
           # auto-update-conda: true
