@@ -107,7 +107,7 @@ done
 
 if [ -z "$PY_VERSION" ]; then
     echo "Error: python version must be one of $V_STRING."
-    exit
+    exit 1
 fi
 
 if [ -d $2 ]; then
