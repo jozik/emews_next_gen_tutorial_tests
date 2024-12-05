@@ -165,3 +165,17 @@ $ Rscript code/install/install_pkgs.R
 or build them manually.
 
 When you run EMEWS Creator, you will need to refer to the tools installed here (R and Tcl) during EQ/R build process.
+
+== Troubleshooting
+
+=== Problems with R
+
+==== Compile-time problems with R
+
+If R packages fail to install, check your environment:
+
+1. Ensure no unnecessary environment variables are set:
+https://stat.ethz.ch/R-manual/R-devel/library/base/html/EnvVar.html,
+particularly +R_LIBS_USER+.
+
+2. Check your R build configuration files, +~/R/Makevars+ and +~/.Renviron+ .  These should be emptyfor EMEWS, however, you can re-add any needed features after you get EMEWS working.
