@@ -178,4 +178,12 @@ If R packages fail to install, check your environment:
 https://stat.ethz.ch/R-manual/R-devel/library/base/html/EnvVar.html,
 particularly +R_LIBS_USER+.
 
-2. Check your R build configuration files, +~/R/Makevars+ and +~/.Renviron+ .  These should be emptyfor EMEWS, however, you can re-add any needed features after you get EMEWS working.
+2. Inside R, use +Sys.getenv()+ and +.libPaths()+ to make sure no custom user libraries are affecting R.
+
+3. If you have R libraries installed on your system, you can force R to ignore them by setting this environment variable in your shell:
++
++$ export R_LIBS_USER=x+
++
+This sets +R_LIBS_USER+ to a non-existent location, thus ignoring it.
+
+4. Check your R build configuration files, +~/R/Makevars+ and +~/.Renviron+ .  These should be empty for EMEWS, however, you can re-add any needed features after you get EMEWS working.
