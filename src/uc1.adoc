@@ -569,6 +569,5 @@ Additional help for the arguments to `swift-t` can be seen by running
 launch the Swift/T workflow can be seen in the <<sweep>> section.
 
 === Downloading and running the full UC1 example
-The UC1 example is found https://github.com/emews/emews-tutorial-code/blob/main/uc1/swift/cfgs/uc1.cfg#L1[here,window=uc1.tutorial,pts="noopener,nofollow"].
+To run the UC1 example, you can navigate to the https://github.com/emews/emews-tutorial-code/blob/main/[EMEWS Tutorial Code site,window=uc1.tutorial,pts="noopener,nofollow"], and follow the instructions to clone the repository and download the Zombies model.
 
-#need to complete this subsection#
