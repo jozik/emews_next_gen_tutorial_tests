@@ -1,7 +1,6 @@
 IMPORTANT: #Highlights# below have in source TODOs.
 [[uc1, Use Case 1 Tutorial - Simple Workflows with ABM]]
-== #Simple# Workflows with ABM
-// TODO: try to unify the voice used throughout
+== Simple Workflows with ABM
 
 For a first demonstration ABM use case, we begin with an example of a Swift/T
 parallel parameter sweep to explore the parameter space of a model.
@@ -12,7 +11,7 @@ We call this input file an _unrolled parameter file_ or _UPF_ file. The followin
 image::EMEWS_figure_sweep.png[Sweep, 640, 480]
 
 
-Further information about the EMEWS Creator tool and the various available templates can be found in the <<creating_emews_projects,EMEWS Creator Appendix>>.
+Further information about the EMEWS Creator tool and the various available templates can be found in the <<creating_emews_projects,EMEWS Creator>> section.
 
 === Tutorial goals
 
@@ -23,15 +22,15 @@ Further information about the EMEWS Creator tool and the various available templ
 === Workflow Project Structure
 The full source code for this tutorial use case can be accessed https://github.com/emews/emews-tutorial-code/tree/main/uc1[here,window=UC1,pts="noopener,nofollow"].
 
-An initial version of the project was created using the EMEWS creator with the following command, #issued from the tutorial# https://github.com/emews/emews-tutorial-code/tree/main[code,window=UC1,pts="noopener,nofollow"] directory:
-// TODO: when the uc1 code is moved to the other repository, may need to change the wording here.
+An initial version of the project was created using the EMEWS creator with the following command, issued from the tutorial https://github.com/emews/emews-tutorial-code/tree/main[code,window=UC1,pts="noopener,nofollow"] directory:
+// TODO: when the uc1 code is moved to the other repository, change the wording here.
 
 [source#uc1-creator,bash]
 ----
 emewscreator -o uc1 sweep -c tutorial_cfgs/UC1.yaml
 ----
-//TODO: Include UC1.yaml and briefly explain the config (check what can be borrowed from EMEWS Creator section). And refer the reader to the EMEWS Creator Appendix for further information.
 
+Here `UC1.yaml` is a https://github.com/emews/emews-tutorial-code/blob/main/tutorial_cfgs/UC1.yaml[project configuration file,window=UC1.yaml,pts="noopener,nofollow"] that provides information to the EMEWS project creator. See the <<creating_emews_projects,EMEWS Creator>> section for more information.
 
 The completed workflow project has the following directory structure and files:
 // NB: Generated using tree.
@@ -66,8 +65,7 @@ uc1
 
 [NOTE]
 ====
-#For running this use case, an R enabled Swift/T installation is required.#
-// Should this be edited to account for the easy installation provided?
+If you haven't installed the EMEWS stack using the EMEWS installer in the <<quickstart,Quickstart section>>, you will need an R enabled Swift/T installation to run this use case.
 See the http://swift-lang.github.io/swift-t/guide.html#build_r[Swift/T R Installation Guide, window=_blank,pts="noopener,nofollow"] for installation details.
 ====
 
@@ -176,8 +174,7 @@ Here we see how the EMEWS Creator allows for very minimal adjustment of the work
 
 In order for Swift/T to call our external application (i.e., the Zombies model),
 we define an
-// TODO: connect to external_execution section in Swift/T tutorial
-#<<_external_execution,app>># function.
+http://swift-lang.github.io/swift-t/guide.html#app_functions[app,window=_blank,pts="noopener,nofollow"] function.
 (The Zombies model is written in Java which is not easily called via Tcl and thus an app function is the best
 choice for integrating the model into a Swift script. See the Swift/T Tutorial for more details.) Repast Simphony provides command line compatible functionality
 via an InstanceRunner class, for passing a set of parameters to a model and performing a single headless
@@ -204,9 +201,8 @@ app (file out, file err) run_model(file shfile, string param_line, string instan
 <2> The value of the `TURBINE_OUTPUT` environment variable is also retrieved. This specifies the path to
 a directory where Swift/T stores its log files and which we will use
 as a parent directory for the working directories of our individual runs.
-For more on these variables see the
-// TODO: Include link to project creator section.
-#<<swift_run_sweep_sh,discussion>># in the template tutorial.
+For more on these variables see the discussion in the 
+<<creating_emews_projects,EMEWS Creator>> section.
 <3> The app function definition begins. The function returns two files, one for standard output and one for standard error.
 The function arguments are those required to run https://github.com/emews/emews-tutorial-code/blob/main/uc1/scripts/run_repast_uc1.sh#L1[run_repast_uc1.sh,window=run_repast_uc1.sh,pts="noopener,nofollow"], that is,
 the full path of the script, the parameters to run and the directory where the model run output should be written.
@@ -299,8 +295,7 @@ array element (that is, a single parameter set represented as a string) while th
 is used to create the directory. The `=>` keyword is again used to ensure that the directory is created before the actual model
 run that uses that directory is performed.
 <7> Create file objects into which the standard out and standard error streams are
-redirected by the <<repast-app-annot,run_model>> #function#.
-// TODO: Do we explain the <... + ...> syntax anywhere?
+redirected by the <<repast-app-annot,run_model>> function. The angle bracket syntax shown here is part of the Swift/T file mapper functionality, which connects string file names to Swift/T file variables in the workflow.  More information about this syntax is http://swift-lang.github.io/swift-t/guide.html#section_files[here, window=_blank,pts="noopener,nofollow"].
 <8> Lastly the `run_model` app function that performs the Zombie model run is called with the required arguments.
 
 This is a common pattern in EMEWS. Some collection of parameters is parsed into an array in which each element
@@ -573,3 +568,7 @@ Additional help for the arguments to `swift-t` can be seen by running
 `swift-t -h`. More information on the shell script used to
 launch the Swift/T workflow can be seen in the <<sweep>> section.
 
+=== Downloading and running the full UC1 example
+The UC1 example is found https://github.com/emews/emews-tutorial-code/blob/main/uc1/swift/cfgs/uc1.cfg#L1[here,window=uc1.tutorial,pts="noopener,nofollow"].
+
+#need to complete this subsection#
