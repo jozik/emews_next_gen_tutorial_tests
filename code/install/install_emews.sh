@@ -74,9 +74,9 @@ help() {
    echo "       install_emews.sh -h"
    echo
    echo "Arguments:"
+   echo "  -h                     display this help and exit"
    echo "  python-version         python version to use ($V_STRING)"
    echo "  database-directory     EQ/SQL Database installation directory"
-   echo "  h                      display this help and exit"
    echo
    echo "Example:"
    echo "  install_emews.sh 3.11 ~/Documents/db/eqsql_db"
