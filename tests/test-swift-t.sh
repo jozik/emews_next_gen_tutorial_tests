@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # TEST SWIFT-T
-# Test Swift/T under GitHub Actions
+# Test Swift/T under GitHub Actions or Jenkins
+
+echo "test-swift-t.sh: START"
 
 if (( ${#} != 1 ))
 then
@@ -16,8 +18,8 @@ THIS=$( dirname $0 )
 if (( ${#JENKINS_URL} > 0 ))
 then
     # CELS Jenkins environment
-    PATH=$WORKSPACE/../EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/bin:$PATH
-    # Otherwise, we are on GitHub, and we have Python and Conda
+    PATH=$WORKSPACE/../EMEWS-Conda/Miniconda-311_23.11.0-1/bin:$PATH
+    # Otherwise, we are on GitHub, and GitHub provides python, conda
 fi
 
 ENV_NAME=emews-py${PY_VERSION}
@@ -29,7 +31,6 @@ CONDA_EXE=$(which conda)
 CONDA_HOME=$(dirname $(dirname $CONDA_EXE))
 CONDA_BIN_DIR=$CONDA_HOME/bin
 
-echo "test-swift-t.sh: START"
 echo "activating: $CONDA_BIN_DIR/activate '$ENV_NAME'"
 if ! [[ -f $CONDA_BIN_DIR/activate ]]
 then
