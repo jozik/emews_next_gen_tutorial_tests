@@ -31,11 +31,11 @@ function start_step {
 function end_step {
     if (( ${#AUTO_TEST} ))
     then
-      # Normal shell run - overwrite last line and show check mark
-      echo -e "\r[\xE2\x9C\x94] $1 "
+        # Normal shell run - overwrite last line and show check mark
+        echo -e "\r[\xE2\x9C\x94] $1 "
     else
-      # Auto test run
-      echo -e "[X] $1 "
+        # Auto test run
+        echo -e "[X] $1 "
     fi
 }
 
