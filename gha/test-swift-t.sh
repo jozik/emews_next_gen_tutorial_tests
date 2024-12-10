@@ -22,6 +22,7 @@ CONDA_EXE=$(which conda)
 CONDA_HOME=$(dirname $(dirname $CONDA_EXE))
 CONDA_BIN_DIR=$CONDA_HOME/bin
 
+echo "test-swift-t.sh: START"
 echo "activating: $CONDA_BIN_DIR/activate '$ENV_NAME'"
 if ! [[ -f $CONDA_BIN_DIR/activate ]]
 then
@@ -33,6 +34,9 @@ then
     echo "could not activate: $ENV_NAME"
     exit 1
 fi
+
+set -eu
+
 PYTHON_EXE=$(which python)
 ENV_HOME=$(dirname $(dirname $PYTHON_EXE))
 
@@ -49,13 +53,17 @@ SWIFT_LIBS=$ENV_HOME/lib
 export TURBINE_RESIDENT_WORK_WORKERS=1
 FLAGS=( -n 4 -I $SWIFT_LIBS -r $SWIFT_LIBS )
 
-set -eux
+(
+    set -x
+    which swift-t
+    swift-t -v
+    swift-t -E 'trace(42);'
+    swift-t ${FLAGS[@]} -E 'import EQR;'
+    swift-t ${FLAGS[@]} $THIS/test-eqr-1.swift
+)
 
-which swift-t
-swift-t -v
-swift-t -E 'trace(42);'
-swift-t ${FLAGS[@]} -E 'import EQR;'
-swift-t ${FLAGS[@]} $THIS/test-eqr-1.swift
+echo "..."
+echo "test-swift-t.sh: STOP: OK"
 
 # Local Variables:
 # sh-basic-offset: 4
