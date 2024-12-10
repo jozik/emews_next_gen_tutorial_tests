@@ -5,7 +5,7 @@
 
 if (( ${#} != 1 ))
 then
-    echo "Provide Python version!"
+    echo "test-swift-t.sh: Provide Python version!"
     exit 1
 fi
 
