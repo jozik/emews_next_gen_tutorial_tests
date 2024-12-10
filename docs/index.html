@@ -1697,6 +1697,104 @@ launch the Swift/T workflow can be seen in the <a href="#sweep">Sweep Template</
 <div class="paragraph">
 <p>To run the UC1 example, you can navigate to the <a href="https://github.com/emews/emews-tutorial-code/blob/main/" target="uc1.tutorial">EMEWS Tutorial Code site</a>, and follow the instructions to clone the repository and download the Zombies model.</p>
 </div>
+<div class="paragraph">
+<p>From the root of the cloned repository, run the following shell commands:</p>
+</div>
+<div id="run-uc1-how-to" class="listingblock">
+<div class="title">Running the workflow</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>$ <span class="tok-nb">cd</span> uc1/swift  <i class="conum" data-value="1"></i><b>(1)</b>
+$ ./run_uc1.sh exp1 cfgs/uc1.cfg  <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Change directory into the <code>swift</code> subdirectory of the <code>uc1</code> directory.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This runs the workflow through the <code>run_uc1.sh</code> file, providing two arguments. The first is an experiment ID (in this case <code>exp1</code>), and the second is a path to the <code>uc1.cfg</code> configuration file, which is inside the <code>cfgs</code> directory.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once the workflow completes, you will see 50 instance directories (corresponding to the 50 lines in the UPF file) along with the following ouputs in the <code>experiments/exp1</code> directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="text"><span></span>exp1
+├── MessageCenter.log4j.properties  <i class="conum" data-value="1"></i><b>(1)</b>
+├── cfg.cfg  <i class="conum" data-value="2"></i><b>(2)</b>
+├── instance_1  <i class="conum" data-value="3"></i><b>(3)</b>
+│   ├── counts.batch_param_map.csv
+│   ├── counts.csv  <i class="conum" data-value="4"></i><b>(4)</b>
+│   ├── data -&gt; /Users/jozik/repos/emews-tutorial-code/uc1/complete_model/data  <i class="conum" data-value="5"></i><b>(5)</b>
+│   ├── debug.log  <i class="conum" data-value="6"></i><b>(6)</b>
+│   ├── err.txt  <i class="conum" data-value="7"></i><b>(7)</b>
+│   ├── location_output.batch_param_map.csv
+│   ├── location_output.csv  <i class="conum" data-value="8"></i><b>(8)</b>
+│   └── out.txt  <i class="conum" data-value="9"></i><b>(9)</b>
+├── instance_10
+|   ...
+├── instance_11
+|   ...
+...
+├── instance_9
+│   ...
+├── run_uc1.sh.log  <i class="conum" data-value="10"></i><b>(10)</b>
+└── upf.txt  <i class="conum" data-value="11"></i><b>(11)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This is a logging configuration file used by Repast Simphony.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The EMEWS configuration file that was used to launch the workflow is preserved here for reference.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This is 1 of 50 instance directories, corresponding to the 50 lines in the UPF file.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>A csv file containing that counts of Human and Zombie agents over time, where the corresponding <code>counts.batch_param_map.csv</code> file contains the parameter values used for this instance.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>A symlink to the <code>data</code> folder inside the Zombies model. This is an empty folder for this example, but could include input or reference data needed for the model to run, and this prevents unnecessary duplication of those assets.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Repast Simphony uses this to log any debugging information. Outputs are configured by the <code>MessageCenter.log4j.properties</code> file.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Standard error logged by the <a href="#repast-app-annot">Repast Simphony App Function</a>, which launches each Zombies instance.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>A csv file containing the locations of Human and Zombie agents at each time step. Here too, Repast Simphony produces the  corresponding <code>x.batch_param_map.csv</code> file to track the parameter values used for this instance.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>Standard out logged by the <a href="#repast-app-annot">Repast Simphony App Function</a>, which launches each Zombies instance.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>A concretized version of the <code>run_uc1.sh</code> file used to launch the workflow, including the resolved environment variables used.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td>The UPF file used to launch this workflow, preserved here for reference.</td>
+</tr>
+</table>
+</div>
 <div class="admonitionblock important">
 <table>
 <tr>
