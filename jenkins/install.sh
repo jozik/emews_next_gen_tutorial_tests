@@ -8,7 +8,7 @@ DATE_FMT_NICE="%D{%Y-%m-%d} %D{%H:%M:%S}"
 log()
 # General-purpose log line
 {
-  print ${(%)DATE_FMT_NICE} "setup-conda.sh:" ${*}
+  print ${(%)DATE_FMT_NICE} "install.sh:" ${*}
 }
 
 log "JENKINS INSTALL SH"
