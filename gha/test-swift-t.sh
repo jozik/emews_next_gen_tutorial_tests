@@ -13,6 +13,13 @@ PY_VERSION=$1
 
 THIS=$( dirname $0 )
 
+if (( ${#JENKINS_URL} > 0 ))
+then
+    # CELS Jenkins environment
+    PATH=$WORKSPACE/../EMEWS-Conda/Miniconda-311_23.11.0-1/envs/emews-py3.11/bin:$PATH
+    # Otherwise, we are on GitHub, and we have Python and Conda
+fi
+
 ENV_NAME=emews-py${PY_VERSION}
 
 CONDA_EXE=$(which conda)
