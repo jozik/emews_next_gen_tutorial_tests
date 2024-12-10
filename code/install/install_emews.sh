@@ -220,7 +220,7 @@ start_step "$TEXT"
 Rscript $THIS/install_eq_sql.R >> "$EMEWS_INSTALL_LOG" 2>&1 || on_error "$TEXT" "$EMEWS_INSTALL_LOG"
 end_step "$TEXT"
 
-echo
+echo "..."
 echo "# To activate this EMEWS environment, use"
 echo "#"
 echo "#     $ conda activate $ENV_NAME"
@@ -228,8 +228,15 @@ echo "#"
 echo "# To deactivate an active environment, use"
 echo "#"
 echo "#     $ conda deactivate"
-
+echo "#"
+echo "# python   is $(which python)"
+echo "$             $(python -V)"
+echo "# R        is $(which R)"
+echo "#             $(R --version | head -1)"
+echo "# swift-t  is $(which swift-t)"
+echo "#             $(swift-t -v)"
 echo "..."
+
 echo "install_emews.sh: done."
 
 
