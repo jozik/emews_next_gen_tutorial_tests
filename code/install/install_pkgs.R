@@ -27,7 +27,7 @@ PKGS <- list(
 
 if (Sys.info()["sysname"] == "Darwin") {
   PKGS <- append(PKGS, "quartz")
-)
+}
 
 print(installed.packages())
 quit(status=1)
