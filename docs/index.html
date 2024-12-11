@@ -530,10 +530,10 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_acknowledgments">1.1.6. Acknowledgments</a></li>
 </ul>
 </li>
-<li><a href="#_quickstart">1.2. Quickstart</a></li>
+<li><a href="#quickstart">1.2. Quickstart</a></li>
 </ul>
 </li>
-<li><a href="#uc1">2. <mark>Simple</mark> Workflows with ABM</a>
+<li><a href="#uc1">2. Simple Workflows with ABM</a>
 <ul class="sectlevel2">
 <li><a href="#_tutorial_goals_2">2.1. Tutorial goals</a></li>
 <li><a href="#_workflow_project_structure">2.2. Workflow Project Structure</a></li>
@@ -556,6 +556,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </ul>
 </li>
 <li><a href="#_running_the_swift_script">2.7. Running the Swift Script</a></li>
+<li><a href="#_downloading_and_running_the_full_uc1_example">2.8. Downloading and running the full UC1 example</a></li>
 </ul>
 </li>
 <li><a href="#uc4">3. Minimizing the Ackley function with an EQSQL Workflow</a>
@@ -769,7 +770,7 @@ based around EMEWS can easily be compared and distributed.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_quickstart">1.2. Quickstart</h3>
+<h3 id="quickstart">1.2. Quickstart</h3>
 <div class="paragraph">
 <p>The EMEWS installer will create a binary EMEWS environment (Swift/T, Python, R, and the EMEWS Python and R packages).
 The binary install is recommended for the tutorial and for small scale testing on non-HPC supported systems.</p>
@@ -912,7 +913,7 @@ For example,</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="uc1">2. <mark>Simple</mark> Workflows with ABM</h2>
+<h2 id="uc1">2. Simple Workflows with ABM</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>For a first demonstration ABM use case, we begin with an example of a Swift/T
@@ -927,7 +928,7 @@ We call this input file an <em>unrolled parameter file</em> or <em>UPF</em> file
 </div>
 </div>
 <div class="paragraph">
-<p>Further information about the EMEWS Creator tool and the various available templates can be found in the <a href="#creating_emews_projects">EMEWS Creator Appendix</a>.</p>
+<p>Further information about the EMEWS Creator tool and the various available templates can be found in the <a href="#creating_emews_projects">EMEWS Creator</a> section.</p>
 </div>
 <div class="sect2">
 <h3 id="_tutorial_goals_2">2.1. Tutorial goals</h3>
@@ -951,12 +952,15 @@ We call this input file an <em>unrolled parameter file</em> or <em>UPF</em> file
 <p>The full source code for this tutorial use case can be accessed <a href="https://github.com/emews/emews-tutorial-code/tree/main/uc1" target="UC1">here</a>.</p>
 </div>
 <div class="paragraph">
-<p>An initial version of the project was created using the EMEWS creator with the following command, <mark>issued from the tutorial</mark> <a href="https://github.com/emews/emews-tutorial-code/tree/main" target="UC1">code</a> directory:</p>
+<p>An initial version of the project was created using the EMEWS creator with the following command, issued from the tutorial <a href="https://github.com/emews/emews-tutorial-code/tree/main" target="UC1">code</a> directory:</p>
 </div>
 <div id="uc1-creator" class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span>emewscreator -o uc1 sweep -c tutorial_cfgs/UC1.yaml</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Here <code>UC1.yaml</code> is a <a href="https://github.com/emews/emews-tutorial-code/blob/main/tutorial_cfgs/UC1.yaml" target="UC1.yaml">project configuration file</a> that provides information to the EMEWS project creator. See the <a href="#creating_emews_projects">EMEWS Creator</a> section for more information.</p>
 </div>
 <div class="paragraph">
 <p>The completed workflow project has the following directory structure and files:</p>
@@ -995,7 +999,7 @@ We call this input file an <em>unrolled parameter file</em> or <em>UPF</em> file
 </td>
 <td class="content">
 <div class="paragraph">
-<p><mark>For running this use case, an R enabled Swift/T installation is required.</mark>
+<p>If you haven&#8217;t installed the EMEWS stack using the EMEWS installer in the <a href="#quickstart">Quickstart section</a>, you will need an R enabled Swift/T installation to run this use case.
 See the <a href="http://swift-lang.github.io/swift-t/guide.html#build_r" target="_blank" rel="noopener">Swift/T R Installation Guide</a> for installation details.</p>
 </div>
 </td>
@@ -1100,7 +1104,7 @@ The script consists of defining variables from environment variables and user in
 <div class="paragraph">
 <p>In order for Swift/T to call our external application (i.e., the Zombies model),
 we define an
-<mark><a href="#_external_execution">app</a></mark> function.
+<a href="http://swift-lang.github.io/swift-t/guide.html#app_functions" target="_blank" rel="noopener">app</a> function.
 (The Zombies model is written in Java which is not easily called via Tcl and thus an app function is the best
 choice for integrating the model into a Swift script. See the Swift/T Tutorial for more details.) Repast Simphony provides command line compatible functionality
 via an InstanceRunner class, for passing a set of parameters to a model and performing a single headless
@@ -1135,8 +1139,8 @@ to ease command line usage. Other non-Repast Simphony models or scientific appli
 <td>The value of the <code>TURBINE_OUTPUT</code> environment variable is also retrieved. This specifies the path to
 a directory where Swift/T stores its log files and which we will use
 as a parent directory for the working directories of our individual runs.
-For more on these variables see the
-<mark><a href="#swift_run_sweep_sh">discussion</a></mark> in the template tutorial.</td>
+For more on these variables see the discussion in the
+<a href="#creating_emews_projects">EMEWS Creator</a> section.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -1286,7 +1290,7 @@ run that uses that directory is performed.</td>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
 <td>Create file objects into which the standard out and standard error streams are
-redirected by the <a href="#repast-app-annot">run_model</a> <mark>function</mark>.</td>
+redirected by the <a href="#repast-app-annot">run_model</a> function. The angle bracket syntax shown here is part of the Swift/T file mapper functionality, which connects string file names to Swift/T file variables in the workflow.  More information about this syntax is <a href="http://swift-lang.github.io/swift-t/guide.html#section_files" target="_blank" rel="noopener">here</a>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
@@ -1684,6 +1688,110 @@ and script specific arguments, here the CMD_LINE_ARGS defined above.
 Additional help for the arguments to <code>swift-t</code> can be seen by running
 <code>swift-t -h</code>. More information on the shell script used to
 launch the Swift/T workflow can be seen in the <a href="#sweep">Sweep Template</a> section.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_downloading_and_running_the_full_uc1_example">2.8. Downloading and running the full UC1 example</h3>
+<div class="paragraph">
+<p>To run the UC1 example, you can navigate to the <a href="https://github.com/emews/emews-tutorial-code/blob/main/" target="uc1.tutorial">EMEWS Tutorial Code site</a>, and follow the instructions to clone the repository and download the Zombies model.</p>
+</div>
+<div class="paragraph">
+<p>From the root of the cloned repository, run the following shell commands:</p>
+</div>
+<div id="run-uc1-how-to" class="listingblock">
+<div class="title">Running the workflow</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>$ <span class="tok-nb">cd</span> uc1/swift  <i class="conum" data-value="1"></i><b>(1)</b>
+$ ./run_uc1.sh exp1 cfgs/uc1.cfg  <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Change directory into the <code>swift</code> subdirectory of the <code>uc1</code> directory.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This runs the workflow through the <code>run_uc1.sh</code> file, providing two arguments. The first is an experiment ID (in this case <code>exp1</code>), and the second is a path to the <code>uc1.cfg</code> configuration file, which is inside the <code>cfgs</code> directory.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once the workflow completes, you will see 50 instance directories (corresponding to the 50 lines in the UPF file) along with the following ouputs in the <code>experiments/exp1</code> directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="text"><span></span>exp1
+├── MessageCenter.log4j.properties  <i class="conum" data-value="1"></i><b>(1)</b>
+├── cfg.cfg  <i class="conum" data-value="2"></i><b>(2)</b>
+├── instance_1  <i class="conum" data-value="3"></i><b>(3)</b>
+│   ├── counts.batch_param_map.csv
+│   ├── counts.csv  <i class="conum" data-value="4"></i><b>(4)</b>
+│   ├── data -&gt; /Users/jozik/repos/emews-tutorial-code/uc1/complete_model/data  <i class="conum" data-value="5"></i><b>(5)</b>
+│   ├── debug.log  <i class="conum" data-value="6"></i><b>(6)</b>
+│   ├── err.txt  <i class="conum" data-value="7"></i><b>(7)</b>
+│   ├── location_output.batch_param_map.csv
+│   ├── location_output.csv  <i class="conum" data-value="8"></i><b>(8)</b>
+│   └── out.txt  <i class="conum" data-value="9"></i><b>(9)</b>
+├── instance_10
+|   ...
+├── instance_11
+|   ...
+...
+├── instance_9
+│   ...
+├── run_uc1.sh.log  <i class="conum" data-value="10"></i><b>(10)</b>
+└── upf.txt  <i class="conum" data-value="11"></i><b>(11)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This is a logging configuration file used by Repast Simphony.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The EMEWS configuration file that was used to launch the workflow is preserved here for reference.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This is 1 of 50 instance directories, corresponding to the 50 lines in the UPF file.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>A csv file containing that counts of Human and Zombie agents over time, where the corresponding <code>counts.batch_param_map.csv</code> file contains the parameter values used for this instance.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>A symlink to the <code>data</code> folder inside the Zombies model. This is an empty folder for this example, but could include input or reference data needed for the model to run, and this prevents unnecessary duplication of those assets.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Repast Simphony uses this to log any debugging information. Outputs are configured by the <code>MessageCenter.log4j.properties</code> file.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Standard error logged by the <a href="#repast-app-annot">Repast Simphony App Function</a>, which launches each Zombies instance.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>A csv file containing the locations of Human and Zombie agents at each time step. Here too, Repast Simphony produces the  corresponding <code>x.batch_param_map.csv</code> file to track the parameter values used for this instance.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>Standard out logged by the <a href="#repast-app-annot">Repast Simphony App Function</a>, which launches each Zombies instance.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>A concretized version of the <code>run_uc1.sh</code> file used to launch the workflow, including the resolved environment variables used.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td>The UPF file used to launch this workflow, preserved here for reference.</td>
 </tr>
 </table>
 </div>
@@ -2529,7 +2637,7 @@ components including Swift/T, R, Python, PostgreSQL, and the R and Python packag
 you do not have an existing conda installation. For the differences between the three with respect to Anaconda&#8217;s Terms of Service and remaining in compliance with those terms, see <a href="https://www.anaconda.com/blog/is-conda-free">is conda free</a>. More information on conda environments can found <a href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">here</a>.</p>
 </div>
 <div class="paragraph">
-<p>See <a href="#_quickstart">Section 1.2, &#8220;Quickstart&#8221;</a> for how to download the install scripts and install the environment with the <code>install_emews.sh</code> script. The remainder
+<p>See <a href="#_quickstart">[_quickstart]</a> for how to download the install scripts and install the environment with the <code>install_emews.sh</code> script. The remainder
 of this section will walk through the relevant parts of the script in greater detail.</p>
 </div>
 <div class="sect3">
@@ -2845,7 +2953,7 @@ This will be used in the model execution bash script. Note that spaces will be r
 </div>
 <div class="paragraph">
 <p>These values can also be supplied in a yaml format configuration file. Sample
-configuration files can be found <a href="https://github.com/emews/emews-project-creator/tree/master/example_cfgs">here</a>
+configuration files can be found <a href="https://github.com/emews/emews-project-creator/tree/master/example_cfgs" target="_blank" rel="noopener">here</a>
 in the <code>example_cfgs</code> directory in the EMEWS Creator github repository.</p>
 </div>
 </div>
@@ -2992,7 +3100,7 @@ the required arguments are specified on the command line</p>
 workflow template&#8217;s configuration parameters when those parameters are
 not specified on the command line. This file is in yaml format.
 As mentioned above, sample configuration files can be found
-<a href="https://github.com/emews/emews-project-creator/tree/master/example_cfgs">here</a>
+<a href="https://github.com/emews/emews-project-creator/tree/master/example_cfgs" target="_blank" rel="noopener">here</a>
 in the <code>example_cfgs</code> directory in the EMEWS Creator github repository. Arguments
 supplied on the command line will override those supplied in a configuration file.
 If any required arguments are missing from the command line, then the
