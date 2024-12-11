@@ -29,9 +29,6 @@ if (Sys.info()["sysname"] == "Darwin") {
   PKGS <- append(PKGS, "quartz")
 }
 
-print(installed.packages())
-quit(status=1)
-
 for (pkg in PKGS) {
   print("")
   cat("INSTALL: ", pkg, "\n")
@@ -54,5 +51,8 @@ cat("FILE:    ", pkg_file, "\n")
 install.packages(pkg_file, repos=NULL, type="source")
 cat("LOAD:    ", pkg, "\n")
 library(package=pkg, character.only=TRUE)
+
+cat("PACKAGE LIST:\n")
+print(installed.packages())
 
 print("INSTALL_R_PKGS: DONE.")
