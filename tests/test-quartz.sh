@@ -21,7 +21,9 @@ fi
 
 ENV_NAME=emews-py${PY_VERSION}
 
+echo "CONDA CREATE ..."
 conda create -y -n $ENV_NAME python=${PY_VERSION}
+echo "CONDA CREATE: OK"
 
 CONDA_EXE=$(which conda)
 # The installation is a bit different on GitHub
@@ -42,8 +44,6 @@ then
     exit 1
 fi
 
-set -eu
-
 PYTHON_EXE=$(which python)
 ENV_HOME=$(dirname $(dirname $PYTHON_EXE))
 
@@ -53,6 +53,8 @@ echo "conda:   " $(which conda)
 echo "env:     " $ENV_HOME
 
 conda install -y -c conda-forge r-base
+
+set -eu
 
 which Rscript
 
