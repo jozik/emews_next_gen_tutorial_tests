@@ -55,11 +55,17 @@ echo "env:     " $ENV_HOME
 # conda install -y -c conda-forge r-base
 conda install -y -c conda-forge -c swift-t emews-r
 
+echo "making .R"
+echo "making .R 2" >&2
 mkdir -pv ~/.R
 
-echo "CXXFLAGS=-Dat_quick_exit=atexit" > ~/.R/Makevars
+echo "writing to Makevars"
+echo 'CXXFLAGS=-Dat_quick_exit=atexit -Dquick_exit=exit' >> ~/.R/Makevars
+echo "Makevars:"
+cat ~/.R/Makevars
+echo "Makevars: DONE"
 
-set -eu
+set -eux
 
 which Rscript
 
