@@ -21,6 +21,8 @@ fi
 
 ENV_NAME=emews-py${PY_VERSION}
 
+conda create -y -n $ENV_NAME python=${PY_VERSION}
+
 CONDA_EXE=$(which conda)
 # The installation is a bit different on GitHub
 # conda    is in $CONDA_HOME/condabin
