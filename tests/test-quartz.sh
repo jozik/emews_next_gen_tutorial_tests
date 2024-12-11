@@ -58,7 +58,7 @@ set -eu
 
 which Rscript
 
-Rscript $THIS/install_pkgs.R
+Rscript $THIS/../code/install/install_pkgs.R
 
 
 
