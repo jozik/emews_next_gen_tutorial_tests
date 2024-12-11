@@ -25,6 +25,13 @@ PKGS <- list(
   "coro", "jsonlite", "purrr", "logger", "remotes", "Rcpp"
 )
 
+if (Sys.info()["sysname"] == "Darwin") {
+  PKGS <- append(PKGS, "quartz")
+)
+
+print(installed.packages())
+quit(status=1)
+
 for (pkg in PKGS) {
   print("")
   cat("INSTALL: ", pkg, "\n")
