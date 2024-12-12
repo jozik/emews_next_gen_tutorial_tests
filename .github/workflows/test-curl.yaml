@@ -1,0 +1,39 @@
+name: Test from Curl
+on: [push, pull_request]
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        os: [ubuntu-latest, macOS-latest]
+        # There is no free mac-14 for x86 on GitHub
+    steps:
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          # auto-update-conda: true
+          python-version: ${{ matrix.python-version }}
+      - name: Check environment
+        run: |
+          echo "hostname:" $(hostname)
+          echo "whoami:  " $(whoami)
+          echo "date:    " $(date "+%Y-%m-%d %H:%M")
+          echo "pwd:     " $(pwd -P)
+          # Conda has not been activated- this will change in install_emews.sh
+          echo "python:  " $(which python)
+          echo
+      - name: Download scripts
+        run: |
+          curl -L -O https://raw.githubusercontent.com/jozik/emews_next_gen_tutorial_tests/main/code/install/install_emews.sh
+          curl -L -O https://raw.githubusercontent.com/jozik/emews_next_gen_tutorial_tests/main/code/install/install_pkgs.R
+      - name: Set up GitHub PAT
+        # Set up PAT for R install_github()
+        run: |
+          echo "GITHUB_PAT=${{ secrets.GH_PAT_WOZ }}" >> ~/.Renviron
+      - name: Install EMEWS
+        run: |
+          bash install_emews.sh ${{ matrix.python-version }} $PWD/DB
+
+# We do not test Swift/T here because we don't have a full clone
+# See ./test-clone.yaml for the Swift/T tests.
