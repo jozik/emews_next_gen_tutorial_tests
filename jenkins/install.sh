@@ -8,7 +8,7 @@ DATE_FMT_NICE="%D{%Y-%m-%d} %D{%H:%M:%S}"
 log()
 # General-purpose log line
 {
-  print ${(%)DATE_FMT_NICE} "setup-conda.sh:" ${*}
+  print ${(%)DATE_FMT_NICE} "install.sh:" ${*}
 }
 
 log "JENKINS INSTALL SH"
@@ -45,6 +45,10 @@ if [[ -d $DB ]] {
   log "Removing existing DB=$DB"
   rm -rf $DB
 }
-set -x
-which python conda
-$EMEWS/code/install/install_emews.sh $PV_DOT $DB
+(
+  set -x
+  which python conda
+  $EMEWS/code/install/install_emews.sh $PV_DOT $DB
+)
+log "INSTALL SUCCESS"
+print

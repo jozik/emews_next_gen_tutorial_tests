@@ -48,4 +48,10 @@ install.packages(pkg_file, repos=NULL, type="source")
 cat("LOAD:    ", pkg, "\n")
 library(package=pkg, character.only=TRUE)
 
+library(remotes)
+remotes::install_github('emews/EQ-SQL/R/EQ.SQL')
+
+cat("PACKAGE LIST:\n")
+print(installed.packages())
+
 print("INSTALL_R_PKGS: DONE.")

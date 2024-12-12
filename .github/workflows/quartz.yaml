@@ -1,4 +1,4 @@
-name: Tests
+name: Quartz
 on: [push, pull_request]
 jobs:
   build:
@@ -6,9 +6,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
-        os: [ubuntu-latest, macOS-latest]
-        # There is no free mac-14 for x86 on GitHub
+        python-version: ["3.11"]
+        os: [macOS-latest]
     steps:
       - uses: actions/checkout@v4
       - uses: conda-incubator/setup-miniconda@v3
@@ -21,7 +20,7 @@ jobs:
           echo "whoami:  " $(whoami)
           echo "date:    " $(date "+%Y-%m-%d %H:%M")
           echo "pwd:     " $(pwd -P)
-          # Conda has not been activated- this will change in install_emews.sh
+          # Conda has not been activated- this will change later
           echo "python:  " $(which python)
           echo
           git log -n 1 --date="format:%Y-%m-%d %H:%m" --format=tformat:"%h %cd %an : %s"
@@ -30,9 +29,6 @@ jobs:
         # Set up PAT for R install_github()
         run: |
           echo "GITHUB_PAT=${{ secrets.GH_PAT_WOZ }}" >> ~/.Renviron
-      - name: Install EMEWS
+      - name: Run Quartz
         run: |
-          code/install/install_emews.sh ${{ matrix.python-version }} $PWD/DB
-      - name: Test Swift/T
-        run: |
-          tests/test-swift-t.sh ${{ matrix.python-version }}
+          tests/test-quartz.sh ${{ matrix.python-version }}
