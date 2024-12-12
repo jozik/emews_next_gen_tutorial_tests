@@ -24,18 +24,6 @@ emews creator <<eqsql_top,eqsql>> template, and that should be read before this.
 
 === Running the Workflow
 
-The workflow is designed to be run with a local swift-t conda install:
-
-#TODO: proper install instructions#
-
-* install conda
-* create swift-t env
-* install swift-t conda package
-* pip3 install -e EQ/SQL
-* pip3 install emews_creator
-* conda install postgres, numpy, scipy, scikit-learn
-* emewscreator init_db
-
 
 The workflow can be run using the https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/me.py#L1[`uc4/python/me.py`,window=me,pts="noopener,nofollow"] python script. It takes two arguments:
 
@@ -53,6 +41,12 @@ $ python3 me.py test_ackley me_cfg.yaml
 Running the workflow will create an experiment directory whose name 
 consists of th experiment id followed by a timestamp. The workflow runs 
 within this directory.
+
+[NOTE]
+====
+If you haven't installed the EMEWS stack using the EMEWS installer in the <<quickstart,Quickstart section>>, you will need an R enabled Swift/T installation to run this use case.
+See the http://swift-lang.github.io/swift-t/guide.html#build_r[Swift/T R Installation Guide, window=_blank,pts="noopener,nofollow"] for installation details.
+====
 
 === Workflow Project Structure
 The full source code for this use case can be accessed https://github.com/emews/emews-tutorial-code/tree/main/uc4[here,window=uc4,pts="noopener,nofollow"].
