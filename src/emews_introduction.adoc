@@ -65,10 +65,10 @@ This tutorial aims to describe through examples the following main elements of t
 The example use cases presented in this tutorial can be found #here#:
 //TODO: uncomment uc2 and uc3 when complete
 
-* https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc1[UC1,window=UC1,pts="noopener,nofollow"]
+* https://github.com/emews/emews-tutorial-code/tree/main/uc1[UC1,window=UC1,pts="noopener,nofollow"]
 //* https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc2[UC2,window=UC2,pts="noopener,nofollow"]
 //* https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc3[UC3,window=UC3,pts="noopener,nofollow"]
-* https://github.com/jozik/emews_next_gen_tutorial_tests/tree/main/code/uc4[UC4,window=UC4,pts="noopener,nofollow"]
+* https://github.com/emews/emews-tutorial-code/tree/main/uc4[UC4,window=UC4,pts="noopener,nofollow"]
 
 ==== EMEWS Mailing List
 For questions about EMEWS or to access archived questions, please subscribe to the EMEWS mailing list:
