@@ -2,8 +2,8 @@ IMPORTANT: #Highlights# below have in source TODOs.
 [[uc1, Use Case 1 Tutorial - Simple Workflows with ABM]]
 == Simple Workflows with ABM
 
-For a first demonstration ABM use case, we begin with an example of a Swift/T
-parallel parameter sweep to explore the parameter space of a model.
+For a first demonstration use case, we begin with an example of a Swift/T
+parallel parameter sweep to explore the parameter space of an ABM.
 This tutorial uses the project structure and files created by the EMEWS project creator <<sweep,sweep template>>. The sweep workflow reads an input file,
 and runs an application using each line of the input file as input to an application run.
 We call this input file an _unrolled parameter file_ or _UPF_ file. The following is the EMEWS sweep workflow structure:
