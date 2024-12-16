@@ -1,5 +1,5 @@
 = EMEWS Tutorial
-Version 1.0 Jan 12 2024
+Version 2.0 Dec 16 2024
 :toc2:
 :toclevels: 4
 :icons: font
