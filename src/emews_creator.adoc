@@ -8,9 +8,9 @@ various files that can be customized by the user for their particular use case.
 
 === Installation
 
-#NOTE: This part might be removed since it'll be installed as part of the stack.#
+If you have already installed EMEWS through the <<quickstart,Quickstart section>>, EMEWS Creator is already installed.
 
-EMEWS Creator can be downloaded and installed from PyPI using pip.
+EMEWS Creator can also be downloaded and installed from PyPI using pip.
 
 ----
 pip install emewscreator
@@ -199,7 +199,7 @@ to be edited to customize the file for your model and workflow. See <<uc1>> for 
 sweep workflow created using EMEWS Creator. We will look more closely at relevant parts of these files
 next.
 
-#NOTE: do we need to update all the commit-specific permalinks like the one below?#
+// TODO: #NOTE: do we need to update all the commit-specific permalinks like the one below?#
 
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/run_sweep_workflow.sh#L1[`*run_sweep_workflow.sh*`,window=UC1,pts="noopener,nofollow"]
 
@@ -257,7 +257,7 @@ script. These are set from values defined in the workflow configuration file
 (i.e., swift/cfgs/sweep_workflow.cfg). See the discussion of that file below.
 
 
-#TODO: make link#
+// #NC TODO: make link#
 
 [source, bash]
 ----
@@ -270,7 +270,8 @@ export TURBINE_JOBNAME="${EXPID}_job"    <2>
 export TURBINE_MPI_THREAD=1    <3>
 ----
 <1> `PROCS`, `QUEUE`, `PROJECT`, `WALLTIME`, and `PPN` are set from variables defined
-in the configuration file. See that section for more info #TODO#
+in the configuration file. 
+//See that section for more info // NC TODO
 <2> `TURBINE_JOBNAME` is used to set the name of the job in the HPC submission script.
 When querying the HPC resource for the status of your job, you will see your job
 name as the experiment id following by `_job`.
@@ -850,9 +851,9 @@ More details to come.
 [[eqsql_top]]
 ==== EQSQL
 
-#TODO#: text that distinguishes between local run (db on same machine, swift non-scheduled
-submission), and swift scheduled worker pool submission, and how that applies to the code
-created by the template.
+// TODO: text that distinguishes between local run (db on same machine, swift non-scheduled
+// submission), and swift scheduled worker pool submission, and how that applies to the code
+// created by the template.
 
 The eqsql command creates a workflow that submits tasks (such as
 application runs) to a database queue. Worker pools pop tasks 
@@ -1515,7 +1516,7 @@ https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567
 
 If the `me_language` argument to the `eqsql` template command is `python`, then an example Python ME and ME configuration file will be produced. The ME can be run from the command line as follows:
 
-#TODO: text about local vs. remote run#
+// #NC TODO: text about local vs. remote run#
 
 ----
 $ python3 algo.py -h
@@ -1612,14 +1613,14 @@ tasks. If not, then abort the run.
 tasks (model input parameters) to the database output queue, and to retrieve
 and use the results returned by the worker pool to the database input queue. 
 
-IMPORTANT: See the eqsql package documentation #TODO: create and make link# for 
-more details.
+// IMPORTANT: See the eqsql package documentation #TODO: create and make link# for 
+// more details.
 
 NOTE: The body of the `run` function is wrapped in a `try ... finally` clause
 in order to shutdown the database, worker pool, and task queue as cleanly 
 as possible in the event of an error occurring. 
 
-#TODO: R example ME discussion#
+// #TODO: R example ME discussion#
 
 [[algo_cfg]]
 https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo_cfg.yaml#L1[`*algo_cfg.yaml*`,window=algo_cfg,pts="noopener,nofollow"]

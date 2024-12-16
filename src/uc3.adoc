@@ -1,12 +1,15 @@
 [[uc3, Use Case 3 Tutorial - Workflows with a Distributed MPI-based Model]]
 == Workflows with a Distributed MPI-based Model
 
+In this use case, we will show how to integrate a multi-process distributed native code model written in C++ into a Swift/T workflow. The model is a variant of the Java Zombies model, written in C++ and using MPI and the Repast HPC toolkit cite:[collier_parallel_2013] to distribute the model across multiple processes. The complete two dimensional continuous space and grid span processes and each individual process holds some subsection of the continuous space and grid. The Zombies and Humans behave as in the other tutorials but may cross process boundaries into another subsection of the continuous space and grid as they move about the complete space. The model itself is driven by an active learning cite:[settles_active_2012] algorithm using EQ/R. As is discussed in the EMEWS Creator <<eqr_top,EQ/R section>>, the EQ/R extension provides an interface for interacting with R-based code run in a resident tasks at specific locations. The code that we present in this use case is directly adapted from the EQ/R template.
 
-//Due to the highly non-linear relationship between ABM input parameters and model outputs, as well as feedback loops and emergent behaviors, large-parameter spaces of realistic ABMs cannot generally be explored via brute force methods, such as full-factorial experiments, space-filling sampling techniques, or any other a priori determined sampling schemes. This is where adaptive, heuristics-based approaches for model exploration (ME) are useful and this is the focus of the next two use cases. 
+image::EMEWS_figure_UC3.png[EQPy, 640, 480]
 
-//In cite:[ozik_many_2015] we describe an inversion of control (IoC) approach enabled by resident Python tasks in Swift/T and simple queue-based interfaces for passing parameters and simulation results, where a metaheuristic method, a genetic algorithm (GA), is used to control a large workflow. This workflow structure was made more general and resulted in the EMEWS framework. In this second use case we describe how this IoC workflow is implemented with the EQ/Py extension. The following is the overall EMEWS workflow structure for this use case.
 
-// image::EMEWS_figure_UC2.png[EQPy, 640, 480]
+[NOTE]
+====
+This use case assumes that you have already installed EMEWS. See the <<quickstart,Quickstart section>> for how to do this with a simple binary install on your local setup. For non-binary installations or for installing on HPC resources, see the <<emews_install, EMEWS Install section>>. An R and Python-enabled Swift/T installation will be required.
+====
 
 IMPORTANT: Completion of the new Workflows with a Distributed MPI-based Model use case is in progress.
 

@@ -6,6 +6,11 @@ In cite:[ozik_many_2015] we describe an inversion of control (IoC) approach enab
 
 image::EMEWS_figure_UC2.png[EQPy, 640, 480]
 
+[NOTE]
+====
+This use case assumes that you have already installed EMEWS. See the <<quickstart,Quickstart section>> for how to do this with a simple binary install on your local setup. For non-binary installations or for installing on HPC resources, see the <<emews_install, EMEWS Install section>>. A Python (and optionally R) enabled Swift/T installation will be required.
+====
+
 IMPORTANT: Completion of the new Workflow control with Python use case is in progress.
 // TODO: Complete UC2
 //=== Workflow Project Structure

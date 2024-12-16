@@ -62,7 +62,7 @@ This tutorial aims to describe through examples the following main elements of t
 
 
 ==== Tutorial Code
-The example use cases presented in this tutorial can be found #here#:
+The example use cases presented in this tutorial can be found here:
 //TODO: uncomment uc2 and uc3 when complete
 
 * https://github.com/emews/emews-tutorial-code/tree/main/uc1[UC1,window=UC1,pts="noopener,nofollow"]
@@ -91,7 +91,7 @@ Research reported in this website was supported by the National Science Foundati
 The EMEWS installer will create a binary EMEWS environment (Swift/T, Python, R, and the EMEWS Python and R packages). 
 The binary install is recommended for the tutorial and for small scale testing on non-HPC supported systems.
 
-IMPORTANT: See <<_installing_emews>> for additional details about the install script,
+IMPORTANT: See the <<emews_install, EMEWS Install section>> for additional details about the install script,
 and other kinds of installs, e.g., targeting HPC systems.
 
 

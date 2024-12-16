@@ -1,4 +1,4 @@
-IMPORTANT: #Highlights# below have in source TODOs.
+// IMPORTANT: #Highlights# below have in source TODOs.
 [[uc4, Use Case 4 Tutorial - An EQSQL Workflow]]
 == Minimizing the Ackley function with an EQSQL Workflow
 
@@ -15,6 +15,11 @@ likely to find an optimal result according to the GPR. This repeats until all th
 
 This tutorial uses the project structure and files created from the
 emews creator <<eqsql_top,eqsql>> template, and that should be read before this.
+
+[NOTE]
+====
+This use case assumes that you have already installed EMEWS. See the <<quickstart,Quickstart section>> for how to do this with a simple binary install on your local setup. For non-binary installations or for installing on HPC resources, see the <<emews_install, EMEWS Install section>>. A Python (and optionally R) enabled Swift/T installation will be required.
+====
 
 === Tutorial Goals
 
@@ -42,11 +47,7 @@ Running the workflow will create an experiment directory whose name
 consists of th experiment id followed by a timestamp. The workflow runs 
 within this directory.
 
-[NOTE]
-====
-If you haven't installed the EMEWS stack using the EMEWS installer in the <<quickstart,Quickstart section>>, you will need an R enabled Swift/T installation to run this use case.
-See the http://swift-lang.github.io/swift-t/guide.html#build_r[Swift/T R Installation Guide, window=_blank,pts="noopener,nofollow"] for installation details.
-====
+
 
 === Workflow Project Structure
 The full source code for this use case can be accessed https://github.com/emews/emews-tutorial-code/tree/main/uc4[here,window=uc4,pts="noopener,nofollow"].
@@ -478,6 +479,6 @@ tasks for Ackley function evaluation by the worker pool.
 evaluations have completed, reprioritize the remaining uncompleted tasks.
 
 
-#TODO:# 
-TIPS: 
-Dealing with worker pool error -- short timeout in as completed to check, check output.txt
+// #TODO:# 
+//TIPS: 
+//Dealing with worker pool error -- short timeout in as completed to check, check output.txt

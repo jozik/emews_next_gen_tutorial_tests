@@ -1,4 +1,4 @@
-IMPORTANT: #Highlights# below have in source TODOs.
+// IMPORTANT: #Highlights# below have in source TODOs.
 [[uc1, Use Case 1 Tutorial - Simple Workflows with ABM]]
 == Simple Workflows with ABM
 
@@ -12,6 +12,11 @@ image::EMEWS_figure_sweep.png[Sweep, 640, 480]
 
 
 Further information about the EMEWS Creator tool and the various available templates can be found in the <<creating_emews_projects,EMEWS Creator>> section.
+
+[NOTE]
+====
+This use case assumes that you have already installed EMEWS. See the <<quickstart,Quickstart section>> for how to do this with a simple binary install on your local setup. For non-binary installations or for installing on HPC resources, see the <<emews_install, EMEWS Install section>>.
+====
 
 === Tutorial goals
 

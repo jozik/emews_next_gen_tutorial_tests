@@ -1,3 +1,4 @@
+[[emews_install,Installing EMEWS]]
 == Installing EMEWS
 
 EMEWS supports two installation modes, Binary and Source, described in the following subsections:

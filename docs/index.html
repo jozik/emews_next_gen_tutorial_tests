@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.16">
+<meta name="generator" content="Asciidoctor 2.0.18">
 <meta name="author" content="Version 1.0 Jan 12 2024">
 <title>EMEWS Tutorial</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
@@ -85,10 +85,10 @@ code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;
 ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
 ul,ol{margin-left:1.5em}
 ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
-ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
-ul.square{list-style-type:square}
 ul.circle{list-style-type:circle}
 ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
 ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
 dl dt{margin-bottom:.3125em;font-weight:bold}
 dl dd{margin-bottom:1.25em}
@@ -194,7 +194,8 @@ body.toc2.toc-right{padding-left:0;padding-right:20em}}
 #content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
 details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
 details{margin-left:1.25rem}
-details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;-webkit-tap-highlight-color:transparent}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
 details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
 details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
 details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
@@ -236,9 +237,8 @@ pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
 table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
 table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
 table.linenotable td.code{padding-left:.75em}
-table.linenotable td.linenos{border-right:0px solid;opacity:.35;padding-right:.5em}
-pre.pygments .lineno{border-right:0px solid;opacity:1;display:inline-block;margin-right:.75em}
-pre.pygments .lineno::before{content:"";margin-right:-.125em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:0px solid;opacity:1;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
 .quoteblock{margin:0 1em 1.25em 1.5em;display:table}
 .quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
 .quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
@@ -275,7 +275,7 @@ table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-c
 table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
 table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
 table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
-table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
 th.halign-left,td.halign-left{text-align:left}
 th.halign-right,td.halign-right{text-align:right}
 th.halign-center,td.halign-center{text-align:center}
@@ -291,10 +291,11 @@ ol{margin-left:1.75em}
 ul li ol{margin-left:1.5em}
 dl dd{margin-left:1.125em}
 dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
-ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
 ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
 ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
 ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
 ul.checklist>li>p:first-child{margin-left:-1em}
 ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
 ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
@@ -337,8 +338,6 @@ sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
 #footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
 #footnotes .footnote:last-of-type{margin-bottom:0}
 #content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
-.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
-.gist .file-data>table td.line-data{width:99%}
 div.unbreakable{page-break-inside:avoid}
 .big{font-size:larger}
 .small{font-size:smaller}
@@ -439,11 +438,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-pre { line-height: 125%; }
-td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
-span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
-td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
-span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
 pre.pygments .hll { background-color: #ffffcc }
 pre.pygments { background: #f8f8f8; }
 pre.pygments .tok-c { color: #408080; font-style: italic } /* Comment */
@@ -581,7 +575,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_the_ackley_me">5.6. The Ackley ME</a></li>
 </ul>
 </li>
-<li><a href="#_installing_emews">Appendix A: Installing EMEWS</a>
+<li><a href="#emews_install">Appendix A: Installing EMEWS</a>
 <ul class="sectlevel2">
 <li><a href="#_binary">A.1. Binary</a>
 <ul class="sectlevel3">
@@ -750,7 +744,7 @@ based around EMEWS can easily be compared and distributed.</p>
 <div class="sect3">
 <h4 id="_tutorial_code">1.1.3. Tutorial Code</h4>
 <div class="paragraph">
-<p>The example use cases presented in this tutorial can be found <mark>here</mark>:</p>
+<p>The example use cases presented in this tutorial can be found here:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -799,7 +793,7 @@ The binary install is recommended for the tutorial and for small scale testing o
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-See <a href="#_installing_emews">Appendix A, <em>Installing EMEWS</em></a> for additional details about the install script,
+See the <a href="#emews_install">EMEWS Install section</a> for additional details about the install script,
 and other kinds of installs, e.g., targeting HPC systems.
 </td>
 </tr>
@@ -914,18 +908,6 @@ For example,</p>
 <pre class="pygments highlight"><code data-lang="bash"><span></span>$ conda activate emews-py3.11</code></pre>
 </div>
 </div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<mark>Highlights</mark> below have in source TODOs.
-</td>
-</tr>
-</table>
-</div>
 </div>
 </div>
 </div>
@@ -946,6 +928,20 @@ We call this input file an <em>unrolled parameter file</em> or <em>UPF</em> file
 </div>
 <div class="paragraph">
 <p>Further information about the EMEWS Creator tool and the various available templates can be found in the <a href="#creating_emews_projects">EMEWS Creator</a> section.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This use case assumes that you have already installed EMEWS. See the <a href="#quickstart">Quickstart section</a> for how to do this with a simple binary install on your local setup. For non-binary installations or for installing on HPC resources, see the <a href="#emews_install">EMEWS Install section</a>.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_tutorial_goals_2">2.1. Tutorial goals</h3>
@@ -1829,6 +1825,20 @@ $ ./run_uc1.sh exp1 cfgs/uc1.cfg  <i class="conum" data-value="2"></i><b>(2)</b>
 <img src="images/EMEWS_figure_UC2.png" alt="EQPy" width="640" height="480">
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This use case assumes that you have already installed EMEWS. See the <a href="#quickstart">Quickstart section</a> for how to do this with a simple binary install on your local setup. For non-binary installations or for installing on HPC resources, see the <a href="#emews_install">EMEWS Install section</a>. A Python (and optionally R) enabled Swift/T installation will be required.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -1846,6 +1856,28 @@ Completion of the new Workflow control with Python use case is in progress.
 <div class="sect1">
 <h2 id="uc3">4. Workflows with a Distributed MPI-based Model</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>In this use case, we will show how to integrate a multi-process distributed native code model written in C into a Swift/T workflow. The model is a variant of the Java Zombies model, written in C and using MPI and the Repast HPC toolkit (<a href="#collier_parallel_2013">Collier and North 2013</a>) to distribute the model across multiple processes. The complete two dimensional continuous space and grid span processes and each individual process holds some subsection of the continuous space and grid. The Zombies and Humans behave as in the other tutorials but may cross process boundaries into another subsection of the continuous space and grid as they move about the complete space. The model itself is driven by an active learning (<a href="#settles_active_2012">Settles 2012</a>) algorithm using EQ/R. As is discussed in the EMEWS Creator <a href="#eqr_top">EQ/R section</a>, the EQ/R extension provides an interface for interacting with R-based code run in a resident tasks at specific locations. The code that we present in this use case is directly adapted from the EQ/R template.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EMEWS_figure_UC3.png" alt="EQPy" width="640" height="480">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This use case assumes that you have already installed EMEWS. See the <a href="#quickstart">Quickstart section</a> for how to do this with a simple binary install on your local setup. For non-binary installations or for installing on HPC resources, see the <a href="#emews_install">EMEWS Install section</a>. An R and Python-enabled Swift/T installation will be required.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -1879,6 +1911,20 @@ likely to find an optimal result according to the GPR. This repeats until all th
 <p>This tutorial uses the project structure and files created from the
 emews creator <a href="#eqsql_top">eqsql</a> template, and that should be read before this.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This use case assumes that you have already installed EMEWS. See the <a href="#quickstart">Quickstart section</a> for how to do this with a simple binary install on your local setup. For non-binary installations or for installing on HPC resources, see the <a href="#emews_install">EMEWS Install section</a>. A Python (and optionally R) enabled Swift/T installation will be required.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="sect2">
 <h3 id="_tutorial_goals_3">5.1. Tutorial Goals</h3>
 <div class="ulist">
@@ -1897,18 +1943,6 @@ emews creator <a href="#eqsql_top">eqsql</a> template, and that should be read b
 </div>
 <div class="sect2">
 <h3 id="_running_the_workflow">5.2. Running the Workflow</h3>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-You will need a working EMEWS install to run this workflow. See the [Quick Start guide][tutorial quickstart] in the EMEWS tutorial.
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
 <p>The workflow can be run using the <a href="https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/me.py#L1" target="me"><code>uc4/python/me.py</code></a> python script. It takes two arguments:</p>
 </div>
@@ -1935,21 +1969,6 @@ $ python3 me.py test_ackley me_cfg.yaml</code></pre>
 <p>Running the workflow will create an experiment directory whose name
 consists of th experiment id followed by a timestamp. The workflow runs
 within this directory.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>If you haven&#8217;t installed the EMEWS stack using the EMEWS installer in the <a href="#quickstart">Quickstart section</a>, you will need an R enabled Swift/T installation to run this use case.
-See the <a href="http://swift-lang.github.io/swift-t/guide.html#build_r" target="_blank" rel="noopener">Swift/T R Installation Guide</a> for installation details.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 <div class="sect2">
@@ -2656,16 +2675,11 @@ evaluations have completed, reprioritize the remaining uncompleted tasks.</td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p><mark>TODO:</mark>
-TIPS:
-Dealing with worker pool error&#8201;&#8212;&#8201;short timeout in as completed to check, check output.txt</p>
-</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installing_emews">Appendix A: Installing EMEWS</h2>
+<h2 id="emews_install">Appendix A: Installing EMEWS</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>EMEWS supports two installation modes, Binary and Source, described in the following subsections:</p>
@@ -2971,10 +2985,10 @@ various files that can be customized by the user for their particular use case.<
 <div class="sect2">
 <h3 id="_installation">B.1. Installation</h3>
 <div class="paragraph">
-<p><mark>NOTE: This part might be removed since it&#8217;ll be installed as part of the stack.</mark></p>
+<p>If you have already installed EMEWS through the <a href="#quickstart">Quickstart section</a>, EMEWS Creator is already installed.</p>
 </div>
 <div class="paragraph">
-<p>EMEWS Creator can be downloaded and installed from PyPI using pip.</p>
+<p>EMEWS Creator can also be downloaded and installed from PyPI using pip.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3254,9 +3268,6 @@ sweep workflow created using EMEWS Creator. We will look more closely at relevan
 next.</p>
 </div>
 <div class="paragraph">
-<p><mark>NOTE: do we need to update all the commit-specific permalinks like the one below?</mark></p>
-</div>
-<div class="paragraph">
 <p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/2843e5d305c93e38f56988c75e1a723e73b30d8d/code/emews_project/swift/run_sweep_workflow.sh#L1" target="UC1"><code><strong>run_sweep_workflow.sh</strong></code></a></p>
 </div>
 <div class="admonitionblock note">
@@ -3343,9 +3354,6 @@ those values so that they are available to swift when creating the job submissio
 script. These are set from values defined in the workflow configuration file
 (i.e., swift/cfgs/sweep_workflow.cfg). See the discussion of that file below.</p>
 </div>
-<div class="paragraph">
-<p><mark>TODO: make link</mark></p>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nb">export</span> <span class="tok-nv">PROCS</span><span class="tok-o">=</span><span class="tok-nv">$CFG_PROCS</span>    <i class="conum" data-value="1"></i><b>(1)</b>
@@ -3362,7 +3370,7 @@ script. These are set from values defined in the workflow configuration file
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td><code>PROCS</code>, <code>QUEUE</code>, <code>PROJECT</code>, <code>WALLTIME</code>, and <code>PPN</code> are set from variables defined
-in the configuration file. See that section for more info <mark>TODO</mark></td>
+in the configuration file.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -4246,11 +4254,6 @@ to be edited to customize the file for your model and workflow.</p>
 </div>
 <div class="sect3">
 <h4 id="eqsql_top">B.4.4. EQSQL</h4>
-<div class="paragraph">
-<p><mark>TODO</mark>: text that distinguishes between local run (db on same machine, swift non-scheduled
-submission), and swift scheduled worker pool submission, and how that applies to the code
-created by the template.</p>
-</div>
 <div class="paragraph">
 <p>The eqsql command creates a workflow that submits tasks (such as
 application runs) to a database queue. Worker pools pop tasks
@@ -5235,9 +5238,6 @@ will be an ignored empty string.</td>
 <div class="paragraph">
 <p>If the <code>me_language</code> argument to the <code>eqsql</code> template command is <code>python</code>, then an example Python ME and ME configuration file will be produced. The ME can be run from the command line as follows:</p>
 </div>
-<div class="paragraph">
-<p><mark>TODO: text about local vs. remote run</mark></p>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre>$ python3 algo.py -h
@@ -5365,19 +5365,6 @@ and use the results returned by the worker pool to the database input queue.</td
 </tr>
 </table>
 </div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-See the eqsql package documentation <mark>TODO: create and make link</mark> for
-more details.
-</td>
-</tr>
-</table>
-</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5391,9 +5378,6 @@ as possible in the event of an error occurring.
 </td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p><mark>TODO: R example ME discussion</mark></p>
 </div>
 <div id="algo_cfg" class="paragraph">
 <p><a href="https://github.com/jozik/emews_next_gen_tutorial_tests/blob/675eb2423dea8fd3c567a42dce610d655b9ab77e/code/eqsql_project/python/algo_cfg.yaml#L1" target="algo_cfg"><code><strong>algo_cfg.yaml</strong></code></a></p>
@@ -5914,6 +5898,9 @@ and/or ATLAS numerical libraries underneath.</p>
 <p><a id="boussaid_survey_2013"></a>Boussaïd, Ilhem, Julien Lepagnot, and Patrick Siarry. 2013. “A Survey on Optimization Metaheuristics.” <em>Information Sciences</em>, Prediction, Control and Diagnosis using Advanced Neural Computations, 237 (July): 82–117. <a href="https://doi.org/10.1016/j.ins.2013.02.041" class="bare">https://doi.org/10.1016/j.ins.2013.02.041</a>.</p>
 </div>
 <div class="paragraph">
+<p><a id="collier_parallel_2013"></a>Collier, Nicholson, and Michael North. 2013. “Parallel Agent-Based Simulation with Repast for High Performance Computing.” <em>SIMULATION</em> 89 (10): 1215–35. <a href="https://doi.org/10.1177/0037549712462620" class="bare">https://doi.org/10.1177/0037549712462620</a>.</p>
+</div>
+<div class="paragraph">
 <p><a id="ozik_many_2015"></a>Ozik, Jonathan, Nicholson T. Collier, and Justin M. Wozniak. 2015. “Many Resident Task Computing in Support of Dynamic Ensemble Computations.” In <em>8th Workshop on Many-Task Computing on Clouds, Grids, and Supercomputers Proceedings</em>. Austin, Texas. <a href="http://datasys.cs.iit.edu/events/MTAGS15/program.html" class="bare">http://datasys.cs.iit.edu/events/MTAGS15/program.html</a>.</p>
 </div>
 <div class="paragraph">
@@ -5921,6 +5908,9 @@ and/or ATLAS numerical libraries underneath.</p>
 </div>
 <div class="paragraph">
 <p><a id="ozik_population_2021"></a>Ozik, Jonathan, Justin M Wozniak, Nicholson Collier, Charles M Macal, and Mickaël Binois. 2021. “A Population Data-Driven Workflow for COVID-19 Modeling and Learning.” <em>The International Journal of High Performance Computing Applications</em> 35 (5): 483–99. <a href="https://doi.org/10.1177/10943420211035164" class="bare">https://doi.org/10.1177/10943420211035164</a>.</p>
+</div>
+<div class="paragraph">
+<p><a id="settles_active_2012"></a>Settles, Burr. 2012. “Active Learning.” <em>Synthesis Lectures on Artificial Intelligence and Machine Learning</em> 6 (1): 1–114. <a href="https://doi.org/10.2200/S00429ED1V01Y201207AIM018" class="bare">https://doi.org/10.2200/S00429ED1V01Y201207AIM018</a>.</p>
 </div>
 <div class="paragraph">
 <p><a id="wozniak_swiftt_2013"></a>Wozniak, J. M., T. G. Armstrong, M. Wilde, D. S. Katz, E. Lusk, and I. T. Foster. 2013. “Swift/T: Large-Scale Application Composition via Distributed-Memory Dataflow Processing.” In <em>2013 13th IEEE/ACM International Symposium on Cluster, Cloud, and Grid Computing</em>, 95–102. IEEE. <a href="https://doi.org/10.1109/CCGrid.2013.99" class="bare">https://doi.org/10.1109/CCGrid.2013.99</a>.</p>
