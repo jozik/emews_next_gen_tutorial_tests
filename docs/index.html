@@ -559,18 +559,23 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_downloading_and_running_the_full_uc1_example">2.8. Downloading and running the full UC1 example</a></li>
 </ul>
 </li>
-<li><a href="#uc4">3. Minimizing the Ackley function with an EQSQL Workflow</a>
+<li><a href="#uc2">3. Workflow control with Python</a>
 <ul class="sectlevel2">
-<li><a href="#_tutorial_goals_3">3.1. Tutorial Goals</a></li>
-<li><a href="#_running_the_workflow">3.2. Running the Workflow</a></li>
-<li><a href="#_workflow_project_structure_2">3.3. Workflow Project Structure</a></li>
-<li><a href="#_the_ackley_function">3.4. The Ackley Function</a></li>
-<li><a href="#_calling_the_ackley_function_from_swift">3.5. Calling the Ackley Function from Swift</a>
-<ul class="sectlevel3">
-<li><a href="#_alternatives_to_a_bash_script">3.5.1. Alternatives to a Bash Script</a></li>
+<li><a href="#_workflow_project_structure_2">3.1. Workflow Project Structure</a></li>
 </ul>
 </li>
-<li><a href="#_the_ackley_me">3.6. The Ackley ME</a></li>
+<li><a href="#uc4">4. Minimizing the Ackley function with an EQSQL Workflow</a>
+<ul class="sectlevel2">
+<li><a href="#_tutorial_goals_3">4.1. Tutorial Goals</a></li>
+<li><a href="#_running_the_workflow">4.2. Running the Workflow</a></li>
+<li><a href="#_workflow_project_structure_3">4.3. Workflow Project Structure</a></li>
+<li><a href="#_the_ackley_function">4.4. The Ackley Function</a></li>
+<li><a href="#_calling_the_ackley_function_from_swift">4.5. Calling the Ackley Function from Swift</a>
+<ul class="sectlevel3">
+<li><a href="#_alternatives_to_a_bash_script">4.5.1. Alternatives to a Bash Script</a></li>
+</ul>
+</li>
+<li><a href="#_the_ackley_me">4.6. The Ackley ME</a></li>
 </ul>
 </li>
 <li><a href="#_installing_emews">Appendix A: Installing EMEWS</a>
@@ -916,8 +921,8 @@ For example,</p>
 <h2 id="uc1">2. Simple Workflows with ABM</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>For a first demonstration ABM use case, we begin with an example of a Swift/T
-parallel parameter sweep to explore the parameter space of a model.
+<p>For a first demonstration use case, we begin with an example of a Swift/T
+parallel parameter sweep to explore the parameter space of an ABM.
 This tutorial uses the project structure and files created by the EMEWS project creator <a href="#sweep">sweep template</a>. The sweep workflow reads an input file,
 and runs an application using each line of the input file as input to an application run.
 We call this input file an <em>unrolled parameter file</em> or <em>UPF</em> file. The following is the EMEWS sweep workflow structure:</p>
@@ -1795,6 +1800,25 @@ $ ./run_uc1.sh exp1 cfgs/uc1.cfg  <i class="conum" data-value="2"></i><b>(2)</b>
 </tr>
 </table>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="uc2">3. Workflow control with Python</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Due to the highly non-linear relationship between ABM input parameters and model outputs, as well as feedback loops and emergent behaviors, large-parameter spaces of realistic ABMs cannot generally be explored via brute force methods, such as full-factorial experiments, space-filling sampling techniques, or any other a priori determined sampling schemes. This is where adaptive, heuristics-based approaches for model exploration (ME) are useful and this is the focus of the next two use cases.</p>
+</div>
+<div class="paragraph">
+<p>In (<a href="#ozik_many_2015">Ozik&#44; Collier&#44; and Wozniak 2015</a>) we describe an inversion of control (IoC) approach enabled by resident Python tasks in Swift/T and simple queue-based interfaces for passing parameters and simulation results, where a metaheuristic method, a genetic algorithm (GA), is used to control a large workflow. This workflow structure was made more general and resulted in the EMEWS framework. In this second use case we describe how this IoC workflow is implemented with the EQ/Py extension. The following is the overall EMEWS workflow structure for this use case.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EMEWS_figure_UC2.png" alt="EQPy" width="640" height="480">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_workflow_project_structure_2">3.1. Workflow Project Structure</h3>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -1811,7 +1835,7 @@ $ ./run_uc1.sh exp1 cfgs/uc1.cfg  <i class="conum" data-value="2"></i><b>(2)</b>
 </div>
 </div>
 <div class="sect1">
-<h2 id="uc4">3. Minimizing the Ackley function with an EQSQL Workflow</h2>
+<h2 id="uc4">4. Minimizing the Ackley function with an EQSQL Workflow</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Our 4th use case workflow implements an example EQSQL optimization workflow
@@ -1830,7 +1854,7 @@ likely to find an optimal result according to the GPR. This repeats until all th
 emews creator <a href="#eqsql_top">eqsql</a> template, and that should be read before this.</p>
 </div>
 <div class="sect2">
-<h3 id="_tutorial_goals_3">3.1. Tutorial Goals</h3>
+<h3 id="_tutorial_goals_3">4.1. Tutorial Goals</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1846,7 +1870,7 @@ emews creator <a href="#eqsql_top">eqsql</a> template, and that should be read b
 </div>
 </div>
 <div class="sect2">
-<h3 id="_running_the_workflow">3.2. Running the Workflow</h3>
+<h3 id="_running_the_workflow">4.2. Running the Workflow</h3>
 <div class="paragraph">
 <p>The workflow is designed to be run with a local swift-t conda install:</p>
 </div>
@@ -1907,7 +1931,7 @@ within this directory.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_workflow_project_structure_2">3.3. Workflow Project Structure</h3>
+<h3 id="_workflow_project_structure_3">4.3. Workflow Project Structure</h3>
 <div class="paragraph">
 <p>The full source code for this use case can be accessed <a href="https://github.com/emews/emews-tutorial-code/tree/main/uc4" target="uc4">here</a>.
 The completed workflow project has the following directory structure and files:</p>
@@ -1985,7 +2009,7 @@ remaining inputs, assigning a higher priority to those it deems more likely to p
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the_ackley_function">3.4. The Ackley Function</h3>
+<h3 id="_the_ackley_function">4.4. The Ackley Function</h3>
 <div class="paragraph">
 <p>The <a href="http://www.sfu.ca/~ssurjano/ackley.html" target="ackley_doc">Ackley</a> function is widely used for testing optimization algorithms.
 In our example project, it is implemented in <a href="https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/ackley.py#L1" target="ackley_py"><code>uc4/python/ackley.py</code></a></p>
@@ -2006,7 +2030,7 @@ In our example project, it is implemented in <a href="https://github.com/emews/e
 </div>
 </div>
 <div class="sect2">
-<h3 id="_calling_the_ackley_function_from_swift">3.5. Calling the Ackley Function from Swift</h3>
+<h3 id="_calling_the_ackley_function_from_swift">4.5. Calling the Ackley Function from Swift</h3>
 <div class="paragraph">
 <p>The Ackley function is implemented in Python and is called by the swift worker pool
 using a bash script <a href="https://github.com/emews/emews-tutorial-code/blob/main/uc4/scripts/run_ackley.sh#L1" target="run_ackley"><code>uc4/scripts/run_ackley.sh</code></a></p>
@@ -2229,7 +2253,7 @@ are unchanged from those produced by eqsql template. A discussion of them can be
 and <a href="#eqsql_launch_script">here</a></p>
 </div>
 <div class="sect3">
-<h4 id="_alternatives_to_a_bash_script">3.5.1. Alternatives to a Bash Script</h4>
+<h4 id="_alternatives_to_a_bash_script">4.5.1. Alternatives to a Bash Script</h4>
 <div class="paragraph">
 <p>Python and R code can also be executed directly using Swift-T&#8217;s embedded Python and R interpreters. When calling Python or R
 code directly from Swift, the convention is to provide the code to call in a text string with template arguments for the
@@ -2312,7 +2336,7 @@ In addition to running a model, the embeded Python interpreter can be very usefu
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the_ackley_me">3.6. The Ackley ME</h3>
+<h3 id="_the_ackley_me">4.6. The Ackley ME</h3>
 <div class="paragraph">
 <p>The Ackley workflow can be run by executing the Python script <a href="https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/me.py#L1" target="me_py"><code>python/me.py</code></a>
 The code begins by
@@ -5830,6 +5854,9 @@ and/or ATLAS numerical libraries underneath.</p>
 <p><a id="boussaid_survey_2013"></a>Boussaïd, Ilhem, Julien Lepagnot, and Patrick Siarry. 2013. “A Survey on Optimization Metaheuristics.” <em>Information Sciences</em>, Prediction, Control and Diagnosis using Advanced Neural Computations, 237 (July): 82–117. <a href="https://doi.org/10.1016/j.ins.2013.02.041" class="bare">https://doi.org/10.1016/j.ins.2013.02.041</a>.</p>
 </div>
 <div class="paragraph">
+<p><a id="ozik_many_2015"></a>Ozik, Jonathan, Nicholson T. Collier, and Justin M. Wozniak. 2015. “Many Resident Task Computing in Support of Dynamic Ensemble Computations.” In <em>8th Workshop on Many-Task Computing on Clouds, Grids, and Supercomputers Proceedings</em>. Austin, Texas. <a href="http://datasys.cs.iit.edu/events/MTAGS15/program.html" class="bare">http://datasys.cs.iit.edu/events/MTAGS15/program.html</a>.</p>
+</div>
+<div class="paragraph">
 <p><a id="ozik_desktop_2016"></a>Ozik, Jonathan, Nicholson T. Collier, Justin M. Wozniak, and Carmine Spagnuolo. 2016. “From Desktop to Large-Scale Model Exploration with Swift/T.” In <em>2016 Winter Simulation Conference (WSC)</em>, 206–20. <a href="https://doi.org/10.1109/WSC.2016.7822090" class="bare">https://doi.org/10.1109/WSC.2016.7822090</a>.</p>
 </div>
 <div class="paragraph">
@@ -5846,7 +5873,7 @@ and/or ATLAS numerical libraries underneath.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-05-03 10:49:57 -0500
+Last updated 2024-12-12 22:27:58 -0500
 </div>
 </div>
 </body>

@@ -18,6 +18,8 @@ include::emews_introduction.adoc[]
 
 include::uc1.adoc[]
 
+include::uc2.adoc[]
+
 include::uc4.adoc[]
 
 // Appendix type sections
