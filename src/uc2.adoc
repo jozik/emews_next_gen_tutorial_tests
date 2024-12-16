@@ -6,7 +6,9 @@ In cite:[ozik_many_2015] we describe an inversion of control (IoC) approach enab
 
 image::EMEWS_figure_UC2.png[EQPy, 640, 480]
 
-=== Workflow Project Structure
+IMPORTANT: Completion of the new Workflow control with Python use case is in progress.
+// TODO: Complete UC2
+//=== Workflow Project Structure
 // <p>
 //   The full source code for this tutorial use case be downloaded here:
 //   <a href="http://www.mcs.anl.gov/~emews/files/UC2.zip">UC2.zip</a>.

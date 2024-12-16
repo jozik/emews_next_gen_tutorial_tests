@@ -559,23 +559,20 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_downloading_and_running_the_full_uc1_example">2.8. Downloading and running the full UC1 example</a></li>
 </ul>
 </li>
-<li><a href="#uc2">3. Workflow control with Python</a>
+<li><a href="#uc2">3. Workflow control with Python</a></li>
+<li><a href="#uc3">4. Workflows with a Distributed MPI-based Model</a></li>
+<li><a href="#uc4">5. Minimizing the Ackley function with an EQSQL Workflow</a>
 <ul class="sectlevel2">
-<li><a href="#_workflow_project_structure_2">3.1. Workflow Project Structure</a></li>
-</ul>
-</li>
-<li><a href="#uc4">4. Minimizing the Ackley function with an EQSQL Workflow</a>
-<ul class="sectlevel2">
-<li><a href="#_tutorial_goals_3">4.1. Tutorial Goals</a></li>
-<li><a href="#_running_the_workflow">4.2. Running the Workflow</a></li>
-<li><a href="#_workflow_project_structure_3">4.3. Workflow Project Structure</a></li>
-<li><a href="#_the_ackley_function">4.4. The Ackley Function</a></li>
-<li><a href="#_calling_the_ackley_function_from_swift">4.5. Calling the Ackley Function from Swift</a>
+<li><a href="#_tutorial_goals_3">5.1. Tutorial Goals</a></li>
+<li><a href="#_running_the_workflow">5.2. Running the Workflow</a></li>
+<li><a href="#_workflow_project_structure_2">5.3. Workflow Project Structure</a></li>
+<li><a href="#_the_ackley_function">5.4. The Ackley Function</a></li>
+<li><a href="#_calling_the_ackley_function_from_swift">5.5. Calling the Ackley Function from Swift</a>
 <ul class="sectlevel3">
-<li><a href="#_alternatives_to_a_bash_script">4.5.1. Alternatives to a Bash Script</a></li>
+<li><a href="#_alternatives_to_a_bash_script">5.5.1. Alternatives to a Bash Script</a></li>
 </ul>
 </li>
-<li><a href="#_the_ackley_me">4.6. The Ackley ME</a></li>
+<li><a href="#_the_ackley_me">5.6. The Ackley ME</a></li>
 </ul>
 </li>
 <li><a href="#_installing_emews">Appendix A: Installing EMEWS</a>
@@ -590,6 +587,15 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_motivation">A.2.1. Motivation</a></li>
 <li><a href="#_list_of_supported_platforms">A.2.2. List of supported platforms</a></li>
 <li><a href="#_source_installation_procedure">A.2.3. Source installation procedure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_troubleshooting">6. Troubleshooting</a>
+<ul class="sectlevel2">
+<li><a href="#_problems_with_r">6.1. Problems with R</a>
+<ul class="sectlevel3">
+<li><a href="#_compile_time_problems_with_r">6.1.1. Compile-time problems with R</a></li>
 </ul>
 </li>
 </ul>
@@ -1817,8 +1823,6 @@ $ ./run_uc1.sh exp1 cfgs/uc1.cfg  <i class="conum" data-value="2"></i><b>(2)</b>
 <img src="images/EMEWS_figure_UC2.png" alt="EQPy" width="640" height="480">
 </div>
 </div>
-<div class="sect2">
-<h3 id="_workflow_project_structure_2">3.1. Workflow Project Structure</h3>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -1826,16 +1830,32 @@ $ ./run_uc1.sh exp1 cfgs/uc1.cfg  <i class="conum" data-value="2"></i><b>(2)</b>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-<mark>Highlights</mark> below have in source TODOs.
+Completion of the new Workflow control with Python use case is in progress.
 </td>
 </tr>
 </table>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="uc3">4. Workflows with a Distributed MPI-based Model</h2>
+<div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Completion of the new Workflows with a Distributed MPI-based Model use case is in progress.
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 <div class="sect1">
-<h2 id="uc4">4. Minimizing the Ackley function with an EQSQL Workflow</h2>
+<h2 id="uc4">5. Minimizing the Ackley function with an EQSQL Workflow</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Our 4th use case workflow implements an example EQSQL optimization workflow
@@ -1854,7 +1874,7 @@ likely to find an optimal result according to the GPR. This repeats until all th
 emews creator <a href="#eqsql_top">eqsql</a> template, and that should be read before this.</p>
 </div>
 <div class="sect2">
-<h3 id="_tutorial_goals_3">4.1. Tutorial Goals</h3>
+<h3 id="_tutorial_goals_3">5.1. Tutorial Goals</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1870,7 +1890,19 @@ emews creator <a href="#eqsql_top">eqsql</a> template, and that should be read b
 </div>
 </div>
 <div class="sect2">
-<h3 id="_running_the_workflow">4.2. Running the Workflow</h3>
+<h3 id="_running_the_workflow">5.2. Running the Workflow</h3>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+You will need a working EMEWS install to run this workflow. See the [Quick Start guide][tutorial quickstart] in the EMEWS tutorial.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>The workflow is designed to be run with a local swift-t conda install:</p>
 </div>
@@ -1931,7 +1963,7 @@ within this directory.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_workflow_project_structure_3">4.3. Workflow Project Structure</h3>
+<h3 id="_workflow_project_structure_2">5.3. Workflow Project Structure</h3>
 <div class="paragraph">
 <p>The full source code for this use case can be accessed <a href="https://github.com/emews/emews-tutorial-code/tree/main/uc4" target="uc4">here</a>.
 The completed workflow project has the following directory structure and files:</p>
@@ -2009,7 +2041,7 @@ remaining inputs, assigning a higher priority to those it deems more likely to p
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the_ackley_function">4.4. The Ackley Function</h3>
+<h3 id="_the_ackley_function">5.4. The Ackley Function</h3>
 <div class="paragraph">
 <p>The <a href="http://www.sfu.ca/~ssurjano/ackley.html" target="ackley_doc">Ackley</a> function is widely used for testing optimization algorithms.
 In our example project, it is implemented in <a href="https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/ackley.py#L1" target="ackley_py"><code>uc4/python/ackley.py</code></a></p>
@@ -2030,7 +2062,7 @@ In our example project, it is implemented in <a href="https://github.com/emews/e
 </div>
 </div>
 <div class="sect2">
-<h3 id="_calling_the_ackley_function_from_swift">4.5. Calling the Ackley Function from Swift</h3>
+<h3 id="_calling_the_ackley_function_from_swift">5.5. Calling the Ackley Function from Swift</h3>
 <div class="paragraph">
 <p>The Ackley function is implemented in Python and is called by the swift worker pool
 using a bash script <a href="https://github.com/emews/emews-tutorial-code/blob/main/uc4/scripts/run_ackley.sh#L1" target="run_ackley"><code>uc4/scripts/run_ackley.sh</code></a></p>
@@ -2253,7 +2285,7 @@ are unchanged from those produced by eqsql template. A discussion of them can be
 and <a href="#eqsql_launch_script">here</a></p>
 </div>
 <div class="sect3">
-<h4 id="_alternatives_to_a_bash_script">4.5.1. Alternatives to a Bash Script</h4>
+<h4 id="_alternatives_to_a_bash_script">5.5.1. Alternatives to a Bash Script</h4>
 <div class="paragraph">
 <p>Python and R code can also be executed directly using Swift-T&#8217;s embedded Python and R interpreters. When calling Python or R
 code directly from Swift, the convention is to provide the code to call in a text string with template arguments for the
@@ -2336,7 +2368,7 @@ In addition to running a model, the embeded Python interpreter can be very usefu
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the_ackley_me">4.6. The Ackley ME</h3>
+<h3 id="_the_ackley_me">5.6. The Ackley ME</h3>
 <div class="paragraph">
 <p>The Ackley workflow can be run by executing the Python script <a href="https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/me.py#L1" target="me_py"><code>python/me.py</code></a>
 The code begins by
@@ -2895,6 +2927,44 @@ and an MPI implementation (e.g., <code>mpich</code>).</p>
 </div>
 <div class="paragraph">
 <p>When you run EMEWS Creator, you will need to refer to the tools installed here (R and Tcl) during EQ/R build process.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_troubleshooting">6. Troubleshooting</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_problems_with_r">6.1. Problems with R</h3>
+<div class="sect3">
+<h4 id="_compile_time_problems_with_r">6.1.1. Compile-time problems with R</h4>
+<div class="paragraph">
+<p>If R packages fail to install, check your environment:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ensure no unnecessary environment variables are set:
+<a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/EnvVar.html" class="bare">https://stat.ethz.ch/R-manual/R-devel/library/base/html/EnvVar.html</a>,
+particularly R_LIBS_USER.</p>
+</li>
+<li>
+<p>Inside R, use Sys.getenv() and .libPaths() to make sure no custom user libraries are affecting R.</p>
+</li>
+<li>
+<p>If you have R libraries installed on your system, you can force R to ignore them by setting this environment variable in your shell:</p>
+<div class="paragraph">
+<p>$ export R_LIBS_USER=x</p>
+</div>
+<div class="paragraph">
+<p>This sets R_LIBS_USER to a non-existent location, thus ignoring it.</p>
+</div>
+</li>
+<li>
+<p>Check your R build configuration files, ~/R/Makevars and ~/.Renviron .  These should be empty for EMEWS, however, you can re-add any needed features after you get EMEWS working.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -5873,7 +5943,7 @@ and/or ATLAS numerical libraries underneath.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-12-12 22:27:58 -0500
+Last updated 2024-12-16 10:42:57 -0500
 </div>
 </div>
 </body>
