@@ -1,12 +1,10 @@
 [[uc2, Use Case 2 Tutorial - Workflow control with Python]]
 == Workflow control with Python
 Due to the highly non-linear relationship between ABM input parameters and model outputs, as well as feedback loops and emergent behaviors, large-parameter spaces of realistic ABMs cannot generally be explored via brute force methods, such as full-factorial experiments, space-filling sampling techniques, or any other a priori determined sampling schemes. This is where adaptive, heuristics-based approaches for model exploration (ME) are useful and this is the focus of the next two use cases. 
-// TODO: how do we include references?
+
 In cite:[ozik_many_2015] we describe an inversion of control (IoC) approach enabled by resident Python tasks in Swift/T and simple queue-based interfaces for passing parameters and simulation results, where a metaheuristic method, a genetic algorithm (GA), is used to control a large workflow. This workflow structure was made more general and resulted in the EMEWS framework. In this second use case we describe how this IoC workflow is implemented with the EQ/Py extension. The following is the overall EMEWS workflow structure for this use case.
 
 image::EMEWS_figure_UC2.png[EQPy, 640, 480]
-// TODO: image
-//img src="plugins/Tutorial-View/tutorial/img/EMEWS_figure_UC2.png" alt="EMEWS Figure UC2" height="300"
 
 === Workflow Project Structure
 // <p>
