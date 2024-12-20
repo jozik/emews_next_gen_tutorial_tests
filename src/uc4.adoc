@@ -312,7 +312,7 @@ The code consists of a Python `dataclass` for encapsulating a task, 5 functions,
 Similarily, creating the task queue, and starting the database, and worker pool which are performed in the `run` function were also discussed
 in the  emews creator eqsql <<me_init,section>> and will not be covered here. 
 
-After initialization, the `run` function calls hhttps://github.com/emews/emews-tutorial-code/blob/main/uc4/python/me.py#L23[`submit_initial_tasks`,window=submit_initial_tasks,pts="noopener,nofollow"], passing it the created task_queue,
+After initialization, the `run` function calls https://github.com/emews/emews-tutorial-code/blob/main/uc4/python/me.py#L23[`submit_initial_tasks`,window=submit_initial_tasks,pts="noopener,nofollow"], passing it the created task_queue,
 the user provided experiment id, and the ME input parameters as a dictionary. The random samples 
 used as Ackley function input data are created and submitted as tasks for evaluation.
 
